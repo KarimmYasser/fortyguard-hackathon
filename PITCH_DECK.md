@@ -19,11 +19,11 @@
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 🎬 Scene 1: The Hook (0:00 – 0:30)
+### 🎬 Scene 1: The Hook & Market Blindspot (0:00 – 0:30)
 * **Visual:** Split-screen showing Phoenix Sky Harbor Airport station ($43.1^\circ\mathrm{C}$) vs. Downtown Substation sitting 2 meters above black asphalt ($47.6^\circ\mathrm{C}$, $+4.5^\circ\mathrm{C}$ delta).
 * **Voiceover:**
-  > *"During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. But distribution transformers and underground cables don't live at the airport—they live 2 meters above radiating black asphalt in dense street canyons.*  
-  > *In Phoenix July 2023, that invisible +4.5°C microclimate trap accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in blackout damages."*
+  > *"During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. Multi-billion dollar SCADA giants like Siemens, GE, and Schneider only react when an alarm trips at 135°C—when failure is already locked in.*  
+  > *In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in blackout damages. Standard weather apps and legacy SCADA completely missed it."*
 
 ---
 
@@ -38,15 +38,15 @@
 ### 🎬 Scene 3: Why Agentic Physical AI (1:00 – 1:30)
 * **Visual:** LangGraph StateGraph visualizer and the CBF-QP Safety Gate card showing $K_{\text{safe}} = 0.98\text{ pu}$.
 * **Voiceover:**
-  > *"Rather than training an unverifiable black-box neural net that hallucinates, we built a hybrid Physical-AI architecture:*  
-  > *FortyGuard provides the 12-hour environmental forecast, our LangGraph multi-agent workflow plans proactive cooling and BESS peak-shaving, and a non-LLM Control Barrier Function (CBF-QP) acts as a mathematical firewall, guaranteeing that physical temperature and voltage limits are never violated."*
+  > *"Rather than training an unverified black-box neural net that hallucinates, we built a hybrid Physical-AI architecture:*  
+  > *Exact physics ODEs handle the thermal math, FortyGuard provides the 12-hour environmental forecast, LangGraph coordinates autonomous multi-agent dispatch planning, and a deterministic Control Barrier Function (CBF-QP) acts as a mathematical firewall, guaranteeing that physical voltage and temperature limits are never violated."*
 
 ---
 
 ### 🎬 Scene 4: Live Dashboard Demo (1:30 – 2:15)
 * **Visual:** Screen capture of `http://127.0.0.1:8000`. Show scrubber moving through 12-hour timeline, switch to **⚡ What-If Studio** dragging sliders, and show the **⚡ AC Power Flow** single-line diagram.
 * **Voiceover:**
-  > *"In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM and discharging 5 MW of BESS to cap the hot-spot safely at 136.8°C.*  
+  > *"In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW of BESS to cap the hot-spot safely at 136.8°C.*  
   > *In our What-If Studio, judges can modulate microclimate deltas, multi-day heatwaves, and battery sizes in real time with sub-15 millisecond ODE re-solving, while our AC power flow solver optimizes On-Load Tap Changers and BESS Volt/VAR support to maintain 100% hospital feeder uptime."*
 
 ---
@@ -67,7 +67,7 @@
 
 ---
 
-## 🏛️ PART 2: 5-Minute Live Presentation Slide Deck & Judge Q&A Defense
+## 🏛️ PART 2: 5-Minute Live Presentation Slide Deck & Judge Defense
 
 ### Slide 1: The Invisible 2-Meter Hazard
 * **Key Takeaway:** Airport weather ($10\text{m}$) has a $+4.5^\circ\mathrm{C}$ blindspot relative to $2\text{m}$ urban asphalt.
@@ -98,5 +98,6 @@
 | :--- | :--- |
 | **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging are governed by exact physical ODEs (IEEE Std C57.91). Training an approximate neural net introduces hallucinations and prevents certification by utilities."* |
 | **"How is this different from existing utility SCADA alarms?"** | *"SCADA alarms are reactive—they trip 5 minutes before failure when equipment is already overheated. Thermal Sentinel Grid ingests FortyGuard's 12-hour forecast to proactively pre-cool radiators at 8:00 AM off-peak and schedule BESS peak shaving hours in advance."* |
+| **"Why is AI justified here versus simple threshold scripts?"** | *"Deterministic scripts cannot orchestrate multi-asset, cross-feeder trade-offs (e.g. balancing BESS State of Charge, transformer top-oil time constants, and hospital feeder voltage constraints). LangGraph acts as the cognitive planner that evaluates complex multi-step mitigation paths, while CBF-QP acts as the mathematical safety barrier."* |
 | **"Would utilities trust an autonomous AI agent with circuit breakers?"** | *"No utility trusts an unconstrained LLM. That is why we designed a non-LLM Control Barrier Function (CBF-QP) as a mathematical firewall. Even if the AI planner proposes an aggressive dispatch, the CBF-QP filter strictly projects actions onto $K_{\text{safe}}$, guaranteeing zero voltage or thermal violations."* |
 | **"Are the avoided loss numbers realistic?"** | *"Yes, all financial figures are calculated directly using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard ($VoLL = \$12.50/\text{kWh}$) and IEEE C57.91 capital replacement formulas over an 180,000-hour asset life."* |

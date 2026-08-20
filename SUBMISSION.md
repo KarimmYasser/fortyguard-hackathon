@@ -6,7 +6,7 @@
 
 ## 🌟 Executive Summary & Pitch
 
-During extreme heatwaves, electrical utilities manage power distribution using regional airport weather stations located 10 miles away. However, distribution transformers, switchgear, and underground feeder cables sit **0 to 2 meters above black asphalt** inside dense urban canyons.
+During extreme heatwaves, electrical utilities manage power distribution using regional airport weather stations located 10 miles away. However, distribution transformers, switchgear, and underground feeder cables sit **0 to 2 meters above radiating black asphalt** inside dense urban canyons.
 
 In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$)—asphalt re-radiation and building canyon wind-sheltering create a **$+4.5^\circ\mathrm{C}$ to $+6.0^\circ\mathrm{C}$ localized thermal trap** that airport stations completely miss.
 
@@ -14,15 +14,34 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 
 ---
 
-## 🏛️ The Three Architectural Pillars
+## 📋 The 15-Minute Pre-Build Decision Checklist (Judge Alignment)
+
+*Evaluated against the official Hackathon Judge Framework (Ahmed Abdelkhalek — Head of Startups, Google Cloud):*
+
+| Dimension | Thermal Sentinel Grid Implementation |
+| :--- | :--- |
+| **Hero (Exact Buyer)** | **Substation Reliability Engineers & Grid Operators** (Utilities e.g. APS, ConEd, ERCOT) & **Mission-Critical Facility Directors** (Data Centers, Hospitals). |
+| **Pain** | **$2.8M in substation blowouts and 15x accelerated insulation aging** caused by unmeasured 2m asphalt thermal soak during 12-hour heatwaves. |
+| **AI Justification** | **Autonomous 12-Hour Proactive Dispatch:** Cognitive multi-agent planning connecting FortyGuard's forecast with BESS peak-shaving, OLTC tap tuning, and radiator pre-cooling. Exact physics ODEs handle math, while AI handles multi-asset policy synthesis. |
+| **Kill Switch (24h Validation)** | **Sub-15ms Real-Time Simulation Engine:** Interactive What-If Studio allowing judges to modulate microclimate deltas and see live ODE recalculations in $<15\text{ms}$. |
+
+---
+
+## 🏛️ The Three Architectural Pillars & Strategic Market Positioning
+
+### Strategic Positioning: "Tickling the Giants"
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   THE 3 ARCHITECTURAL PILLARS                                          │
+│                              LEGACY SCADA & WEATHER vs. THERMAL SENTINEL GRID                          │
 │                                                                                                        │
-│   1. External Boundary Layer      ──►  FortyGuard 2m Ambient Air + 12h Forecast + Persistence Runs     │
-│   2. Internal Physical State      ──►  IEEE C57.91 / IEC 60076-7 Differential Thermal & Aging ODEs     │
-│   3. Deterministic Safety Gate    ──►  Robust Control Barrier Function (CBF-QP) Voltage & N-1 Envelopes│
+│   Dimension            Legacy SCADA (Siemens, GE, Schneider)     Thermal Sentinel Grid (Our Stack)     │
+│   ──────────────────   ───────────────────────────────────────   ───────────────────────────────────   │
+│   Weather Input        Airport Station 10 miles away (10m air)   FortyGuard 2-Meter Microclimate AI    │
+│   Reaction Time        Reactive: Trips alarm at 135°C (5m left)  Proactive: Dispatches 12h ahead       │
+│   Physical Cascades    Blind to soil dryout & canyon winds       4 Deep Physics & Aerodynamic Moats    │
+│   Safety Guarantee     Rule-based / human operator triage        Non-LLM CBF-QP Mathematical Firewall  │
+│   Financial Value      Incurs emergency blackout replacement     $2.79M Net Avoided Loss (5,952x ROI)  │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
