@@ -69,6 +69,15 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 
 ---
 
+## 🔌 FortyGuard API Dual-Mode Ingestion Architecture
+*(For the complete architectural decision record, see **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md)**)*
+
+Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ingestion** pattern:
+1. **Mode A: Live Cloud Ingestion (`POST /api/v1/scan`):** Uses [`AsyncFortyGuardClient`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fortyguard_client.py) with full submit-and-poll async lifecycle against live FortyGuard cloud endpoints (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{id}`) for ad-hoc parcel scanning.
+2. **Mode B: Deterministic Benchmark Replay (`POST /api/v1/replay/phoenix-2023`):** Uses the pre-ingested Phoenix July 2023 heatwave dataset ([`phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json)) to guarantee **$<15\text{ms}$ sub-second physics evaluation**, 60 FPS scrubber telemetry, 100% scientific reproducibility for IEEE Annex G validation, and zero-downtime stability during live judging presentations.
+
+---
+
 ## 💻 Tech Stack
 
 * **Backend & Physics:** Python 3.13, FastAPI, NumPy, SciPy, Pydantic v2, Uvicorn
@@ -86,7 +95,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (22 Tests Passing)
+### 2. Run Automated Pytest Suite (23 Tests Passing)
 ```bash
 pytest tests/ -v
 ```

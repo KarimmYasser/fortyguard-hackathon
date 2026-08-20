@@ -24,6 +24,52 @@ class ScanRequest(BaseModel):
     threshold_c: Optional[float] = Field(default=40.0)
 
 
+@router.get("/usage")
+async def get_api_usage() -> Dict[str, Any]:
+    """
+    Returns real-time FortyGuard API credit consumption, subscription status, and limits.
+    """
+    client = AsyncFortyGuardClient()
+    try:
+        if not client.api_key:
+            return {
+                "status": "mock",
+                "api_key_configured": False,
+                "credit_summary": {
+                    "total_available_credits": 2000000,
+                    "cycle_credits_used": 0,
+                    "cycle_remaining_credits": 2000000,
+                    "cycle_usage_percentage": 0.0,
+                },
+                "plan_details": {
+                    "plan_type": "Hackathon Demo",
+                    "active": True,
+                },
+            }
+        usage = await client.fetch_api_key_usage()
+        return {
+            "status": "live",
+            "api_key_configured": True,
+            "data": usage,
+        }
+    except Exception as e:
+        return {
+            "status": "offline_fallback",
+            "api_key_configured": bool(client.api_key),
+            "error": str(e),
+            "credit_summary": {
+                "total_available_credits": 2000000,
+                "cycle_credits_used": 0,
+                "cycle_remaining_credits": 2000000,
+                "cycle_usage_percentage": 0.0,
+            },
+            "plan_details": {
+                "plan_type": "Hackathon",
+                "active": True,
+            },
+        }
+
+
 @router.post("")
 async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
     """

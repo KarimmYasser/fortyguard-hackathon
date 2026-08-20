@@ -67,7 +67,10 @@ class AsyncFortyGuardClient:
         mock_mode: Optional[bool] = None,
     ) -> None:
         self.api_key = api_key or os.getenv("FORTYGUARD_API_KEY", "")
-        self.base_url = (base_url or os.getenv("FORTYGUARD_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
+        raw_base = base_url or os.getenv("FORTYGUARD_BASE_URL") or os.getenv("FORTYGUARD_API_BASE_URL") or DEFAULT_BASE_URL
+        if raw_base.endswith("/v1"):
+            raw_base = raw_base[:-3]
+        self.base_url = raw_base.rstrip("/")
         self.timeout = timeout
 
         env_mock = os.getenv("MOCK_FORTYGUARD_API", "").lower() in ("true", "1", "yes")
@@ -290,6 +293,26 @@ class AsyncFortyGuardClient:
 
         return self._fixture_data.get("scenario_metadata", {}).get("persistence_metrics", {})
 
+    async def fetch_api_key_usage(self) -> Dict[str, Any]:
+        """POST /v1/system/fetch-api-key-usage — current billing cycle summary."""
+        resp = await self._request("POST", "/v1/system/fetch-api-key-usage", json={"api_key": self.api_key})
+        return resp.json()
+
+    async def fetch_api_key_custom_usage(self, start_date: str, end_date: str) -> Dict[str, Any]:
+        """POST /v1/system/fetch-api-key-custom-usage — usage over custom date window."""
+        def _to_iso(value: str, end_of_day: bool) -> str:
+            if "T" in value:
+                return value
+            return f"{value}T{'23:59:59' if end_of_day else '00:00:00'}Z"
+
+        payload = {
+            "api_key": self.api_key,
+            "start_date": _to_iso(start_date, end_of_day=False),
+            "end_date": _to_iso(end_date, end_of_day=True),
+        }
+        resp = await self._request("POST", "/v1/system/fetch-api-key-custom-usage", json=payload)
+        return resp.json()
+
 
 class FortyGuardClient:
     """Synchronous wrapper around AsyncFortyGuardClient for scripts and notebooks."""
@@ -330,3 +353,9 @@ class FortyGuardClient:
 
     def get_persistence_and_exceedance(self, *args: Any, **kwargs: Any) -> Any:
         return self._run_async(self._async_client.get_persistence_and_exceedance(*args, **kwargs))
+
+    def fetch_api_key_usage(self) -> Dict[str, Any]:
+        return self._run_async(self._async_client.fetch_api_key_usage())
+
+    def fetch_api_key_custom_usage(self, start_date: str, end_date: str) -> Dict[str, Any]:
+        return self._run_async(self._async_client.fetch_api_key_custom_usage(start_date, end_date))

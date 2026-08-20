@@ -56,3 +56,9 @@ def test_fastapi_endpoints():
     )
     assert res_scan.status_code == 200
     assert res_scan.json()["status"] == "success"
+
+    # API Usage endpoint
+    res_usage = client.get("/api/v1/scan/usage")
+    assert res_usage.status_code == 200
+    assert "status" in res_usage.json()
+

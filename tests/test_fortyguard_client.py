@@ -54,3 +54,11 @@ def test_load_phoenix_fixture():
     fixture = load_phoenix_fixture()
     assert "scenario_metadata" in fixture
     assert fixture["scenario_metadata"]["location"]["city"] == "Phoenix"
+
+
+def test_client_base_url_normalization():
+    client = AsyncFortyGuardClient(base_url="https://api.fortyguard.com/v1", mock_mode=True)
+    assert client.base_url == "https://api.fortyguard.com"
+    assert hasattr(client, "fetch_api_key_usage")
+    assert hasattr(client, "fetch_api_key_custom_usage")
+

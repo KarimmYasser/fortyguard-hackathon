@@ -13,6 +13,7 @@ import { ACPowerFlowSingleLineViewer } from './components/ACPowerFlowSingleLineV
 import { IEEEAnnexGBenchmarkViewer } from './components/IEEEAnnexGBenchmarkViewer';
 import { SafetyGateCard } from './components/SafetyGateCard';
 import { AuditLedger } from './components/AuditLedger';
+import { LiveApiScanModal } from './components/LiveApiScanModal';
 import { ReplayDataset, TimelineStep } from './types';
 
 export const App: React.FC = () => {
@@ -23,6 +24,7 @@ export const App: React.FC = () => {
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isMitigatedMode, setIsMitigatedMode] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
+  const [isLiveScanOpen, setIsLiveScanOpen] = useState<boolean>(false);
 
   // Fetch replay dataset from backend
   const fetchReplayData = useCallback(async () => {
@@ -103,6 +105,7 @@ export const App: React.FC = () => {
         activeTab={activeTab}
         onSelectTab={setActiveTab}
         onRefresh={fetchReplayData}
+        onOpenLiveScan={() => setIsLiveScanOpen(true)}
         isLoading={isLoading}
       />
 
@@ -207,6 +210,7 @@ export const App: React.FC = () => {
             currentAmbient2m={currentStep.fortyguard_2m_ambient_c}
             airportAmbient={currentStep.airport_reference_temp_c}
             deltaAmbient={currentStep.microclimate_delta_c}
+            onOpenLiveScan={() => setIsLiveScanOpen(true)}
           />
         )}
 
@@ -236,6 +240,12 @@ export const App: React.FC = () => {
           />
         )}
       </main>
+
+      {/* Live FortyGuard API Cloud Ingestion Modal */}
+      <LiveApiScanModal
+        isOpen={isLiveScanOpen}
+        onClose={() => setIsLiveScanOpen(false)}
+      />
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-[#050810] py-4 px-6 text-center text-xs text-slate-500 font-mono flex items-center justify-between max-w-[1600px] mx-auto w-full">

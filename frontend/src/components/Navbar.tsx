@@ -16,6 +16,7 @@ import {
   Award,
   Flame,
   Network,
+  Radio,
 } from 'lucide-react';
 import { ScenarioMetadata, SafetyGateVerdict } from '../types';
 
@@ -38,6 +39,7 @@ interface NavbarProps {
   activeTab: ActiveTab;
   onSelectTab: (tab: ActiveTab) => void;
   onRefresh: () => void;
+  onOpenLiveScan?: () => void;
   isLoading: boolean;
 }
 
@@ -49,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   onSelectTab,
   onRefresh,
+  onOpenLiveScan,
   isLoading,
 }) => {
   const tabs = [
@@ -171,6 +174,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               Mitigated
             </button>
           </div>
+
+          {onOpenLiveScan && (
+            <button
+              onClick={onOpenLiveScan}
+              className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20"
+              title="Open FortyGuard Live Cloud Ingestion & Quota Hub"
+            >
+              <Radio className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+              <span className="hidden sm:inline">Live Cloud Scan</span>
+            </button>
+          )}
 
           <button
             onClick={onRefresh}

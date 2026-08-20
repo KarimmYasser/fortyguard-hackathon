@@ -12,6 +12,7 @@ import {
   ExternalLink,
   Sliders,
   Eye,
+  Radio,
 } from 'lucide-react';
 import { HeatmapCollection, HeatmapFeature } from '../types';
 
@@ -20,6 +21,7 @@ interface GeospatialMicroclimateViewerProps {
   currentAmbient2m: number;
   airportAmbient: number;
   deltaAmbient: number;
+  onOpenLiveScan?: () => void;
 }
 
 export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewerProps> = ({
@@ -27,6 +29,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
   currentAmbient2m,
   airportAmbient,
   deltaAmbient,
+  onOpenLiveScan,
 }) => {
   const [selectedTileId, setSelectedTileId] = useState<string>('tile_phx_sub_04');
   const [activeLayer, setActiveLayer] = useState<'2m_ambient' | 'persistence' | 'albedo'>('2m_ambient');
@@ -54,8 +57,21 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
           </div>
         </div>
 
-        {/* GIS Layer Switcher Pills */}
-        <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+        {/* GIS Controls & Live Scan Trigger */}
+        <div className="flex flex-wrap items-center gap-3">
+          {onOpenLiveScan && (
+            <button
+              onClick={onOpenLiveScan}
+              className="px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 flex items-center gap-1.5 transition-all font-mono"
+              title="Trigger Live Cloud API Scan"
+            >
+              <Radio className="h-3.5 w-3.5 animate-pulse" />
+              <span>Live Cloud Scan</span>
+            </button>
+          )}
+
+          {/* GIS Layer Switcher Pills */}
+          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           <button
             onClick={() => setActiveLayer('2m_ambient')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
@@ -88,6 +104,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
           </button>
         </div>
       </div>
+    </div>
 
       {/* Main Map & Parcel Inspector Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
