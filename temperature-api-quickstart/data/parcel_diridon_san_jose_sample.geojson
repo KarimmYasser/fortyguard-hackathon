@@ -1,0 +1,52 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "parcel_id": "APN-259-27-014",
+        "name": "Diridon Gateway Site",
+        "address": "W Santa Clara St & Cahill St",
+        "city": "San Jose",
+        "state": "CA",
+        "zoning": "DC — Downtown Commercial",
+        "proposed_use": "Mixed-use office / residential",
+        "proposed_gsf": 420000,
+        "stories": 12,
+        "status": "Under evaluation",
+        "notes": "Corner lot with one clipped corner — deliberately not a bounding box, so the notebook exercises arbitrary parcel geometry."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -121.900791,
+              37.330050
+            ],
+            [
+              -121.899209,
+              37.330050
+            ],
+            [
+              -121.899209,
+              37.330700
+            ],
+            [
+              -121.899600,
+              37.330950
+            ],
+            [
+              -121.900791,
+              37.330950
+            ],
+            [
+              -121.900791,
+              37.330050
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

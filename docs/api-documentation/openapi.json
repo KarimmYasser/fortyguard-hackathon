@@ -1,0 +1,464 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FortyGuard Temperature API®",
+    "description": "The FortyGuard Temperature Operating System (tOS) Enterprise API provides high-resolution 2-meter air temperature mapping, computer vision segmentation, environmental parameter tracking, and multi-dimensional heat intelligence reports powered by Large Temperature Models (LTMs).",
+    "version": "1.0.0",
+    "contact": {
+      "name": "FortyGuard Support",
+      "email": "support@fortyguard.com",
+      "url": "https://fortyguard.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.fortyguard.com",
+      "description": "Production Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "api-key",
+        "description": "FortyGuard API Key provided upon registration"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/heatmap": {
+      "post": {
+        "summary": "Create Heatmap",
+        "description": "Generates tile-based high-resolution GeoJSON thermal maps derived from spatial and temporal inputs.",
+        "operationId": "createHeatmap",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "polygon_aoi",
+                  "date_time",
+                  "granularity"
+                ],
+                "properties": {
+                  "polygon_aoi": {
+                    "type": "object",
+                    "description": "GeoJSON FeatureCollection or Polygon geometry"
+                  },
+                  "date_time": {
+                    "type": "object",
+                    "required": [
+                      "start_date",
+                      "filter_type"
+                    ],
+                    "properties": {
+                      "start_date": {
+                        "type": "string",
+                        "example": "2024-07-15"
+                      },
+                      "end_date": {
+                        "type": "string",
+                        "example": "2024-07-15"
+                      },
+                      "start_time": {
+                        "type": "string",
+                        "example": "14:00"
+                      },
+                      "end_time": {
+                        "type": "string",
+                        "example": "15:00"
+                      },
+                      "filter_type": {
+                        "type": "integer",
+                        "enum": [
+                          1,
+                          2,
+                          3,
+                          4
+                        ],
+                        "description": "1=Single Hour, 2=Range of Hours, 3=Single Day, 4=Range of Days"
+                      }
+                    }
+                  },
+                  "granularity": {
+                    "type": "integer",
+                    "enum": [
+                      60,
+                      80,
+                      100
+                    ]
+                  },
+                  "analytic_type": {
+                    "type": "string",
+                    "enum": [
+                      "tcm",
+                      "time_of_measure",
+                      "exceedance",
+                      "persistence"
+                    ],
+                    "default": "tcm"
+                  },
+                  "threshold": {
+                    "type": "number",
+                    "default": 30
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "above",
+                      "below"
+                    ],
+                    "default": "above"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heatmap Submitted Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "status_code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Heatmap Submitted Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "activity_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/satellite": {
+      "post": {
+        "summary": "Satellite View Segmentation",
+        "description": "Performs segmentation analysis on satellite imagery to identify land cover types and thermal characteristics.",
+        "operationId": "satelliteSegmentation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sat",
+                  "date_time",
+                  "granularity"
+                ],
+                "properties": {
+                  "sat": {
+                    "type": "object",
+                    "required": [
+                      "latitude",
+                      "longitude"
+                    ],
+                    "properties": {
+                      "latitude": {
+                        "type": "number"
+                      },
+                      "longitude": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "date_time": {
+                    "type": "object"
+                  },
+                  "granularity": {
+                    "type": "integer",
+                    "enum": [
+                      60,
+                      80,
+                      100
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Satellite Segmentation Submitted Successfully"
+          }
+        }
+      }
+    },
+    "/v1/streetview": {
+      "post": {
+        "summary": "Street View Segmentation",
+        "description": "Performs segmentation analysis on ground-level street view imagery.",
+        "operationId": "streetviewSegmentation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "latitude",
+                  "longitude",
+                  "vertical_angle",
+                  "horizontal_angle",
+                  "back_view"
+                ],
+                "properties": {
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "vertical_angle": {
+                    "type": "number"
+                  },
+                  "horizontal_angle": {
+                    "type": "number"
+                  },
+                  "back_view": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Street View Segmentation Submitted Successfully"
+          }
+        }
+      }
+    },
+    "/v1/heat_intelligence": {
+      "post": {
+        "summary": "Heat Intelligence Report",
+        "description": "Generates multi-dimensional diagnostic reports across 5 analytics categories.",
+        "operationId": "heatIntelligence",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "latitude",
+                  "longitude",
+                  "temperature",
+                  "date",
+                  "analysis"
+                ],
+                "properties": {
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "temperature": {
+                    "type": "number"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "analysis": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "geographic",
+                        "environmental",
+                        "urban",
+                        "events",
+                        "anthropogenic"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Heat Intelligence Submitted Successfully"
+          }
+        }
+      }
+    },
+    "/v1/env_params": {
+      "post": {
+        "summary": "Environmental Parameters",
+        "description": "Returns microclimate parameters including heat index, apparent temperature, wet bulb, AQI, trace gases, and solar irradiance.",
+        "operationId": "environmentalParameters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "latitude",
+                  "longitude",
+                  "temperature",
+                  "date_time"
+                ],
+                "properties": {
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "temperature": {
+                    "type": "number"
+                  },
+                  "date_time": {
+                    "type": "object"
+                  },
+                  "analysis": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Environment Parameters Analysis Submitted Successfully"
+          }
+        }
+      }
+    },
+    "/v1/status/{activity_id}": {
+      "get": {
+        "summary": "Check Activity Status",
+        "description": "Retrieves the execution state and output data for an asynchronous task.",
+        "operationId": "checkStatus",
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Unique task identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status and result payload"
+          }
+        }
+      }
+    },
+    "/v1/system/fetch-api-key-usage": {
+      "post": {
+        "summary": "Fetch API Key Usage",
+        "description": "Returns credit balance, subscription status, and usage breakdown for the active billing cycle.",
+        "operationId": "fetchApiKeyUsage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "api_key"
+                ],
+                "properties": {
+                  "api_key": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subscription and credit usage details"
+          }
+        }
+      }
+    },
+    "/v1/system/fetch-api-key-custom-usage": {
+      "post": {
+        "summary": "Fetch Custom Date-Range Usage",
+        "description": "Returns credit usage across a custom date window.",
+        "operationId": "fetchApiKeyCustomUsage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "api_key",
+                  "start_date",
+                  "end_date"
+                ],
+                "properties": {
+                  "api_key": {
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom credit usage breakdown"
+          }
+        }
+      }
+    }
+  }
+}

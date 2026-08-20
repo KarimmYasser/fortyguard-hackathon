@@ -1,0 +1,15 @@
+# 🔬 Research, Physical AI Models & System Specifications
+> **Thermal Sentinel Grid — FortyGuard Hackathon '26**  
+> Master catalog of academic literature, physical differential equations, IEEE/IEC/UL standards, economic models, and multi-agent system specifications.
+
+---
+
+## 📑 Document Catalog
+
+| Document | Purpose & Scope |
+| :--- | :--- |
+| **[Thermal Sentinel Grid Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)** | **Core Technical Spec:** Full mathematical formulation, IEEE C57.91 / IEC 60076-7 thermal differential equations, discrete-time exact exponential updates, Overpass QL / EIA dataset queries, deterministic Safety Gate rules, Phoenix July 2023 replay scenario, and LangGraph schema. |
+| **[Asymmetric Innovation & Physical Mechanisms](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)** | **Scientific Moats:** 4 non-obvious literature intersections (cable-soil moisture dry-out, robust Control Barrier Functions [CBF-QP], urban canyon aerodynamic throttling, and virtual paper-oil moisture diffusion). |
+| **[Economic Model, UI Architecture & Pitch Script](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ECONOMIC_MODEL_DASHBOARD_AND_PITCH_SCRIPT.md)** | **Financials & Delivery:** Investment-grade avoided loss formulation, customer interruption ($VoLL$), React/Vite operator dashboard wireframe, and second-by-second 3-minute video pitch script. |
+| **[Physical-AI Research & Standards Synthesis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md)** | **Standards & Benchmarks:** Meteorological 2m boundary layer gap analysis, IEEE/IEC/UL/ASHRAE standards basis, 4-concept benchmark matrix. |
+| **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)** | **Strategy & Blueprints:** Comprehensive synthesized distillation of keynotes (*Google, Autodesk, FortyGuard*), idea selection philosophy, 6 demonstrated industry blueprints, and winning hackathon strategies. |
