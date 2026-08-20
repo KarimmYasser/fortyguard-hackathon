@@ -1,0 +1,297 @@
+{
+  "scenario_metadata": {
+    "scenario_id": "phoenix_heatwave_july_2023",
+    "name": "Phoenix July 2023 Extreme Heatwave Replay",
+    "location": {
+      "city": "Phoenix",
+      "state": "AZ",
+      "latitude": 33.4484,
+      "longitude": -112.0740,
+      "substation_id": "SUB-PHX-DOWNTOWN-04",
+      "substation_name": "Phoenix Central Substation TX-04"
+    },
+    "date_range": {
+      "start_date": "2023-07-24T06:00:00Z",
+      "end_date": "2023-07-24T18:00:00Z",
+      "filter_type": 2
+    },
+    "persistence_metrics": {
+      "threshold_c": 40.0,
+      "persistence_hours_p40": 7.17,
+      "exceedance_degree_hours_h40": 34.25,
+      "thermal_soak_index_tsi": 4.12,
+      "consecutive_heatwave_days": 24
+    },
+    "urban_canyon_metrics": {
+      "height_to_width_ratio_hw": 1.85,
+      "frontal_area_density_lambda_f": 0.32,
+      "canyon_albedo": 0.22,
+      "morphological_sheltering_kappa": 0.58,
+      "cooling_derate_eta_cool": 0.68
+    },
+    "soil_cable_metrics": {
+      "volumetric_soil_moisture_theta_v": 0.055,
+      "critical_moisture_theta_crit": 0.12,
+      "soil_thermal_resistivity_rho_dry": 2.50,
+      "soil_thermal_resistivity_rho_wet": 0.90,
+      "current_rho_soil": 2.45,
+      "cable_ampacity_derate": 0.78
+    }
+  },
+  "hourly_forecast_12h": [
+    {
+      "hour_index": 0,
+      "timestamp": "2023-07-24T06:00:00Z",
+      "time_label": "06:00 AM",
+      "fortyguard_2m_ambient_c": 34.2,
+      "airport_reference_temp_c": 32.8,
+      "microclimate_delta_c": 1.4,
+      "solar_irradiance_w_m2": 120.0,
+      "relative_humidity_pct": 28.0,
+      "wet_bulb_temp_c": 21.4,
+      "wind_speed_m_s": 1.8,
+      "baseline_load_ratio_k": 0.65,
+      "hospital_critical_load_mw": 4.2,
+      "bess_soc_pct": 85.0
+    },
+    {
+      "hour_index": 1,
+      "timestamp": "2023-07-24T07:00:00Z",
+      "time_label": "07:00 AM",
+      "fortyguard_2m_ambient_c": 36.5,
+      "airport_reference_temp_c": 34.5,
+      "microclimate_delta_c": 2.0,
+      "solar_irradiance_w_m2": 310.0,
+      "relative_humidity_pct": 25.0,
+      "wet_bulb_temp_c": 22.0,
+      "wind_speed_m_s": 2.0,
+      "baseline_load_ratio_k": 0.72,
+      "hospital_critical_load_mw": 4.5,
+      "bess_soc_pct": 85.0
+    },
+    {
+      "hour_index": 2,
+      "timestamp": "2023-07-24T08:00:00Z",
+      "time_label": "08:00 AM",
+      "fortyguard_2m_ambient_c": 39.1,
+      "airport_reference_temp_c": 36.8,
+      "microclimate_delta_c": 2.3,
+      "solar_irradiance_w_m2": 520.0,
+      "relative_humidity_pct": 22.0,
+      "wet_bulb_temp_c": 22.8,
+      "wind_speed_m_s": 2.1,
+      "baseline_load_ratio_k": 0.81,
+      "hospital_critical_load_mw": 4.8,
+      "bess_soc_pct": 82.0
+    },
+    {
+      "hour_index": 3,
+      "timestamp": "2023-07-24T09:00:00Z",
+      "time_label": "09:00 AM",
+      "fortyguard_2m_ambient_c": 41.8,
+      "airport_reference_temp_c": 38.9,
+      "microclimate_delta_c": 2.9,
+      "solar_irradiance_w_m2": 710.0,
+      "relative_humidity_pct": 19.0,
+      "wet_bulb_temp_c": 23.4,
+      "wind_speed_m_s": 2.3,
+      "baseline_load_ratio_k": 0.90,
+      "hospital_critical_load_mw": 5.2,
+      "bess_soc_pct": 80.0
+    },
+    {
+      "hour_index": 4,
+      "timestamp": "2023-07-24T10:00:00Z",
+      "time_label": "10:00 AM",
+      "fortyguard_2m_ambient_c": 44.0,
+      "airport_reference_temp_c": 40.5,
+      "microclimate_delta_c": 3.5,
+      "solar_irradiance_w_m2": 850.0,
+      "relative_humidity_pct": 16.0,
+      "wet_bulb_temp_c": 23.9,
+      "wind_speed_m_s": 2.4,
+      "baseline_load_ratio_k": 0.98,
+      "hospital_critical_load_mw": 5.5,
+      "bess_soc_pct": 78.0
+    },
+    {
+      "hour_index": 5,
+      "timestamp": "2023-07-24T11:00:00Z",
+      "time_label": "11:00 AM",
+      "fortyguard_2m_ambient_c": 45.8,
+      "airport_reference_temp_c": 41.8,
+      "microclimate_delta_c": 4.0,
+      "solar_irradiance_w_m2": 940.0,
+      "relative_humidity_pct": 14.0,
+      "wet_bulb_temp_c": 24.2,
+      "wind_speed_m_s": 2.5,
+      "baseline_load_ratio_k": 1.05,
+      "hospital_critical_load_mw": 5.8,
+      "bess_soc_pct": 75.0
+    },
+    {
+      "hour_index": 6,
+      "timestamp": "2023-07-24T12:00:00Z",
+      "time_label": "12:00 PM",
+      "fortyguard_2m_ambient_c": 46.9,
+      "airport_reference_temp_c": 42.6,
+      "microclimate_delta_c": 4.3,
+      "solar_irradiance_w_m2": 980.0,
+      "relative_humidity_pct": 12.0,
+      "wet_bulb_temp_c": 24.5,
+      "wind_speed_m_s": 2.2,
+      "baseline_load_ratio_k": 1.12,
+      "hospital_critical_load_mw": 6.0,
+      "bess_soc_pct": 70.0
+    },
+    {
+      "hour_index": 7,
+      "timestamp": "2023-07-24T13:00:00Z",
+      "time_label": "01:00 PM",
+      "fortyguard_2m_ambient_c": 47.6,
+      "airport_reference_temp_c": 43.1,
+      "microclimate_delta_c": 4.5,
+      "solar_irradiance_w_m2": 960.0,
+      "relative_humidity_pct": 11.0,
+      "wet_bulb_temp_c": 24.6,
+      "wind_speed_m_s": 2.0,
+      "baseline_load_ratio_k": 1.16,
+      "hospital_critical_load_mw": 6.2,
+      "bess_soc_pct": 65.0
+    },
+    {
+      "hour_index": 8,
+      "timestamp": "2023-07-24T14:00:00Z",
+      "time_label": "02:00 PM",
+      "fortyguard_2m_ambient_c": 47.4,
+      "airport_reference_temp_c": 42.9,
+      "microclimate_delta_c": 4.5,
+      "solar_irradiance_w_m2": 880.0,
+      "relative_humidity_pct": 11.0,
+      "wet_bulb_temp_c": 24.4,
+      "wind_speed_m_s": 2.2,
+      "baseline_load_ratio_k": 1.18,
+      "hospital_critical_load_mw": 6.3,
+      "bess_soc_pct": 58.0
+    },
+    {
+      "hour_index": 9,
+      "timestamp": "2023-07-24T15:00:00Z",
+      "time_label": "03:00 PM",
+      "fortyguard_2m_ambient_c": 46.8,
+      "airport_reference_temp_c": 42.4,
+      "microclimate_delta_c": 4.4,
+      "solar_irradiance_w_m2": 740.0,
+      "relative_humidity_pct": 12.0,
+      "wet_bulb_temp_c": 24.2,
+      "wind_speed_m_s": 2.5,
+      "baseline_load_ratio_k": 1.15,
+      "hospital_critical_load_mw": 6.1,
+      "bess_soc_pct": 50.0
+    },
+    {
+      "hour_index": 10,
+      "timestamp": "2023-07-24T16:00:00Z",
+      "time_label": "04:00 PM",
+      "fortyguard_2m_ambient_c": 45.7,
+      "airport_reference_temp_c": 41.5,
+      "microclimate_delta_c": 4.2,
+      "solar_irradiance_w_m2": 540.0,
+      "relative_humidity_pct": 14.0,
+      "wet_bulb_temp_c": 23.9,
+      "wind_speed_m_s": 2.7,
+      "baseline_load_ratio_k": 1.08,
+      "hospital_critical_load_mw": 5.9,
+      "bess_soc_pct": 45.0
+    },
+    {
+      "hour_index": 11,
+      "timestamp": "2023-07-24T17:00:00Z",
+      "time_label": "05:00 PM",
+      "fortyguard_2m_ambient_c": 44.1,
+      "airport_reference_temp_c": 40.2,
+      "microclimate_delta_c": 3.9,
+      "solar_irradiance_w_m2": 320.0,
+      "relative_humidity_pct": 16.0,
+      "wet_bulb_temp_c": 23.5,
+      "wind_speed_m_s": 2.8,
+      "baseline_load_ratio_k": 1.02,
+      "hospital_critical_load_mw": 5.6,
+      "bess_soc_pct": 40.0
+    }
+  ],
+  "heatmap_geojson_tiles": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [-112.0760, 33.4470],
+            [-112.0720, 33.4470],
+            [-112.0720, 33.4500],
+            [-112.0760, 33.4500],
+            [-112.0760, 33.4470]
+          ]]
+        },
+        "properties": {
+          "tile_id": "tile_phx_sub_04",
+          "ambient_temp_c": 47.6,
+          "ambient_temp_f": 117.68,
+          "persistence_hours_p40": 7.17,
+          "exceedance_degree_hours": 34.25,
+          "land_cover": "asphalt_impervious",
+          "albedo": 0.18,
+          "asset_present": "SUB-PHX-DOWNTOWN-04"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [-112.0800, 33.4470],
+            [-112.0760, 33.4470],
+            [-112.0760, 33.4500],
+            [-112.0800, 33.4500],
+            [-112.0800, 33.4470]
+          ]]
+        },
+        "properties": {
+          "tile_id": "tile_phx_canyon_01",
+          "ambient_temp_c": 46.8,
+          "ambient_temp_f": 116.24,
+          "persistence_hours_p40": 6.80,
+          "exceedance_degree_hours": 31.50,
+          "land_cover": "commercial_canyon",
+          "albedo": 0.22,
+          "asset_present": "FEEDER-WEST-01"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [-112.0720, 33.4470],
+            [-112.0680, 33.4470],
+            [-112.0680, 33.4500],
+            [-112.0720, 33.4500],
+            [-112.0720, 33.4470]
+          ]]
+        },
+        "properties": {
+          "tile_id": "tile_phx_med_center",
+          "ambient_temp_c": 45.4,
+          "ambient_temp_f": 113.72,
+          "persistence_hours_p40": 5.90,
+          "exceedance_degree_hours": 26.80,
+          "land_cover": "hospital_campus",
+          "albedo": 0.28,
+          "asset_present": "FEEDER-HOSPITAL-PRIORITY"
+        }
+      }
+    ]
+  }
+}
