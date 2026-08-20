@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>Thermal Sentinel Grid — Live Presentation Slide Deck</title>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #060910;
+      color: #f8fafc;
+      font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    .slide-scene {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #070a11;
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+      filter: brightness(0.6) contrast(1.2);
+    }
+
+    .slide-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 60% 40%, rgba(7, 10, 17, 0.4) 0%, rgba(7, 10, 17, 0.95) 85%);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      position: absolute;
+      top: 36px;
+      left: 64px;
+      right: 64px;
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .slide-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #f8fafc;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 12px #06b6d4;
+    }
+
+    .slide-meta-tags {
+      display: flex;
+      gap: 10px;
+    }
+
+    .meta-tag {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: monospace;
+      color: #38bdf8;
+    }
+
+    /* Slide Content Layout */
+    .slide-layout {
+      position: absolute;
+      inset: 0;
+      padding: 104px 64px 64px 64px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .slide-layout.single {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide-eyebrow {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #06b6d4;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+
+    .slide-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 23px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #cbd5e1;
+      margin-bottom: 36px;
+    }
+
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 19px;
+      line-height: 1.4;
+      color: #e2e8f0;
+    }
+
+    .bullet-icon {
+      color: #06b6d4;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* Visual Media Display */
+    .slide-media-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      background: #080c14;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .slide-media-frame img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      display: block;
+      background: #080c14;
+    }
+
+    .media-hud-bar {
+      padding: 14px 20px;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(6, 182, 212, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    /* Q&A Defense Cards */
+    .qa-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px solid #06b6d4;
+      border-radius: 20px;
+      padding: 40px 48px;
+      max-width: 1100px;
+      text-align: left;
+      box-shadow: 0 0 50px rgba(6, 182, 212, 0.25);
+    }
+
+    .qa-question {
+      font-family: 'Outfit', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .qa-answer {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #f1f5f9;
+    }
+
+    .qa-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- HYPERFRAMES SLIDESHOW JSON ISLAND                                         -->
+  <!-- ========================================================================= -->
+  <script type="application/hyperframes-slideshow+json">
+  {
+    "slides": [
+      {
+        "sceneId": "slide-1-hazard",
+        "notes": "Lead with the pain: airport weather stations 10 miles away completely miss the 2m asphalt heat trap (+4.5°C delta in Phoenix July 2023).",
+        "fragments": [3.0, 6.0],
+        "hotspots": [
+          {
+            "id": "h-scada",
+            "label": "Judge Defense: Why Legacy SCADA Fails",
+            "target": "branch-scada-vs-sentinel",
+            "region": { "x": 68, "y": 88, "w": 28, "h": 8 }
+          }
+        ]
+      },
+      {
+        "sceneId": "slide-2-architecture",
+        "notes": "Explain why we do not use black-box ML: exact physics + FortyGuard 12h forecast + LangGraph planner + Non-LLM CBF-QP mathematical firewall.",
+        "fragments": [13.0, 16.0],
+        "hotspots": [
+          {
+            "id": "h-ml",
+            "label": "Judge Defense: Why Not Black-Box ML?",
+            "target": "branch-ml-vs-physics",
+            "region": { "x": 68, "y": 88, "w": 28, "h": 8 }
+          }
+        ]
+      },
+      {
+        "sceneId": "slide-3-moats",
+        "notes": "Walk through the four scientific moats: cable-soil dryout, canyon wind throttling, virtual paper-to-oil moisture desorption, and IEEE hot-spot ODEs.",
+        "fragments": [23.0, 26.0]
+      },
+      {
+        "sceneId": "slide-4-compounding",
+        "notes": "Show the 72-hour continuous heatwave simulation and the 4-bus AC distribution power flow with OLTC tap tuning.",
+        "fragments": [33.0, 36.0]
+      },
+      {
+        "sceneId": "slide-5-financial",
+        "notes": "Deliver the investment-grade economic model: $2.79M Net Avoided Loss at 5,952x ROI based on the DOE LBNL ICE Standard.",
+        "fragments": [43.0, 46.0],
+        "hotspots": [
+          {
+            "id": "h-ice",
+            "label": "Judge Defense: LBNL ICE Validation",
+            "target": "branch-ice-formula",
+            "region": { "x": 68, "y": 88, "w": 28, "h": 8 }
+          }
+        ]
+      }
+    ],
+    "slideSequences": [
+      {
+        "id": "branch-scada-vs-sentinel",
+        "label": "Judge Defense: SCADA vs Sentinel Grid",
+        "slides": [
+          {
+            "sceneId": "branch-scada-slide",
+            "notes": "Explain why 5-minute reactive SCADA alarms fail during cumulative 12-hour thermal soak."
+          }
+        ]
+      },
+      {
+        "id": "branch-ml-vs-physics",
+        "label": "Judge Defense: Why Not Black-Box ML?",
+        "slides": [
+          {
+            "sceneId": "branch-ml-slide",
+            "notes": "Highlight IEEE C57.91 Annex G verification (<0.0001°C error) and utility certification requirements."
+          }
+        ]
+      },
+      {
+        "id": "branch-ice-formula",
+        "label": "Judge Defense: LBNL ICE Standard Math",
+        "slides": [
+          {
+            "sceneId": "branch-ice-slide",
+            "notes": "Walk through the non-overlapping avoided loss formula and VoLL = $12.50/kWh."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 1: THE INVISIBLE 2-METER HAZARD                                     -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-1-hazard"
+    class="slide-scene"
+    data-composition-id="slide-1-hazard"
+    data-start="0"
+    data-duration="10"
+    data-label="The Invisible 2-Meter Hazard"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/realistic_substation_4_3.jpg');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">SLIDE 01 / 05</div>
+        <div class="meta-tag">THE PROBLEM</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#ef4444">●</span> 2-METER MICROCLIMATE BLINDSPOT</div>
+        <h1 class="slide-title">Airport Weather Stations Miss the Urban Heat Trap</h1>
+        <p class="slide-desc">
+          Critical grid transformers sit 0–2m above radiating asphalt in dense street canyons. While regional airport towers report 43.1°C, localized ambient air reaches 47.6°C (+4.5°C unmeasured delta).
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Phoenix July 2023 Case Study:</strong> 31 consecutive days ≥ 110°F peaking at 119°F.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Thermal Soak vs Temperature Spike:</strong> 15× accelerated insulation degradation.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Catastrophic Consequence:</strong> Substation blowouts and $2.8M in emergency blackout losses.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/realistic_thermal_flir_16_9.jpg" alt="Phoenix FLIR Thermal vs Airport Comparison" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">PHOENIX SKY HARBOR (43.1°C) vs DOWNTOWN 2M (47.6°C)</span>
+          <span style="color:#ef4444;">+4.5°C LOCAL TRAP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 2: THE PHYSICAL-AI ARCHITECTURE                                     -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-2-architecture"
+    class="slide-scene"
+    data-composition-id="slide-2-architecture"
+    data-start="10"
+    data-duration="10"
+    data-label="The Physical-AI Architecture"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_agent_graph.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">SLIDE 02 / 05</div>
+        <div class="meta-tag">4-LAYER HYBRID STACK</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#8b5cf6">●</span> HYBRID PHYSICAL-AI DESIGN</div>
+        <h1 class="slide-title">Exact Physics Truth + Agentic Coordination</h1>
+        <p class="slide-desc">
+          Replacing thermodynamic laws with approximate neural nets introduces hallucinations. We integrate exact ODEs with FortyGuard forecasting and Control Barrier Functions.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">1.</span> <strong>Perception:</strong> FortyGuard 2m Convective AI & 12-Hour Forecast.</div>
+          <div class="bullet-item"><span class="bullet-icon">2.</span> <strong>Physical Truth:</strong> IEEE C57.91 Differential ODEs (<0.0001°C error).</div>
+          <div class="bullet-item"><span class="bullet-icon">3.</span> <strong>Agentic Planner:</strong> LangGraph StateGraph Autonomous Scheduler.</div>
+          <div class="bullet-item"><span class="bullet-icon">4.</span> <strong>Safety Firewall:</strong> Non-LLM CBF-QP Invariance Gate (0.95–1.05 pu).</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_agent_graph.png" alt="LangGraph Multi-Agent Architecture" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">LANGGRAPH MULTI-AGENT ENGINE</span>
+          <span style="color:#34d399;">DETERMINISTIC CBF-QP GATE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 3: FOUR SCIENTIFIC MOATS                                            -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-3-moats"
+    class="slide-scene"
+    data-composition-id="slide-3-moats"
+    data-start="20"
+    data-duration="10"
+    data-label="Four Asymmetric Scientific Moats"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_physics_moats.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">SLIDE 03 / 05</div>
+        <div class="meta-tag">DEEP PHYSICS MOATS</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#06b6d4">●</span> SCIENTIFIC DIFFERENTIATION</div>
+        <h1 class="slide-title">Four Latent Physical Cascades Standard SCADA Misses</h1>
+        <p class="slide-desc">
+          Beyond simple threshold alarms, Thermal Sentinel Grid models micro-thermodynamics and multi-day desertification effects.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEC 60287 Cable-Soil Dryout:</strong> rho_soil surges 0.90 -> 2.48 K·m/W (-22% ampacity).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Oke / Evola Canyon Aerodynamics:</strong> Wind-sheltering causes -32% radiator derate.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Virtual Paper Moisture Sensor:</strong> Fickian oil saturation (RS_o = 42% arcing alert).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEEE C57.91 Annex G Hot-Spot:</strong> Exact transient temperature capping <= 140°C.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_physics_moats.png" alt="Four Scientific Moats Panel" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">IEEE C57.91 & IEC 60287 COMPLIANT</span>
+          <span style="color:#34d399;">FIRST-PRINCIPLES FORMULATIONS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 4: MULTI-DAY COMPOUNDING & AC POWER FLOW                            -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-4-compounding"
+    class="slide-scene"
+    data-composition-id="slide-4-compounding"
+    data-start="30"
+    data-duration="10"
+    data-label="Multi-Day Compounding & AC Power Flow"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_sandbox.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">SLIDE 04 / 05</div>
+        <div class="meta-tag">GRID OPERATIONS</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#10b981">●</span> 72H SIMULATION & FEEDER DISPATCH</div>
+        <h1 class="slide-title">Compounding Heatwaves & 4-Bus AC Network Solver</h1>
+        <p class="slide-desc">
+          Continuous 72-hour Phoenix simulation capturing overnight thermal soak, paired with On-Load Tap Changer (OLTC) tuning and 4-quadrant BESS Volt/VAR support.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>72-Hour Continuous Simulation:</strong> Tracks overnight heat retention and progressive dryout.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>12-Hour Proactive Pre-Cooling:</strong> Radiators engaged at 8:00 AM off-peak.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>4-Bus Distribution Feeder Flow:</strong> Exact Forward-Backward Sweep AC solver.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Hospital Feeder Protection:</strong> 100% critical medical feeder uptime maintained.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_sandbox.png" alt="Mission Control & What-If Studio" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">WHAT-IF STUDIO (&lt;15ms RE-SOLVING)</span>
+          <span style="color:#34d399;">100% HOSPITAL UPTIME</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 5: INVESTMENT-GRADE AVOIDED LOSS                                    -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-5-financial"
+    class="slide-scene"
+    data-composition-id="slide-5-financial"
+    data-start="40"
+    data-duration="10"
+    data-label="Investment-Grade Avoided Loss"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_financial_roi.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">SLIDE 05 / 05</div>
+        <div class="meta-tag">ECONOMIC AUDIT</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#f59e0b">●</span> DEPARTMENT OF ENERGY LBNL ICE</div>
+        <h1 class="slide-title">$2,791,338 Net Avoided Loss at 5,952× ROI</h1>
+        <p class="slide-desc">
+          Auditable utility financial metrics based on Value of Lost Load ($12.50/kWh) and IEEE C57.91 capital replacement formulas.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Avoided Catastrophic Outage Risk:</strong> $2,450,000 in customer interruption savings.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transformer Life Extension:</strong> 846.8 equivalent hours of insulation life saved.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Proactive Mitigation Power Cost:</strong> $469.00 (minimal off-peak spend).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Net Economic Return:</strong> $2,791,338 Net Avoided Loss (5,952.7× ROI).</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel" />
+        <div class="media-hud-bar">
+          <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
+          <span style="color:#34d399;">5,952.7x ROI MULTIPLE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BRANCH 1: JUDGE DEFENSE — SCADA VS SENTINEL GRID                          -->
+  <!-- ========================================================================= -->
+  <div
+    id="branch-scada-slide"
+    class="slide-scene"
+    data-composition-id="branch-scada-slide"
+    data-start="50"
+    data-duration="10"
+    data-label="Q&A Defense: SCADA vs Sentinel"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_overview.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID — JUDGE DEFENSE</div>
+      <div class="slide-meta-tags"><div class="meta-tag">DEFENSE BRANCH 01</div></div>
+    </header>
+
+    <div class="slide-layout single">
+      <div class="qa-box">
+        <div class="qa-badge">JUDGE QUESTION</div>
+        <h2 class="qa-question">"How is this different from existing utility SCADA alarms from Siemens, GE, or Schneider?"</h2>
+        <p class="qa-answer">
+          Legacy SCADA alarms are <strong>reactive</strong>: they only trip an alarm 5 minutes before failure when equipment top-oil has already reached 135°C and thermal runaway is locked in. Standard SCADA is completely blind to 2m microclimate asphalt traps and soil moisture dryout.<br/><br/>
+          <strong>Thermal Sentinel Grid is proactive:</strong> It ingests FortyGuard's 12-hour forward forecast to engage radiator pre-cooling at 8:00 AM off-peak and schedule BESS peak shaving hours in advance, capping the hot-spot at 136.8°C and preventing alarm trips entirely.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BRANCH 2: JUDGE DEFENSE — WHY NOT BLACK-BOX ML?                           -->
+  <!-- ========================================================================= -->
+  <div
+    id="branch-ml-slide"
+    class="slide-scene"
+    data-composition-id="branch-ml-slide"
+    data-start="60"
+    data-duration="10"
+    data-label="Q&A Defense: Why Not Black-Box ML"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_ieee_annex_g.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID — JUDGE DEFENSE</div>
+      <div class="slide-meta-tags"><div class="meta-tag">DEFENSE BRANCH 02</div></div>
+    </header>
+
+    <div class="slide-layout single">
+      <div class="qa-box">
+        <div class="qa-badge">JUDGE QUESTION</div>
+        <h2 class="qa-question">"Why didn't you train an end-to-end neural network to predict equipment temperature?"</h2>
+        <p class="qa-answer">
+          1. <strong>FortyGuard already solved the microclimate ML layer:</strong> They provide state-of-the-art 2m Temperature AI and 12-hour forecasts.<br/>
+          2. <strong>Thermodynamic physics are exact:</strong> Transformer heat dissipation and Arrhenius aging are governed by exact differential equations (IEEE Std C57.91 & IEC 60076-7). Replacing exact physics with an approximate neural net introduces hallucinations.<br/>
+          3. <strong>Utility certification:</strong> Power utilities and insurers will never certify an unverified black box for circuit breaker dispatch. Our IEEE Annex G solver is verified to &lt;0.0001°C error against published standards.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BRANCH 3: JUDGE DEFENSE — LBNL ICE VALIDATION                             -->
+  <!-- ========================================================================= -->
+  <div
+    id="branch-ice-slide"
+    class="slide-scene"
+    data-composition-id="branch-ice-slide"
+    data-start="70"
+    data-duration="10"
+    data-label="Q&A Defense: LBNL ICE Validation"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_financial_roi.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID — JUDGE DEFENSE</div>
+      <div class="slide-meta-tags"><div class="meta-tag">DEFENSE BRANCH 03</div></div>
+    </header>
+
+    <div class="slide-layout single">
+      <div class="qa-box">
+        <div class="qa-badge">JUDGE QUESTION</div>
+        <h2 class="qa-question">"Are the $2.79M avoided loss and 5,952× ROI numbers realistic?"</h2>
+        <p class="qa-answer">
+          Yes, every figure is directly derived from the Department of Energy's <strong>LBNL Interruption Cost Estimate (ICE) standard</strong>:<br/><br/>
+          • <strong>Customer Outage Interruption ($2.45M):</strong> Calculated using Value of Lost Load ($VoLL = \$12.50/\text{kWh}$) over 49 MW affected feeder capacity.<br/>
+          • <strong>Capital Asset Deferral ($341k):</strong> Evaluated using IEEE C57.91 Arrhenius degradation formulas over an 180,000-hour design life ($2.5M replacement cost).<br/>
+          • <strong>Mitigation Power ($469):</strong> 5 MW BESS discharge at $0.0938/kWh off-peak electricity.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GSAP Timelines for each Scene Composition -->
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    const slideIds = [
+      "slide-1-hazard",
+      "slide-2-architecture",
+      "slide-3-moats",
+      "slide-4-compounding",
+      "slide-5-financial",
+      "branch-scada-slide",
+      "branch-ml-slide",
+      "branch-ice-slide"
+    ];
+
+    slideIds.forEach((id) => {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(`#${id} .slide-layout`, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.2);
+      window.__timelines[id] = tl;
+    });
+  </script>
+</body>
+</html>

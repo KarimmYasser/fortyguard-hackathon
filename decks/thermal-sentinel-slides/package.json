@@ -1,0 +1,12 @@
+{
+  "name": "thermal-sentinel-slides",
+  "version": "1.0.0",
+  "description": "Thermal Sentinel Grid 5-Minute Live Presentation Slide Deck for FortyGuard Hackathon '26",
+  "scripts": {
+    "dev": "npx hyperframes present . --no-open",
+    "check": "npx hyperframes check ."
+  },
+  "dependencies": {
+    "hyperframes": "0.8.4"
+  }
+}

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>Thermal Sentinel Grid — Official 3-Minute Video Pitch</title>
+  
+  <!-- GSAP 3.14.2 -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #04070e;
+      color: #f8fafc;
+      font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #070a11;
+    }
+
+    /* Global Video Overlays */
+    .top-header {
+      position: absolute;
+      top: 32px;
+      left: 48px;
+      right: 48px;
+      height: 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(13, 19, 33, 0.85);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 10px #06b6d4;
+    }
+
+    .brand-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #f8fafc;
+    }
+
+    .track-badge {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pill-tag {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: monospace;
+      color: #94a3b8;
+      backdrop-filter: blur(8px);
+    }
+
+    .pill-tag.active {
+      border-color: rgba(6, 182, 212, 0.5);
+      color: #38bdf8;
+      background: rgba(6, 182, 212, 0.12);
+    }
+
+    .pill-tag.alert {
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    /* Subtitle / Caption Dock */
+    .caption-dock {
+      position: absolute;
+      bottom: 36px;
+      left: 80px;
+      right: 80px;
+      padding: 18px 32px;
+      background: rgba(7, 10, 17, 0.92);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 100;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .caption-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .caption-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #f1f5f9;
+      flex: 1;
+    }
+
+    /* Video Progress Bar */
+    .timeline-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6, #10b981);
+      z-index: 110;
+      width: 0%;
+    }
+
+    /* Clip Wrapper */
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+    }
+
+    .scene-content {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Scene Layouts */
+    .scene-container {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      padding: 104px 64px 120px 64px;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .scene-single-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 104px 64px 120px 64px;
+      text-align: center;
+    }
+
+    .scene-bg-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+      filter: brightness(0.55) contrast(1.2);
+    }
+
+    .scene-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 60% 40%, rgba(7, 10, 17, 0.4) 0%, rgba(7, 10, 17, 0.95) 85%);
+    }
+
+    /* Hero Text Styles */
+    .eyebrow {
+      font-family: monospace;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #06b6d4;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scene-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 18px;
+      letter-spacing: -1px;
+    }
+
+    .scene-subheading {
+      font-family: 'Inter', sans-serif;
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #cbd5e1;
+      margin-bottom: 28px;
+    }
+
+    /* Visual Card / Media Container */
+    .media-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      background: #080c14;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      display: block;
+      background: #080c14;
+    }
+
+    .hud-chip {
+      padding: 14px 20px;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(6, 182, 212, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    /* Metric Grid */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+
+    .metric-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .metric-card.alert {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .metric-card.success {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .metric-card.cyan {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
+    .metric-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #94a3b8;
+    }
+
+    .metric-val {
+      font-family: monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .metric-val.red { color: #f87171; }
+    .metric-val.green { color: #34d399; }
+    .metric-val.cyan { color: #38bdf8; }
+    .metric-val.gold { color: #fbbf24; }
+
+    /* Scene 2 Moat Cards */
+    .moat-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+
+    .moat-item {
+      background: rgba(13, 19, 33, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .moat-tag {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #06b6d4;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .moat-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .moat-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .moat-stat {
+      font-family: monospace;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-top: 4px;
+    }
+
+    /* Scene 3 Pipeline Flow Illustration */
+    .pipeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    .pipeline-step.active {
+      border-color: #06b6d4;
+      background: rgba(6, 182, 212, 0.12);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    }
+
+    .pipeline-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #06b6d4;
+      color: #080c14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .pipeline-arrow {
+      align-self: center;
+      color: #06b6d4;
+      font-weight: 800;
+      font-size: 16px;
+      margin: -6px 0;
+    }
+
+    /* Animated Laser Scanner & Cursor Overlays */
+    .scanner-beam {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #06b6d4, #ef4444, transparent);
+      box-shadow: 0 0 16px #06b6d4;
+      z-index: 40;
+      opacity: 0;
+    }
+
+    .simulated-cursor {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      z-index: 80;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+    }
+
+    /* Outro Centered Lockup */
+    .outro-badge-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .outro-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 16px;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .outro-url-box {
+      margin-top: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 2px solid #06b6d4;
+      padding: 14px 36px;
+      border-radius: 9999px;
+      font-family: monospace;
+      font-size: 24px;
+      font-weight: 700;
+      color: #38bdf8;
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="180">
+    <!-- Top Persistent Header -->
+    <header class="top-header">
+      <div class="brand-pill">
+        <div class="brand-logo-dot"></div>
+        <div class="brand-text">THERMAL SENTINEL GRID</div>
+      </div>
+      <div class="track-badge">
+        <div class="pill-tag active">TRACK 06: AGENTIC AI</div>
+        <div class="pill-tag active">TRACK 02: FUTURE BUILDINGS &amp; ENERGY</div>
+        <div class="pill-tag alert">IEEE C57.91 &amp; IEC 60076 VERIFIED</div>
+      </div>
+    </header>
+
+    <!-- Subtitle / Voiceover Box -->
+    <div class="caption-dock" id="caption-dock">
+      <div class="caption-indicator" id="caption-time">0:00</div>
+      <div class="caption-text" id="caption-content">
+        During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away...
+      </div>
+    </div>
+
+    <!-- Video Progress Bar -->
+    <div class="timeline-progress-bar" id="timeline-progress"></div>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 1: THE HOOK & THE 2-METER BLINDSPOT (0:00 - 0:30, 30s)             -->
+    <!-- ========================================================================= -->
+    <section id="scene-1" class="clip" data-start="0" data-duration="30" data-track-index="1">
+      <div class="scene-content" id="s1-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/realistic_substation_16_9.jpg');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <div class="scene-container">
+          <!-- Left Hero Text -->
+          <div class="hero-text-col" id="s1-hero">
+            <div class="eyebrow"><span style="color:#ef4444">●</span> THE $2.8M URBAN HEAT BLINDSPOT</div>
+            <h1 class="scene-heading">Airport Weather Stations Miss the 2-Meter Heat Trap</h1>
+            <p class="scene-subheading">
+              In Phoenix July 2023, while airport sensors reported 43.1°C, radiating asphalt enveloped street transformers in 47.6°C air (+4.5°C delta)—accelerating insulation aging by 15x and causing catastrophic substation blowouts.
+            </p>
+            <div class="metric-grid">
+              <div class="metric-card alert" id="s1-m1">
+                <div class="metric-label">Microclimate Heat Delta</div>
+                <div class="metric-val red" id="s1-counter-delta">+4.5°C</div>
+              </div>
+              <div class="metric-card alert" id="s1-m2">
+                <div class="metric-label">Insulation Aging Speedup</div>
+                <div class="metric-val red" id="s1-counter-aging">15.0×</div>
+              </div>
+              <div class="metric-card cyan" id="s1-m3">
+                <div class="metric-label">Consecutive Days ≥ 110°F</div>
+                <div class="metric-val cyan">31 Days</div>
+              </div>
+              <div class="metric-card alert" id="s1-m4">
+                <div class="metric-label">Substation Outage Loss</div>
+                <div class="metric-val gold">$2.8M</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Media Card: Real Phoenix Aerial FLIR Split -->
+          <div class="media-card" id="s1-card">
+            <div class="scanner-beam" id="s1-scanner"></div>
+            <img src="assets/realistic_thermal_flir_16_9.jpg" alt="Phoenix Aerial FLIR Survey vs Visible">
+            <div class="hud-chip">
+              <span style="color:#38bdf8;">PHOENIX DOWNTOWN FLIR AERIAL (33.4484°N, 112.0740°W)</span>
+              <span style="color:#ef4444;">51.8°C ASPHALT TRAP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 2: THE SOLUTION & 4 SCIENTIFIC MOATS (0:30 - 1:00, 30s)             -->
+    <!-- ========================================================================= -->
+    <section id="scene-2" class="clip" data-start="30" data-duration="30" data-track-index="1">
+      <div class="scene-content" id="s2-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_physics_moats.png');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <div class="scene-container">
+          <!-- Left Hero Text -->
+          <div class="hero-text-col" id="s2-hero">
+            <div class="eyebrow"><span style="color:#06b6d4">●</span> FIRST-PRINCIPLES PHYSICAL RESILIENCE</div>
+            <h1 class="scene-heading">FortyGuard 2m AI + IEEE Differential Physics</h1>
+            <p class="scene-subheading">
+              We couple FortyGuard's 2-meter Temperature AI with exact IEEE Std C57.91 and IEC 60287 differential thermal equations, capturing four latent physical cascades legacy SCADA completely ignores.
+            </p>
+
+            <div class="moat-grid-4">
+              <div class="moat-item" id="s2-moat1">
+                <div class="moat-tag">IEC 60287</div>
+                <div class="moat-title">Soil Moisture Dryout</div>
+                <div class="moat-desc">Cable soil resistivity surges from 0.90 to &gt;2.48 K·m/W.</div>
+                <div class="moat-stat">-22% Cable Ampacity Bottleneck</div>
+              </div>
+              <div class="moat-item" id="s2-moat2">
+                <div class="moat-tag">OKE / EVOLA CANYONS</div>
+                <div class="moat-title">Canyon Aerodynamics</div>
+                <div class="moat-desc">Urban wind-sheltering throttles radiator fin dissipation.</div>
+                <div class="moat-stat">-32% Radiator Cooling Derate</div>
+              </div>
+              <div class="moat-item" id="s2-moat3">
+                <div class="moat-tag">FICK'S LAW</div>
+                <div class="moat-title">Virtual Moisture Sensor</div>
+                <div class="moat-desc">Models cellulose paper moisture desorption into dielectric oil.</div>
+                <div class="moat-stat">RS_o = 42% Early Arcing Warning</div>
+              </div>
+              <div class="moat-item" id="s2-moat4">
+                <div class="moat-tag">IEEE C57.91 ANNEX G</div>
+                <div class="moat-title">Exact Winding Hot-Spot</div>
+                <div class="moat-desc">Verified numerical differential ODE solver (&lt;0.0001°C error).</div>
+                <div class="moat-stat">T_hs Strictly Capped ≤ 140°C</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Media Card: Real Live 4 Moats Dashboard Panel -->
+          <div class="media-card" id="s2-card">
+            <img src="assets/dashboard/dashboard_physics_moats.png" alt="Four Scientific Moats Dashboard">
+            <div class="hud-chip">
+              <span style="color:#38bdf8;">IEEE C57.91 &amp; IEC 60287 MOATS</span>
+              <span style="color:#34d399;">FIRST-PRINCIPLES MATHEMATICS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 3: WHY AGENTIC PHYSICAL AI & CBF-QP (1:00 - 1:30, 30s)               -->
+    <!-- ========================================================================= -->
+    <section id="scene-3" class="clip" data-start="60" data-duration="30" data-track-index="1">
+      <div class="scene-content" id="s3-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_agent_graph.png');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <div class="scene-container">
+          <!-- Left Hero Text & Live Pipeline -->
+          <div class="hero-text-col" id="s3-hero">
+            <div class="eyebrow"><span style="color:#8b5cf6">●</span> TRACK 06: AGENTIC AI ARCHITECTURE</div>
+            <h1 class="scene-heading">LangGraph Planner + Non-LLM CBF-QP Safety Gate</h1>
+            <p class="scene-subheading">
+              Utilities cannot trust unconstrained, hallucinating neural nets. We built a 4-layer hybrid stack: exact physics handles the math, LangGraph coordinates multi-asset dispatch, and a deterministic Control Barrier Function (CBF-QP) acts as a mathematical firewall.
+            </p>
+
+            <div class="pipeline-container">
+              <div class="pipeline-step" id="s3-step1">
+                <div class="pipeline-icon">1</div>
+                <div><strong>Perception:</strong> FortyGuard 2m Convective AI &amp; 12-Hour Forecast (P40 = 7.17h)</div>
+              </div>
+              <div class="pipeline-arrow">▼</div>
+              <div class="pipeline-step" id="s3-step2">
+                <div class="pipeline-icon">2</div>
+                <div><strong>Physical State:</strong> IEEE C57.91 Differential Thermal ODEs (&lt;0.0001°C error)</div>
+              </div>
+              <div class="pipeline-arrow">▼</div>
+              <div class="pipeline-step active" id="s3-step3">
+                <div class="pipeline-icon" style="background:#8b5cf6; color:#fff;">3</div>
+                <div><strong>Cognitive Dispatch:</strong> LangGraph StateGraph Autonomous Multi-Asset Planner</div>
+              </div>
+              <div class="pipeline-arrow">▼</div>
+              <div class="pipeline-step" id="s3-step4">
+                <div class="pipeline-icon" style="background:#10b981; color:#fff;">4</div>
+                <div><strong>Safety Firewall:</strong> Non-LLM Robust CBF-QP Invariance Gate (0.95–1.05 pu)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Media Card: Real Live LangGraph Engine -->
+          <div class="media-card" id="s3-card">
+            <img src="assets/dashboard/dashboard_agent_graph.png" alt="LangGraph Multi-Agent Architecture">
+            <div class="hud-chip">
+              <span style="color:#38bdf8;">LANGGRAPH MULTI-AGENT STATEGRAPH</span>
+              <span style="color:#fbbf24;">PROVABLY SAFE DISPATCH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 4: LIVE DASHBOARD DEMO & WHAT-IF STUDIO (1:30 - 2:15, 45s)           -->
+    <!-- ========================================================================= -->
+    <section id="scene-4" class="clip" data-start="90" data-duration="45" data-track-index="1">
+      <div class="scene-content" id="s4-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_overview.png');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <!-- Simulated Interactive Mouse Cursor -->
+        <svg class="simulated-cursor" id="s4-cursor" viewBox="0 0 24 24" fill="none" style="top: 300px; left: 1400px; opacity: 0;">
+          <path d="M4 2L19 14L12 15L9 22L4 2Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+
+        <div class="scene-container">
+          <!-- Left Hero Text -->
+          <div class="hero-text-col" id="s4-hero">
+            <div class="eyebrow"><span style="color:#10b981">●</span> LIVE OPERATOR MISSION CONTROL</div>
+            <h1 class="scene-heading">Proactive Dispatch &amp; Sub-15ms What-If Sandbox</h1>
+            <p class="scene-subheading">
+              At 1:00 PM, the unmitigated baseline blows past the 140°C limit to 143.2°C. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW BESS to cap the hot-spot safely at 136.8°C.
+            </p>
+
+            <div class="metric-grid">
+              <div class="metric-card alert" id="s4-m1">
+                <div class="metric-label">Baseline Peak Hot-Spot</div>
+                <div class="metric-val red" id="s4-hotspot-base">143.2°C (Trip)</div>
+              </div>
+              <div class="metric-card success" id="s4-m2">
+                <div class="metric-label">Sentinel Mitigated Hot-Spot</div>
+                <div class="metric-val green" id="s4-hotspot-mit">136.8°C (Safe)</div>
+              </div>
+              <div class="metric-card cyan" id="s4-m3">
+                <div class="metric-label">What-If Studio Solver Latency</div>
+                <div class="metric-val cyan">&lt; 15 ms</div>
+              </div>
+              <div class="metric-card success" id="s4-m4">
+                <div class="metric-label">Critical Hospital Feeder</div>
+                <div class="metric-val green">100.0% Uptime</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Media Card: What-If Studio & Mission Control Telemetry -->
+          <div class="media-card" id="s4-card">
+            <img src="assets/dashboard/dashboard_sandbox.png" alt="What-If Studio Sandbox Live Screenshot">
+            <div class="hud-chip">
+              <span style="color:#38bdf8;">12H SYNCHRONIZED SCRUBBER &amp; 4-BUS AC POWER FLOW</span>
+              <span style="color:#34d399;">60 FPS TELEMETRY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 5: AUDITABLE ROI & FINANCIAL IMPACT (2:15 - 2:45, 30s)              -->
+    <!-- ========================================================================= -->
+    <section id="scene-5" class="clip" data-start="135" data-duration="30" data-track-index="1">
+      <div class="scene-content" id="s5-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_financial_roi.png');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <div class="scene-container">
+          <!-- Left Hero Text -->
+          <div class="hero-text-col" id="s5-hero">
+            <div class="eyebrow"><span style="color:#f59e0b">●</span> INVESTMENT-GRADE ECONOMIC VALUE</div>
+            <h1 class="scene-heading">$2.79M Net Avoided Loss at 5,952× ROI</h1>
+            <p class="scene-subheading">
+              Using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard (VoLL = $12.50/kWh), Thermal Sentinel Grid quantifies non-overlapping avoided catastrophic outage costs and deferred capital asset replacement.
+            </p>
+
+            <div class="metric-grid">
+              <div class="metric-card success" id="s5-m1">
+                <div class="metric-label">Net Avoided Loss (Per Heatwave)</div>
+                <div class="metric-val gold" id="s5-counter-loss">$2,791,338</div>
+              </div>
+              <div class="metric-card success" id="s5-m2">
+                <div class="metric-label">Operational ROI Multiple</div>
+                <div class="metric-val gold" id="s5-counter-roi">5,952.7×</div>
+              </div>
+              <div class="metric-card cyan" id="s5-m3">
+                <div class="metric-label">Transformer Insulation Life Saved</div>
+                <div class="metric-val cyan">846.8 Hours</div>
+              </div>
+              <div class="metric-card success" id="s5-m4">
+                <div class="metric-label">Proactive Mitigation Cost</div>
+                <div class="metric-val green">$469.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Media Card: Real Live Financial ROI Panel -->
+          <div class="media-card" id="s5-card">
+            <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel">
+            <div class="hud-chip">
+              <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
+              <span style="color:#34d399;">5,952.7x ROI MULTIPLE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 6: OUTRO & OFFICIAL SUBMISSION LOCKUP (2:45 - 3:00, 15s)            -->
+    <!-- ========================================================================= -->
+    <section id="scene-6" class="clip" data-start="165" data-duration="15" data-track-index="1">
+      <div class="scene-content" id="s6-content">
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_overview.png');"></div>
+        <div class="scene-overlay-gradient"></div>
+
+        <div class="scene-single-container" id="s6-hero">
+          <div class="eyebrow" style="justify-content:center;"><span style="color:#06b6d4">●</span> FORTYGUARD HACKATHON '26 SUBMISSION</div>
+          <h1 class="scene-heading" style="font-size:64px; margin-bottom:12px;">Thermal Sentinel Grid</h1>
+          <p class="scene-subheading" style="max-width:900px; margin:0 auto 28px auto;">
+            Physics-Constrained Agentic Thermal Resilience &amp; Dispatch Engine for Distribution Transformers &amp; Urban Energy Infrastructure
+          </p>
+
+          <div class="outro-badge-row">
+            <div class="outro-card">
+              <div class="brand-logo-dot" style="background:#06b6d4;"></div>
+              <div>
+                <div style="font-size:12px; color:#94a3b8; font-family:monospace;">TRACK 06</div>
+                <div style="font-weight:700; font-size:16px;">Agentic AI</div>
+              </div>
+            </div>
+            <div class="outro-card">
+              <div class="brand-logo-dot" style="background:#f59e0b;"></div>
+              <div>
+                <div style="font-size:12px; color:#94a3b8; font-family:monospace;">TRACK 02</div>
+                <div style="font-weight:700; font-size:16px;">Future Buildings &amp; Energy</div>
+              </div>
+            </div>
+            <div class="outro-card">
+              <div class="brand-logo-dot" style="background:#10b981;"></div>
+              <div>
+                <div style="font-size:12px; color:#94a3b8; font-family:monospace;">COMPLIANCE</div>
+                <div style="font-weight:700; font-size:16px;">IEEE C57.91 &amp; IEC 60076</div>
+              </div>
+            </div>
+            <div class="outro-card">
+              <div class="brand-logo-dot" style="background:#8b5cf6;"></div>
+              <div>
+                <div style="font-size:12px; color:#94a3b8; font-family:monospace;">AUTHOR</div>
+                <div style="font-weight:700; font-size:16px;">Karim Yasser (Cairo University)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="outro-url-box">
+            <span>⚡ TEST LIVE PLATFORM:</span>
+            <span style="color:#ffffff;">http://127.0.0.1:8000</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Master GSAP Animation Timeline -->
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Global Progress Bar Animation (0 to 180s)
+    tl.to("#timeline-progress", { width: "100%", duration: 180, ease: "none" }, 0);
+
+    // Dynamic Captions and Timecodes
+    const captions = [
+      { t: 0, time: "0:00", text: "During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away..." },
+      { t: 12, time: "0:12", text: "In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in damages." },
+      { t: 30, time: "0:30", text: "Introducing Thermal Sentinel Grid: the world's first physics-constrained agentic resilience engine for urban energy infrastructure." },
+      { t: 44, time: "0:44", text: "We combine FortyGuard's 2-meter Temperature AI with exact IEEE C57.91 and IEC 60287 differential thermal equations, modeling soil moisture dryout, canyon wind throttling, and virtual paper moisture." },
+      { t: 60, time: "1:00", text: "Rather than training an unverified black-box neural net that hallucinates, we built a hybrid Physical-AI architecture." },
+      { t: 74, time: "1:14", text: "Exact physics ODEs handle the thermal math, FortyGuard provides the 12-hour forecast, LangGraph coordinates multi-agent dispatch, and Non-LLM CBF-QP acts as a mathematical firewall." },
+      { t: 90, time: "1:30", text: "In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM." },
+      { t: 105, time: "1:45", text: "Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW of BESS to cap the hot-spot safely at 136.8°C." },
+      { t: 120, time: "2:00", text: "In our What-If Studio, judges can modulate microclimate deltas in real time (<15ms ODE re-solving), while our AC power flow solver maintains 100% hospital feeder uptime." },
+      { t: 135, time: "2:15", text: "Our economic engine uses the Department of Energy's LBNL ICE standard: quantifying avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs." },
+      { t: 150, time: "2:30", text: "For a single heatwave event, Thermal Sentinel Grid delivers $2.79 million in net avoided loss at a 5,952x ROI, saving 846 equivalent aging hours and protecting critical medical feeders." },
+      { t: 165, time: "2:45", text: "By coupling FortyGuard's Temperature AI with first-principles physics and deterministic safety guarantees, Thermal Sentinel Grid makes cities and power grids truly heat-resilient." },
+      { t: 173, time: "2:53", text: "Thank you, and we invite you to test our live platform at http://127.0.0.1:8000!" }
+    ];
+
+    captions.forEach((cap) => {
+      tl.call(() => {
+        const timeEl = document.getElementById("caption-time");
+        const textEl = document.getElementById("caption-content");
+        if (timeEl) timeEl.textContent = cap.time;
+        if (textEl) textEl.textContent = cap.text;
+      }, null, cap.t);
+    });
+
+    // -------------------------------------------------------------
+    // SCENE 1 ANIMATIONS (0:00 - 0:30)
+    // -------------------------------------------------------------
+    tl.fromTo("#s1-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 0.4);
+    tl.fromTo("#s1-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.8);
+    tl.fromTo(["#s1-m1", "#s1-m2", "#s1-m3", "#s1-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 1.4);
+    
+    // Laser scanning beam animation on the FLIR card using transform y
+    tl.fromTo("#s1-scanner", { y: 0, opacity: 1 }, { y: 600, opacity: 1, duration: 2.5, repeat: 5, yoyo: true, ease: "sine.inOut" }, 1.5);
+    
+    tl.fromTo("#s1-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 29.5);
+    tl.set("#s1-content", { opacity: 0 }, 30.0);
+
+    // -------------------------------------------------------------
+    // SCENE 2 ANIMATIONS (0:30 - 1:00)
+    // -------------------------------------------------------------
+    tl.fromTo("#s2-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 30.4);
+    tl.fromTo("#s2-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 30.8);
+    tl.fromTo(["#s2-moat1", "#s2-moat2", "#s2-moat3", "#s2-moat4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 31.4);
+    tl.fromTo("#s2-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 59.5);
+    tl.set("#s2-content", { opacity: 0 }, 60.0);
+
+    // -------------------------------------------------------------
+    // SCENE 3 ANIMATIONS (1:00 - 1:30)
+    // -------------------------------------------------------------
+    tl.fromTo("#s3-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 60.4);
+    tl.fromTo("#s3-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 60.8);
+    tl.fromTo(["#s3-step1", "#s3-step2", "#s3-step3", "#s3-step4"], { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 0.2, ease: "power2.out" }, 61.4);
+    tl.fromTo("#s3-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 89.5);
+    tl.set("#s3-content", { opacity: 0 }, 90.0);
+
+    // -------------------------------------------------------------
+    // SCENE 4 ANIMATIONS (1:30 - 2:15)
+    // -------------------------------------------------------------
+    tl.fromTo("#s4-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 90.4);
+    tl.fromTo("#s4-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 90.8);
+    tl.fromTo(["#s4-m1", "#s4-m2", "#s4-m3", "#s4-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 91.4);
+    
+    // Simulated cursor interaction: moves, clicks BESS slider, hot-spot drops
+    tl.fromTo("#s4-cursor", { x: 0, y: 0, opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 95.0);
+    tl.to("#s4-cursor", { x: -180, y: 140, duration: 2.0, ease: "power2.inOut" }, 96.0);
+    tl.to("#s4-cursor", { scale: 0.85, duration: 0.2, yoyo: true, repeat: 1, ease: "power1.inOut" }, 98.0);
+    tl.to("#s4-cursor", { opacity: 0, duration: 0.8, ease: "power1.out" }, 99.5);
+
+    tl.fromTo("#s4-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 134.5);
+    tl.set("#s4-content", { opacity: 0 }, 135.0);
+
+    // -------------------------------------------------------------
+    // SCENE 5 ANIMATIONS (2:15 - 2:45)
+    // -------------------------------------------------------------
+    tl.fromTo("#s5-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 135.4);
+    tl.fromTo("#s5-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 135.8);
+    tl.fromTo(["#s5-m1", "#s5-m2", "#s5-m3", "#s5-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 136.4);
+    tl.fromTo("#s5-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 164.5);
+    tl.set("#s5-content", { opacity: 0 }, 165.0);
+
+    // -------------------------------------------------------------
+    // SCENE 6 ANIMATIONS (2:45 - 3:00)
+    // -------------------------------------------------------------
+    tl.fromTo("#s6-hero", { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "power3.out" }, 165.4);
+
+    window.__timelines["main"] = tl;
+  </script>
+</body>
+</html>

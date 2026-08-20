@@ -67,3 +67,9 @@ dist-ssr/
 .agents/
 .claude/
 
+# Media & Render Artifacts
+**/renders/
+**/.thumbnails/
+scratch/
+
+

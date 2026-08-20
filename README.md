@@ -165,6 +165,126 @@ python3 -m uvicorn src.server.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
 
+### 4. Launch 3-Minute Video Pitch (HyperFrames Studio Timeline)
+```bash
+npx hyperframes preview videos/thermal-sentinel-pitch --port 3005
+```
+Open **[http://localhost:3005/#project/thermal-sentinel-pitch](http://localhost:3005/#project/thermal-sentinel-pitch)** in your browser.
+
+### 5. Launch 5-Minute Live Presentation Slide Deck (Presenter Mode)
+```bash
+npx hyperframes present decks/thermal-sentinel-slides --port 3004
+```
+Open **[http://localhost:3004](http://localhost:3004)** in your browser (Press `P` for Audience display / `Space` to advance).
+
+### 6. Render 3-Minute Video Pitch to 1080p MP4
+```bash
+npx hyperframes render videos/thermal-sentinel-pitch --quality high --output videos/thermal-sentinel-pitch/renders/video.mp4
+```
+
+---
+
+## 📡 Sample FortyGuard API Request & Response (Judge Verification)
+
+Thermal Sentinel Grid interacts programmatically with FortyGuard's async submit-and-poll API endpoints. Below is a real production payload and response pair used in the platform:
+
+### 1. Request (`POST /v1/heatmap`)
+```json
+{
+  "polygon_aoi": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [-112.0780, 33.4450],
+            [-112.0700, 33.4450],
+            [-112.0700, 33.4520],
+            [-112.0780, 33.4520],
+            [-112.0780, 33.4450]
+          ]]
+        },
+        "properties": {
+          "substation_id": "SUB-PHX-DOWNTOWN-04",
+          "asset_class": "Distribution_Transformer_50MVA"
+        }
+      }
+    ]
+  },
+  "date_time": {
+    "start_date": "2023-07-24T14:00:00Z",
+    "filter_type": 2
+  },
+  "granularity": 60,
+  "analytic_type": "persistence",
+  "threshold": 40.0,
+  "direction": "above"
+}
+```
+
+### 2. Async Submission Response (`200 OK`)
+```json
+{
+  "status": "success",
+  "data": {
+    "activity_id": "act_phx_sub04_20230724_tcm_60m",
+    "message": "Heatmap generation task successfully enqueued."
+  }
+}
+```
+
+### 3. Polled Result (`GET /v1/status/act_phx_sub04_20230724_tcm_60m`)
+```json
+{
+  "status": "succeeded",
+  "data": {
+    "activity_id": "act_phx_sub04_20230724_tcm_60m",
+    "execution_time_ms": 1420,
+    "result": {
+      "mean_temperature_2m_c": 47.6,
+      "max_temperature_2m_c": 51.2,
+      "min_temperature_2m_c": 44.8,
+      "persistence_hours_p40": 7.17,
+      "exceedance_degree_hours_h40": 34.25,
+      "thermal_soak_index": 4.12,
+      "urban_canyon": {
+        "aspect_ratio_hw": 1.85,
+        "wind_shelter_kappa": 0.58,
+        "cooling_derate_eta": 0.68
+      },
+      "tiles_count": 144
+    }
+  }
+}
+```
+
+---
+
+## ⚠️ What Doesn't Work Yet & Future Roadmap
+
+To ensure full transparency with the judging committee, here are current prototype boundaries and our immediate post-hackathon engineering roadmap:
+
+1. **Direct SCADA / DNP3 / IEC 61850 Hardware-in-the-Loop (HIL) Execution:**
+   * *Current State:* Thermal Sentinel Grid synthesizes optimal, CBF-verified dispatch setpoints (BESS MW/MVAR, OLTC taps, cooling pumps) and outputs machine-readable JSON/REST work orders.
+   * *Roadmap (Phase 2):* Implement native DNP3 / IEC 61850 protocol adapters to stream setpoints directly to substation RTUs (e.g., SEL-3530 Real-Time Automation Controllers).
+2. **Global Microclimate Beyond U.S. Polygons:**
+   * *Current State:* The live API scanner operates within FortyGuard's current commercial U.S. coverage zone (Phoenix, Houston, Miami, NYC, Los Angeles).
+   * *Roadmap (Phase 2):* Expand multi-region ingestion once FortyGuard opens GCC (Dubai/Abu Dhabi) and European spatial bounding boxes.
+3. **Automated Transformer Internal Dissolved Gas Analysis (DGA) Sensor Telemetry:**
+   * *Current State:* Paper-to-oil moisture desorption and dielectric breakdown risk are modeled via Fick's Second Law differential equations.
+   * *Roadmap (Phase 2):* Connect live online DGA sensors ($H_2, CH_4, C_2H_2$ ppm) via Modbus TCP to cross-validate physical moisture state estimates with chemical gas generation.
+
+---
+
+## 🔒 Security, Collaborator Access & Hackathon Compliance
+
+* **Private Repository Collaborator:** `hackathon@fortyguard.com` (GitHub: `Hackathon-FG`) has been invited to this repository.
+* **Zero API Key Commitment Policy:** No API keys or sensitive credentials are committed to version control. All keys are injected at runtime via `.env` (see `.env.example`).
+* **Development Timeline Transparency:** Initial repository setup, architectural scoping, and mock-data structure: **17 August 2026**. Real FortyGuard Temperature API integration, physical ODE solvers, CBF-QP safety gate, and core functionality: **18 August 2026 onward** (following official API key release).
+
+
 ---
 
 ## 🖥️ Interactive Operator Dashboard Features
@@ -184,4 +304,5 @@ Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
 * **AI Research Intern at Nile University SESC Research Center:** Architected autonomous multi-agent OpenFOAM CFD/thermal numerical pipeline; co-authoring upcoming research publication.
 * **Software Engineering Intern at Siemens Digital Industries Software:** High-performance CAT RTS engine (54.5x speedup, large-scale concurrent data ingestion).
 * **Portfolio:** [karim-yasser.vercel.app](https://karim-yasser.vercel.app) · **GitHub:** [@KarimmYasser](https://github.com/KarimmYasser)
+
 

@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "skill": "product-launch-video",
+  "main": "index.html",
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "duration": 180
+}
