@@ -59,6 +59,13 @@ FortyGuard provides 4 proprietary capabilities that directly solve this blind sp
 - **Pain Point:** Lack of visibility into whether their specific balcony or unshaded facade is entering an explosive thermal trap.
 - **Agent Deliverable:** Real-time push alerts ("Your facade will hit 49°C persistence between 1 PM–4 PM: run AC on moderate eco-cycle and avoid simultaneous high-draw appliances to prevent circuit breaker fires").
 
+## 1.5 Why Physics-Constrained Agentic AI (Track 06) Over Black-Box ML Training
+*(For the full deep-dive, see **[Value Proposition & AI Philosophy](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
+- **FortyGuard Already Solved Microclimate ML:** 2m convective air, land-cover morphology, and 12h forecasts are directly provided by FortyGuard's AI.
+- **Physical Differential ODEs are Exact:** Transformer heat rises and Arrhenius cellulose degradation are governed by exact physical ODEs (IEEE Std C57.91 / IEC 60076-7). Replacing exact physics with an approximate neural net introduces hallucinations and out-of-distribution failure.
+- **Mission-Critical Safety Demands CBF-QP:** Utilities and fire insurers will never allow a black-box ML model to trip breakers or dispatch BESS. They require mathematical forward-invariance of safe sets ($T_{hs} \le 140^\circ\mathrm{C}$, $0.95 \le V_{\text{pu}} \le 1.05$).
+- **The 4-Layer Stack:** Perception (FortyGuard AI) $\to$ Physical Truth (IEEE ODEs) $\to$ Agentic Planner (LangGraph StateGraph) $\to$ Safety Barrier (Non-LLM CBF-QP).
+
 ---
 
 # SECTION 2: TECHNICAL ARCHITECTURE & AGENT PIPELINE
@@ -225,4 +232,33 @@ flowchart TD
   - **AI Research Intern @ Nile University (SESC Research Center):** Architected an autonomous Multi-Agent AI Pipeline and 19-tool MCP harness translating natural language into verified OpenFOAM CFD/thermal cases. Built deterministic C++ renderers, 3-level preflight gates, thermodynamic envelope constraints, and MPI validation ladders. **Supervisor publishing research paper as co-authors.**
   - **Software Engineer Intern @ Siemens EDA (Solido Design Environment):** Re-architected Commit-Based Analysis Tool (CAT) RTS platform, slashing runtime from 23.6h to 26min (~54.5x speedup) on 21 GB coverage corpus with SQLite covering indexes, worker pools, and persistent AST caches.
   - **Hackathon Track Record:** 1st place in 30+ team i'Supply Hackathon; 1st place in ODC x INSTANT AI Hackathon (3D BraTS medical segmentation).
-- **Core Stack:** Python, LangGraph, LangChain, MCP (Model Context Protocol), FastAPI, Rust, C++, SQLite, Docker, React/Vite.
+- **Core Stack:** Python 3.13, FastAPI, LangGraph, NumPy, SciPy, React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Docker.
+
+---
+
+# SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
+
+## 6.1 Core Tested Architecture (22/22 Pytest Tests Passing)
+* **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, automatic fallback to Phoenix July 2023 ground truth dataset.
+* **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
+* **4 Asymmetric Physical Moats:**
+  1. *IEC 60287 Cable-Soil Moisture Dryout (`src/physics/soil_cable.py`)*
+  2. *Control Barrier Functions [CBF-QP] (`src/safety/cbf_gate.py`)*
+  3. *Urban Canyon Aerodynamic Throttling (`src/physics/urban_canyon.py`)*
+  4. *Virtual Paper-to-Oil Moisture Desorption (`src/physics/virtual_moisture.py`)*
+* **Investment-Grade Economic Engine (`src/physics/economic_model.py`):** LBNL ICE Calculator integration calculating Net Avoided Loss ($175k to $2.79M) and dynamic ROI.
+* **IEEE Std C57.91-2011 Annex G Benchmark Engine (`src/physics/ieee_annex_g_benchmark.py`):** Verified against Clause G.2 (Step Load) & Clause G.3 (Diurnal Ambient Ramp) with $<0.0001^\circ\mathrm{C}$ error.
+* **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Multi-day heatwave progression with continuous overnight heat soak and compounding soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
+* **AC Distribution Feeder Power Flow Engine (`src/physics/power_flow.py`):** 4-Bus radial grid solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
+* **LangGraph Multi-Agent Workflow (`src/agent/graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
+* **Operator Dashboard (9-Tab React 19 / TypeScript / Apache ECharts):**
+  1. Mission Control Overview (12h synchronized replay scrubber)
+  2. ⚡ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
+  3. 🔥 72-Hour Compounding Heatwave Viewer (Day 1 $\to$ 3 progression)
+  4. ⚡ AC Distribution Power Flow Single-Line Diagram
+  5. 📜 IEEE Annex G Standard Benchmark Table
+  6. Hyperlocal 2m GIS Viewer
+  7. Four Scientific Moats Deep-Dive
+  8. LangGraph Engine Visualizer
+  9. Avoided Loss Financial Audit
+

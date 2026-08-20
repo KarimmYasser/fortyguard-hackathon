@@ -137,9 +137,42 @@ fortyguard-hackathon/
 
 ---
 
+## 🚀 Quick Start & How to Run
+
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+cd frontend && npm install && cd ..
+```
+
+### 2. Run Automated Pytest Suite (15 Tests)
+```bash
+pytest tests/ -v
+```
+
+### 3. Launch Backend API & Interactive Dashboard
+```bash
+python3 -m uvicorn src.server.main:app --host 127.0.0.1 --port 8000 --reload
+```
+Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
+
+---
+
+## 🖥️ Interactive Operator Dashboard Features
+
+* **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
+* **⚡ Live "What-If" Physics Stress Studio:** Interactive real-time sandbox allowing judges to modulate FortyGuard 2m delta ($0^\circ\mathrm{C} \to +6^\circ\mathrm{C}$), multi-day heatwave dryout (Day 1 to 31), BESS capacity ($0 \to 50\text{ MWh}$), and transformer MVA with sub-15ms live ODE recalculation.
+* **Hyperlocal 2-Meter GIS Viewer:** Parcel-level convective heat tiles ($60\text{m}$ resolution) and interactive asset inspector.
+* **Four Scientific Moats Viewer:** First-principles deep dives into Cable-Soil dryout, CBF-QP safety filter, Canyon aerodynamics, and Virtual moisture sensor.
+* **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation.
+* **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+
+---
+
 ## 👨‍💻 Author & Research Background
 
 **Karim Yasser** — *Computer Engineering, Cairo University Faculty of Engineering*  
 * **AI Research Intern at Nile University SESC Research Center:** Architected autonomous multi-agent OpenFOAM CFD/thermal numerical pipeline; co-authoring upcoming research publication.
 * **Software Engineering Intern at Siemens Digital Industries Software:** High-performance CAT RTS engine (54.5x speedup, large-scale concurrent data ingestion).
 * **Portfolio:** [karim-yasser.vercel.app](https://karim-yasser.vercel.app) · **GitHub:** [@KarimmYasser](https://github.com/KarimmYasser)
+
