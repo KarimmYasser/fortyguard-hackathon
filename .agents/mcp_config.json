@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "alphaxiv": {
+      "url": "https://api.alphaxiv.org/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${ALPHAXIV_API_KEY}"
+      }
+    }
+  }
+}
