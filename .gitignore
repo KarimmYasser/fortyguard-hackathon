@@ -62,3 +62,8 @@ yarn-error.log*
 dist/
 dist-ssr/
 *.local
+
+# AI Agent Skills & Tooling
+.agents/
+.claude/
+
