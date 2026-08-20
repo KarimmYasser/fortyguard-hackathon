@@ -1,6 +1,6 @@
 # 🧠 Master Context Reservoir — FortyGuard Hackathon'26
 
-> **Project:** PyreShield AI (and Ideation Reservoir)  
+> **Project:** Thermal Sentinel Grid (formerly PyreShield AI ideation base)  
 > **Author:** Karim Yasser  
 > **Target Event:** FortyGuard Hackathon'26 — *Building the World's Temperature AI* (Aug 18–30, 2026)  
 > **Repository Path:** `/Users/karim/Development/projects/fortyguard-hackathon`
@@ -9,7 +9,7 @@
 
 ## 📖 How to Use This Document
 This document is the **single source of truth and context reservoir** for any future AI assistant, collaborator, or conversation regarding this hackathon project. It preserves:
-1. The **primary project vision (PyreShield AI)** in granular technical detail.
+1. The **primary project vision (Thermal Sentinel Grid)** with IEEE/IEC physics, Control Barrier Functions, and 4 asymmetric moats.
 2. The **real-world problem context and local hazard inspiration** (Egypt / Middle East / US Sunbelt).
 3. The **complete draft catalog of alternative brainstormed ideas** so no design thought is lost.
 4. The **FortyGuard API technical mechanics, challenge tracks, mentor advice, and judging strategies**.
@@ -17,7 +17,10 @@ This document is the **single source of truth and context reservoir** for any fu
 
 ---
 
-# SECTION 1: PRIMARY PROJECT VISION — PyreShield AI
+# SECTION 1: PRIMARY PROJECT VISION — Thermal Sentinel Grid
+
+*For the complete specifications, see **[Thermal Sentinel Grid Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)** and **[Asymmetric Innovation & Physical Mechanisms](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)**.*
+
 
 ## 1.1 The Core Problem & The Physics of 2-Meter Heat
 Standard weather services (e.g., Apple Weather, OpenWeather, NOAA) measure ambient air at airport stations or 10–30 meters above the ground, while satellites only measure orbital Land Surface Temperature (LST). These sources report a generic macroscopic temperature (e.g., 38°C–40°C).

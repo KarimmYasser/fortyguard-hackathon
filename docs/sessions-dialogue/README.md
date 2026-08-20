@@ -4,7 +4,8 @@ This directory contains full verbatim transcripts, structured summaries, and act
 
 > [!TIP]
 > 📖 **Master Distillation & Idea Framework:**  
-> For the complete synthesized playbook on idea selection, problem framing, commercial positioning, and the 6 demonstrated industry blueprints, read **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/official/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
+> For the complete synthesized playbook on idea selection, problem framing, commercial positioning, and the 6 demonstrated industry blueprints, read **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
+
 
 ---
 

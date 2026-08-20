@@ -80,7 +80,8 @@
 ---
 
 > [!TIP]
-> * 📖 **Idea Selection & Mentor Synthesis:** See the complete synthesized playbook in **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/official/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
+> * 📖 **Idea Selection & Mentor Synthesis:** See the complete synthesized playbook in **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
 > * 🎙️ **Full Transcripts & Recordings:** Verbatim session dialogues are curated in **[docs/sessions-dialogue/](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/README.md)**.
+
 
 
