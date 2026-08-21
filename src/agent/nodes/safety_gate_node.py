@@ -78,7 +78,7 @@ async def safety_gate_node(state: ThermalSentinelState) -> Dict[str, Any]:
     audit_entry = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
         "node": "safety_gate_node",
-        "message": f"Safety Gate Verdict: [{verdict.status.value}] — Projected Peak Hot-Spot: {mitigated_traj.peak_hot_spot_c}°C (Cap: 140°C), Net Avoided Loss: ${eco_eval['net_avoided_loss_usd']:,} (ROI: {eco_eval['roi_multiple']}x)",
+        "message": f"Safety Gate Verdict: [{verdict.status.value}] - Projected Peak Hot-Spot: {mitigated_traj.peak_hot_spot_c}°C (Cap: 140°C), Net Avoided Loss: ${eco_eval['net_avoided_loss_usd']:,} (ROI: {eco_eval['roi_multiple']}x)",
     }
 
     audit_trail = list(state.get("audit_trail", []))

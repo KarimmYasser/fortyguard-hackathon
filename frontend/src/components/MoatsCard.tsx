@@ -32,7 +32,7 @@ export const MoatsCard: React.FC<MoatsCardProps> = ({ soilState, moistureState }
         <div className="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-[11px] font-mono text-amber-400 mb-1">
-              <span className="font-bold">1. Cable–Soil Dryout</span>
+              <span className="font-bold">1. Cable-Soil Dryout</span>
               <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 border border-amber-500/20">
                 IEC 60287
               </span>

@@ -26,7 +26,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div id="tour-financial-header" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-amber-500 text-slate-950 shadow-lg shadow-emerald-500/20">
             <Calculator className="h-6 w-6" />
@@ -47,7 +47,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
       </div>
 
       {/* Hero Financial Banner */}
-      <div className="glass-panel rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-950 shadow-2xl">
+      <div id="tour-financial-breakdown" className="glass-panel rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-950 shadow-2xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-mono">
           <div>
             <div className="text-xs font-mono text-amber-400 uppercase tracking-wider">
@@ -100,14 +100,14 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
       </div>
 
       {/* Side-by-Side Comparison Table: Baseline vs. Thermal Sentinel Grid */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl">
+      <div id="tour-financial-matrix" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl">
         <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
           <div>
             <h3 className="text-base font-extrabold text-white font-heading">
               Benchmark Comparison: Baseline Controller vs. Thermal Sentinel Grid
             </h3>
             <p className="text-xs text-slate-400 font-mono">
-              Phoenix July 24–26, 2023 Heatwave Episode Validation Matrix
+              Phoenix July 24-26, 2023 Heatwave Episode Validation Matrix
             </p>
           </div>
         </div>

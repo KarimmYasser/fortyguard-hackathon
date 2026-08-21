@@ -42,7 +42,7 @@ I’m taking part solo
 Teams can have between 2 and 3 participants, including you.
 
 Your Idea & Motivation *
-Tell us what you want to build, and how and why — what problem are you solving, your approach, and what motivates you to work on it?
+Tell us what you want to build, and how and why - what problem are you solving, your approach, and what motivates you to work on it?
 
 Describe your idea, your approach, and the area of interest it falls under.
 
@@ -80,7 +80,7 @@ Here is the complete, field-by-field registration information tailored specifica
 | **Organization or University \*** | `Cairo University, Faculty of Engineering` | *(Optional mention: Nile University SESC)* |
 | **Country \*** | `Egypt` | |
 | **City \*** | `Cairo` | |
-| **Experience Level \*** | **`Intermediate (1–3 years)`** *(or `Advanced (3–5 years)`)* | Dropdown choices: `Beginner (0–1 years)`, `Intermediate (1–3 years)`, `Advanced (3–5 years)`, `Expert (5+ years)` |
+| **Experience Level \*** | **`Intermediate (1-3 years)`** *(or `Advanced (3-5 years)`)* | Dropdown choices: `Beginner (0-1 years)`, `Intermediate (1-3 years)`, `Advanced (3-5 years)`, `Expert (5+ years)` |
 | **How are you taking part? \*** | **`I’m taking part solo`** *(or `I already have a team`)* | If `team`, you can add up to 2 other members (Name & Email) |
 | **How Did You Hear About Us? \*** | **`Social Media`** *(or `Search Engine` / `Friend / Colleague`)* | Dropdown choices: `Social Media`, `Friend / Colleague`, `Newsletter`, `Blog / Article`, `Search Engine`, `Event / Conference`, `Other` |
 | **Agreement Checkbox** | ☑️ *Check the box* | Agree to updates |
@@ -91,7 +91,7 @@ Here is the complete, field-by-field registration information tailored specifica
 
 Below are two tailored proposals connecting your background (Agentic AI pipelines, OpenFOAM CFD/thermal modeling, and high-performance backend systems) with FortyGuard's 2-meter street-level Temperature API.
 
-#### Option 1: Autonomous Microclimate Resilience Agent (Recommended — Track 06: Agentic AI / Track 01: Resilient Cities)
+#### Option 1: Autonomous Microclimate Resilience Agent (Recommended - Track 06: Agentic AI / Track 01: Resilient Cities)
 > **Track:** Track 06: Agentic AI & Track 01: Resilient Cities & Infrastructure
 >
 > **Idea & Problem:**
@@ -115,7 +115,7 @@ Below are two tailored proposals connecting your background (Agentic AI pipeline
 >
 > **Approach:**
 > 1. **Microclimate Digital Twin Integration:** Ingests FortyGuard’s street-level temperature and historical baseline data to model localized exterior heat flux against architectural envelope properties.
-> 2. **Predictive Pre-Cooling Model:** Uses time-series anomaly and thermal persistence analysis to schedule predictive HVAC pre-cooling cycles prior to peak heat exceedances, minimizing peak-tariff energy consumption by 15–25%.
+> 2. **Predictive Pre-Cooling Model:** Uses time-series anomaly and thermal persistence analysis to schedule predictive HVAC pre-cooling cycles prior to peak heat exceedances, minimizing peak-tariff energy consumption by 15-25%.
 > 3. **Interactive Visual Dashboard:** Built with a high-throughput FastAPI backend and React/Vite interface featuring spatial heat risk heatmaps and energy-cost analytics.
 >
 > **Motivation:**
@@ -127,9 +127,9 @@ Below are two tailored proposals connecting your background (Agentic AI pipeline
 
 - **Hackathon URL:** [FortyGuard Hackathon'26](https://www.fortyguard.com/hackathon26)
 - **Direct Form URL:** [FortyGuard Registration Page](https://www.fortyguard.com/hackathon-registration)
-- **Dates:** August 18–30, 2026 (GST / UTC+4)
+- **Dates:** August 18-30, 2026 (GST / UTC+4)
 - **Prizes:** $6,000 total cash prize pool ($3,000 1st place + NVIDIA Jetson AI Developer Kit hardware prizes + internship pathway).
-- **Submission Requirements:** Public GitHub repository (with `fortyguard` added as a collaborator), live working demo link, 2–5 minute demo video, and documentation of FortyGuard Temperature API integration.
+- **Submission Requirements:** Public GitHub repository (with `fortyguard` added as a collaborator), live working demo link, 2-5 minute demo video, and documentation of FortyGuard Temperature API integration.
 
 ---
 
@@ -233,7 +233,7 @@ Here are **3 rewritten, natural versions** that drop the buzzwords and sound lik
 
 > **Idea & Approach:**
 > I'm targeting **Track 06 (Agentic AI)** with **ThermoAgent**, an autonomous microclimate monitoring and response system. 
-> City heat isn't uniform—street orientation, asphalt, and building density create intense localized heat traps. ThermoAgent connects to FortyGuard’s Temperature API to continuously track street-level thermal risk, compute heat-minimized routes for delivery workers and commuters, and autonomously trigger mitigation workflows (like cooling station routing and asset alerts) when temperatures spike.
+> City heat isn't uniform - street orientation, asphalt, and building density create intense localized heat traps. ThermoAgent connects to FortyGuard’s Temperature API to continuously track street-level thermal risk, compute heat-minimized routes for delivery workers and commuters, and autonomously trigger mitigation workflows (like cooling station routing and asset alerts) when temperatures spike.
 >
 > **Motivation:**
 > Living in Cairo, extreme summer heat and dense urban heat islands are something I experience firsthand every year. You quickly realize how useless city-wide weather forecasts are when two adjacent streets feel 5°C apart. With my background in agent architectures and software engineering, I want to use FortyGuard’s street-level data to build a tool that solves a problem I personally understand.
@@ -243,7 +243,7 @@ Here are **3 rewritten, natural versions** that drop the buzzwords and sound lik
 ### Option C: The Problem-First / Fast-Validation Angle *(Pragmatic & Pitch-Ready)*
 
 > **Idea & Approach:**
-> Under **Track 06 (Agentic AI)**, I'm developing **ThermoAgent**—an autonomous agent that turns raw FortyGuard temperature feeds into proactive urban heat management.
+> Under **Track 06 (Agentic AI)**, I'm developing **ThermoAgent** - an autonomous agent that turns raw FortyGuard temperature feeds into proactive urban heat management.
 > Instead of requiring a human to manually monitor heat dashboards, ThermoAgent polls FortyGuard's exceedance and persistence endpoints, detects high-risk zones, suggests optimized low-exposure transit paths, and outputs structured action reports for municipal teams and fleet operators.
 >
 > **Motivation:**
@@ -270,7 +270,7 @@ The current local time is: 2026-08-19T07:55:31+03:00.
 
 ## 🤖 ASSISTANT
 
-Here is a completely natural, human version written the way an actual developer would type it into the text box—no bullet points, no buzzwords, no stiff formatting:
+Here is a completely natural, human version written the way an actual developer would type it into the text box - no bullet points, no buzzwords, no stiff formatting:
 
 ---
 
@@ -304,7 +304,7 @@ The current local time is: 2026-08-19T07:56:51+03:00.
 
 ## 🤖 ASSISTANT
 
-That is a huge differentiator—having published research and production CFD/agent architecture background immediately puts you at the top tier of applicants for this hackathon.
+That is a huge differentiator - having published research and production CFD/agent architecture background immediately puts you at the top tier of applicants for this hackathon.
 
 Here is the updated, natural version that bakes that accomplishment in seamlessly:
 
@@ -316,13 +316,13 @@ I want to build an autonomous agent (Track 06 / Track 01) that uses FortyGuard's
 
 The idea is to build a LangGraph-based agent pipeline that pulls FortyGuard's temperature, exceedance, and persistence endpoints, identifies persistently dangerous street segments, and automatically generates low-exposure paths and mitigation summaries without requiring manual dashboard triage.
 
-My motivation comes from both hands-on engineering and daily life. I recently completed research engineering an autonomous multi-agent pipeline for OpenFOAM thermal/CFD simulations—work my supervisor is currently publishing into a paper with our team as co-authors. I want to take that same rigor in agent harness engineering and thermal physics to build a practical tool using real street-level data. Plus, living in Cairo, extreme urban heat is something I experience firsthand every summer, so this problem hits very close to home.
+My motivation comes from both hands-on engineering and daily life. I recently completed research engineering an autonomous multi-agent pipeline for OpenFOAM thermal/CFD simulations - work my supervisor is currently publishing into a paper with our team as co-authors. I want to take that same rigor in agent harness engineering and thermal physics to build a practical tool using real street-level data. Plus, living in Cairo, extreme urban heat is something I experience firsthand every summer, so this problem hits very close to home.
 
 ---
 
 ### Why this hits the mark:
 - **Instant credibility:** Mentions your upcoming paper and production multi-agent / thermal CFD research without sounding boastful.
-- **Relevant to FortyGuard:** FortyGuard's core tech is thermal modeling and NVIDIA-backed simulation—so your CFD/thermal background is a direct match.
+- **Relevant to FortyGuard:** FortyGuard's core tech is thermal modeling and NVIDIA-backed simulation - so your CFD/thermal background is a direct match.
 - **Genuine & conversational:** Reads like an ambitious, skilled engineer who knows exactly what they are building and why.
 
 ---
@@ -344,11 +344,11 @@ I’ve re-examined the exact details of your research internship at **Nile Unive
 
 - **Core system:** You built a production-grade autonomous **Multi-Agent AI Pipeline** and dual-entry agent harness (deterministic **LangGraph state graph** + interactive 19-tool **MCP server**) translating natural language into verified, executable OpenFOAM CFD/thermal cases.
 - **Key innovations:** 
-  - **Structured Intermediate Representation (IR) & deterministic rendering** ("reason free, constrain late" paradigm).
-  - **Physical-envelope constraint layer** clamping parameters to verified thermodynamic bounds.
-  - **3-Level Preflight Gate** (static dictionary audit, mesh metric checks, residual log-slope convergence prediction) catching errors in seconds.
-  - **Stateful self-healing loops** with formal failure routing taxonomies and evidence-backed Safe Exit protocols.
-  - Validated on complex thermal vortex benchmarks (RHVT multi-rank MPI enthalpy/velocity residual convergence) across 288+ tests.
+ - **Structured Intermediate Representation (IR) & deterministic rendering** ("reason free, constrain late" paradigm).
+ - **Physical-envelope constraint layer** clamping parameters to verified thermodynamic bounds.
+ - **3-Level Preflight Gate** (static dictionary audit, mesh metric checks, residual log-slope convergence prediction) catching errors in seconds.
+ - **Stateful self-healing loops** with formal failure routing taxonomies and evidence-backed Safe Exit protocols.
+ - Validated on complex thermal vortex benchmarks (RHVT multi-rank MPI enthalpy/velocity residual convergence) across 288+ tests.
 - **Academic outcome:** Your supervisor is publishing this work as a peer-reviewed research paper with you and your team as co-authors.
 
 ---
@@ -370,7 +370,7 @@ I'm applying under **Track 06 (Agentic AI)** and **Track 01 (Resilient Cities)**
 Instead of just building a simple chatbot or a static map viewer, I want to build a deterministic **LangGraph agent pipeline** that surfaces FortyGuard’s asynchronous endpoints as structured tool calls. The agent will run scheduled spatial scans across city grids, correlate thermal persistence and exceedance layers to detect localized heat traps, and automatically generate heat-minimized "cool corridors" for outdoor/delivery workers and vulnerable communities. It will also produce verifiable incident triage reports for municipal cooling interventions when safety thresholds are breached.
 
 **Why I'm motivated to build this:**
-I recently finished an AI research internship at Nile University's SESC Research Center where I engineered a production-grade multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal/CFD simulations—work my supervisor is currently publishing into a research paper with our team as co-authors. Through that project, I focused heavily on building strict physical-envelope guardrails, self-healing loops, and preflight validation gates so agents don't hallucinate when working with complex physical systems. 
+I recently finished an AI research internship at Nile University's SESC Research Center where I engineered a production-grade multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal/CFD simulations - work my supervisor is currently publishing into a research paper with our team as co-authors. Through that project, I focused heavily on building strict physical-envelope guardrails, self-healing loops, and preflight validation gates so agents don't hallucinate when working with complex physical systems. 
 
 I want to bring that same architectural rigor to FortyGuard’s street-level thermal data. Furthermore, living in Cairo, extreme summer heat and dense urban heat islands are a daily reality for me, so building a practical, autonomous tool that tackles real street-level thermal risk is an engineering challenge I'm very excited about.
 
@@ -412,7 +412,7 @@ Looking at the judging criteria (**40% Impact & Business Relevance**) and the me
 
 ### 💡 Idea 2: Predictive Data Center / Industrial Heat-Peak Shaver
 * **Track:** **Track 02 (Future Buildings & Energy)** + **Track 06 (Agentic AI)**
-* **The High-Cost Problem:** Data centers and heavy industrial plants reject massive thermal loads into the immediate surrounding street-level air. When ambient street air spikes past critical thresholds, chiller COP efficiency collapses by 20–30%, spiking electricity bills with severe peak-demand utility penalties.
+* **The High-Cost Problem:** Data centers and heavy industrial plants reject massive thermal loads into the immediate surrounding street-level air. When ambient street air spikes past critical thresholds, chiller COP efficiency collapses by 20-30%, spiking electricity bills with severe peak-demand utility penalties.
 * **The Solution:** An autonomous HVAC dispatch agent using FortyGuard's 12-hour hyperlocal forecast. The agent predicts localized microclimate heat peaks, runs automated thermal audits, and autonomously schedules predictive pre-cooling (ice/water storage) during cooler night hours or dynamically sheds compute loads across cooler regional nodes before the street heat spike hits.
 * **Who Pays:** Data center operators (Equinix, hyperscalers), commercial facility managers, and heavy industrial plants.
 * **Why You Can Build It:** Direct synergy with your OpenFOAM thermal/CFD physics understanding (enthalpy/cooling loads) and agent automation.
@@ -521,13 +521,13 @@ Here is the revised write-up that directly highlights this recognized **local ha
 ```text
 I'm applying under Track 06 (Agentic AI) and Track 02 (Future Buildings & Energy) to build an autonomous thermal hazard and electrical fire prevention agent.
 
-This project is inspired by a severe local hazard in my home country, Egypt. During recent intense summer heatwaves, extreme ambient temperatures have triggered a surge in residential and commercial fires—outdoor air conditioning compressors, exposed electrical panels, and battery-powered devices are pushed beyond their thermal limits, causing sudden explosions and structural fires. Standard city-wide weather forecasts completely miss the localized microclimate heat traps where facade and rooftop equipment overheat.
+This project is inspired by a severe local hazard in my home country, Egypt. During recent intense summer heatwaves, extreme ambient temperatures have triggered a surge in residential and commercial fires - outdoor air conditioning compressors, exposed electrical panels, and battery-powered devices are pushed beyond their thermal limits, causing sudden explosions and structural fires. Standard city-wide weather forecasts completely miss the localized microclimate heat traps where facade and rooftop equipment overheat.
 
 I'm building a LangGraph agent pipeline that connects to FortyGuard’s 2-meter temperature, exceedance, and persistence endpoints to monitor electrical and building asset vulnerability. The agent evaluates localized thermal stress against equipment operating thresholds, predicts explosion and failure windows up to 12 hours in advance, and autonomously generates actionable protection plans:
 - For B2B property managers and insurers: Automated electrical load-shedding schedules and critical HVAC duty-cycling to prevent transformer blowouts and million-dollar fire claims.
 - For B2C residents: Timely alerts when their building's facade or balcony is entering a severe thermal persistence trap, advising on safe appliance usage to prevent overcurrent fires.
 
-My motivation comes directly from wanting to solve this critical hazard using rigorous engineering. I recently completed an AI research internship at Nile University's SESC Research Center, where I built an autonomous multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal and CFD simulations—work my supervisor is currently publishing into a peer-reviewed research paper with our team as co-authors. Having engineered thermodynamic constraint layers and self-healing agent workflows, I want to bring that same technical depth to FortyGuard’s API to build a practical system that stops heat-induced equipment explosions and saves lives.
+My motivation comes directly from wanting to solve this critical hazard using rigorous engineering. I recently completed an AI research internship at Nile University's SESC Research Center, where I built an autonomous multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal and CFD simulations - work my supervisor is currently publishing into a peer-reviewed research paper with our team as co-authors. Having engineered thermodynamic constraint layers and self-healing agent workflows, I want to bring that same technical depth to FortyGuard’s API to build a practical system that stops heat-induced equipment explosions and saves lives.
 ```
 
 ---
@@ -559,17 +559,17 @@ Standard weather services (and satellite data) fail completely when it comes to 
 ---
 
 ### 1. Where Devices Actually Explode: The 2-Meter Boundary Layer
-* Standard weather forecasts measure temperature at open-field airport stations or 10–30 meters in the air. Satellites only measure surface skin temperature from orbit.
+* Standard weather forecasts measure temperature at open-field airport stations or 10-30 meters in the air. Satellites only measure surface skin temperature from orbit.
 * But **where are the exploding assets located?**
-  - **Outdoor AC compressor units** (mounted on ground pads or lower-floor balconies at 1–2m).
-  - **Street-level electrical distribution boxes, transformers, and building junction meters** (installed 1–2m above the sidewalk).
-  - **EV battery chargers, e-bike charging docks, and backup generators** (0–2m level).
+ - **Outdoor AC compressor units** (mounted on ground pads or lower-floor balconies at 1-2m).
+ - **Street-level electrical distribution boxes, transformers, and building junction meters** (installed 1-2m above the sidewalk).
+ - **EV battery chargers, e-bike charging docks, and backup generators** (0-2m level).
 * In a dense street canyon, asphalt and walls radiate intense heat. A weather app might say the city is **39°C (safe)**, but the actual ambient air **2 meters above the asphalt** surrounding that transformer box is **49°C**! That **10°C microclimate delta** is what pushes capacitors, refrigerants, and lithium cells into violent thermal runaway.
 
 ---
 
 ### 2. How We Exploit FortyGuard's 3 Specific Innovations:
-1. **2-Meter Ground-Level Resolution:** Measures the true air envelope where electrical gear operates—not a useless city-wide average.
+1. **2-Meter Ground-Level Resolution:** Measures the true air envelope where electrical gear operates - not a useless city-wide average.
 2. **Thermal Persistence Layer:** Devices don't explode from a 5-minute temperature spike; they explode from **cumulative thermal soak** (e.g., sitting in 46°C air for 4+ consecutive hours). FortyGuard’s persistence endpoint gives us this exact cumulative heat index.
 3. **Exceedance & 12-Hour Forecast:** We can match FortyGuard's 12-hour forecast against the equipment's rated thermal limit (e.g., UL standard 45°C max operating temp) to predict failures hours before they happen.
 
@@ -580,7 +580,7 @@ Standard weather services (and satellite data) fail completely when it comes to 
 ```text
 I'm applying under Track 06 (Agentic AI) and Track 02 (Future Buildings & Energy) to build an autonomous thermal hazard and electrical fire prevention agent.
 
-This project addresses a severe local hazard in my home country, Egypt. During recent record heatwaves, cities have faced a wave of appliance explosions and building fires when outdoor AC compressors, exposed electrical panels, and battery storage systems overheat. The reason standard weather tools fail to prevent these disasters is simple: standard forecasts measure air high above open fields, but the equipment that explodes sits in the street-level microclimate—within 2 meters of hot asphalt and concrete. A city forecast might report a manageable 39°C, while the ambient air 2 meters above the ground in an unshaded street canyon hits an extreme 49°C, triggering thermal runaway and electrical arc explosions.
+This project addresses a severe local hazard in my home country, Egypt. During recent record heatwaves, cities have faced a wave of appliance explosions and building fires when outdoor AC compressors, exposed electrical panels, and battery storage systems overheat. The reason standard weather tools fail to prevent these disasters is simple: standard forecasts measure air high above open fields, but the equipment that explodes sits in the street-level microclimate - within 2 meters of hot asphalt and concrete. A city forecast might report a manageable 39°C, while the ambient air 2 meters above the ground in an unshaded street canyon hits an extreme 49°C, triggering thermal runaway and electrical arc explosions.
 
 FortyGuard’s 2-meter street-level Temperature API solves this exact blind spot. I am building a LangGraph agent pipeline that maps critical building infrastructure (rooftop/balcony HVAC condensers, street-level power transformers, and EV charging hubs) to FortyGuard's 2-meter temperature, exceedance, and persistence layers. 
 
@@ -589,7 +589,7 @@ By measuring the real boundary-layer air surrounding these assets, the agent:
 2. Predicts explosion and blowout risks 12 hours ahead using short-range forecast intelligence.
 3. Autonomously triggers B2B facility load-shedding and HVAC duty-cycling schedules to prevent commercial fires, while dispatching proactive hazard alerts to residents.
 
-My motivation stems from wanting to turn cutting-edge thermal AI into a life-saving tool. I recently completed an AI research internship at Nile University's SESC Research Center, where I built an autonomous multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal/CFD simulations—research my supervisor is publishing into a peer-reviewed paper with our team as co-authors. Having engineered thermodynamic constraint layers, boundary parsers, and self-healing agent harnesses, I want to leverage FortyGuard’s 2-meter resolution data to build an autonomous system that stops heat-induced electrical explosions before they happen.
+My motivation stems from wanting to turn cutting-edge thermal AI into a life-saving tool. I recently completed an AI research internship at Nile University's SESC Research Center, where I built an autonomous multi-agent pipeline and 19-tool MCP harness for OpenFOAM thermal/CFD simulations - research my supervisor is publishing into a peer-reviewed paper with our team as co-authors. Having engineered thermodynamic constraint layers, boundary parsers, and self-healing agent harnesses, I want to leverage FortyGuard’s 2-meter resolution data to build an autonomous system that stops heat-induced electrical explosions before they happen.
 ```
 
 ---

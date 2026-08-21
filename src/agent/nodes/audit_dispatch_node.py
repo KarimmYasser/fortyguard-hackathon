@@ -9,11 +9,13 @@ from __future__ import annotations
 import time
 from typing import Any, Dict
 from src.agent.state import ThermalSentinelState
+from src.agent.llm_factory import generate_chat_completion
 
 
 async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     """
     Compiles downstream dispatch orders and finalizes audit log.
+    Uses GPT-5.4 via Siemens SDC LLM Gateway for live advisory synthesis when available.
     """
     asset_id = state.get("asset_id", "SUB-PHX-DOWNTOWN-04")
     asset_name = state.get("asset_name", "Phoenix Central Substation TX-04")
@@ -37,25 +39,48 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
         "regulatory_compliance": "IEEE Std C57.91 & ANSI C84.1 Compliant",
     }
 
-    # 2. B2C Citizen / Tenant Advisory
+    # 2. Live LLM Synthesis for Citizen Advisory
+    default_guidance = (
+        f"Hyperlocal air temperatures surrounding street-level electrical infrastructure "
+        f"are projected to hit 47.6°C between 11:00 AM and 05:00 PM. Automated grid cooling "
+        f"and battery peak shaving are actively engaged to prevent power interruptions. "
+        f"Residents are advised to schedule EV charging after 07:00 PM."
+    )
+
+    llm_guidance = await generate_chat_completion(
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are an autonomous power grid resilience agent. "
+                    "Write a concise, professional 2-sentence public advisory for residents "
+                    "explaining that extreme microclimate heat is active, but autonomous BESS battery "
+                    "peak shaving and transformer cooling have been dispatched to ensure uninterrupted power."
+                ),
+            },
+            {
+                "role": "user",
+                "content": f"Location: {city}, Substation: {asset_name}, Projected 2m Heat: 47.6°C, Avoided Loss: ${eco.get('net_avoided_loss_usd', 2791337):,}.",
+            },
+        ],
+        max_completion_tokens=150,
+        temperature=0.2,
+    )
+
     b2c_advisory = {
         "advisory_id": f"ADV-HEAT-{int(time.time())}",
         "city": city,
         "alert_level": "HEAT_MICROCLIMATE_ADVISORY",
-        "headline": "Extreme 2-Meter Heat Corridor Active in Downtown Phoenix",
-        "guidance": (
-            "Hyperlocal air temperatures surrounding street-level electrical infrastructure "
-            "are projected to hit 47.6°C between 11:00 AM and 05:00 PM. Automated grid cooling "
-            "and battery peak shaving are actively engaged to prevent power interruptions. "
-            "Residents are advised to schedule EV charging after 07:00 PM."
-        ),
+        "headline": f"Extreme 2-Meter Heat Corridor Active in {city}",
+        "guidance": llm_guidance or default_guidance,
         "expected_peak_hour": "01:00 PM - 03:00 PM",
+        "ai_synthesizer": "GPT-5.4 via Siemens SDC Gateway" if llm_guidance else "Deterministic Template",
     }
 
     audit_entry = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
         "node": "audit_dispatch_node",
-        "message": f"Dispatched Work Order {b2b_work_order['work_order_id']} and Citizen Advisory {b2c_advisory['advisory_id']}. Pipeline completed successfully.",
+        "message": f"Dispatched Work Order {b2b_work_order['work_order_id']} and Citizen Advisory {b2c_advisory['advisory_id']} ({b2c_advisory['ai_synthesizer']}). Pipeline completed successfully.",
     }
 
     audit_trail = list(state.get("audit_trail", []))

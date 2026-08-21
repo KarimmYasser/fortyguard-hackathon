@@ -48,7 +48,7 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
   };
 
   return (
-    <div className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-2xl relative overflow-hidden">
+    <div id="tour-replay-bar" className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-2xl relative overflow-hidden">
       {/* Subtle background glow based on peak */}
       <div className="absolute top-0 right-1/4 w-96 h-32 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
 

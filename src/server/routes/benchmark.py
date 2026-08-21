@@ -26,7 +26,7 @@ async def get_ieee_annex_g_validation() -> Dict[str, Any]:
 @router.get("/api/v1/replay/72h-compounding")
 async def get_72h_compounding_replay() -> Dict[str, Any]:
     """
-    Returns the continuous 72-hour (3-day) rolling heatwave simulation (July 24–26, 2023)
+    Returns the continuous 72-hour (3-day) rolling heatwave simulation (July 24-26, 2023)
     showing compounding soil moisture depletion, surging rho_soil, and multi-day Arrhenius degradation.
     """
     engine = MultiDayHeatwaveEngine()

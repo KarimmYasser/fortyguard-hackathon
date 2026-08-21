@@ -1,6 +1,6 @@
 """Python client for the FortyGuard tOS Enterprise API.
 
-One method per endpoint. All analysis endpoints are async task-based —
+One method per endpoint. All analysis endpoints are async task-based - 
 the `_submit_and_wait` helper handles polling so notebook users don't have to.
 """
 
@@ -193,7 +193,7 @@ class FortyGuardClient:
         timeout: float = 600.0,
         verbose: bool = True,
     ) -> dict | str:
-        """POST /v1/heatmap — generate a thermal map over a polygon AOI.
+        """POST /v1/heatmap - generate a thermal map over a polygon AOI.
 
         ``filter_type``: 1=single hour, 2=range of hours, 3=single day,
         4=range of days (pass ``end_date``).
@@ -201,13 +201,13 @@ class FortyGuardClient:
 
         Analysis heatmaps (``analytic_type``, default ``"tcm"``):
 
-        * ``tcm`` — snapshot temperature (the classic heatmap), tiles in °F.
-        * ``time_of_measure`` — UTC hour-of-day (0-23) of each cell's peak.
-        * ``exceedance`` — count of hours each cell spends past ``threshold``
+        * ``tcm`` - snapshot temperature (the classic heatmap), tiles in °F.
+        * ``time_of_measure`` - UTC hour-of-day (0-23) of each cell's peak.
+        * ``exceedance`` - count of hours each cell spends past ``threshold``
           (a count of hours, not degree-hours).
-        * ``persistence`` — longest continuous run of such hours.
+        * ``persistence`` - longest continuous run of such hours.
 
-        ``threshold`` (**°C**, default 30 on the API side — note the contrast
+        ``threshold`` (**°C**, default 30 on the API side - note the contrast
         with the °F tile readings) and ``direction`` (``"above"``/``"below"``)
         are required for ``exceedance`` and ``persistence``, ignored otherwise.
 
@@ -275,7 +275,7 @@ class FortyGuardClient:
         timeout: float = 600.0,
         verbose: bool = True,
     ) -> dict | str:
-        """POST /v1/satellite — land-cover segmentation of a satellite tile (Premium)."""
+        """POST /v1/satellite - land-cover segmentation of a satellite tile (Premium)."""
         date_time: dict[str, Any] = {"start_date": start_date, "filter_type": filter_type}
         if start_time is not None:
             date_time["start_time"] = start_time
@@ -309,7 +309,7 @@ class FortyGuardClient:
         timeout: float = 600.0,
         verbose: bool = True,
     ) -> dict | str:
-        """POST /v1/streetview — segmentation of a ground-level street view (Premium)."""
+        """POST /v1/streetview - segmentation of a ground-level street view (Premium)."""
         payload = {
             "latitude": latitude,
             "longitude": longitude,
@@ -351,7 +351,7 @@ class FortyGuardClient:
         timeout: float = 600.0,
         verbose: bool = True,
     ) -> dict | str:
-        """POST /v1/env_params — heat index, AQI, solar irradiance, and more.
+        """POST /v1/env_params - heat index, AQI, solar irradiance, and more.
 
         ``analysis`` optionally restricts the response to a subset of
         ``_ENV_PARAMS_ANALYSES`` (the exact parameter names the API emits). Omit it
@@ -407,7 +407,7 @@ class FortyGuardClient:
         timeout: float = 900.0,
         verbose: bool = True,
     ) -> Path:
-        """POST /v1/heat_intelligence — generate a heat-intelligence report.
+        """POST /v1/heat_intelligence - generate a heat-intelligence report.
 
         Waits for completion, then downloads the generated PDF. On completion the
         status response returns the standard JSON envelope with a short-lived
@@ -439,7 +439,7 @@ class FortyGuardClient:
         while True:
             resp = self._session.get(url, stream=True, timeout=self.timeout)
             if resp.status_code == 404:
-                # Not queryable yet (eventual consistency right after submit) — retry.
+                # Not queryable yet (eventual consistency right after submit) - retry.
                 resp.close()
                 if verbose:
                     print("  status: pending")
@@ -488,7 +488,7 @@ class FortyGuardClient:
                     Path("outputs") / f"heat_intelligence_{activity_id}.pdf"
                 )
                 target.parent.mkdir(parents=True, exist_ok=True)
-                # Pre-signed blob URL — fetch directly, no API auth headers needed.
+                # Pre-signed blob URL - fetch directly, no API auth headers needed.
                 with requests.get(download_link, stream=True, timeout=self.timeout) as dl:
                     if not dl.ok:
                         raise FortyGuardError(
@@ -512,7 +512,7 @@ class FortyGuardClient:
     # ------------------------------------------------------------- credits
 
     def fetch_api_key_usage(self) -> dict:
-        """POST /v1/system/fetch-api-key-usage — current billing cycle summary."""
+        """POST /v1/system/fetch-api-key-usage - current billing cycle summary."""
         body = self._request(
             "POST",
             "/v1/system/fetch-api-key-usage",
@@ -521,7 +521,7 @@ class FortyGuardClient:
         return body
 
     def fetch_api_key_custom_usage(self, start_date: str, end_date: str) -> dict:
-        """POST /v1/system/fetch-api-key-custom-usage — usage over a custom range.
+        """POST /v1/system/fetch-api-key-custom-usage - usage over a custom range.
 
         ``start_date``/``end_date`` accept ``YYYY-MM-DD`` (we format to ISO)
         or already-ISO strings (passed through).

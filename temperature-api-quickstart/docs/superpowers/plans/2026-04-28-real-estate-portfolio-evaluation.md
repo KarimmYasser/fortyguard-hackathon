@@ -4,7 +4,7 @@
 
 **Goal:** Rewrite `notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb` into a 10-step diurnal real-estate-agent-facing portfolio evaluation that runs end-to-end with cached files (offline) when `CACHED=True`, and exercises four FortyGuard API endpoints when `CACHED=False`.
 
-**Architecture:** The notebook reads the user portfolio CSV plus four cached FortyGuard sample artifacts (24-hour heatmap GeoJSON, satellite seg JSON, street-view seg JSON, env-params JSON), computes diurnal per-property metrics, runs surface and ground-truth diagnostics on the top-N exposures, and emits two scores (heat-risk and opportunity), three folium maps (M1/M2/M3), four matplotlib charts (C1–C4), and a CSV (`outputs/portfolio_evaluation.csv`). Every expensive step has an `if CACHED:` cached-file branch and an `else:` live-API branch. No new Python modules are introduced; everything lives in the notebook.
+**Architecture:** The notebook reads the user portfolio CSV plus four cached FortyGuard sample artifacts (24-hour heatmap GeoJSON, satellite seg JSON, street-view seg JSON, env-params JSON), computes diurnal per-property metrics, runs surface and ground-truth diagnostics on the top-N exposures, and emits two scores (heat-risk and opportunity), three folium maps (M1/M2/M3), four matplotlib charts (C1-C4), and a CSV (`outputs/portfolio_evaluation.csv`). Every expensive step has an `if CACHED:` cached-file branch and an `else:` live-API branch. No new Python modules are introduced; everything lives in the notebook.
 
 **Tech Stack:** Jupyter (nbformat 4.5), pandas, folium, matplotlib, shapely, IPython.display.HTML, the FortyGuard SDK (`fortyguard.FortyGuardClient`, `fortyguard.samples.SAN_JOSE_POLYGON`).
 
@@ -71,10 +71,10 @@ Expected output exactly: `OK`. If any import fails, install via `pip install -r 
 
 Run:
 ```bash
-git -C c:/development/fortyguard/repositories/temperature-api-quickstart log --oneline -1 -- notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb
+git -C c:/development/fortyguard/repositories/temperature-api-quickstart log --oneline -1 - notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb
 ```
 
-Expected: a commit SHA (any commit). Note the SHA — you'll diff against it after the rewrite.
+Expected: a commit SHA (any commit). Note the SHA - you'll diff against it after the rewrite.
 
 ---
 
@@ -83,7 +83,7 @@ Expected: a commit SHA (any commit). Note the SHA — you'll diff against it aft
 **Files:**
 - Replace: `notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb` (write the entire .ipynb file)
 
-This task is one atomic Write call. The complete JSON content is embedded below — copy it verbatim into the Write tool.
+This task is one atomic Write call. The complete JSON content is embedded below - copy it verbatim into the Write tool.
 
 - [ ] **Step 1: Write the complete notebook file**
 
@@ -97,13 +97,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "id": "intro-md",
    "metadata": {},
    "source": [
-    "# Use Case — Portfolio Heat Evaluation for the Real-Estate Agent\n",
+    "# Use Case - Portfolio Heat Evaluation for the Real-Estate Agent\n",
     "\n",
     "**Who this is for**  \n",
     "Real-estate agents preparing a portfolio review with a client; portfolio managers and client advisors; secondarily REIT asset managers, private real-estate investors, and property operations leads.\n",
     "\n",
     "**The scenario**  \n",
-    "You manage (or advise on) a 10-asset San Jose portfolio. The client wants to know which assets are at heat risk *today*, which represent the biggest *opportunity* if you treat them, and what those answers mean in dollars. Walking a building per day is not an option — you need a desk-first screening that gives you defensible numbers and slide-ready visuals before the meeting.\n",
+    "You manage (or advise on) a 10-asset San Jose portfolio. The client wants to know which assets are at heat risk *today*, which represent the biggest *opportunity* if you treat them, and what those answers mean in dollars. Walking a building per day is not an option - you need a desk-first screening that gives you defensible numbers and slide-ready visuals before the meeting.\n",
     "\n",
     "This notebook combines **your portfolio data** with **FortyGuard layers** to answer five questions:\n",
     "\n",
@@ -113,9 +113,9 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "4. **What does tenant comfort look like through the day?**  ← environmental parameters\n",
     "5. **What's the risk and the opportunity per asset, in dollars and tiers?**  ← composite scoring + business translation\n",
     "\n",
-    "> **Cached by default.** The notebook ships with `CACHED=True` so it runs end-to-end against the bundled sample files in `data/` — no API key needed for the demo. Set `CACHED=False` at the top of the Setup cell to run the same workflow live against any portfolio.\n",
+    "> **Cached by default.** The notebook ships with `CACHED=True` so it runs end-to-end against the bundled sample files in `data/` - no API key needed for the demo. Set `CACHED=False` at the top of the Setup cell to run the same workflow live against any portfolio.\n",
     "\n",
-    "> **Bring your own portfolio.** Sample data ships at `data/real_estate_san_jose_portfolio_sample.csv`. Swap the path in Step 1 — as long as the columns match (`property_id`, `name`, `type`, `year_built`, `sqft`, `market_value_musd`, `latitude`, `longitude`), everything downstream works.\n",
+    "> **Bring your own portfolio.** Sample data ships at `data/real_estate_san_jose_portfolio_sample.csv`. Swap the path in Step 1 - as long as the columns match (`property_id`, `name`, `type`, `year_built`, `sqft`, `market_value_musd`, `latitude`, `longitude`), everything downstream works.\n",
     "\n",
     "---"
    ]
@@ -191,13 +191,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 1 — Load your portfolio\n",
+    "## Step 1 - Load your portfolio\n",
     "\n",
     "### What you are doing\n",
-    "Reading the portfolio CSV. Any columns may ride along — the workflow only needs `latitude` and `longitude` to do the geospatial work; the rest pass through to the final output so finance and ops see the asset IDs and values they already recognize.\n",
+    "Reading the portfolio CSV. Any columns may ride along - the workflow only needs `latitude` and `longitude` to do the geospatial work; the rest pass through to the final output so finance and ops see the asset IDs and values they already recognize.\n",
     "\n",
     "### Why this matters\n",
-    "Starting from the operations system of record means the output carries *your* property IDs, *your* asset types, *your* square-footages — ready to paste into the client report or CRM."
+    "Starting from the operations system of record means the output carries *your* property IDs, *your* asset types, *your* square-footages - ready to paste into the client report or CRM."
    ]
   },
   {
@@ -222,10 +222,10 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 2 — Heat layer (online or cached)\n",
+    "## Step 2 - Heat layer (online or cached)\n",
     "\n",
     "### What you are doing\n",
-    "When `CACHED=True` we read the bundled 24-hour heatmap GeoJSON — 16,507 tiles, each carrying hourly temperatures `'00'..'23'` plus min/max/avg. Values in the file are in °F, so we convert and assert a sanity range. When `CACHED=False` we call `client.create_heatmap` for the design hour.\n",
+    "When `CACHED=True` we read the bundled 24-hour heatmap GeoJSON - 16,507 tiles, each carrying hourly temperatures `'00'..'23'` plus min/max/avg. Values in the file are in °F, so we convert and assert a sanity range. When `CACHED=False` we call `client.create_heatmap` for the design hour.\n",
     "\n",
     "### Why this matters\n",
     "A city-wide weather observation misses intra-city variation that *actually* drives cooling cost and tenant complaints. At 100 m resolution we can distinguish a building on the hot side of a block from one on the cool side. The 24-hour cached layer also unlocks **peak-hour** and **diurnal-swing** signals you cannot get from a single-hour call."
@@ -288,7 +288,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "        poly = shape(ft['geometry'])\n",
     "        t = ft['properties'].get('temperature')\n",
     "        # Single-hour live data: broadcast to 24-hour tuple so downstream code is uniform.\n",
-    "        # Diurnal columns will be degenerate in this mode — see banner below.\n",
+    "        # Diurnal columns will be degenerate in this mode - see banner below.\n",
     "        hourly_c = [t] * 24\n",
     "        tiles.append((poly, hourly_c, t, sh, t))\n",
     "        x0, y0, x1, y1 = poly.bounds\n",
@@ -315,13 +315,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 3 — Diurnal temperature attach\n",
+    "## Step 3 - Diurnal temperature attach\n",
     "\n",
     "### What you are doing\n",
     "For each property, find the tile that contains it, copy off the **peak temperature**, **peak hour**, **min temperature**, **diurnal swing**, and the **AOI percentile** (this property's peak relative to all 16,507 city tiles). Now every property has an analysis-ready row.\n",
     "\n",
     "### Why this matters\n",
-    "This is the moment your portfolio table becomes a *risk* table. Every downstream question — ranking, scoring, business translation — is a `groupby` or sort on this DataFrame."
+    "This is the moment your portfolio table becomes a *risk* table. Every downstream question - ranking, scoring, business translation - is a `groupby` or sort on this DataFrame."
    ]
   },
   {
@@ -366,13 +366,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 4 — Portfolio overview map (M1)\n",
+    "## Step 4 - Portfolio overview map (M1)\n",
     "\n",
     "### What you are doing\n",
     "Rendering every property on a folium map. Marker size scales with peak temperature; color encodes asset type. Popups show the dollar value, square footage, peak temperature, peak hour, and AOI percentile.\n",
     "\n",
     "### Why this matters\n",
-    "This is the slide-1 visual for the client meeting. Before any score is computed, the map already tells the agent which assets to talk about — the big red circles."
+    "This is the slide-1 visual for the client meeting. Before any score is computed, the map already tells the agent which assets to talk about - the big red circles."
    ]
   },
   {
@@ -424,7 +424,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 5 — Above-average hot exposures (M2)\n",
+    "## Step 5 - Above-average hot exposures (M2)\n",
     "\n",
     "### What you are doing\n",
     "Filtering to properties whose peak temperature is at or above the portfolio median, and overlaying the city's hottest-tile network (AOI 90th percentile) underneath. The zoomed map M2 shows where the action is.\n",
@@ -479,13 +479,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 6 — Surface diagnosis (satellite segmentation)\n",
+    "## Step 6 - Surface diagnosis (satellite segmentation)\n",
     "\n",
     "### What you are doing\n",
     "For the top-N hottest properties, characterize the surface mix in their immediate surroundings: building, road, sidewalk, tree, grass. We bucket those into `impervious_pct` and `vegetation_pct` for scoring, and chart the full breakdown.\n",
     "\n",
     "### Why this matters\n",
-    "Temperature alone doesn't tell you what to spend money on. A hot property surrounded by impervious rooftops is a cool-roof candidate. A hot property with minimal vegetation is a planting candidate. The surface mix points to the lever — without us prescribing which one to pull."
+    "Temperature alone doesn't tell you what to spend money on. A hot property surrounded by impervious rooftops is a cool-roof candidate. A hot property with minimal vegetation is a planting candidate. The surface mix points to the lever - without us prescribing which one to pull."
    ]
   },
   {
@@ -544,7 +544,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "top_n['vegetation_pct'] = top_n['property_id'].map(\n",
     "    lambda pid: _bucket(seg_data.get(pid), VEGGIE_KEYS) if pid in seg_data else None)\n",
     "\n",
-    "# Chart C2 — stacked bar of segment classes for the available enriched properties\n",
+    "# Chart C2 - stacked bar of segment classes for the available enriched properties\n",
     "enriched_rows = [(pid, segs) for pid, segs in seg_data.items() if segs]\n",
     "if enriched_rows:\n",
     "    classes = sorted({c for _, s in enriched_rows for c in s.keys()})\n",
@@ -556,7 +556,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "        ax.barh(pids, vals, left=bottoms, label=c)\n",
     "        bottoms = [b + v for b, v in zip(bottoms, vals)]\n",
     "    ax.set_xlabel('% of surrounding scene')\n",
-    "    ax.set_title('C2 — Satellite surface composition (top exposures)')\n",
+    "    ax.set_title('C2 - Satellite surface composition (top exposures)')\n",
     "    ax.legend(loc='center left', bbox_to_anchor=(1.02, 0.5), fontsize=8)\n",
     "    plt.tight_layout(); plt.show()\n",
     "\n",
@@ -569,7 +569,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 7 — Street-view ground truth on #1\n",
+    "## Step 7 - Street-view ground truth on #1\n",
     "\n",
     "### What you are doing\n",
     "Pulling the front-facing street view at the highest-ranked enriched property and rendering the original alongside the segmented version. Tabulating the front-view composition (sky, building, tree, road, sidewalk, car, grass).\n",
@@ -609,7 +609,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "    sv_segs    = front.get('segments', {}) or {}\n",
     "    image_date = front.get('image_date', 'n/a')\n",
     "\n",
-    "print(f\"Street-view #1 = {property_one['property_id']} ({property_one['name']}) — \"\n",
+    "print(f\"Street-view #1 = {property_one['property_id']} ({property_one['name']}) - \"\n",
     "      f\"imagery date {image_date} (front view only)\")\n",
     "\n",
     "def _img_tag(b64, label):\n",
@@ -637,13 +637,13 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 8 — Diurnal driver profile (env-params)\n",
+    "## Step 8 - Diurnal driver profile (env-params)\n",
     "\n",
     "### What you are doing\n",
-    "Pulling the full-day environmental parameters for the top-N exposures: heat index, apparent temperature, relative humidity, solar irradiance. Computing per property: peak heat index, peak apparent temperature, hours-above-SLA in business hours (09:00–18:00), peak solar irradiance.\n",
+    "Pulling the full-day environmental parameters for the top-N exposures: heat index, apparent temperature, relative humidity, solar irradiance. Computing per property: peak heat index, peak apparent temperature, hours-above-SLA in business hours (09:00-18:00), peak solar irradiance.\n",
     "\n",
     "### Why this matters\n",
-    "Tenant-comfort SLAs are written in terms of heat index, not dry-bulb temperature. A building at 34 °C ambient with low humidity is comfortable; one at 31 °C with 80 % humidity is not. Heat index is the number complaints cluster around — and it's what the leasing team will quote back to you."
+    "Tenant-comfort SLAs are written in terms of heat index, not dry-bulb temperature. A building at 34 °C ambient with low humidity is comfortable; one at 31 °C with 80 % humidity is not. Heat index is the number complaints cluster around - and it's what the leasing team will quote back to you."
    ]
   },
   {
@@ -712,7 +712,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "for col in ('peak_heat_index_c', 'peak_apparent_temp_c', 'hours_above_sla', 'peak_solar_irradiance'):\n",
     "    top_n[col] = top_n['property_id'].map(lambda p: (metrics.get(p) or {}).get(col))\n",
     "\n",
-    "# Chart C3 — diurnal driver profile for property #1 (2-row subplot)\n",
+    "# Chart C3 - diurnal driver profile for property #1 (2-row subplot)\n",
     "if property_one['property_id'] in env_data:\n",
     "    s = env_data[property_one['property_id']]\n",
     "    n = len(s.get('heat_index_celsius') or [])\n",
@@ -734,7 +734,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "        ax_bot.plot(hours, s['solar_irradiance'], color='#bcbd22')\n",
     "    ax_bot.set_ylabel('Solar irradiance (W/m²)')\n",
     "    ax_bot.set_xlabel('Hour of day')\n",
-    "    ax_top.set_title(f\"C3 — Diurnal drivers — {property_one['property_id']} ({property_one['name']})\")\n",
+    "    ax_top.set_title(f\"C3 - Diurnal drivers - {property_one['property_id']} ({property_one['name']})\")\n",
     "    plt.tight_layout(); plt.show()\n",
     "\n",
     "top_n[['temp_rank','property_id','name','peak_temp_c',\n",
@@ -747,16 +747,16 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 9 — Composite scores (risk + opportunity)\n",
+    "## Step 9 - Composite scores (risk + opportunity)\n",
     "\n",
     "### What you are doing\n",
-    "Two scores, both 0–1, both min-max-normalized on the analyzed subset:\n",
+    "Two scores, both 0-1, both min-max-normalized on the analyzed subset:\n",
     "\n",
-    "- **`heat_risk_score`** = `0.40·peak_temp + 0.20·impervious + 0.20·peak_HI + 0.20·hours_above_SLA` — *which assets are exposed today.*\n",
-    "- **`opportunity_score`** = `0.50·peak_temp + 0.30·impervious + 0.20·veg_deficit` — *which assets have the most headroom for cooling investment.*\n",
+    "- **`heat_risk_score`** = `0.40·peak_temp + 0.20·impervious + 0.20·peak_HI + 0.20·hours_above_SLA` - *which assets are exposed today.*\n",
+    "- **`opportunity_score`** = `0.50·peak_temp + 0.30·impervious + 0.20·veg_deficit` - *which assets have the most headroom for cooling investment.*\n",
     "\n",
     "### Why this matters\n",
-    "The investment committee wants one number per asset for risk *and* one for upside. Two scores answer two different questions: which to flag, and which to treat. The agent uses them together — high risk + high opportunity = treat now; high risk + low opportunity = divest; low risk + high opportunity = hold and watch."
+    "The investment committee wants one number per asset for risk *and* one for upside. Two scores answer two different questions: which to flag, and which to treat. The agent uses them together - high risk + high opportunity = treat now; high risk + low opportunity = divest; low risk + high opportunity = hold and watch."
    ]
   },
   {
@@ -776,7 +776,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "analyzed = top_n.dropna(subset=['impervious_pct', 'vegetation_pct',\n",
     "                                 'peak_heat_index_c', 'hours_above_sla']).copy()\n",
     "if len(analyzed) < 2:\n",
-    "    print(f\"⚠ Analyzed subset has {len(analyzed)} property — scores are not comparable \"\n",
+    "    print(f\"⚠ Analyzed subset has {len(analyzed)} property - scores are not comparable \"\n",
     "          f\"across assets in this run. Set CACHED=False or expand cached coverage \"\n",
     "          f\"to score the full top-{TOP_N_TO_ENRICH}.\")\n",
     "\n",
@@ -805,14 +805,14 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "source": [
     "---\n",
-    "## Step 10 — Business translation + investment summary\n",
+    "## Step 10 - Business translation + investment summary\n",
     "\n",
     "### What you are doing\n",
     "Translating the technical numbers into the four outputs the agent's client actually cares about:\n",
     "\n",
-    "- **Cooling OpEx uplift (USD / yr)** — `(Δ°C above 24) × sqft × 0.18 kWh/sf/°C × $0.24/kWh`. Triage-grade, defensible at a meeting.\n",
-    "- **Insurance risk tier** A / B / C — percentile buckets on `heat_risk_score`.\n",
-    "- **Tenant-comfort SLA flag** — boolean, flips when peak heat index is above 32 °C.\n",
+    "- **Cooling OpEx uplift (USD / yr)** - `(Δ°C above 24) × sqft × 0.18 kWh/sf/°C × $0.24/kWh`. Triage-grade, defensible at a meeting.\n",
+    "- **Insurance risk tier** A / B / C - percentile buckets on `heat_risk_score`.\n",
+    "- **Tenant-comfort SLA flag** - boolean, flips when peak heat index is above 32 °C.\n",
     "- **Final ranked map M3 + risk-vs-opportunity scatter C4 + diurnal curves C1.**\n",
     "\n",
     "### Why this matters\n",
@@ -873,7 +873,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
    "metadata": {},
    "outputs": [],
    "source": [
-    "# Map M3 — final ranked priority map\n",
+    "# Map M3 - final ranked priority map\n",
     "m3 = folium.Map(location=center, zoom_start=14, tiles='cartodbpositron')\n",
     "for poly, _, peak_c, _, _ in overlay_tiles:\n",
     "    folium.GeoJson(\n",
@@ -899,7 +899,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "    ).add_to(m3)\n",
     "display(m3)\n",
     "\n",
-    "# Chart C4 — Risk vs Opportunity scatter (4 quadrants for the agent)\n",
+    "# Chart C4 - Risk vs Opportunity scatter (4 quadrants for the agent)\n",
     "scored = portfolio.dropna(subset=['heat_risk_score', 'opportunity_score'])\n",
     "if len(scored):\n",
     "    fig, ax = plt.subplots(figsize=(7, 6))\n",
@@ -913,14 +913,14 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "    ax.set_xlim(-0.05, 1.05); ax.set_ylim(-0.05, 1.05)\n",
     "    ax.set_xlabel('Heat-risk score →')\n",
     "    ax.set_ylabel('Opportunity score →')\n",
-    "    ax.set_title('C4 — Risk vs Opportunity (4 quadrants)')\n",
+    "    ax.set_title('C4 - Risk vs Opportunity (4 quadrants)')\n",
     "    ax.text(0.02, 0.98, 'Hold',   transform=ax.transAxes, fontsize=10, color='#666', va='top')\n",
     "    ax.text(0.98, 0.98, 'Treat',  transform=ax.transAxes, fontsize=10, color='#666', va='top', ha='right')\n",
     "    ax.text(0.02, 0.02, 'Watch',  transform=ax.transAxes, fontsize=10, color='#666', va='bottom')\n",
     "    ax.text(0.98, 0.02, 'Divest', transform=ax.transAxes, fontsize=10, color='#666', va='bottom', ha='right')\n",
     "    plt.tight_layout(); plt.show()\n",
     "\n",
-    "# Chart C1 — Diurnal temperature curves for the analyzed subset\n",
+    "# Chart C1 - Diurnal temperature curves for the analyzed subset\n",
     "analyzed_pids = list(env_data.keys()) or list(top_n['property_id'].head(TOP_N_TO_ENRICH))\n",
     "fig, ax = plt.subplots(figsize=(9, 4))\n",
     "for _, p in portfolio[portfolio['property_id'].isin(analyzed_pids)].iterrows():\n",
@@ -928,7 +928,7 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "    ax.plot(range(24), hourly_c, label=f\"{p['property_id']} {p['name']}\")\n",
     "ax.axhline(BASELINE_C, color='#888', linestyle='--', linewidth=1, label=f'baseline {BASELINE_C}°C')\n",
     "ax.set_xlabel('Hour of day'); ax.set_ylabel('°C')\n",
-    "ax.set_title('C1 — Diurnal surface temperature — analyzed subset')\n",
+    "ax.set_title('C1 - Diurnal surface temperature - analyzed subset')\n",
     "ax.legend(loc='lower right', fontsize=8)\n",
     "plt.tight_layout(); plt.show()"
    ]
@@ -945,9 +945,9 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "\n",
     "| Artifact | Used by |\n",
     "|----------|---------|\n",
-    "| **M1** portfolio overview map | Client deck — slide 1 |\n",
-    "| **M2** hot-exposures zoom map | Client deck — slide 2 |\n",
-    "| **M3** final ranked priority map | Client deck — slide 3 |\n",
+    "| **M1** portfolio overview map | Client deck - slide 1 |\n",
+    "| **M2** hot-exposures zoom map | Client deck - slide 2 |\n",
+    "| **M3** final ranked priority map | Client deck - slide 3 |\n",
     "| **C1** diurnal temperature curves | Backup / analyst review |\n",
     "| **C2** surface composition stacked bar | Backup |\n",
     "| **C3** HI / apparent / RH / solar profile (#1) | Deep-dive slide |\n",
@@ -955,9 +955,9 @@ Use the Write tool with `file_path = c:/development/fortyguard/repositories/temp
     "| `outputs/portfolio_evaluation.csv` | CRM / client report |\n",
     "| [Heat-intelligence PDF report](../../data/real_state_san_jose_heat_intelligence_sample_day_2024-10-02.pdf) | Forward to client unchanged |\n",
     "\n",
-    "Every input is explicit. Every weight is at the top of the notebook. Set `CACHED=False` to rerun against any portfolio with a live FortyGuard API key — the same workflow applies, with the caveat that diurnal columns reduce to the snapshot hour until a 24-hour live API is available.\n",
+    "Every input is explicit. Every weight is at the top of the notebook. Set `CACHED=False` to rerun against any portfolio with a live FortyGuard API key - the same workflow applies, with the caveat that diurnal columns reduce to the snapshot hour until a 24-hour live API is available.\n",
     "\n",
-    "**Apply this pattern to adjacent use cases**: insured-properties portfolio (insurance underwriting), data-center sites (operational-risk screening), hospitality assets (guest-comfort benchmarking), retail acquisitions (foot-traffic comfort). The workflow — *portfolio × diurnal heatmap × surface diagnosis × ground-truth × env-params → risk + opportunity table* — transfers directly."
+    "**Apply this pattern to adjacent use cases**: insured-properties portfolio (insurance underwriting), data-center sites (operational-risk screening), hospitality assets (guest-comfort benchmarking), retail acquisitions (foot-traffic comfort). The workflow - *portfolio × diurnal heatmap × surface diagnosis × ground-truth × env-params → risk + opportunity table* - transfers directly."
    ]
   }
  ],
@@ -987,7 +987,7 @@ python -c "import json; nb=json.load(open('c:/development/fortyguard/repositorie
 
 Expected output exactly: `cells: 22 nbformat: 4 minor: 5`
 
-If the cell count is wrong, the JSON is corrupt — re-run Step 1.
+If the cell count is wrong, the JSON is corrupt - re-run Step 1.
 
 - [ ] **Step 3: Verify cell IDs are unique and step ordering is correct**
 
@@ -1003,7 +1003,7 @@ print('id_count:', len(ids), 'expected:', len(expected))
 "
 ```
 
-Expected: `id_count: 25 expected: 25` — wait, this is wrong. The JSON above has only 22 cells. Recount and adjust.
+Expected: `id_count: 25 expected: 25` - wait, this is wrong. The JSON above has only 22 cells. Recount and adjust.
 
 **Correction**: count the cells listed in the JSON. The cells are: intro-md, setup-md, setup-code, step1-md, step1-code, step2-md, step2-code, step3-md, step3-code, step4-md, step4-code, step5-md, step5-code, step6-md, step6-code, step7-md, step7-code, step8-md, step8-code, step9-md, step9-code, step10-md, step10-code, step10-visuals-code, wrapup-md = **25 cells**.
 
@@ -1038,12 +1038,12 @@ Run:
 cd c:/development/fortyguard/repositories/temperature-api-quickstart && jupyter nbconvert --to notebook --execute notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb --output real_estate_portfolio_heat_risk.ipynb --ExecutePreprocessor.timeout=300
 ```
 
-Expected: `[NbConvertApp] Writing N bytes to ...` with no Python tracebacks. Execution should complete in 60–180 seconds (the heatmap geojson is 17 MB and 16,507-tile point-in-polygon takes time).
+Expected: `[NbConvertApp] Writing N bytes to ...` with no Python tracebacks. Execution should complete in 60-180 seconds (the heatmap geojson is 17 MB and 16,507-tile point-in-polygon takes time).
 
 If execution fails:
-- **`AssertionError: F→C sanity check failed`** — the geojson temperature scale is unexpected; inspect a sample tile property and adjust `TEMP_C_SANITY` only if the values are genuinely out of the (15, 55) °C range. Do not commit a relaxed range without confirming the source data.
-- **`KeyError` on `'00'..'23'`** — the geojson tile properties don't have the expected keys; inspect the file structure and adjust the loader. (This shouldn't happen — the file was inspected in brainstorming.)
-- **Slow execution / timeout** — increase `--ExecutePreprocessor.timeout=600`.
+- **`AssertionError: F→C sanity check failed`** - the geojson temperature scale is unexpected; inspect a sample tile property and adjust `TEMP_C_SANITY` only if the values are genuinely out of the (15, 55) °C range. Do not commit a relaxed range without confirming the source data.
+- **`KeyError` on `'00'..'23'`** - the geojson tile properties don't have the expected keys; inspect the file structure and adjust the loader. (This shouldn't happen - the file was inspected in brainstorming.)
+- **Slow execution / timeout** - increase `--ExecutePreprocessor.timeout=600`.
 
 - [ ] **Step 2: Verify the output CSV exists, has 19 columns and 10 rows**
 
@@ -1154,7 +1154,7 @@ for cid in chart_cells:
 "
 ```
 
-Expected: each cell shows `image/png=True`. (The `step10-visuals-code` cell contains C4 and C1 — both should render as PNG outputs.)
+Expected: each cell shows `image/png=True`. (The `step10-visuals-code` cell contains C4 and C1 - both should render as PNG outputs.)
 
 - [ ] **Step 3: Confirm street-view side-by-side rendered**
 
@@ -1191,7 +1191,7 @@ Expected: only `M  notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb` is
 
 If either of the two reference notebooks shows up as modified, **stop** and revert them with:
 ```bash
-git -C c:/development/fortyguard/repositories/temperature-api-quickstart checkout -- notebooks/use_cases/urban_planner_bus_stop_prioritization.ipynb notebooks/use_cases/urban_forestry_tree_prioritization.ipynb
+git -C c:/development/fortyguard/repositories/temperature-api-quickstart checkout - notebooks/use_cases/urban_planner_bus_stop_prioritization.ipynb notebooks/use_cases/urban_forestry_tree_prioritization.ipynb
 ```
 
 Then investigate why they were touched and re-run from Task 2 Step 1.
@@ -1202,9 +1202,9 @@ Then investigate why they were touched and re-run from Task 2 Step 1.
 
 **Files:**
 - Stage: `notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb`
-- Stage: `outputs/portfolio_evaluation.csv` (only if outputs/ is tracked; otherwise leave it out — see Step 1)
+- Stage: `outputs/portfolio_evaluation.csv` (only if outputs/ is tracked; otherwise leave it out - see Step 1)
 - Stage: `data/real_estate_san_jose_portfolio_sample.csv`, the four `data/real_state_san_jose_*.json/geojson` files, and the PDF, since they are referenced by the notebook
-- Do NOT stage: `data/sample_real_estate_portfolio.csv` deletion (that's pre-existing and unrelated to this commit — handle it in a separate change)
+- Do NOT stage: `data/sample_real_estate_portfolio.csv` deletion (that's pre-existing and unrelated to this commit - handle it in a separate change)
 
 - [ ] **Step 1: Decide whether to track `outputs/`**
 
@@ -1213,7 +1213,7 @@ Run:
 git -C c:/development/fortyguard/repositories/temperature-api-quickstart check-ignore -v outputs/portfolio_evaluation.csv 2>&1; echo "exitcode=$?"
 ```
 
-If the output is `exitcode=0` with a `.gitignore` rule, the file is ignored — don't stage it. If `exitcode=1` (no rule), check if any other `outputs/*.csv` is currently tracked:
+If the output is `exitcode=0` with a `.gitignore` rule, the file is ignored - don't stage it. If `exitcode=1` (no rule), check if any other `outputs/*.csv` is currently tracked:
 ```bash
 git -C c:/development/fortyguard/repositories/temperature-api-quickstart ls-files outputs/
 ```
@@ -1232,7 +1232,7 @@ Then:
 git -C c:/development/fortyguard/repositories/temperature-api-quickstart status --short
 ```
 
-Expected: the seven added files marked `A`/`AM`, the modified notebook marked `M`. The `data/sample_real_estate_portfolio.csv` deletion remains unstaged (` D`) — leave it for a separate change.
+Expected: the seven added files marked `A`/`AM`, the modified notebook marked `M`. The `data/sample_real_estate_portfolio.csv` deletion remains unstaged (` D`) - leave it for a separate change.
 
 - [ ] **Step 3: Create the commit**
 
@@ -1277,30 +1277,30 @@ Walking the spec sections against the plan:
 - **§2 Scope** → File Structure section + Task 5 verifies tree/bus-stop untouched. ✓
 - **§3 Inputs** → All six paths declared in `setup-code`. ✓
 - **§4 Configuration constants** → `setup-code` sets `STUDY_DATE`, `STUDY_HOUR`, `GRANULARITY_M`, `TOP_N_TO_ENRICH`, `CACHED`, `BASELINE_C`, `COOLING_KWH_PER_SF`, `KWH_PRICE_USD`, `SLA_HI_C`, `TEMP_C_SANITY`, `ASSET_TYPE_PALETTE`. ✓
-- **§5 Step 1 — Load portfolio** → cells `step1-md`, `step1-code`. ✓
-- **§5 Step 2 — Heat layer** → cells `step2-md`, `step2-code` (online + cached duals, F→C, sanity assert, `tile_for` helper, AOI bounds). ✓
-- **§5 Step 3 — Diurnal attach** → cells `step3-md`, `step3-code` (peak/hour/min/swing/aoi_percentile + temp_rank). ✓
-- **§5 Step 4 — Map M1** → cells `step4-md`, `step4-code` (radius scales with peak, palette, popup, legend). ✓
-- **§5 Step 5 — Map M2** → cells `step5-md`, `step5-code` (median filter, p90 underlay capped at 500 tiles, zoom). ✓
-- **§5 Step 6 — Satellite** → cells `step6-md`, `step6-code` (online + cached duals, IMPERV/VEGGIE buckets, C2). ✓
-- **§5 Step 7 — Street view** → cells `step7-md`, `step7-code` (online + cached duals, "#1" defined as enriched-subset top, side-by-side base64 HTML, imagery date). ✓
-- **§5 Step 8 — env-params** → cells `step8-md`, `step8-code` (online + cached duals, peak HI/apparent/hours_above_sla/peak_solar, C3 2-row subplot with twin-RH-axis). ✓
-- **§5 Step 9 — Composite scores** → cells `step9-md`, `step9-code` (heat_risk weights `0.40/0.20/0.20/0.20`, opportunity weights `0.50/0.30/0.20`, single-property notice). ✓
-- **§5 Step 10 — Business translation** → cells `step10-md`, `step10-code` (OpEx, tier, comfort flag, CSV write); `step10-visuals-code` (M3 + C4 + C1). ✓
+- **§5 Step 1 - Load portfolio** → cells `step1-md`, `step1-code`. ✓
+- **§5 Step 2 - Heat layer** → cells `step2-md`, `step2-code` (online + cached duals, F→C, sanity assert, `tile_for` helper, AOI bounds). ✓
+- **§5 Step 3 - Diurnal attach** → cells `step3-md`, `step3-code` (peak/hour/min/swing/aoi_percentile + temp_rank). ✓
+- **§5 Step 4 - Map M1** → cells `step4-md`, `step4-code` (radius scales with peak, palette, popup, legend). ✓
+- **§5 Step 5 - Map M2** → cells `step5-md`, `step5-code` (median filter, p90 underlay capped at 500 tiles, zoom). ✓
+- **§5 Step 6 - Satellite** → cells `step6-md`, `step6-code` (online + cached duals, IMPERV/VEGGIE buckets, C2). ✓
+- **§5 Step 7 - Street view** → cells `step7-md`, `step7-code` (online + cached duals, "#1" defined as enriched-subset top, side-by-side base64 HTML, imagery date). ✓
+- **§5 Step 8 - env-params** → cells `step8-md`, `step8-code` (online + cached duals, peak HI/apparent/hours_above_sla/peak_solar, C3 2-row subplot with twin-RH-axis). ✓
+- **§5 Step 9 - Composite scores** → cells `step9-md`, `step9-code` (heat_risk weights `0.40/0.20/0.20/0.20`, opportunity weights `0.50/0.30/0.20`, single-property notice). ✓
+- **§5 Step 10 - Business translation** → cells `step10-md`, `step10-code` (OpEx, tier, comfort flag, CSV write); `step10-visuals-code` (M3 + C4 + C1). ✓
 - **§5 Wrap-up** → cell `wrapup-md` with artifact table and PDF link. ✓
-- **§6 Outputs** → All M1/M2/M3, C1–C4, T1/T2/T3, L1 produced. Verified in Task 4. ✓
+- **§6 Outputs** → All M1/M2/M3, C1-C4, T1/T2/T3, L1 produced. Verified in Task 4. ✓
 - **§7 File-mode contract** → CACHED=True default in `setup-code`; per-step `if CACHED` branches; online-mode banner in `step2-code` warning that diurnal collapses. ✓
 - **§8 Data-quality assumptions** → Q1 (F→C + sanity assert: `step2-code`), Q2 (P01-only notice: `step6-code`/`step8-code`), Q3 (verbatim paths in `setup-code`), Q4 (image_date printed: `step7-code`), Q5 (`COOLING_KWH_PER_SF` constant exposed at top), Q6 (`STUDY_DATE='2024-10-02'`), Q7 (AOI from geojson bounds in cached, SAN_JOSE_POLYGON in online). ✓
-- **§9 Acceptance criteria** → Verified via Tasks 3 (criteria 1, 2, 4, 5, 6 — note 6 is online-only and out of scope for this run with `CACHED=True`), 4 (criterion 1 visuals), 5 (criterion 7). ✓
+- **§9 Acceptance criteria** → Verified via Tasks 3 (criteria 1, 2, 4, 5, 6 - note 6 is online-only and out of scope for this run with `CACHED=True`), 4 (criterion 1 visuals), 5 (criterion 7). ✓
 
-**Note on Acceptance Criterion 6** ("Setting `CACHED=False` and rerunning Steps 1, 2a, and 3–10 succeeds against a live API key"): the smoke test in Task 3 runs `CACHED=True` only. Live-mode verification requires a `.env` with API credentials and is **not** part of this plan. If a live verification is needed, run the notebook manually with `CACHED=False` after merging.
+**Note on Acceptance Criterion 6** ("Setting `CACHED=False` and rerunning Steps 1, 2a, and 3-10 succeeds against a live API key"): the smoke test in Task 3 runs `CACHED=True` only. Live-mode verification requires a `.env` with API credentials and is **not** part of this plan. If a live verification is needed, run the notebook manually with `CACHED=False` after merging.
 
 ### 2. Placeholder scan
 
 - No `TBD`, `TODO`, `implement later`, `fill in details` strings anywhere in the plan. ✓
 - Every step has either complete code or a complete shell command. ✓
-- "Add appropriate error handling" — not present. ✓
-- "Similar to Task N" — not present (each task is self-contained). ✓
+- "Add appropriate error handling" - not present. ✓
+- "Similar to Task N" - not present (each task is self-contained). ✓
 
 ### 3. Type / name consistency
 
@@ -1323,8 +1323,8 @@ No drift detected.
 
 **Plan complete and saved to `docs/superpowers/plans/2026-04-28-real-estate-portfolio-evaluation.md`. Two execution options:**
 
-**1. Subagent-Driven (recommended)** — I dispatch a fresh subagent per task, review between tasks, fast iteration.
+**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration.
 
-**2. Inline Execution** — Execute tasks in this session using executing-plans, batch execution with checkpoints.
+**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints.
 
 **Which approach?**

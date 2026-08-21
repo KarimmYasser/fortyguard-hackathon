@@ -142,7 +142,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
         </div>
 
         {/* Quick Presets */}
-        <div className="flex items-center gap-1.5 flex-wrap">
+        <div id="tour-sandbox-actions" className="flex items-center gap-1.5 flex-wrap">
           <button
             onClick={() => applyPreset('phoenix_historic')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
@@ -187,7 +187,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
       </div>
 
       {/* 5 Interactive Slider Controls */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div id="tour-sandbox-controls" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {/* Slider 1: FortyGuard Microclimate Delta */}
         <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-3">
           <div className="flex items-center justify-between text-xs font-mono">

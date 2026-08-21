@@ -41,15 +41,15 @@ class IEEEAnnexGBenchmarkEngine:
     def get_ieee_annex_g_reference_transformer() -> TransformerThermalEngine:
         """
         Returns the official IEEE C57.91-2011 Annex G Clause G.2 reference transformer:
-        - 30 MVA ONAN/ONAF, 115 kV / 13.8 kV
-        - Rated Top-Oil Rise: 45.0 °C
-        - Rated Winding Hot-Spot Rise: 27.0 °C
-        - Top-Oil Time Constant: 3.0 hours
-        - Winding Time Constant: 5.0 minutes (0.0833 hours)
-        - Ratio of Load Losses to No-Load Losses: R = 5.0
-        - Oil Exponent: n = 0.8
-        - Winding Exponent: m = 0.8
-        - Reference Hot-Spot Temperature: 110.0 °C
+ - 30 MVA ONAN/ONAF, 115 kV / 13.8 kV
+ - Rated Top-Oil Rise: 45.0 °C
+ - Rated Winding Hot-Spot Rise: 27.0 °C
+ - Top-Oil Time Constant: 3.0 hours
+ - Winding Time Constant: 5.0 minutes (0.0833 hours)
+ - Ratio of Load Losses to No-Load Losses: R = 5.0
+ - Oil Exponent: n = 0.8
+ - Winding Exponent: m = 0.8
+ - Reference Hot-Spot Temperature: 110.0 °C
         """
         params = TransformerThermalParams(
             rated_mva=30.0,

@@ -90,8 +90,9 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
             res = await client.environmental_parameters(
                 latitude=req.latitude,
                 longitude=req.longitude,
-                temperature=47.6,
+                temperature=req.threshold_c or 35.0,
                 start_date=req.start_date,
+                filter_type=3,
             )
 
         persistence = await client.get_persistence_and_exceedance(

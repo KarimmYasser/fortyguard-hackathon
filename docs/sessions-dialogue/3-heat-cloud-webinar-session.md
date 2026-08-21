@@ -1,4 +1,4 @@
-# Heat Intelligence Cloud: What You Can Build on the FortyGuard API — Full Transcript & Summary
+# Heat Intelligence Cloud: What You Can Build on the FortyGuard API - Full Transcript & Summary
 
 **Recording URL:** [Zoho Webinar Recording](https://webinar.zoho.com/meeting/public/videoprv?recordingId=02adbe26d7441dfba535b4bf5b46ed300cef01518c64d1ea40a9fdd4902c6e66&x-meeting-org=935374719)
 
@@ -19,12 +19,12 @@ The session showcases live product demonstrations across 6 major target industri
 1. **The 4 Data Layers:** Surface Temperature, Thermal Comfort Analysis (UTCI/Apparent Temp), Air Quality, and Land Cover Analysis.
 2. **Granularity Advantage:** Moving from regional weather stations to street and building parcel level microclimate resolution.
 3. **6 Target Industry Applications & Live Demos:**
-   - **Real Estate & Property Tech:** Climate risk scoring and thermal comfort ratings for asset valuation.
-   - **Insurance & Underwriting:** Dynamic heat stress risk indices and extreme weather claim modeling.
-   - **Urban Planning & Municipalities:** Pinpointing Urban Heat Islands to optimize shade tree placement and cool pavements.
-   - **Public Health & Outdoor Workers:** Real-time heat exhaustion warnings and hydration/rest shift scheduling.
-   - **Logistics & Cold Chain:** Temperature-sensitive route planning and cargo spoilage prevention.
-   - **Energy & Utilities:** Grid peak load forecasting driven by hyper-local AC demand spikes.
+ - **Real Estate & Property Tech:** Climate risk scoring and thermal comfort ratings for asset valuation.
+ - **Insurance & Underwriting:** Dynamic heat stress risk indices and extreme weather claim modeling.
+ - **Urban Planning & Municipalities:** Pinpointing Urban Heat Islands to optimize shade tree placement and cool pavements.
+ - **Public Health & Outdoor Workers:** Real-time heat exhaustion warnings and hydration/rest shift scheduling.
+ - **Logistics & Cold Chain:** Temperature-sensitive route planning and cargo spoilage prevention.
+ - **Energy & Utilities:** Grid peak load forecasting driven by hyper-local AC demand spikes.
 4. **Live Product Demos:** Full walkthrough of 6 production-grade web applications built with React/Next.js, Mapbox/Deck.gl, and the FortyGuard Temperature API.
 
 ---

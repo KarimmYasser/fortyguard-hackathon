@@ -1,5 +1,5 @@
 """
-alphaXiv API Client — Scientific Paper Fetcher & Academic Provenance Adapter
+alphaXiv API Client - Scientific Paper Fetcher & Academic Provenance Adapter
 Allows Thermal Sentinel Grid agents to dynamically search arXiv papers, retrieve
 mathematical models, and generate verified academic citations.
 """

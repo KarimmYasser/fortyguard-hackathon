@@ -1,4 +1,4 @@
-# Real-Estate Portfolio Heat Evaluation — Design Spec
+# Real-Estate Portfolio Heat Evaluation - Design Spec
 
 - **Date:** 2026-04-28
 - **Target file (modified in place):** `notebooks/use_cases/real_estate_portfolio_heat_risk.ipynb`
@@ -24,7 +24,7 @@ A **real-estate agent** (primary) preparing a portfolio review with a client, pl
 - Reference the heat-intelligence PDF as a hyperlink at the end.
 
 **Out of scope**
-- Any retrofit-tagging rule (`cool roof`/`shade trees`/etc.) — explicitly excluded.
+- Any retrofit-tagging rule (`cool roof`/`shade trees`/etc.) - explicitly excluded.
 - Renaming the data files (the `real_state_*` typo on 5 of 6 files is preserved).
 - Touching any other notebook.
 - Changing the FortyGuard SDK or any code outside the target notebook.
@@ -58,49 +58,49 @@ SLA_HI_C            = 32.0                 # tenant-comfort heat-index threshold
 TEMP_C_SANITY       = (15.0, 55.0)         # F→C conversion sanity check
 ```
 
-## 5. Notebook structure — 10 steps
+## 5. Notebook structure - 10 steps
 
 ### Setup
 Imports, `dotenv`, ROOT path, `FortyGuardClient()`, constants, file paths, single-line "Authenticated to <base_url>" print.
 
-### Step 1 — Load your portfolio
+### Step 1 - Load your portfolio
 Read CSV, print `assets / total $ / total sqft / asset-type counts`, display the dataframe.
 Markdown frames the agent take-away: "this is the book we're screening."
 
-### Step 2 — Heat layer
+### Step 2 - Heat layer
 - **2a (online, when `CACHED=False`):** `client.create_heatmap(polygon_aoi=SAN_JOSE_POLYGON, start_date=STUDY_DATE, start_time=STUDY_HOUR, filter_type=1, granularity=GRANULARITY_M)`. Single hour.
 - **2b (cached, default):** load `real_state_san_jose_heatmap_sample_day_2024-10-02.geojson`. Each feature has `properties` keyed `'00'..'23'` (hourly) plus `min_temperature/max_temperature/average_temperature` (all in **°F**).
-  - Convert °F→°C with sanity assert (every tile peak temperature must be within `TEMP_C_SANITY`).
-  - Build helper `tile_temp_at(lat, lon, hour: int)` → °C, with point-in-polygon lookup and nearest-centroid fallback.
+ - Convert °F→°C with sanity assert (every tile peak temperature must be within `TEMP_C_SANITY`).
+ - Build helper `tile_temp_at(lat, lon, hour: int)` → °C, with point-in-polygon lookup and nearest-centroid fallback.
 - AOI in cached mode = bounding box of the geojson features (derived dynamically). AOI in online mode = `SAN_JOSE_POLYGON`.
 - Print: tile count, AOI bounds (lat/lon range), portfolio-wide temperature range.
 
-### Step 3 — Diurnal temperature attach (per property)
+### Step 3 - Diurnal temperature attach (per property)
 For each property compute and attach:
 - `peak_temp_c` (max over 24 hours of the property's tile)
-- `peak_hour` (argmax, 0–23)
+- `peak_hour` (argmax, 0-23)
 - `min_temp_c`
 - `diurnal_swing_c` = `peak_temp_c - min_temp_c`
 - `aoi_percentile` (rank of `peak_temp_c` against the full 16,507-tile distribution of `max_temperature`).
 
 Sort by `peak_temp_c` descending, insert `temp_rank`. Display analysis-ready table (T1).
 
-### Step 4 — Portfolio overview map (M1)
+### Step 4 - Portfolio overview map (M1)
 Folium, `cartodbpositron`, centered on portfolio centroid, zoom ~13.
 `CircleMarker` per property: radius scales with `peak_temp_c`, color from a fixed asset-type palette (Office / Residential / Retail / Mixed-Use / Industrial). Popup shows `name`, `$ value (M)`, `sqft`, `peak_temp_c`, `peak_hour`, `aoi_percentile`. Add a legend (HTML `MacroElement`) for asset-type colors.
 
-### Step 5 — Above-average hot exposures (zoom)
+### Step 5 - Above-average hot exposures (zoom)
 Filter to `peak_temp_c >= portfolio median peak_temp_c`. New zoomed folium map (M2): underlay = a sampled subset of AOI tiles whose `max_temperature` is at or above the AOI 90th percentile (rendered as red translucent polygons, capped at ~500 tiles for browser performance); overlay = the above-average properties. Display the hot-exposures table.
 
-### Step 6 — Surface diagnosis (satellite segmentation)
+### Step 6 - Surface diagnosis (satellite segmentation)
 - **6a (online, when `CACHED=False`):** loop over the top-N exposures, call `client.satellite_segmentation(latitude, longitude, start_date=STUDY_DATE, start_time=STUDY_HOUR, filter_type=1, granularity=GRANULARITY_M)`.
 - **6b (cached, default):** load the cached JSON. The cache covers only **property P01** (Adobe Campus Tower, 37.2963, -121.8341).
-  - The notebook prints a clear `⚠` notice in markdown: "Cached deep-dive applies to P01 only. Set `CACHED=False` to enrich the full top-N."
-  - The notebook continues with whatever properties match the cached coordinate (here just P01).
+ - The notebook prints a clear `⚠` notice in markdown: "Cached deep-dive applies to P01 only. Set `CACHED=False` to enrich the full top-N."
+ - The notebook continues with whatever properties match the cached coordinate (here just P01).
 - Compute `impervious_pct` (sum of road/pavement/building/sidewalk/earth segment values) and `vegetation_pct` (sum of tree/grass/vegetation values), using the existing keyword-bucket helper.
 - Render stacked bar chart C2 (matplotlib) of segment classes for the available enriched properties.
 
-### Step 7 — Street-view ground truth on #1
+### Step 7 - Street-view ground truth on #1
 "Property #1" is defined as the highest-`temp_rank` property *within the enriched subset* from Step 6 (in cached mode this is P01; in online mode it is the top of the top-N).
 - **7a (online, when `CACHED=False`):** `client.street_view_segmentation` for property #1.
 - **7b (cached, default):** load `real_state_san_jose_street_view_segmentation_sample_day_2024-10-02.json` (front view only).
@@ -108,20 +108,20 @@ Filter to `peak_temp_c >= portfolio median peak_temp_c`. New zoomed folium map (
 - Print front-view composition table (sky / building / tree / road / sidewalk / car / grass).
 - Markdown caveat: "Imagery date 2022-10-01 (front view only)."
 
-### Step 8 — Diurnal driver profile (env-params)
+### Step 8 - Diurnal driver profile (env-params)
 - **8a (online, when `CACHED=False`):** loop over top-N, `client.environmental_parameters(latitude, longitude, temperature=peak_temp_c, start_date=STUDY_DATE, start_time='09:00', end_time='18:00', filter_type=2)`.
-- **8b (cached, default):** load `real_state_san_jose_env_paramaters_sample_day_2024-10-02.json`. Has 1 location (P01), 24 hourly readings; the notebook business-hours window (09–18) is sliced from indices 9..18.
+- **8b (cached, default):** load `real_state_san_jose_env_paramaters_sample_day_2024-10-02.json`. Has 1 location (P01), 24 hourly readings; the notebook business-hours window (09-18) is sliced from indices 9..18.
 - Per available property, compute:
-  - `peak_heat_index_c` (max of `parameters.heat_index_celsius`)
-  - `peak_apparent_temp_c`
-  - `hours_above_sla` (count where `heat_index_celsius > SLA_HI_C` within 09–18)
-  - `peak_solar_irradiance` (max of `solar_irradiance`)
+ - `peak_heat_index_c` (max of `parameters.heat_index_celsius`)
+ - `peak_apparent_temp_c`
+ - `hours_above_sla` (count where `heat_index_celsius > SLA_HI_C` within 09-18)
+ - `peak_solar_irradiance` (max of `solar_irradiance`)
 - Render chart C3 for property #1 as a 2-row matplotlib subplot (shared x-axis = 0..23 hours):
-  - **Top subplot:** HI and apparent_temp on the primary y-axis (°C); RH on a twin y-axis (%). Horizontal dashed reference line at `SLA_HI_C` on the primary axis.
-  - **Bottom subplot:** solar irradiance (W/m²).
+ - **Top subplot:** HI and apparent_temp on the primary y-axis (°C); RH on a twin y-axis (%). Horizontal dashed reference line at `SLA_HI_C` on the primary axis.
+ - **Bottom subplot:** solar irradiance (W/m²).
 
-### Step 9 — Composite scores (TWO scores)
-Min-max normalize on the analyzed subset (the available enriched properties — full top-N online, P01 only when cached):
+### Step 9 - Composite scores (TWO scores)
+Min-max normalize on the analyzed subset (the available enriched properties - full top-N online, P01 only when cached):
 
 ```
 temp_n   = mm(peak_temp_c)
@@ -136,7 +136,7 @@ opportunity_score = 0.50·temp_n + 0.30·imp_n + 0.20·veg_def
 
 Min-max degenerate case (single property in cached mode): `mm` returns 0 for any constant column, so both scores resolve to 0 for the single property. The notebook prints a notice when the analyzed subset has fewer than 3 properties, and explicitly states the scores are not comparable to a multi-asset run. **No retrofit tagging.** Show ranked table with both scores side-by-side.
 
-### Step 10 — Business translation + investment summary
+### Step 10 - Business translation + investment summary
 For every property in the portfolio (not only enriched):
 
 - `cooling_opex_uplift_usd = max(0, peak_temp_c - BASELINE_C) × sqft × COOLING_KWH_PER_SF × KWH_PRICE_USD`, rounded to whole dollars (existing formula, applied to `peak_temp_c` rather than single-hour `temperature_c`).
@@ -145,7 +145,7 @@ For every property in the portfolio (not only enriched):
 
 Final folium map M3: priority circles ∝ `heat_risk_score` (analyzed subset) + city-wide 90th-percentile tile overlay.
 
-Chart C4 (matplotlib): scatter `heat_risk_score` (x) vs `opportunity_score` (y), 4 quadrants labeled (Hold / Watch / Treat / Divest framing for the agent — quadrant labels only, no tag column added to the data).
+Chart C4 (matplotlib): scatter `heat_risk_score` (x) vs `opportunity_score` (y), 4 quadrants labeled (Hold / Watch / Treat / Divest framing for the agent - quadrant labels only, no tag column added to the data).
 
 Optional chart C1 (matplotlib): per-property diurnal temperature curves for the analyzed subset.
 
@@ -155,10 +155,10 @@ Write `outputs/portfolio_evaluation.csv` with columns:
 Print aggregate `cooling_opex_uplift_usd.sum()` for the portfolio.
 
 End-of-notebook markdown contains the link:
-`[Download the heat-intelligence PDF report](../../data/real_state_san_jose_heat_intelligence_sample_day_2024-10-02.pdf)` — link only, do not embed.
+`[Download the heat-intelligence PDF report](../../data/real_state_san_jose_heat_intelligence_sample_day_2024-10-02.pdf)` - link only, do not embed.
 
 ### Wrap-up
-Markdown table summarizing artifacts (M1/M2/M3, C1–C4, T1–T3, L1) and the audience for each (slide deck / CRM / client / committee), and a one-paragraph note on rerunning with `CACHED=False` against any portfolio.
+Markdown table summarizing artifacts (M1/M2/M3, C1-C4, T1-T3, L1) and the audience for each (slide deck / CRM / client / committee), and a one-paragraph note on rerunning with `CACHED=False` against any portfolio.
 
 ## 6. Output artifacts (canonical)
 
@@ -180,11 +180,11 @@ Markdown table summarizing artifacts (M1/M2/M3, C1–C4, T1–T3, L1) and the au
 
 `CACHED=True` (default):
 - Step 2b reads the geojson, no API call.
-- Step 6b/7b/8b read JSON caches that cover only P01 — the notebook continues with the cache's coverage and prints a notice.
+- Step 6b/7b/8b read JSON caches that cover only P01 - the notebook continues with the cache's coverage and prints a notice.
 - Notebook is fully runnable with no `.env` / no API key.
 
 `CACHED=False`:
-- Step 2a calls `create_heatmap` (single-hour). Diurnal columns `peak_*`, `min_temp_c`, `diurnal_swing_c`, `aoi_percentile` are degenerate — they collapse to the single-hour temperature with `peak_hour=STUDY_HOUR` and `diurnal_swing_c=0`. The notebook prints a banner that diurnal analysis is meaningful only with the cached 24-hour geojson (or a future 24-hour API call), and the rest of the workflow proceeds unchanged.
+- Step 2a calls `create_heatmap` (single-hour). Diurnal columns `peak_*`, `min_temp_c`, `diurnal_swing_c`, `aoi_percentile` are degenerate - they collapse to the single-hour temperature with `peak_hour=STUDY_HOUR` and `diurnal_swing_c=0`. The notebook prints a banner that diurnal analysis is meaningful only with the cached 24-hour geojson (or a future 24-hour API call), and the rest of the workflow proceeds unchanged.
 - Steps 6a/7a/8a call APIs for the full top-N (and #1 for street view).
 
 ## 8. Data-quality assumptions enforced
@@ -208,7 +208,7 @@ The implementation is complete when **all** are true:
 3. The intro paragraphs lead with "real-estate agent" as primary audience.
 4. The four FortyGuard endpoints are each demonstrated with explicit `CACHED` dual-paths in their respective steps.
 5. F→C conversion sanity assert passes on the cached geojson without manual override.
-6. Setting `CACHED=False` and rerunning Steps 1, 2a, and 3–10 succeeds against a live API key (the diurnal columns will be degenerate as documented).
+6. Setting `CACHED=False` and rerunning Steps 1, 2a, and 3-10 succeeds against a live API key (the diurnal columns will be degenerate as documented).
 7. The tree notebook and the bus-stop notebook are byte-identical to their pre-change versions (`git diff` shows no changes there).
 
 ## 10. Out-of-scope follow-ups (not done in this change)

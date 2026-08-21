@@ -38,7 +38,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
   const currentTopOil = isMitigated ? currentStep.mitigated_top_oil_c : currentStep.baseline_top_oil_c;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div id="tour-kpi-grid" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       {/* KPI 1: Winding Hot-Spot (T_hs) & Emergency Limit */}
       <div
         className={`rounded-3xl p-5 border transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${

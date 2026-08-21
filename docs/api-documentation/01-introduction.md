@@ -1,4 +1,4 @@
-# Introduction — FortyGuard Temperature API®
+# Introduction - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/introduction](https://docs-api.fortyguard.com/docs/introduction)  
 > **Framework:** FortyGuard Temperature Operating System (tOS)  
@@ -37,7 +37,7 @@ Each endpoint in this documentation is tagged with its subscription requirement:
 1. **Climate-Aware Infrastructure Planning:**  
    Use temperature intelligence and environmental parameters to design and maintain roads, transformers, electrical enclosures, bridges, and public utilities to withstand extreme heat stress.
 2. **Property & Asset Intelligence:**  
-   Generate property-level heat performance reports to assess livability, operational efficiency, and financial risk—supporting ESG appraisals and insurance underwriting.
+   Generate property-level heat performance reports to assess livability, operational efficiency, and financial risk - supporting ESG appraisals and insurance underwriting.
 3. **Smart Mobility & Logistics:**  
    Integrate thermal comfort-based routing and forecasted heat zones into transportation networks, delivery fleets, and cold chains to reduce energy consumption and improve worker safety.
 4. **Environmental & Health Monitoring:**  

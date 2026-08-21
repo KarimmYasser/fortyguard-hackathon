@@ -1,5 +1,5 @@
-# 🛡️ Thermal Sentinel Grid — Asymmetric Innovation & Advanced Physical Mechanisms
-> **FortyGuard Hackathon '26 — Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
+# 🛡️ Thermal Sentinel Grid - Asymmetric Innovation & Advanced Physical Mechanisms
+> **FortyGuard Hackathon '26 - Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
 > Four Non-Obvious, Cross-Disciplinary Literature Intersections: Cable-Soil Dry-Out, Robust Control Barrier Functions (CBFs), Urban Canyon Aerodynamic Throttling, and Virtual Paper-Oil Moisture Diffusion.
 
 ---
@@ -22,7 +22,7 @@
 
 ---
 
-## 1. 🕳️ Buried Cable–Soil Dry-Out (Coupled Multi-Physics Bottleneck)
+## 1. 🕳️ Buried Cable-Soil Dry-Out (Coupled Multi-Physics Bottleneck)
 
 ### 1.1 The Hidden Failure Mechanism
 Standard distribution monitoring tracks feeder current and transformer top-oil temperature, but **never observes underground soil moisture or thermal resistivity ($\rho_{\text{soil}}$)** surrounding buried cables.
@@ -86,7 +86,7 @@ flowchart LR
 ## 3. 🏙️ Urban Canyon Aerodynamics & Heat Rejection Throttling
 
 ### 3.1 The Hidden Failure Mechanism
-IEEE transformer standards assume standard free-convective airflow ($h_c \approx 10–15\text{ W/m}^2\text{K}$). In dense urban canyons, building height-to-width ratios ($H/W$) and low sky-view factors cause aerodynamic wind-sheltering, air recirculation, and reflected short-wave irradiance from high-albedo facades, drastically throttling equipment cooling capacity.
+IEEE transformer standards assume standard free-convective airflow ($h_c \approx 10-15\text{ W/m}^2\text{K}$). In dense urban canyons, building height-to-width ratios ($H/W$) and low sky-view factors cause aerodynamic wind-sheltering, air recirculation, and reflected short-wave irradiance from high-albedo facades, drastically throttling equipment cooling capacity.
 
 ```mermaid
 flowchart TD

@@ -7,7 +7,7 @@ audience: Hackathon Judges, Grid Reliability Engineers, Facility Directors
 mode: autonomous
 ---
 
-## Frame 1 — The Hook & Market Blindspot ($2.8M Problem)
+## Frame 1 - The Hook & Market Blindspot ($2.8M Problem)
 
 - scene: Split screen comparing Phoenix Sky Harbor airport station (43.1°C) vs downtown substation 2m asphalt heat trap (47.6°C, +4.5°C delta)
 - duration: 30s
@@ -19,7 +19,7 @@ mode: autonomous
 
 Open on a stark split-screen contrast: airport open terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $43.1^\circ\mathrm{C}$ vs $47.6^\circ\mathrm{C}$, the $+4.5^\circ\mathrm{C}$ microclimate delta, 15x accelerated aging factor, and $2.8M in catastrophic blackout damage.
 
-## Frame 2 — The Solution: FortyGuard 2m AI + IEEE Differential Engine
+## Frame 2 - The Solution: FortyGuard 2m AI + IEEE Differential Engine
 
 - scene: 4 Asymmetric Scientific Moats engineering blueprint and IEEE C57.91 differential thermal equation flow
 - duration: 30s
@@ -31,7 +31,7 @@ Open on a stark split-screen contrast: airport open terrain on the left vs radia
 
 Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\text{soil}} = 0.90 \to 2.48\text{ K}\cdot\text{m/W}$), 2. Canyon Aerodynamics ($-32\%$ cooling fin derate), 3. Virtual Paper-to-Oil Moisture Desorption ($RS_o = 42\%$), and 4. Exact IEEE Winding Hot-Spot Differential Equations ($T_{hs} \le 140^\circ\mathrm{C}$).
 
-## Frame 3 — Why Agentic Physical AI (LangGraph + Non-LLM CBF-QP)
+## Frame 3 - Why Agentic Physical AI (LangGraph + Non-LLM CBF-QP)
 
 - scene: 4-Layer Hybrid Stack and glowing CBF-QP Mathematical Safety Firewall
 - duration: 30s
@@ -43,7 +43,7 @@ Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\te
 
 Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential ODE Solver $\to$ LangGraph Multi-Agent Planner $\to$ Non-LLM CBF-QP Safety Barrier. A glowing cyan and amber firewall enforces the forward-invariance envelope ($0.95 \le V_{\text{pu}} \le 1.05$, $T_{hs} \le 140^\circ\mathrm{C}$).
 
-## Frame 4 — Live Dashboard Demo: What-If Studio & AC Power Flow
+## Frame 4 - Live Dashboard Demo: What-If Studio & AC Power Flow
 
 - scene: Mission Control UI at http://127.0.0.1:8000 with 12h scrubber, What-If sliders (<15ms ODE re-solving), and 4-bus power network
 - duration: 45s
@@ -55,7 +55,7 @@ Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential O
 
 High-fidelity Mission Control view. Baseline temperature curve spikes to $143.2^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $136.8^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms solver speed, and 4-bus AC Power Flow demonstrates 100% hospital feeder uptime.
 
-## Frame 5 — Auditable ROI & Financial Impact (LBNL ICE Standard)
+## Frame 5 - Auditable ROI & Financial Impact (LBNL ICE Standard)
 
 - scene: Investment-grade financial audit with LBNL ICE Standard, 5,952x ROI badge, and $2.79M avoided loss breakdown
 - duration: 30s
@@ -67,7 +67,7 @@ High-fidelity Mission Control view. Baseline temperature curve spikes to $143.2^
 
 Prominent gold and emerald financial audit card: $5,952.7\text{x}$ ROI hero badge, $\$2,791,338$ Net Avoided Loss, $846.8$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and $100\%$ critical medical uptime.
 
-## Frame 6 — Outro & Official Submission Lockup
+## Frame 6 - Outro & Official Submission Lockup
 
 - scene: Track 06 & Track 02 badges, IEEE C57.91 & IEC 60076 certification seals, author credits, and live platform link
 - duration: 15s

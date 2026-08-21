@@ -1,4 +1,4 @@
-# Check API Credits Usage — FortyGuard Temperature API®
+# Check API Credits Usage - FortyGuard Temperature API®
 
 > **Official Endpoints:**  
 > - `POST https://api.fortyguard.com/v1/system/fetch-api-key-usage`  

@@ -1,6 +1,6 @@
-# ⚡ Thermal Sentinel Grid — FortyGuard Hackathon '26
+# ⚡ Thermal Sentinel Grid - FortyGuard Hackathon '26
 > **Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Grid Assets & Transformers**  
-> *Building the World's Temperature AI · Global AI Hackathon (August 18–30, 2026)*
+> *Building the World's Temperature AI · Global AI Hackathon (August 18-30, 2026)*
 
 [![Track: Agentic AI](https://img.shields.io/badge/Track%2006-Agentic%20AI-0e9ec4?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Future%20Buildings%20%26%20Energy-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
@@ -11,7 +11,7 @@
 
 ## 🧭 Executive Summary
 
-During extreme urban heatwaves, standard meteorological forecasts report broad, regional temperatures measured miles away at airports or high above open terrain (e.g., 38°C–42°C). However, critical grid infrastructure—**substation distribution transformers, underground MV cables, padmount switchgear, and outdoor Battery Energy Storage Systems (BESS)**—operates directly within the **2-meter boundary layer** above radiating asphalt and urban street canyons, where convective air temperatures regularly exceed **48°C–52°C**.
+During extreme urban heatwaves, standard meteorological forecasts report broad, regional temperatures measured miles away at airports or high above open terrain (e.g., 38°C-42°C). However, critical grid infrastructure - **substation distribution transformers, underground MV cables, padmount switchgear, and outdoor Battery Energy Storage Systems (BESS)** - operates directly within the **2-meter boundary layer** above radiating asphalt and urban street canyons, where convective air temperatures regularly exceed **48°C-52°C**.
 
 This microclimate heat trap creates massive **cumulative thermal soak**, pushing transformer top-oil and winding hot-spot temperatures past critical limits, accelerating insulation aging by orders of magnitude, and driving catastrophic substation blowouts and grid outages.
 
@@ -54,7 +54,7 @@ flowchart LR
     H -->|Provably Safe| I[Autonomous Dispatch / Work Order]
 ```
 
-1. **Buried Cable–Soil Moisture Dryout (IEC 60287):** Ingests 5-day FortyGuard persistence to infer non-linear soil thermal resistivity surge ($\rho_{\text{soil}}$ from $0.9$ to $> 2.5\text{ K}\cdot\text{m/W}$), exposing the hidden underground cable bottleneck.
+1. **Buried Cable-Soil Moisture Dryout (IEC 60287):** Ingests 5-day FortyGuard persistence to infer non-linear soil thermal resistivity surge ($\rho_{\text{soil}}$ from $0.9$ to $> 2.5\text{ K}\cdot\text{m/W}$), exposing the hidden underground cable bottleneck.
 2. **Provably Safe Control Barrier Functions (CBF-QP):** Enforces forward-invariance of safe thermal sets $\mathcal{C} = \{x : h_o(x) \ge 0, h_{hs}(x) \ge 0\}$ under bounded FortyGuard forecast uncertainty ($\widehat{T}_a \pm \epsilon$).
 3. **Urban Canyon Aerodynamic Throttling (Oke / Evola):** Computes morphological wind-sheltering ($\kappa_{\text{morph}}$) and equipment cooling derate ($\eta_{\text{cool}}$) caused by deep building canyons ($H/W$) and reflected facade irradiance.
 4. **Virtual Moisture & Dielectric Risk Sensor (Fick's Law):** Models temperature-driven moisture desorption from cellulose paper into oil, alerting to dielectric arcing risk before emergency hot-spot limits trip.
@@ -65,20 +65,29 @@ flowchart LR
 
 | Dimension | Standard Weather APIs / Satellite LST | FortyGuard Temperature AI |
 | :--- | :--- | :--- |
-| **Measurement Target** | Coarse regional towers (10–30 km) / Satellite skin LST | **Exact 2-meter convective ambient air at asset parcel (60–100m)** |
+| **Measurement Target** | Coarse regional towers (10-30 km) / Satellite skin LST | **Exact 2-meter convective ambient air at asset parcel (60-100m)** |
 | **Microclimate Context** | Blind to asphalt, street canyons, and building shade | **Incorporates land-cover morphology & solar irradiance ($S(t)$)** |
 | **Duration Intelligence** | Instantaneous snapshot only | **Continuous Persistence ($P_\theta$) & Degree-Hour Exceedance ($H_\theta$)** |
 | **Predictive Horizon** | Macroscopic synoptic forecast | **12-Hour Hyperlocal Forward Forecast** for proactive intervention |
-| **Actionability** | *"Airport says 39°C — status normal"* ❌ | *"Asset ambient 47.6°C with 7h persistence"* ⚠️ (Proactive cooling dispatch) |
+| **Actionability** | *"Airport says 39°C - status normal"* ❌ | *"Asset ambient 47.6°C with 7h persistence"* ⚠️ (Proactive cooling dispatch) |
 
 ---
 
-## 🔌 FortyGuard API Dual-Mode Architecture (Live Ingestion vs. Benchmark Replay)
+## 🔌 FortyGuard API Dual-Mode Architecture & System Taxonomy
 *(For the complete architectural design record, see **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md)**)*
 
 Thermal Sentinel Grid is built with a dual-mode ingestion pattern:
-1. **Mode A: Live Cloud Ingestion (`AsyncFortyGuardClient` / `POST /api/v1/scan`):** Fully integrated with FortyGuard's async submit-and-poll lifecycle (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{activity_id}`, `/v1/system/fetch-api-key-usage`).
+1. **Mode A: Live Cloud Ingestion (`AsyncFortyGuardClient` / `POST /api/v1/scan`):** Fully integrated with FortyGuard's async submit-and-poll lifecycle (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{activity_id}`, `/v1/system/fetch-api-key-usage`) with live credit billing.
 2. **Mode B: Deterministic Benchmark Replay (`PhoenixHeatwaveReplayEngine` / `POST /api/v1/replay/phoenix-2023`):** Uses high-resolution pre-ingested Phoenix July 2023 heatwave fixtures ([`phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json)). This delivers **$<15\text{ms}$ sub-second ODE solving**, smooth 60 FPS timeline scrubbing, 100% scientific reproducibility for IEEE Annex G validation, and zero-downtime stability during live judging presentations.
+
+### 🏛️ System Boundary & Simulation Taxonomy
+| Layer | Implementation | Status | Purpose |
+| :--- | :--- | :---: | :--- |
+| **FortyGuard Live API** | `/v1/env_params`, `/v1/heatmap`, `/v1/system/fetch-api-key-usage` | 🟢 **LIVE** | On-demand parcel scanning, microclimate index lookup & real-time quota accounting. |
+| **Physics ODE Solvers** | IEEE C57.91 Annex G, Arrhenius Aging, IEC 60287 Soil, 14-Bus AC Flow | ⚡ **CALCULATED LIVE** | Real-time continuous differential equations and CBF-QP safety barrier evaluations. |
+| **Substation Asset Digital Twin** | IEEE C57.91 standard transformer parameters (50 MVA, $\tau_{TO}$, $\tau_W$, $R$) | 📦 **SIMULATED TWIN** | Industry-standard CIM/GIS substation nameplate profiles for digital twin benchmarking. |
+| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($47.6^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=7.17\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
+| **Hardware Actuators** | SCADA dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated dispatch control commands with guaranteed CBF-QP safety invariants. |
 
 ---
 
@@ -300,7 +309,7 @@ To ensure full transparency with the judging committee, here are current prototy
 
 ## 👨‍💻 Author & Research Background
 
-**Karim Yasser** — *Computer Engineering, Cairo University Faculty of Engineering*  
+**Karim Yasser** - *Computer Engineering, Cairo University Faculty of Engineering*  
 * **AI Research Intern at Nile University SESC Research Center:** Architected autonomous multi-agent OpenFOAM CFD/thermal numerical pipeline; co-authoring upcoming research publication.
 * **Software Engineering Intern at Siemens Digital Industries Software:** High-performance CAT RTS engine (54.5x speedup, large-scale concurrent data ingestion).
 * **Portfolio:** [karim-yasser.vercel.app](https://karim-yasser.vercel.app) · **GitHub:** [@KarimmYasser](https://github.com/KarimmYasser)

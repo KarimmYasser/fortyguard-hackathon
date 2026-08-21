@@ -1,4 +1,4 @@
-# Street View Segmentation — FortyGuard Temperature API®
+# Street View Segmentation - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/streetview`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  

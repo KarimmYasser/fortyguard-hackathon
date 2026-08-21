@@ -19,7 +19,7 @@ from src.models.safety import ActionType, MitigationAction
 
 class PhoenixHeatwaveReplayEngine:
     """
-    Replay benchmark generator for Phoenix July 24–26, 2023 episode.
+    Replay benchmark generator for Phoenix July 24-26, 2023 episode.
     """
 
     def __init__(self) -> None:

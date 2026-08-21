@@ -186,7 +186,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                 <span className="text-cyan-400">https://api.fortyguard.com/v1</span>
               </div>
               <div className="text-[11px] text-slate-500">
-                Billing Cycle: {planDetails.billing_period || 'Aug 20 – Sep 24, 2026'} · Deducts credits on completed tasks
+                Billing Cycle: {planDetails.billing_period || 'Aug 20 - Sep 24, 2026'} · Deducts credits on completed tasks
               </div>
             </div>
 
@@ -279,9 +279,9 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                 onChange={(e) => setAnalyticType(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white font-mono text-xs focus:ring-1 focus:ring-amber-400 outline-none"
               >
-                <option value="tcm">tcm — 2m Snapshot Temperature</option>
-                <option value="persistence">persistence — Continuous Heat Run (P40)</option>
-                <option value="exceedance">exceedance — Degree-Hour Threshold</option>
+                <option value="tcm">tcm - 2m Snapshot Temperature</option>
+                <option value="persistence">persistence - Continuous Heat Run (P40)</option>
+                <option value="exceedance">exceedance - Degree-Hour Threshold</option>
               </select>
             </div>
             <div>

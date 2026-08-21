@@ -1,4 +1,4 @@
-# Quickstart Guide — FortyGuard Temperature API®
+# Quickstart Guide - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/quickstart](https://docs-api.fortyguard.com/docs/quickstart)
 
@@ -42,7 +42,7 @@ The FortyGuard Engine processes high-resolution geospatial models and Large Temp
 | **404** | Activity not found or not yet indexed | Retry status check after a short delay |
 | **429** | Rate limit exceeded | Back off and retry |
 | **500** | Server-side processing error | Check logs and retry or contact support |
-| **`Submitted` / `Processing`** | Task is actively computing | Continue bounded polling (e.g. every 2–5s) |
+| **`Submitted` / `Processing`** | Task is actively computing | Continue bounded polling (e.g. every 2-5s) |
 | **`Completed`** | Task finished successfully | Retrieve result data payload (Credits deducted) |
 | **`Failed`** | Task execution failed | Stop polling, record activity_id (No credits deducted) |
 

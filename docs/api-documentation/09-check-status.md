@@ -1,4 +1,4 @@
-# Check Status — FortyGuard Temperature API®
+# Check Status - FortyGuard Temperature API®
 
 > **Official Endpoint:** `GET https://api.fortyguard.com/v1/status/{activity_id}`  
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Available across all plans)  

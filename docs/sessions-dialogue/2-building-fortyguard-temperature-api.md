@@ -1,12 +1,12 @@
-# Building on the FortyGuard Temperature API® — Full Session Transcript & Summary
+# Building on the FortyGuard Temperature API® - Full Session Transcript & Summary
 
 **Recording URL:** [Zoho Webinar Recording](https://webinar.zoho.com/meeting/videoprv?recordingId=63d82747aa1472191eb371cf93f5e4894b610ee1af6efd8c6649e1debbfc0024&x-meeting-org=935374719)
 
 **Date:** August 18, 2026 | **Duration:** 1 hour 1 minute | **Language:** English
 
 **Speakers:**
-- **Nahil** — Hackathon Organizer & Community Lead
-- **Fawad** — Head of Software Engineering at FortyGuard
+- **Nahil** - Hackathon Organizer & Community Lead
+- **Fawad** - Head of Software Engineering at FortyGuard
 
 ---
 
@@ -18,30 +18,30 @@ Fawad (Head of Software Engineering at FortyGuard) and Nahil guide participants 
 ### Key Highlights & Technical Insights
 
 1. **Core API Capabilities & Data Scope:**
-   - High-resolution outdoor urban temperature and microclimate data (surface temperature, apparent temperature, heat index).
-   - Support for historical observations and forward-looking forecasted values.
-   - Spatial breakdown by bounding boxes, polygon areas, tile grids, and parcel-level segmentation.
+ - High-resolution outdoor urban temperature and microclimate data (surface temperature, apparent temperature, heat index).
+ - Support for historical observations and forward-looking forecasted values.
+ - Spatial breakdown by bounding boxes, polygon areas, tile grids, and parcel-level segmentation.
 
 2. **Architecture & 6 Core Endpoints:**
-   - Major endpoints include Heat Map, Parcel Analytics, Time-Series / Historical Data, Forecast Data, and Environmental Parameters.
-   - **Polling Pattern:** Due to heavy geospatial computations for large polygons, the API processes queries asynchronously. Clients initiate a request and poll every 3–5 seconds until results are ready.
+ - Major endpoints include Heat Map, Parcel Analytics, Time-Series / Historical Data, Forecast Data, and Environmental Parameters.
+ - **Polling Pattern:** Due to heavy geospatial computations for large polygons, the API processes queries asynchronously. Clients initiate a request and poll every 3-5 seconds until results are ready.
 
 3. **Quickstart Template & Code Walkthrough:**
-   - Walkthrough of the official FortyGuard Temperature API Quickstart template repository.
-   - API Key setup via headers, setting bounding boxes, configuring data parameters, and parsing JSON payloads.
-   - Handling rate limits and request concurrency.
+ - Walkthrough of the official FortyGuard Temperature API Quickstart template repository.
+ - API Key setup via headers, setting bounding boxes, configuring data parameters, and parsing JSON payloads.
+ - Handling rate limits and request concurrency.
 
 4. **Environmental Analytics & Case Studies:**
-   - Calculating standard deviation, temperature thresholds (e.g. continuous hours > 35°C), and heat wave event detection.
-   - Identifying 'Hottest to Coolest Parcels' to prioritize urban cooling interventions and heat resilience.
-   - Generating automated heat analysis reports and visual distributions.
+ - Calculating standard deviation, temperature thresholds (e.g. continuous hours > 35°C), and heat wave event detection.
+ - Identifying 'Hottest to Coolest Parcels' to prioritize urban cooling interventions and heat resilience.
+ - Generating automated heat analysis reports and visual distributions.
 
 5. **AI & LLM Integration (Agentic AI Track):**
-   - Encouragement to build Agentic AI workflows, autonomous climate bots, urban planning copilots, or predictive alerting agents utilizing FortyGuard API endpoints.
+ - Encouragement to build Agentic AI workflows, autonomous climate bots, urban planning copilots, or predictive alerting agents utilizing FortyGuard API endpoints.
 
 6. **Hackathon Submission Guidelines & Q&A:**
-   - Mandatory deliverables: A working live URL / deployed application, demo video (explaining architecture & value proposition), public GitHub repository, and documented use of the FortyGuard Temperature API.
-   - Post-hackathon Startup API program for teams wanting commercial continuation.
+ - Mandatory deliverables: A working live URL / deployed application, demo video (explaining architecture & value proposition), public GitHub repository, and documented use of the FortyGuard Temperature API.
+ - Post-hackathon Startup API program for teams wanting commercial continuation.
 
 ---
 

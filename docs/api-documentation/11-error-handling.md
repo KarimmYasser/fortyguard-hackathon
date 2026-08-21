@@ -1,4 +1,4 @@
-# Error Handling & Diagnostics — FortyGuard Temperature API®
+# Error Handling & Diagnostics - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/errors](https://docs-api.fortyguard.com/docs/errors)
 

@@ -1,4 +1,4 @@
-# ❓ FortyGuard Hackathon '26 — Comprehensive Master FAQ
+# ❓ FortyGuard Hackathon '26 - Comprehensive Master FAQ
 
 > **Official Event Knowledge Base & Slack Q&A Synthesis**  
 > Compiled from official FortyGuard announcements, mentor & organizer answers, and all real-time debugging threads across `#announcements`, `#help-general`, and `#help-technical`.
@@ -52,7 +52,7 @@
 
 ### Q: What is the exact submission deadline?
 * **Deadline:** **30 August 2026, 11:59 PM GST (UTC+4)**.
-* **Late Policy:** **Strict cutoff** — the submission form closes automatically, and late submissions will not be accepted. Submit with time to spare.
+* **Late Policy:** **Strict cutoff** - the submission form closes automatically, and late submissions will not be accepted. Submit with time to spare.
 
 ### Q: Where do I check for official schedule updates?
 * `#announcements` in Slack is the single authoritative source of truth.
@@ -92,7 +92,7 @@
 * If assigned teammates do not reply to emails or Slack DMs:
   1. You may choose to proceed as a **Solo participant** (1 person).
   2. Or post in the **`#looking-for-team`** Slack channel to team up with active builders.
-* You do not need admin approval to change teammates—simply submit the final project submission form with the active team members.
+* You do not need admin approval to change teammates - simply submit the final project submission form with the active team members.
 
 ### Q: How do teammates join Slack if their invite link expired?
 * Request an invite through Slack's built-in workspace invitation request tool or ask in `#help-general`. Remind teammates to check their spam/promotions folders for emails from `slack.com`.
@@ -113,7 +113,7 @@
 ### Q: What tier and credit quota do participants receive?
 * **Quota:** **2,000,000 free credits** per hackathon key.
 * **Duration:** Valid for **5 weeks** (covers development, testing, judging, and live demos).
-* **Tier:** **Full Premium Access** — all endpoints (Heatmaps, Environmental Parameters, Satellite Segmentation, Street View Segmentation, and Heat Intelligence reports) are unlocked.
+* **Tier:** **Full Premium Access** - all endpoints (Heatmaps, Environmental Parameters, Satellite Segmentation, Street View Segmentation, and Heat Intelligence reports) are unlocked.
 
 ### Q: Do failed API calls cost credits?
 * **No.** Credits are **only deducted on successful task completion**. Failed requests (4xx/5xx errors or rejected requests) cost **0 credits**.
@@ -316,7 +316,7 @@ print(f"Batch completed! Processed {len(results)} analyses.")
 
 > [!WARNING]
 > ### 6 Non-Obvious Behaviors & Best Practices:
-> 1. **`start_time` must be `"HH:MM"` string:** Pass `"14:00"` — do **not** pass an integer like `14`.
+> 1. **`start_time` must be `"HH:MM"` string:** Pass `"14:00"` - do **not** pass an integer like `14`.
 > 2. **Avoid invalid `analytic_type` casing/values:** The default is `tcm` (raw temperature). Omit `analytic_type` or pass lower-case `"time_of_measure"`, `"exceedance"`, or `"persistence"`.
 > 3. **Empty Data on First "Completed" Poll:** In asynchronous polling, `map_data` / `stats_data` may momentarily be empty when `status` first flips to `"Completed"`. Your polling loop must verify that `features` or `stats_data` are populated before treating the response as ready.
 > 4. **Credits on Failed Tasks:** Failed tasks are free and do not consume credits. Successful analyses consume credits based on your plan tier.
@@ -358,7 +358,7 @@ def poll_for_heatmap(base_url, headers, activity_id, max_retries=30, initial_int
 | Analytic / View | Parameter / Method | Description | Primary Use Case |
 | :--- | :--- | :--- | :--- |
 | **Standard (TCM)** | `analytic_type="tcm"` *(or omit)* | Raw 2m air temperature (°C) across every spatial tile. | Baseline heat mapping, urban heat islands. |
-| **Time of Measure** | `analytic_type="time_of_measure"` | Identifies the hour of day (0–23) when each tile peaks. Use `filter_type=3`. | Shift scheduling, delivery dispatching, sea breeze fingerprinting. |
+| **Time of Measure** | `analytic_type="time_of_measure"` | Identifies the hour of day (0-23) when each tile peaks. Use `filter_type=3`. | Shift scheduling, delivery dispatching, sea breeze fingerprinting. |
 | **Exceedance** | `analytic_type="exceedance"`, `threshold=35`, `direction="above"` | Cumulative degree-hours accrued past a temperature threshold (°C). | Worker OSHA compliance, cumulative thermal burden, HVAC strain. |
 | **Persistence** | `analytic_type="persistence"`, `threshold=35`, `direction="above"` | Maximum continuous duration (consecutive hours) sustained above a threshold. | Sustained heatwave endurance, vulnerable population alerts. |
 | **Time Series** | Built in Dashboard / Client Code | Line chart of average, hottest, and coolest spots across time. | Tracking heat wave progression and extreme divergence. |
@@ -368,13 +368,13 @@ def poll_for_heatmap(base_url, headers, activity_id, max_retries=30, initial_int
 
 ## 🎯 12. The 7 Challenge Tracks & Project Concepts
 
-1. **Track 1 — Resilient Cities & Infrastructure:** Cool-walking route planners, bus stop/playground shade-audit tools, digital-twin tree canopy simulators.
-2. **Track 2 — Future Buildings & Energy:** Siting & facade-orientation advisor, utility demand-response signals, building retrofit ROI calculators.
-3. **Track 3 — Industrial & Enterprise:** Data center thermal siting screener, cold-chain logistics protector, parametric heat-risk insurance scorecards.
-4. **Track 4 — Government & Environment:** Demographic heat-vulnerability mapping, outdoor workforce heat alerts, agricultural microclimate timing.
-5. **Track 5 — Model Designing:** Composite vulnerability algorithms, predictive worker-strain models, microclimate forecasting layers.
-6. **Track 6 — Agentic Track (API + Agentic AI):** Autonomous natural-language heat analysts, 24/7 portfolio sweep agents, tool-using research assistants.
-7. **Track 7 — Data Analysis & Correlation:** Non-weather outcome regressions (hospital ER visits, energy demand, transit ridership), heat equity and redlining analyses.
+1. **Track 1 - Resilient Cities & Infrastructure:** Cool-walking route planners, bus stop/playground shade-audit tools, digital-twin tree canopy simulators.
+2. **Track 2 - Future Buildings & Energy:** Siting & facade-orientation advisor, utility demand-response signals, building retrofit ROI calculators.
+3. **Track 3 - Industrial & Enterprise:** Data center thermal siting screener, cold-chain logistics protector, parametric heat-risk insurance scorecards.
+4. **Track 4 - Government & Environment:** Demographic heat-vulnerability mapping, outdoor workforce heat alerts, agricultural microclimate timing.
+5. **Track 5 - Model Designing:** Composite vulnerability algorithms, predictive worker-strain models, microclimate forecasting layers.
+6. **Track 6 - Agentic Track (API + Agentic AI):** Autonomous natural-language heat analysts, 24/7 portfolio sweep agents, tool-using research assistants.
+7. **Track 7 - Data Analysis & Correlation:** Non-weather outcome regressions (hospital ER visits, energy demand, transit ridership), heat equity and redlining analyses.
 
 ---
 
@@ -396,7 +396,7 @@ def poll_for_heatmap(base_url, headers, activity_id, max_retries=30, initial_int
 * **The API provides raw observations:** "What is the 2m temperature at location $(x, y)$ on date $t$?"
 * **Your AI / Agent System provides intelligence & decision-making:**
   1. **Extended Multi-Day Forecasting:** Modeling beyond 12 hours using historical analogs and regressions.
-  2. **Multi-Source Vulnerability Scoring (0–100):** Combining FortyGuard temperature with Census demographics and infrastructure vulnerability.
+  2. **Multi-Source Vulnerability Scoring (0-100):** Combining FortyGuard temperature with Census demographics and infrastructure vulnerability.
   3. **Autonomous Hazard Remediation:** Detecting persistence past equipment safety limits (40°C/45°C) and triggering automated load-shedding or alert dispatches.
 
 ---
@@ -437,24 +437,24 @@ Form URL: **[https://forms.gle/jLgBzVTG1NhJ3gNe6](https://forms.gle/jLgBzVTG1NhJ
 5. **FortyGuard API Usage Details**
 6. **API Key ID** (to verify real API usage on backend)
 7. **AI Tools Used Disclosure**
-8. **Code Repository Link** (GitHub/GitLab — add `hackathon@fortyguard.com` / `Hackathon-FG` if private)
+8. **Code Repository Link** (GitHub/GitLab - add `hackathon@fortyguard.com` / `Hackathon-FG` if private)
 9. **Live Demo URL** (Hosted web app, accessible in incognito without install)
 10. **Demo Video Link** (YouTube/Loom, max 3 min, must show working UI + voiceover)
 
 ### 🏆 Judging Rubric (100% Total)
-* **Impact & Relevance — 40%:** Solves a real urban heat problem with measurable client benefit and commercial viability.
-* **Technical Execution — 35%:** Robust build, client-grade deployable quality, sound data architecture.
-* **Innovation — 15%:** Originality or novel multidisciplinary approach.
-* **Communication — 10%:** Clear, compelling demo, writeup, and video narrative.
+* **Impact & Relevance - 40%:** Solves a real urban heat problem with measurable client benefit and commercial viability.
+* **Technical Execution - 35%:** Robust build, client-grade deployable quality, sound data architecture.
+* **Innovation - 15%:** Originality or novel multidisciplinary approach.
+* **Communication - 10%:** Clear, compelling demo, writeup, and video narrative.
 
 ---
 
 ## 🎥 18. Workshop & Live Session Summaries
 
-1. **Onboarding & Kickoff (18 Aug):** Jay Sadiq (CEO) & Snehil Ahuja (Product Lead) — Challenge overview, track selection, scoring rubrics, and winning strategies.
+1. **Onboarding & Kickoff (18 Aug):** Jay Sadiq (CEO) & Snehil Ahuja (Product Lead) - Challenge overview, track selection, scoring rubrics, and winning strategies.
 2. **Building on the FortyGuard Temperature API (18 Aug):** Complete walkthrough of all 6 endpoints, payload formatting, common pitfalls, and agent orchestration.
-3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) — Production use cases, data intelligence patterns, and commercial opportunities.
-4. **Breaking Silos with Autodesk (19 Aug):** Jordana Rosa (Autodesk Forma) — Contextual site data, environmental analysis, and connecting spatial APIs to generative design tools.
+3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) - Production use cases, data intelligence patterns, and commercial opportunities.
+4. **Breaking Silos with Autodesk (19 Aug):** Jordana Rosa (Autodesk Forma) - Contextual site data, environmental analysis, and connecting spatial APIs to generative design tools.
 
 ---
 

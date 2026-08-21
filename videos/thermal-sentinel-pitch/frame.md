@@ -1,4 +1,4 @@
-# Design Specification — Thermal Sentinel Grid (`frame.md`)
+# Design Specification - Thermal Sentinel Grid (`frame.md`)
 
 ```yaml
 preset: cyber-slate

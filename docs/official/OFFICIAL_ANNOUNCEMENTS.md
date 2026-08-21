@@ -1,7 +1,7 @@
-# 📢 FortyGuard Hackathon '26 — Official Announcements & Rules
+# 📢 FortyGuard Hackathon '26 - Official Announcements & Rules
 
 > **Source:** Official `#announcements` Pinned Canvas & Hackathon Guidelines  
-> **Build Window:** August 18, 2026 (12:00 AM GST) – August 30, 2026 (11:59 PM GST)  
+> **Build Window:** August 18, 2026 (12:00 AM GST) - August 30, 2026 (11:59 PM GST)  
 > **Timezone:** Gulf Standard Time (GST / UTC+4)
 
 ---
@@ -11,9 +11,9 @@
 FortyGuard Hackathon '26 challenges participants to build impactful, client-ready solutions with **hyperlocal 2-metre street-level ambient temperature intelligence** (~20-metre spatial resolution) powered by **Large Temperature Models (LTMs)** and the **Temperature Operating System (tOS)**.
 
 ### Core Parameters
-* **Dates:** 18 – 30 August 2026 (GST / UTC+4)
+* **Dates:** 18 - 30 August 2026 (GST / UTC+4)
 * **Format:** Fully online, global participation
-* **Team Size:** 1–3 people (Solo participants are welcome)
+* **Team Size:** 1-3 people (Solo participants are welcome)
 * **Official Submission Form:** [https://forms.gle/jLgBzVTG1NhJ3gNe6](https://forms.gle/jLgBzVTG1NhJ3gNe6)
 * **Team Channel Creation Form:** [https://forms.gle/CCCvSNgDsDiNZ2gk7](https://forms.gle/CCCvSNgDsDiNZ2gk7)
 * **Submission Deadline:** **30 August 2026, 11:59 PM GST** (Hard cutoff, no late submissions)
@@ -25,49 +25,49 @@ FortyGuard Hackathon '26 challenges participants to build impactful, client-read
 
 ## 🎯 7 Challenge Tracks & Project Examples
 
-### Track 1 — Resilient Cities & Infrastructure
-* **Focus:** Design physical urban spaces around heat — cool walking paths, asset shade audits, intervention testing.
+### Track 1 - Resilient Cities & Infrastructure
+* **Focus:** Design physical urban spaces around heat - cool walking paths, asset shade audits, intervention testing.
 * **Examples:**
   1. *Cool-route planner:* Generates lowest-heat-exposure pedestrian paths using hourly heatmaps.
   2. *Public asset heat audit:* Ranks bus stops, parks, and playgrounds by peak-hour heat to prioritize shade infrastructure.
   3. *Digital-twin intervention simulator:* Simulates temperature reductions from tree canopy expansion or cool pavements.
 
-### Track 2 — Future Buildings & Energy
+### Track 2 - Future Buildings & Energy
 * **Focus:** Siting, powering, and retrofitting buildings based on actual street-level thermal load.
 * **Examples:**
   1. *Facade-orientation advisor:* Scores building sites by solar and heat load to inform HVAC sizing and glazing.
   2. *Demand-response grid signal:* Uses neighborhood heat patterns to estimate utility cooling loads.
   3. *Retrofit ROI calculator:* Quantifies financial payback and energy savings from modeled temperature drops.
 
-### Track 3 — Industrial & Enterprise
+### Track 3 - Industrial & Enterprise
 * **Focus:** Hyperlocal heat as an operational, supply-chain, and underwriting signal.
 * **Examples:**
   1. *Data-center siting screener:* Flags sites with elevated ambient heat and higher cooling overhead.
   2. *Last-mile logistics optimizer:* Protects heat-sensitive cargo and delivery driver safety during transit.
   3. *Parametric heat-risk index:* Translates hyperlocal thermal exposure into insurance and real estate underwriting models.
 
-### Track 4 — Government & Environment
+### Track 4 - Government & Environment
 * **Focus:** Targeting public resources to vulnerable populations and outdoor workforces.
 * **Examples:**
   1. *Heat-vulnerability demographic map:* Combines temperature with demographic data to site cooling centers.
   2. *Worker safety alert system:* Real-time warnings for outdoor construction and utility crews crossing thermal thresholds.
   3. *Microclimate agricultural planner:* Optimizes irrigation and planting timing based on microclimate trends.
 
-### Track 5 — Model Designing
+### Track 5 - Model Designing
 * **Focus:** Algorithms, statistical models, and ML pipelines built on top of raw temperature data.
 * **Examples:**
-  1. *Multi-factor heat vulnerability model:* Predicts composite neighborhood risk scores (0–100).
+  1. *Multi-factor heat vulnerability model:* Predicts composite neighborhood risk scores (0-100).
   2. *Predictive worker safety model:* Early warning models for occupational heat strain.
   3. *Agricultural microclimate model:* Forecasting local microclimate conditions.
 
-### Track 6 — Agentic Track (API + Agentic AI)
+### Track 6 - Agentic Track (API + Agentic AI)
 * **Focus:** Autonomous AI agents that plan, call endpoints, poll tasks, and synthesize decisions with minimal steering.
 * **Examples:**
   1. *Goal-driven heat analyst:* Accepts natural language prompts (e.g. *"find hottest bus stops in Phoenix last July and draft a shade memo"*), executes API calls, and outputs ranked plans.
   2. *Portfolio monitoring agent:* Continuously sweeps current conditions across U.S. assets and triggers automated alerts.
   3. *Tool-using research assistant:* Combines FortyGuard layers with open data, providing auditable API trace logs.
 
-### Track 7 — Data Analysis & Correlation
+### Track 7 - Data Analysis & Correlation
 * **Focus:** Correlating hyperlocal temperature with non-weather outcome datasets.
 * **Examples:**
   1. *Outcome correlation study:* Links temperature to hospital admissions, energy demand, transit ridership, crime, or retail foot traffic.
@@ -125,10 +125,10 @@ Submit via the **[Official Submission Form](https://forms.gle/jLgBzVTG1NhJ3gNe6)
 ## 🎥 Workshop & Live Session Recap
 
 All live sessions are recorded and distributed to registered participants:
-1. **Onboarding & Kickoff (18 Aug):** Jay Sadiq (CEO) & Snehil Ahuja (Product Lead) — Event mechanics, 7 tracks, scoring rubrics, and winning strategies.
+1. **Onboarding & Kickoff (18 Aug):** Jay Sadiq (CEO) & Snehil Ahuja (Product Lead) - Event mechanics, 7 tracks, scoring rubrics, and winning strategies.
 2. **Building on the FortyGuard Temperature API (18 Aug):** Step-by-step walkthrough of all 6 endpoints, payload formatting, common pitfalls, and agent orchestration.
-3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) — Production use cases, data intelligence patterns, and commercial opportunities.
-4. **Breaking Silos with Autodesk (19 Aug):** Jordana Rosa (Autodesk Forma) — Contextual site data, environmental analysis, and connecting spatial APIs to generative design tools.
+3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) - Production use cases, data intelligence patterns, and commercial opportunities.
+4. **Breaking Silos with Autodesk (19 Aug):** Jordana Rosa (Autodesk Forma) - Contextual site data, environmental analysis, and connecting spatial APIs to generative design tools.
 
 ---
 

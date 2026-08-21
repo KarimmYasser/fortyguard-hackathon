@@ -1,5 +1,5 @@
 # 🧠 Mentor Insights, Idea Selection Framework & Webinar Synthesis
-> **FortyGuard Hackathon '26 — *Building the World's Temperature AI***  
+> **FortyGuard Hackathon '26 - *Building the World's Temperature AI***  
 > Comprehensive distillation of keynotes, technical workshops, and judging advice from FortyGuard engineers, founders, and industry leaders (*Google Cloud, Autodesk, Inspeerity*).
 
 ---
@@ -28,7 +28,7 @@
 ## 1. 🎯 Idea Selection & Problem Framing Philosophy
 
 ### A. The "Deep Problem Understanding" Advantage
-*(Jordana Rosa — Senior Technical Specialist at Autodesk & 4x Hackathon Winner)*
+*(Jordana Rosa - Senior Technical Specialist at Autodesk & 4x Hackathon Winner)*
 
 1. **Pick Problems You Deeply Understand:**
    * In the era of AI coding assistants and rapid prototyping, anyone can build a generic dashboard in a few hours. The winning edge comes from finding the non-obvious solution that competitors miss because of your specific domain or engineering background.
@@ -42,13 +42,13 @@
 ---
 
 ### B. Escaping the "Builder's Trap" & Prioritizing Commercial Value
-*(Ashan Javed — Lead Solutions Architect / FortyGuard AI Team & Ahmed Abdelkhalek — Head of Digital Natives & Startups, Google Cloud)*
+*(Ashan Javed - Lead Solutions Architect / FortyGuard AI Team & Ahmed Abdelkhalek - Head of Digital Natives & Startups, Google Cloud)*
 
 1. **Engineering Perfection vs. Commercial Clarity:**
    * *"If you do great engineering, but your product doesn't answer a clear commercial question or show measurable value, it will score poorly with judges."*
 2. **Identify the Exact Paying Customer:**
    * Never pitch a generic *"everyone in the city"* tool. Specify the exact buyer: Commercial Facility Managers, Data Center Operators, Property Underwriters, Electric Utilities, General Contractors, or Municipal Heat Officers.
-3. **Outcome over Tech Stack *(Karol Wiszowaty — COO, Inspeerity)*:**
+3. **Outcome over Tech Stack *(Karol Wiszowaty - COO, Inspeerity)*:**
    * Sell the **catastrophe prevented, downtime eliminated, or operational dollar savings**, not just the list of LLM models or API endpoints.
 
 ---
@@ -59,8 +59,8 @@ Mentors repeatedly emphasized that conventional weather APIs (Apple Weather, Ope
 
 | Dimension | Conventional Weather APIs / Orbital Satellites | FortyGuard Temperature AI |
 | :--- | :--- | :--- |
-| **Spatial Resolution** | Regional zip-code or city averages (~10–30 km) | **Parcel & street level** (60m, 80m, 100m tiles down to building footprints) |
-| **Atmospheric Boundary** | 10–30m tower height or open airport grass | **Exact 2-meter ground/street layer** (where humans, building facades, and electrical equipment operate) |
+| **Spatial Resolution** | Regional zip-code or city averages (~10-30 km) | **Parcel & street level** (60m, 80m, 100m tiles down to building footprints) |
+| **Atmospheric Boundary** | 10-30m tower height or open airport grass | **Exact 2-meter ground/street layer** (where humans, building facades, and electrical equipment operate) |
 | **Heat Duration Analysis** | Single snapshot max temperature only | **Exceedance & Persistence layers** (continuous hours spent above critical safety thresholds) |
 | **Context & Causality** | Raw temperature number only | **Land Cover & Computer Vision** (explains *why* it's hot: building %, asphalt %, tree canopy %, facade reflectance) |
 | **Temporal Horizon** | Macroscopic synoptic forecast | **12-Hour Hyperlocal Street Forecast** (updated hourly) + Historical back to 2021 |
@@ -103,7 +103,7 @@ During the technical webinars, FortyGuard demonstrated 6 production-grade web ap
 * **Commercial Value:** Dynamically optimizes Power Usage Effectiveness (PUE) and schedules carbon-aware compute workloads during cooler microclimate windows.
 
 ### 4. Insurance & Underwriting Risk Modeling
-* **Core Endpoints:** Historical Time-Series (2021–present) + Exceedance / Persistence + Satellite Segmentation.
+* **Core Endpoints:** Historical Time-Series (2021-present) + Exceedance / Persistence + Satellite Segmentation.
 * **Mechanism:** Correlates multi-year heatwave duration with structural fire claims, electrical panel failures, and wildfire ignition zones (e.g., Los Angeles heatwave fire risks).
 * **Commercial Value:** Enables parametric heat insurance products and dynamic property risk premiums.
 
@@ -121,17 +121,17 @@ During the technical webinars, FortyGuard demonstrated 6 production-grade web ap
 ---
 
 ## 4. 🤖 Engineering Guide for Track 06: Agentic AI
-*(Fawad Shah — Head of Software Engineering)*
+*(Fawad Shah - Head of Software Engineering)*
 
 1. **Expose APIs as Structured Agent Tools:**
    Wrap the 6 core FortyGuard endpoints (Heatmap, Exceedance, Persistence, Environmental Parameters, Satellite Segmentation, Heat Intelligence) as typed tool functions for LangGraph / LangChain agents.
 2. **Handle Asynchronous Polling Gracefully:**
-   Geospatial polygon computations are non-blocking. The agent must submit the query, extract the `activity_id`, and poll the `/v1/status` endpoint every 3–5 seconds without hanging the pipeline.
+   Geospatial polygon computations are non-blocking. The agent must submit the query, extract the `activity_id`, and poll the `/v1/status` endpoint every 3-5 seconds without hanging the pipeline.
 3. **Contextual Multi-Step Reasoning:**
    The agent should not stop at fetching temperature; it must:
-   - Identify *why* the heat anomaly exists (Land Cover segmentation).
-   - Evaluate cumulative thermal soak (Persistence / Exceedance).
-   - Formulate and dispatch actionable mitigation instructions (load-shedding, HVAC cycling, resident push alerts).
+ - Identify *why* the heat anomaly exists (Land Cover segmentation).
+ - Evaluate cumulative thermal soak (Persistence / Exceedance).
+ - Formulate and dispatch actionable mitigation instructions (load-shedding, HVAC cycling, resident push alerts).
 
 ---
 

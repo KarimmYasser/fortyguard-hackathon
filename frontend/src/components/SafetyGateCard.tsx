@@ -11,7 +11,7 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
   const isAccept = verdict.status === 'ACCEPT' && isMitigated;
 
   return (
-    <div className="glass-panel rounded-2xl p-5 border border-slate-800 h-full flex flex-col justify-between">
+    <div id="tour-safety-gate" className="glass-panel rounded-2xl p-5 border border-slate-800 h-full flex flex-col justify-between">
       <div>
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">

@@ -1,6 +1,6 @@
 """
 72-Hour Multi-Day Compounding Heatwave Simulation Engine
-Simulates the historic Phoenix July 24–26, 2023 3-day extreme heatwave episode.
+Simulates the historic Phoenix July 24-26, 2023 3-day extreme heatwave episode.
 Models continuous overnight heat traps, cumulative thermal soak,
 and non-linear IEC 60287 soil moisture dryout across 72 hours.
 """
@@ -265,7 +265,7 @@ class MultiDayHeatwaveEngine:
         cum_avoided_loss = (0.98 - 0.01) * c_consequence + (avoided_life_hours * 1.944) - (3 * 469.0)
 
         return MultiDaySimulationResult(
-            scenario_name="Phoenix July 24–26, 2023 Compounding 72-Hour Heatwave Benchmark",
+            scenario_name="Phoenix July 24-26, 2023 Compounding 72-Hour Heatwave Benchmark",
             total_hours=72,
             days_summary=days_summary,
             timeline_72h=timeline_72h,

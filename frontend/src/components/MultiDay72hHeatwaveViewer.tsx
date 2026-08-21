@@ -28,7 +28,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
   return (
     <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div id="tour-72h-header" className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div className="flex items-center gap-3.5">
           <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-rose-500 to-orange-600 p-[1px] shadow-lg shadow-rose-500/20">
             <div className="h-full w-full bg-slate-950 rounded-[15px] flex items-center justify-center">
@@ -38,7 +38,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
           <div>
             <div className="flex items-center gap-2.5">
               <h2 className="text-base font-black text-white uppercase tracking-wide font-heading">
-                72-Hour Compounding Multi-Day Heatwave (July 24–26, 2023)
+                72-Hour Compounding Multi-Day Heatwave (July 24-26, 2023)
               </h2>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-800 animate-pulse">
                 COMPOUNDING DRYOUT
@@ -51,7 +51,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
         </div>
 
         {/* Day Switcher */}
-        <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+        <div id="tour-72h-day-selector" className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           {[1, 2, 3].map((d) => (
             <button
               key={d}
@@ -69,7 +69,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
       </div>
 
       {/* 3-Day Progressive Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+      <div id="tour-72h-metrics" className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
         {days.map((day: any) => {
           const isSelected = day.day_number === selectedDay;
           return (

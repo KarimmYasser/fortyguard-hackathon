@@ -14,7 +14,9 @@ import { IEEEAnnexGBenchmarkViewer } from './components/IEEEAnnexGBenchmarkViewe
 import { SafetyGateCard } from './components/SafetyGateCard';
 import { AuditLedger } from './components/AuditLedger';
 import { LiveApiScanModal } from './components/LiveApiScanModal';
+import { HomePitchViewer } from './components/HomePitchViewer';
 import { ReplayDataset, TimelineStep } from './types';
+import { startTourGuide } from './utils/tourGuide';
 
 export const App: React.FC = () => {
   const [data, setData] = useState<ReplayDataset | null>(null);
@@ -23,7 +25,7 @@ export const App: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isMitigatedMode, setIsMitigatedMode] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [isLiveScanOpen, setIsLiveScanOpen] = useState<boolean>(false);
 
   // Fetch replay dataset from backend
@@ -106,26 +108,43 @@ export const App: React.FC = () => {
         onSelectTab={setActiveTab}
         onRefresh={fetchReplayData}
         onOpenLiveScan={() => setIsLiveScanOpen(true)}
+        onStartTour={() =>
+          startTourGuide({
+            activeTab,
+            onNavigateTab: setActiveTab,
+            onOpenLiveScan: () => setIsLiveScanOpen(true),
+          })
+        }
         isLoading={isLoading}
       />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 md:px-8 py-6 space-y-6">
-        {/* Global Replay Scrub Bar (Always Visible Across Tabs) */}
-        <ReplayControlBar
-          metadata={dataset.scenario_metadata}
-          steps={dataset.timeline_steps}
-          currentHourIndex={currentHourIndex}
-          onSelectHour={setCurrentHourIndex}
-          isPlaying={isPlaying}
-          onTogglePlay={() => setIsPlaying(!isPlaying)}
-          onReset={() => {
-            setIsPlaying(false);
-            setCurrentHourIndex(0);
-          }}
-          speed={playbackSpeed}
-          onChangeSpeed={setPlaybackSpeed}
-        />
+        {/* Global Replay Scrub Bar (Visible Across Interactive Simulation Tabs) */}
+        {activeTab !== 'home' && (
+          <ReplayControlBar
+            metadata={dataset.scenario_metadata}
+            steps={dataset.timeline_steps}
+            currentHourIndex={currentHourIndex}
+            onSelectHour={setCurrentHourIndex}
+            isPlaying={isPlaying}
+            onTogglePlay={() => setIsPlaying(!isPlaying)}
+            onReset={() => {
+              setIsPlaying(false);
+              setCurrentHourIndex(0);
+            }}
+            speed={playbackSpeed}
+            onChangeSpeed={setPlaybackSpeed}
+          />
+        )}
+
+        {/* TAB 0: Executive Home & Video Pitch Showcase */}
+        {activeTab === 'home' && (
+          <HomePitchViewer
+            onNavigateTab={setActiveTab}
+            onOpenLiveScan={() => setIsLiveScanOpen(true)}
+          />
+        )}
 
         {/* TAB 1: Mission Control Overview */}
         {activeTab === 'overview' && (

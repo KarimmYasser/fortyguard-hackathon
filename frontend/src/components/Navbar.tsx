@@ -21,6 +21,7 @@ import {
 import { ScenarioMetadata, SafetyGateVerdict } from '../types';
 
 export type ActiveTab =
+  | 'home'
   | 'overview'
   | 'sandbox'
   | 'multi_day_72h'
@@ -40,6 +41,7 @@ interface NavbarProps {
   onSelectTab: (tab: ActiveTab) => void;
   onRefresh: () => void;
   onOpenLiveScan?: () => void;
+  onStartTour?: () => void;
   isLoading: boolean;
 }
 
@@ -52,14 +54,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectTab,
   onRefresh,
   onOpenLiveScan,
+  onStartTour,
   isLoading,
 }) => {
   const tabs = [
+    { id: 'home', label: 'Pitch & Video', icon: Sparkles },
     { id: 'overview', label: 'Mission Control', icon: Activity },
-    { id: 'sandbox', label: '⚡ What-If Studio', icon: Sliders },
-    { id: 'multi_day_72h', label: '🔥 72h Compounding', icon: Flame },
-    { id: 'power_flow', label: '⚡ AC Power Flow', icon: Network },
-    { id: 'ieee_annex_g', label: '📜 IEEE Annex G', icon: Award },
+    { id: 'sandbox', label: 'What-If Studio', icon: Sliders },
+    { id: 'multi_day_72h', label: '72h Compounding', icon: Flame },
+    { id: 'power_flow', label: 'AC Power Flow', icon: Network },
+    { id: 'ieee_annex_g', label: 'IEEE Annex G', icon: Award },
     { id: 'gis_map', label: 'Hyperlocal 2m GIS', icon: MapPin },
     { id: 'physics_moats', label: '4 Scientific Moats', icon: Layers },
     { id: 'agent_graph', label: 'LangGraph Engine', icon: Cpu },
@@ -67,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ] as const;
 
   return (
-    <header className="border-b border-slate-800/90 bg-[#080C14]/90 backdrop-blur-2xl sticky top-0 z-50 transition-all">
+    <header className="border-b border-slate-800/90 bg-[#080C14]/95 backdrop-blur-2xl sticky top-0 z-50 transition-all">
       {/* Top Banner / Pulse Bar */}
       <div className="bg-gradient-to-r from-amber-950/40 via-slate-900/60 to-cyan-950/40 px-6 py-1.5 border-b border-slate-800/40 flex items-center justify-between text-[11px] font-mono">
         <div className="flex items-center gap-3">
@@ -98,10 +102,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <div className="max-w-[1600px] mx-auto px-6 py-3 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4">
+      {/* Main Header Bar (Logo & Controls) */}
+      <div className="max-w-[1600px] mx-auto px-6 py-3.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         {/* Brand & Logo */}
-        <div className="flex items-center gap-3.5">
+        <div id="tour-navbar-brand" className="flex items-center gap-3.5">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
             <div className="relative h-11 w-11 rounded-xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 p-[1px]">
@@ -126,31 +130,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Center Tab Navigation */}
-        <nav className="flex items-center gap-1 p-1 bg-slate-900/90 border border-slate-800 rounded-2xl shadow-inner overflow-x-auto max-w-full">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => onSelectTab(tab.id as ActiveTab)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg shadow-amber-500/25 ring-1 ring-amber-300/40'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                }`}
-              >
-                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
-                {tab.label}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Right Controller Mode Switcher */}
-        <div className="flex items-center gap-3 w-full xl:w-auto justify-between xl:justify-end">
-          <div className="bg-slate-900/95 border border-slate-800 p-1 rounded-2xl flex items-center shadow-lg">
+        {/* Right Controller Mode Switcher & Quick Actions */}
+        <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end flex-wrap">
+          {/* Baseline vs Mitigated Toggle */}
+          <div id="tour-navbar-mode-toggle" className="bg-slate-900/95 border border-slate-800 p-1 rounded-2xl flex items-center shadow-lg">
             <button
               onClick={() => isMitigatedMode && onToggleMode()}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
@@ -175,10 +158,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
+          {/* Universal Tour Guide Button */}
+          {onStartTour && (
+            <button
+              id="tour-navbar-tour-btn"
+              onClick={onStartTour}
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-pink-500/15 hover:from-indigo-500/25 hover:via-purple-500/25 hover:to-pink-500/25 border border-indigo-500/40 hover:border-indigo-400 text-indigo-300 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shadow-indigo-500/15 hover:shadow-indigo-500/30"
+              title="Start Interactive Spotlight Tour for Active Tab"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-indigo-400 animate-pulse" />
+              <span>Tour Guide</span>
+            </button>
+          )}
+
           {onOpenLiveScan && (
             <button
+              id="tour-navbar-live-scan"
               onClick={onOpenLiveScan}
-              className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20"
+              className="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 font-mono"
               title="Open FortyGuard Live Cloud Ingestion & Quota Hub"
             >
               <Radio className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
@@ -195,6 +192,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin text-amber-400' : ''}`} />
           </button>
         </div>
+      </div>
+
+      {/* Dedicated Expanded Navigation Bar (Directly Under Header) */}
+      <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner">
+        <nav id="tour-navbar-tabs" className="max-w-[1600px] mx-auto flex items-center justify-between gap-1 sm:gap-1.5 overflow-x-auto lg:overflow-x-visible no-scrollbar w-full">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onSelectTab(tab.id as ActiveTab)}
+                className={`flex-1 min-w-max lg:min-w-0 px-2.5 sm:px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                  isActive
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg shadow-amber-500/25 ring-1 ring-amber-300/50 scale-[1.02]'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/70 bg-slate-900/50 border border-slate-800/70'
+                }`}
+              >
+                <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
+                <span className="truncate">{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

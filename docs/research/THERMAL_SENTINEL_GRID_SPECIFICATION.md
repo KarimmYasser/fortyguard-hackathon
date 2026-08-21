@@ -1,5 +1,5 @@
-# ⚡ Thermal Sentinel Grid — Full Implementation Specification
-> **FortyGuard Hackathon '26 — Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
+# ⚡ Thermal Sentinel Grid - Full Implementation Specification
+> **FortyGuard Hackathon '26 - Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
 > Physics-Constrained Multi-Agent Decision-Support & Dispatch Engine for Distribution Transformers and Outdoor Energy Assets.
 
 ---
@@ -172,7 +172,7 @@ $$K_{\text{safe}} = \max K \quad \text{s.t. } T_{hs}^{U}(K) \le T_{hs,\max}, \; 
 ```
                                   PHOENIX HEATWAVE REPLAY EPISODE
    ┌───────────────────────────────────┐     ┌───────────────────────────────────┐
-   │ Episode Dates: July 24–26, 2023   │ ──► │ Target Asset: Urban Substation    │
+   │ Episode Dates: July 24-26, 2023   │ ──► │ Target Asset: Urban Substation    │
    │ Historic Record: 31 days >= 110°F │     │ • 2x Oil-Immersed Transformers    │
    │ Peak Ambient: 119°F (48.3°C)      │     │ • 1x BESS Unit + Commercial Loads │
    └───────────────────────────────────┘     └─────────────────┬─────────────────┘

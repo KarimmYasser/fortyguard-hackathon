@@ -30,7 +30,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div id="tour-moats-header" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/20">
             <Layers className="h-6 w-6" />
@@ -58,7 +58,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
               onClick={() => setActiveMoat(m.id)}
               className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
                 activeMoat === m.id
-                  ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md shadow-amber-500/30'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -69,7 +69,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
       </div>
 
       {/* Moat Deep-Dive Content Container */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl">
+      <div id="tour-moats-cards" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl">
         {/* MOAT 1: Cable-Soil Dryout */}
         {activeMoat === 1 && (
           <div className="space-y-6">
@@ -81,7 +81,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
                   <span>Mazza & Wu (2026) Multi-Physics Soil Degradation</span>
                 </div>
                 <h3 className="text-lg font-black text-white font-heading">
-                  1. Buried Cable–Soil Moisture Dryout & Thermal Resistivity Surge
+                  1. Buried Cable-Soil Moisture Dryout & Thermal Resistivity Surge
                 </h3>
                 <p className="text-xs text-slate-300 mt-1 max-w-4xl leading-relaxed">
                   During multi-day heatwaves (P40 ≥ 5 days), intense surface evaporative forcing depletes underground soil moisture. Soil thermal resistivity (ρ_soil) surges non-linearly from <strong>0.9 K·m/W to &gt;2.45 K·m/W</strong>, creating an invisible underground ampacity bottleneck.

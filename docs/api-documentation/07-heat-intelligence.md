@@ -1,10 +1,10 @@
-# Heat Intelligence — FortyGuard Temperature API®
+# Heat Intelligence - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/heat_intelligence`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/heat-intelligence](https://docs-api.fortyguard.com/docs/heat-intelligence)
 
-Heat Intelligence transforms raw temperature data into comprehensive, multi-dimensional intelligence reports for any urban location. This service examines spatial and temporal temperature patterns through five targeted analytics categories—Geographic, Environmental, Urban, Events, and Anthropogenic—providing deep, actionable insights for urban planning, climate resilience, and infrastructure design.
+Heat Intelligence transforms raw temperature data into comprehensive, multi-dimensional intelligence reports for any urban location. This service examines spatial and temporal temperature patterns through five targeted analytics categories - Geographic, Environmental, Urban, Events, and Anthropogenic - providing deep, actionable insights for urban planning, climate resilience, and infrastructure design.
 
 ---
 
@@ -22,11 +22,11 @@ Heat Intelligence transforms raw temperature data into comprehensive, multi-dime
 ### 🔬 Analysis Dimensions
 
 Pass a list containing any of the 5 supported analysis categories in the `analysis` array:
-- `"geographic"` — Topographic, elevation, and regional spatial heat patterns.
-- `"environmental"` — Atmospheric, humidity, solar exposure, and microclimate factors.
-- `"urban"` — Built environment, building footprint, surface materials, and canyon heat entrapment.
-- `"events"` — Anomalous microclimate spikes and temporal heatwave events.
-- `"anthropogenic"` — Human-made heat emissions (traffic, industrial equipment, AC heat exhaust).
+- `"geographic"` - Topographic, elevation, and regional spatial heat patterns.
+- `"environmental"` - Atmospheric, humidity, solar exposure, and microclimate factors.
+- `"urban"` - Built environment, building footprint, surface materials, and canyon heat entrapment.
+- `"events"` - Anomalous microclimate spikes and temporal heatwave events.
+- `"anthropogenic"` - Human-made heat emissions (traffic, industrial equipment, AC heat exhaust).
 
 ---
 

@@ -1,4 +1,4 @@
-# Environmental Parameters — FortyGuard Temperature API®
+# Environmental Parameters - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/env_params`  
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Basic: Up to 3 parameters/request | Premium: Full access to all parameters)  
@@ -21,7 +21,7 @@ A multidimensional temperature intelligence service offering operationally vital
 | `date_time.end_date` | `string` | No | End date in YYYY-MM-DD format. Auto-populated based on filter_type. |
 | `date_time.start_time` | `string` | No | Start time in HH:MM 24-hour format. Required for filter_type 1 and 2. |
 | `date_time.end_time` | `string` | No | End time in HH:MM 24-hour format. Required for filter_type 2. |
-| `analysis` | `string[]` | No | Optional list of environmental parameters to return. Omit to receive all of them. API Basic and API Startup are limited to 3 parameters per request; API Premium has full access.<br><br>Thermal & atmospheric:<br>• heat_index_celsius — heat index ("feels like"), °C<br>• apparent_temperature_celsius — apparent temperature, °C<br>• wet_bulb_temperature_celsius — wet-bulb temperature, °C<br>• relative_humidity_percent — relative humidity, %<br>• precipitation_mm — precipitation, mm<br>• cloud_cover_octas — effective cloud cover, octas<br>• elevation — ground elevation, m<br><br>Air quality (US AQI) & gases:<br>• air_quality:idx — overall US Air Quality Index<br>• air_quality_pm2p5:idx — AQI, PM2.5<br>• air_quality_pm10:idx — AQI, PM10<br>• air_quality_no2:idx — AQI, nitrogen dioxide<br>• aqi_us_co — AQI, carbon monoxide<br>• air_quality_o3:idx — AQI, ozone<br>• air_quality_so2:idx — AQI, sulphur dioxide<br>• methane_ppb — methane, ppb<br>• co2_ppm — carbon dioxide, ppm<br><br>Solar:<br>• solar_irradiance — clear-sky GHI / DNI / DHI |
+| `analysis` | `string[]` | No | Optional list of environmental parameters to return. Omit to receive all of them. API Basic and API Startup are limited to 3 parameters per request; API Premium has full access.<br><br>Thermal & atmospheric:<br>• heat_index_celsius - heat index ("feels like"), °C<br>• apparent_temperature_celsius - apparent temperature, °C<br>• wet_bulb_temperature_celsius - wet-bulb temperature, °C<br>• relative_humidity_percent - relative humidity, %<br>• precipitation_mm - precipitation, mm<br>• cloud_cover_octas - effective cloud cover, octas<br>• elevation - ground elevation, m<br><br>Air quality (US AQI) & gases:<br>• air_quality:idx - overall US Air Quality Index<br>• air_quality_pm2p5:idx - AQI, PM2.5<br>• air_quality_pm10:idx - AQI, PM10<br>• air_quality_no2:idx - AQI, nitrogen dioxide<br>• aqi_us_co - AQI, carbon monoxide<br>• air_quality_o3:idx - AQI, ozone<br>• air_quality_so2:idx - AQI, sulphur dioxide<br>• methane_ppb - methane, ppb<br>• co2_ppm - carbon dioxide, ppm<br><br>Solar:<br>• solar_irradiance - clear-sky GHI / DNI / DHI |
 
 
 
@@ -32,30 +32,30 @@ A multidimensional temperature intelligence service offering operationally vital
 You can specify a subset of parameters in the `analysis` array, or omit `analysis` on Premium to retrieve all available metrics:
 
 ### 1. Thermal Stress & Atmospheric
-- `heat_index_celsius` — Heat Index ("feels like" temperature accounting for humidity), in °C.
-- `apparent_temperature_celsius` — Combined perceptual temperature taking wind, humidity, and radiation into account, in °C.
-- `wet_bulb_temperature_celsius` — Wet-bulb temperature indicating thermodynamic heat dissipation limit, in °C. Critical for human survivability & evaporative cooling thresholds.
-- `relative_humidity_percent` — Relative atmospheric humidity percentage (0–100%).
-- `precipitation_mm` — Liquid precipitation accumulation, in mm.
-- `cloud_cover_octas` — Effective cloud cover measured in octas (0–8 scale).
-- `elevation` — Ground surface elevation above sea level, in meters (m).
+- `heat_index_celsius` - Heat Index ("feels like" temperature accounting for humidity), in °C.
+- `apparent_temperature_celsius` - Combined perceptual temperature taking wind, humidity, and radiation into account, in °C.
+- `wet_bulb_temperature_celsius` - Wet-bulb temperature indicating thermodynamic heat dissipation limit, in °C. Critical for human survivability & evaporative cooling thresholds.
+- `relative_humidity_percent` - Relative atmospheric humidity percentage (0-100%).
+- `precipitation_mm` - Liquid precipitation accumulation, in mm.
+- `cloud_cover_octas` - Effective cloud cover measured in octas (0-8 scale).
+- `elevation` - Ground surface elevation above sea level, in meters (m).
 
 ### 2. Air Quality Index (US AQI) & Atmospheric Trace Gases
-- `air_quality:idx` — Overall aggregated US Air Quality Index (0–500 scale).
-- `air_quality_pm2p5:idx` — AQI sub-index for Fine Particulate Matter ($PM_{2.5}$).
-- `air_quality_pm10:idx` — AQI sub-index for Coarse Particulate Matter ($PM_{10}$).
-- `air_quality_no2:idx` — AQI sub-index for Nitrogen Dioxide ($NO_2$).
-- `aqi_us_co` — AQI sub-index for Carbon Monoxide ($CO$).
-- `air_quality_o3:idx` — AQI sub-index for Ground-level Ozone ($O_3$).
-- `air_quality_so2:idx` — AQI sub-index for Sulfur Dioxide ($SO_2$).
-- `methane_ppb` — Atmospheric Methane concentration in parts per billion (ppb).
-- `co2_ppm` — Atmospheric Carbon Dioxide concentration in parts per million (ppm).
+- `air_quality:idx` - Overall aggregated US Air Quality Index (0-500 scale).
+- `air_quality_pm2p5:idx` - AQI sub-index for Fine Particulate Matter ($PM_{2.5}$).
+- `air_quality_pm10:idx` - AQI sub-index for Coarse Particulate Matter ($PM_{10}$).
+- `air_quality_no2:idx` - AQI sub-index for Nitrogen Dioxide ($NO_2$).
+- `aqi_us_co` - AQI sub-index for Carbon Monoxide ($CO$).
+- `air_quality_o3:idx` - AQI sub-index for Ground-level Ozone ($O_3$).
+- `air_quality_so2:idx` - AQI sub-index for Sulfur Dioxide ($SO_2$).
+- `methane_ppb` - Atmospheric Methane concentration in parts per billion (ppb).
+- `co2_ppm` - Atmospheric Carbon Dioxide concentration in parts per million (ppm).
 
 ### 3. Solar Radiation & Irradiance Profiles
-- `solar_irradiance` — Clear-sky solar irradiance components:
-  - **GHI (Global Horizontal Irradiance):** Total solar radiation received per unit area by a horizontal surface ($W/m^2$).
-  - **DNI (Direct Normal Irradiance):** Solar radiation received per unit area by a surface held perpendicular to solar rays ($W/m^2$).
-  - **DHI (Diffuse Horizontal Irradiance):** Solar radiation scattered by atmospheric molecules and aerosols ($W/m^2$).
+- `solar_irradiance` - Clear-sky solar irradiance components:
+ - **GHI (Global Horizontal Irradiance):** Total solar radiation received per unit area by a horizontal surface ($W/m^2$).
+ - **DNI (Direct Normal Irradiance):** Solar radiation received per unit area by a surface held perpendicular to solar rays ($W/m^2$).
+ - **DHI (Diffuse Horizontal Irradiance):** Solar radiation scattered by atmospheric molecules and aerosols ($W/m^2$).
 
 ---
 

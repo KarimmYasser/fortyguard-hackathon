@@ -1,12 +1,12 @@
-# Breaking Silos with Autodesk: Bringing Context from Data to Design — Full Transcript & Summary
+# Breaking Silos with Autodesk: Bringing Context from Data to Design - Full Transcript & Summary
 
 **Recording URL:** [Zoho Webinar Recording](https://webinar.zoho.com/meeting/public/videoprv?recordingId=a1a05b1bf15cdc9b02dfc2f9b9602e807bdfc239b371138c5a356c0b5136c0ba&x-meeting-org=935374719)
 
 **Date:** August 19, 2026 | **Duration:** 1 hour 11 seconds (3,612s) | **Language:** English
 
 **Speakers:**
-- **Jay** — FortyGuard Host & Community Lead
-- **Jordana Rosa** — Senior Technical Specialist at Autodesk (AEC / Sustainability / 4x Hackathon Winner)
+- **Jay** - FortyGuard Host & Community Lead
+- **Jordana Rosa** - Senior Technical Specialist at Autodesk (AEC / Sustainability / 4x Hackathon Winner)
 
 ---
 

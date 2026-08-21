@@ -1,5 +1,5 @@
 """
-Thermal Sentinel Grid — FastAPI Application
+Thermal Sentinel Grid - FastAPI Application
 Physics-Constrained Agentic Thermal Resilience & Dispatch Backend.
 """
 
@@ -10,6 +10,10 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from src.server.routes import (
     scan_router,
@@ -60,10 +64,16 @@ async def health_check():
     }
 
 
+# Mount rendered videos directory if available
+videos_dir = Path(__file__).parents[2] / "videos" / "thermal-sentinel-pitch" / "renders"
+if videos_dir.exists():
+    app.mount("/videos", StaticFiles(directory=str(videos_dir)), name="videos")
+
 # Mount built frontend if available
 frontend_dist = Path(__file__).parents[2] / "frontend" / "dist"
 if frontend_dist.exists():
     app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
+
 
 
 if __name__ == "__main__":

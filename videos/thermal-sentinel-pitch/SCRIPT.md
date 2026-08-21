@@ -1,7 +1,7 @@
-# Thermal Sentinel Grid — Official 3-Minute Video Pitch Script (180s)
+# Thermal Sentinel Grid - Official 3-Minute Video Pitch Script (180s)
 
 ## Scene 1: The Hook & Market Blindspot (0:00 - 0:30, 30s)
-During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. Multi-billion dollar SCADA giants like Siemens, GE, and Schneider only react when an alarm trips at 135°C—when failure is already locked in.
+During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. Multi-billion dollar SCADA giants like Siemens, GE, and Schneider only react when an alarm trips at 135°C - when failure is already locked in.
 In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in blackout damages. Standard weather apps and legacy SCADA completely missed it.
 
 ## Scene 2: The Solution (0:30 - 1:00, 30s)

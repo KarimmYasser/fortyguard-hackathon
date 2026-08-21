@@ -17,12 +17,12 @@ Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track
 
 ## Assets
 
-- `assets/scene1.jpg` — Split screen: Airport meteorological station (43.1°C) vs Urban 2m asphalt canyon with transformer (47.6°C).
-- `assets/scene2.jpg` — 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
-- `assets/scene3.jpg` — 4-Layer Agentic Architecture & CBF-QP Mathematical Safety Shield.
-- `assets/scene4.jpg` — Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
-- `assets/scene5.jpg` — Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.79M Net Avoided Loss, 5,952x ROI).
-- `assets/scene6.jpg` — Hackathon Tracks 06 & 02 lockup, IEEE compliance seals, author credits, and live platform URL.
+- `assets/scene1.jpg` - Split screen: Airport meteorological station (43.1°C) vs Urban 2m asphalt canyon with transformer (47.6°C).
+- `assets/scene2.jpg` - 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
+- `assets/scene3.jpg` - 4-Layer Agentic Architecture & CBF-QP Mathematical Safety Shield.
+- `assets/scene4.jpg` - Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
+- `assets/scene5.jpg` - Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.79M Net Avoided Loss, 5,952x ROI).
+- `assets/scene6.jpg` - Hackathon Tracks 06 & 02 lockup, IEEE compliance seals, author credits, and live platform URL.
 
 ## Customizations
 

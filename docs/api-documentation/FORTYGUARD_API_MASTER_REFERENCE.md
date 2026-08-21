@@ -1,4 +1,4 @@
-# 🌐 FortyGuard Temperature API® — Master Technical Reference
+# 🌐 FortyGuard Temperature API® - Master Technical Reference
 
 > **Base URL:** `https://api.fortyguard.com`  
 > **Auth Header:** `api-key: YOUR_API_KEY`  
@@ -6,7 +6,7 @@
 
 ---
 
-# Introduction — FortyGuard Temperature API®
+# Introduction - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/introduction](https://docs-api.fortyguard.com/docs/introduction)  
 > **Framework:** FortyGuard Temperature Operating System (tOS)  
@@ -45,7 +45,7 @@ Each endpoint in this documentation is tagged with its subscription requirement:
 1. **Climate-Aware Infrastructure Planning:**  
    Use temperature intelligence and environmental parameters to design and maintain roads, transformers, electrical enclosures, bridges, and public utilities to withstand extreme heat stress.
 2. **Property & Asset Intelligence:**  
-   Generate property-level heat performance reports to assess livability, operational efficiency, and financial risk—supporting ESG appraisals and insurance underwriting.
+   Generate property-level heat performance reports to assess livability, operational efficiency, and financial risk - supporting ESG appraisals and insurance underwriting.
 3. **Smart Mobility & Logistics:**  
    Integrate thermal comfort-based routing and forecasted heat zones into transportation networks, delivery fleets, and cold chains to reduce energy consumption and improve worker safety.
 4. **Environmental & Health Monitoring:**  
@@ -58,7 +58,7 @@ Each endpoint in this documentation is tagged with its subscription requirement:
 
 ---
 
-# Quickstart Guide — FortyGuard Temperature API®
+# Quickstart Guide - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/quickstart](https://docs-api.fortyguard.com/docs/quickstart)
 
@@ -102,7 +102,7 @@ The FortyGuard Engine processes high-resolution geospatial models and Large Temp
 | **404** | Activity not found or not yet indexed | Retry status check after a short delay |
 | **429** | Rate limit exceeded | Back off and retry |
 | **500** | Server-side processing error | Check logs and retry or contact support |
-| **`Submitted` / `Processing`** | Task is actively computing | Continue bounded polling (e.g. every 2–5s) |
+| **`Submitted` / `Processing`** | Task is actively computing | Continue bounded polling (e.g. every 2-5s) |
 | **`Completed`** | Task finished successfully | Retrieve result data payload (Credits deducted) |
 | **`Failed`** | Task execution failed | Stop polling, record activity_id (No credits deducted) |
 
@@ -194,11 +194,11 @@ for attempt in range(max_attempts):
 
 ---
 
-# Authentication — FortyGuard Temperature API®
+# Authentication - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/authentication](https://docs-api.fortyguard.com/docs/authentication)
 
-FortyGuard's Enterprise API uses direct **API key–based authentication** to ensure secure and controlled access to all endpoints.
+FortyGuard's Enterprise API uses direct **API key-based authentication** to ensure secure and controlled access to all endpoints.
 
 Every request to the API must include a valid API Key provided upon registration or via your organization's FortyGuard dashboard.
 
@@ -267,7 +267,7 @@ const response = await fetch("https://api.fortyguard.com/v1/heatmap", {
 
 ---
 
-# Create Heatmap — FortyGuard Temperature API®
+# Create Heatmap - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/heatmap`  
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Basic: Up to 10 mi² | Premium: Up to 50 mi²)  
@@ -282,7 +282,7 @@ The Heatmap Generation feature produces high-resolution thermal maps derived fro
 The Heatmap Generation endpoint computes 2-meter air temperature rasters across polygon areas of interest. It supports 4 distinct analytical modes via `analytic_type`:
 
 1. **`tcm` (Default):** Temperature snapshot raster returning temperature in degrees Celsius (°C) for each spatial grid cell.
-2. **`time_of_measure`:** Returns the exact hour of the day (0–23, UTC) at which the maximum peak temperature occurs in each cell.
+2. **`time_of_measure`:** Returns the exact hour of the day (0-23, UTC) at which the maximum peak temperature occurs in each cell.
 3. **`exceedance`:** Calculates the total number of hours the temperature exceeded (or fell below) a user-defined threshold (°C) within the time window.
 4. **`persistence`:** Calculates the longest continuous consecutive sequence of hours where the temperature remained beyond the threshold (°C). Measures cumulative *thermal soak*.
 
@@ -294,13 +294,13 @@ The Heatmap Generation endpoint computes 2-meter air temperature rasters across 
 | :--- | :--- | :--- | :--- |
 | `polygon_aoi` | `object` | **Yes** | GeoJSON polygon defining the area of interest for heatmap generation. |
 | `date_time` | `object` | **Yes** | Date and time range configuration object. |
-| `date_time.start_date` | `string` | **Yes** | Start date in YYYY-MM-DD format. Supported range: 2019-01-01 through 12 hours past the current time.<br>• 2019 up to now — historical / real-time heatmaps<br>• up to 12 hours into the future — forecast heatmaps<br>Dates before 2019, or more than 12 hours ahead of the current time, are rejected with 400 Bad Request. |
-| `date_time.filter_type` | `number` | **Yes** | Filter type options:<br>• 1 (Single Hour) - requires start_date and start_time<br>• 2 (Range of Hours, same day) - requires start_date, start_time, and end_time<br>• 3 (Single Day) - requires only start_date (covers 00:00–23:59)<br>• 4 (Range of Days — week / month, ≤ 1 month) - requires start_date and end_date |
+| `date_time.start_date` | `string` | **Yes** | Start date in YYYY-MM-DD format. Supported range: 2019-01-01 through 12 hours past the current time.<br>• 2019 up to now - historical / real-time heatmaps<br>• up to 12 hours into the future - forecast heatmaps<br>Dates before 2019, or more than 12 hours ahead of the current time, are rejected with 400 Bad Request. |
+| `date_time.filter_type` | `number` | **Yes** | Filter type options:<br>• 1 (Single Hour) - requires start_date and start_time<br>• 2 (Range of Hours, same day) - requires start_date, start_time, and end_time<br>• 3 (Single Day) - requires only start_date (covers 00:00-23:59)<br>• 4 (Range of Days - week / month, ≤ 1 month) - requires start_date and end_date |
 | `granularity` | `number` | **Yes** | Spatial resolution/granularity level options:<br>• 60m<br>• 80m<br>• 100m |
-| `date_time.end_date` | `string` | No | End date in YYYY-MM-DD format. Required for filter_type 4; auto-populated for filter_type 1–3. |
+| `date_time.end_date` | `string` | No | End date in YYYY-MM-DD format. Required for filter_type 4; auto-populated for filter_type 1-3. |
 | `date_time.start_time` | `string` | No | Start time in HH:MM 24-hour format. Required for filter_type 1 and 2. |
 | `date_time.end_time` | `string` | No | End time in HH:MM 24-hour format. Required for filter_type 2. Auto-calculated for filter_type 1 (start_time + 1 hour). |
-| `analytic_type` | `string` | No | Analysis heatmap type (default 'tcm'):<br>• tcm — Temperature snapshot; value is temperature (°C) per tile<br>• time_of_measure — hour of day (0–23, UTC) at which the peak temperature occurs<br>• exceedance — number of hours the temperature passes the threshold<br>• persistence — longest continuous run of hours past the threshold<br>time_of_measure, exceedance and persistence return values in hours (stats_data.units = "hour"); tcm returns °C. |
+| `analytic_type` | `string` | No | Analysis heatmap type (default 'tcm'):<br>• tcm - Temperature snapshot; value is temperature (°C) per tile<br>• time_of_measure - hour of day (0-23, UTC) at which the peak temperature occurs<br>• exceedance - number of hours the temperature passes the threshold<br>• persistence - longest continuous run of hours past the threshold<br>time_of_measure, exceedance and persistence return values in hours (stats_data.units = "hour"); tcm returns °C. |
 | `threshold` | `number` | No | Temperature threshold in °C for exceedance / persistence. Defaults to 30 °C. Ignored by tcm and time_of_measure. |
 | `direction` | `string` | No | Threshold direction for exceedance / persistence: 'above' (default) counts hours above the threshold, 'below' counts hours below it. Ignored by tcm and time_of_measure. |
 
@@ -521,20 +521,20 @@ Tile-based heatmap output formatted as GeoJSON polygons.
 #### `Result.stats_data` (`object`)
 Aggregated statistical summary of all tiles in the heatmap. This includes:
 • Temperature_stats - Temperature statistics across the heatmap region
-  - Minimum: Lowest temperature across the heatmap region
-  - Maximum: Highest temperature across the heatmap region
-  - Mean: Average temperature value
-  - Standard_deviation: Variability of temperatures across tiles
+ - Minimum: Lowest temperature across the heatmap region
+ - Maximum: Highest temperature across the heatmap region
+ - Mean: Average temperature value
+ - Standard_deviation: Variability of temperatures across tiles
 • Overall_temperature_distribution (array[number]) - Sorted temperature values representing the overall distribution
 • Normal_temperature_distribution (object) - Normalized curve data for plotting a temperature distribution
-  - x_axis: Temperature range
-  - y_axis: Probability density values
+ - x_axis: Temperature range
+ - y_axis: Probability density values
 • Temperature_frequency (object) - Histogram-style frequency counts for temperature bins
 
 
 ---
 
-# Satellite View Segmentation — FortyGuard Temperature API®
+# Satellite View Segmentation - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/satellite`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  
@@ -661,8 +661,8 @@ Year of the satellite imagery used for the segmentation.
 #### `Segmentation` (`object`)
 Model output + metadata for the satellite image.
 • image_dimensions (object) - Output image size in pixels
-  - height (number): Pixel height
-  - width (number): Pixel width
+ - height (number): Pixel height
+ - width (number): Pixel width
 • mode (string) - Processing mode (e.g., "sat" for satellite)
 • processing_time_seconds (number) - Time taken to run segmentation (seconds)
 • request_id (string) - Internal identifier for tracing/debugging
@@ -676,7 +676,7 @@ Model output + metadata for the satellite image.
 
 ---
 
-# Street View Segmentation — FortyGuard Temperature API®
+# Street View Segmentation - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/streetview`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  
@@ -781,13 +781,13 @@ Street View "front" camera results for that location.
 
 ---
 
-# Heat Intelligence — FortyGuard Temperature API®
+# Heat Intelligence - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/heat_intelligence`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/heat-intelligence](https://docs-api.fortyguard.com/docs/heat-intelligence)
 
-Heat Intelligence transforms raw temperature data into comprehensive, multi-dimensional intelligence reports for any urban location. This service examines spatial and temporal temperature patterns through five targeted analytics categories—Geographic, Environmental, Urban, Events, and Anthropogenic—providing deep, actionable insights for urban planning, climate resilience, and infrastructure design.
+Heat Intelligence transforms raw temperature data into comprehensive, multi-dimensional intelligence reports for any urban location. This service examines spatial and temporal temperature patterns through five targeted analytics categories - Geographic, Environmental, Urban, Events, and Anthropogenic - providing deep, actionable insights for urban planning, climate resilience, and infrastructure design.
 
 ---
 
@@ -805,11 +805,11 @@ Heat Intelligence transforms raw temperature data into comprehensive, multi-dime
 ### 🔬 Analysis Dimensions
 
 Pass a list containing any of the 5 supported analysis categories in the `analysis` array:
-- `"geographic"` — Topographic, elevation, and regional spatial heat patterns.
-- `"environmental"` — Atmospheric, humidity, solar exposure, and microclimate factors.
-- `"urban"` — Built environment, building footprint, surface materials, and canyon heat entrapment.
-- `"events"` — Anomalous microclimate spikes and temporal heatwave events.
-- `"anthropogenic"` — Human-made heat emissions (traffic, industrial equipment, AC heat exhaust).
+- `"geographic"` - Topographic, elevation, and regional spatial heat patterns.
+- `"environmental"` - Atmospheric, humidity, solar exposure, and microclimate factors.
+- `"urban"` - Built environment, building footprint, surface materials, and canyon heat entrapment.
+- `"events"` - Anomalous microclimate spikes and temporal heatwave events.
+- `"anthropogenic"` - Human-made heat emissions (traffic, industrial equipment, AC heat exhaust).
 
 ---
 
@@ -885,7 +885,7 @@ Heat Intelligence report generation may take several minutes. The download_link 
 
 ---
 
-# Environmental Parameters — FortyGuard Temperature API®
+# Environmental Parameters - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/env_params`  
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Basic: Up to 3 parameters/request | Premium: Full access to all parameters)  
@@ -908,7 +908,7 @@ A multidimensional temperature intelligence service offering operationally vital
 | `date_time.end_date` | `string` | No | End date in YYYY-MM-DD format. Auto-populated based on filter_type. |
 | `date_time.start_time` | `string` | No | Start time in HH:MM 24-hour format. Required for filter_type 1 and 2. |
 | `date_time.end_time` | `string` | No | End time in HH:MM 24-hour format. Required for filter_type 2. |
-| `analysis` | `string[]` | No | Optional list of environmental parameters to return. Omit to receive all of them. API Basic and API Startup are limited to 3 parameters per request; API Premium has full access.<br><br>Thermal & atmospheric:<br>• heat_index_celsius — heat index ("feels like"), °C<br>• apparent_temperature_celsius — apparent temperature, °C<br>• wet_bulb_temperature_celsius — wet-bulb temperature, °C<br>• relative_humidity_percent — relative humidity, %<br>• precipitation_mm — precipitation, mm<br>• cloud_cover_octas — effective cloud cover, octas<br>• elevation — ground elevation, m<br><br>Air quality (US AQI) & gases:<br>• air_quality:idx — overall US Air Quality Index<br>• air_quality_pm2p5:idx — AQI, PM2.5<br>• air_quality_pm10:idx — AQI, PM10<br>• air_quality_no2:idx — AQI, nitrogen dioxide<br>• aqi_us_co — AQI, carbon monoxide<br>• air_quality_o3:idx — AQI, ozone<br>• air_quality_so2:idx — AQI, sulphur dioxide<br>• methane_ppb — methane, ppb<br>• co2_ppm — carbon dioxide, ppm<br><br>Solar:<br>• solar_irradiance — clear-sky GHI / DNI / DHI |
+| `analysis` | `string[]` | No | Optional list of environmental parameters to return. Omit to receive all of them. API Basic and API Startup are limited to 3 parameters per request; API Premium has full access.<br><br>Thermal & atmospheric:<br>• heat_index_celsius - heat index ("feels like"), °C<br>• apparent_temperature_celsius - apparent temperature, °C<br>• wet_bulb_temperature_celsius - wet-bulb temperature, °C<br>• relative_humidity_percent - relative humidity, %<br>• precipitation_mm - precipitation, mm<br>• cloud_cover_octas - effective cloud cover, octas<br>• elevation - ground elevation, m<br><br>Air quality (US AQI) & gases:<br>• air_quality:idx - overall US Air Quality Index<br>• air_quality_pm2p5:idx - AQI, PM2.5<br>• air_quality_pm10:idx - AQI, PM10<br>• air_quality_no2:idx - AQI, nitrogen dioxide<br>• aqi_us_co - AQI, carbon monoxide<br>• air_quality_o3:idx - AQI, ozone<br>• air_quality_so2:idx - AQI, sulphur dioxide<br>• methane_ppb - methane, ppb<br>• co2_ppm - carbon dioxide, ppm<br><br>Solar:<br>• solar_irradiance - clear-sky GHI / DNI / DHI |
 
 
 ---
@@ -918,30 +918,30 @@ A multidimensional temperature intelligence service offering operationally vital
 You can specify a subset of parameters in the `analysis` array, or omit `analysis` on Premium to retrieve all available metrics:
 
 ### 1. Thermal Stress & Atmospheric
-- `heat_index_celsius` — Heat Index ("feels like" temperature accounting for humidity), in °C.
-- `apparent_temperature_celsius` — Combined perceptual temperature taking wind, humidity, and radiation into account, in °C.
-- `wet_bulb_temperature_celsius` — Wet-bulb temperature indicating thermodynamic heat dissipation limit, in °C. Critical for human survivability & evaporative cooling thresholds.
-- `relative_humidity_percent` — Relative atmospheric humidity percentage (0–100%).
-- `precipitation_mm` — Liquid precipitation accumulation, in mm.
-- `cloud_cover_octas` — Effective cloud cover measured in octas (0–8 scale).
-- `elevation` — Ground surface elevation above sea level, in meters (m).
+- `heat_index_celsius` - Heat Index ("feels like" temperature accounting for humidity), in °C.
+- `apparent_temperature_celsius` - Combined perceptual temperature taking wind, humidity, and radiation into account, in °C.
+- `wet_bulb_temperature_celsius` - Wet-bulb temperature indicating thermodynamic heat dissipation limit, in °C. Critical for human survivability & evaporative cooling thresholds.
+- `relative_humidity_percent` - Relative atmospheric humidity percentage (0-100%).
+- `precipitation_mm` - Liquid precipitation accumulation, in mm.
+- `cloud_cover_octas` - Effective cloud cover measured in octas (0-8 scale).
+- `elevation` - Ground surface elevation above sea level, in meters (m).
 
 ### 2. Air Quality Index (US AQI) & Atmospheric Trace Gases
-- `air_quality:idx` — Overall aggregated US Air Quality Index (0–500 scale).
-- `air_quality_pm2p5:idx` — AQI sub-index for Fine Particulate Matter ($PM_{2.5}$).
-- `air_quality_pm10:idx` — AQI sub-index for Coarse Particulate Matter ($PM_{10}$).
-- `air_quality_no2:idx` — AQI sub-index for Nitrogen Dioxide ($NO_2$).
-- `aqi_us_co` — AQI sub-index for Carbon Monoxide ($CO$).
-- `air_quality_o3:idx` — AQI sub-index for Ground-level Ozone ($O_3$).
-- `air_quality_so2:idx` — AQI sub-index for Sulfur Dioxide ($SO_2$).
-- `methane_ppb` — Atmospheric Methane concentration in parts per billion (ppb).
-- `co2_ppm` — Atmospheric Carbon Dioxide concentration in parts per million (ppm).
+- `air_quality:idx` - Overall aggregated US Air Quality Index (0-500 scale).
+- `air_quality_pm2p5:idx` - AQI sub-index for Fine Particulate Matter ($PM_{2.5}$).
+- `air_quality_pm10:idx` - AQI sub-index for Coarse Particulate Matter ($PM_{10}$).
+- `air_quality_no2:idx` - AQI sub-index for Nitrogen Dioxide ($NO_2$).
+- `aqi_us_co` - AQI sub-index for Carbon Monoxide ($CO$).
+- `air_quality_o3:idx` - AQI sub-index for Ground-level Ozone ($O_3$).
+- `air_quality_so2:idx` - AQI sub-index for Sulfur Dioxide ($SO_2$).
+- `methane_ppb` - Atmospheric Methane concentration in parts per billion (ppb).
+- `co2_ppm` - Atmospheric Carbon Dioxide concentration in parts per million (ppm).
 
 ### 3. Solar Radiation & Irradiance Profiles
-- `solar_irradiance` — Clear-sky solar irradiance components:
-  - **GHI (Global Horizontal Irradiance):** Total solar radiation received per unit area by a horizontal surface ($W/m^2$).
-  - **DNI (Direct Normal Irradiance):** Solar radiation received per unit area by a surface held perpendicular to solar rays ($W/m^2$).
-  - **DHI (Diffuse Horizontal Irradiance):** Solar radiation scattered by atmospheric molecules and aerosols ($W/m^2$).
+- `solar_irradiance` - Clear-sky solar irradiance components:
+ - **GHI (Global Horizontal Irradiance):** Total solar radiation received per unit area by a horizontal surface ($W/m^2$).
+ - **DNI (Direct Normal Irradiance):** Solar radiation received per unit area by a surface held perpendicular to solar rays ($W/m^2$).
+ - **DHI (Diffuse Horizontal Irradiance):** Solar radiation scattered by atmospheric molecules and aerosols ($W/m^2$).
 
 ---
 
@@ -1079,7 +1079,7 @@ This response is returned when the activity status is "Completed".
 
 ---
 
-# Check Status — FortyGuard Temperature API®
+# Check Status - FortyGuard Temperature API®
 
 > **Official Endpoint:** `GET https://api.fortyguard.com/v1/status/{activity_id}`  
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Available across all plans)  
@@ -1180,7 +1180,7 @@ def poll_fortyguard_task(activity_id: str, api_key: str, max_timeout: int = 120,
 
 ---
 
-# Check API Credits Usage — FortyGuard Temperature API®
+# Check API Credits Usage - FortyGuard Temperature API®
 
 > **Official Endpoints:**  
 > - `POST https://api.fortyguard.com/v1/system/fetch-api-key-usage`  
@@ -1269,7 +1269,7 @@ check_credits("YOUR_API_KEY")
 
 ---
 
-# Error Handling & Diagnostics — FortyGuard Temperature API®
+# Error Handling & Diagnostics - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/errors](https://docs-api.fortyguard.com/docs/errors)
 
@@ -1340,7 +1340,7 @@ def submit_with_retry(url, headers, payload, max_retries=3):
 
 ---
 
-# Known Limitations & Plan Comparison — FortyGuard Temperature API®
+# Known Limitations & Plan Comparison - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/limitations](https://docs-api.fortyguard.com/docs/limitations)
 
@@ -1370,26 +1370,26 @@ This document details the operational, technical, geographic, and subscription c
 Requests violating these constraints return `400 Bad Request` and are **not charged** against your credit balance:
 
 1. **Coordinates:**
-   - `latitude` must be in range `[-90, 90]`.
-   - `longitude` must be in range `[-180, 180]`.
-   - In the current release, coordinates must fall within the **United States**.
+ - `latitude` must be in range `[-90, 90]`.
+ - `longitude` must be in range `[-180, 180]`.
+ - In the current release, coordinates must fall within the **United States**.
 2. **Polygon Area of Interest (AOI):**
-   - Must be a valid GeoJSON `FeatureCollection` or `Feature` whose geometry is a closed `Polygon` (first and last coordinate vertices must be identical).
-   - Maximum area limit: $le 10	ext{ mi}^2$ on Basic/Startup, $le 50	ext{ mi}^2$ on Premium.
+ - Must be a valid GeoJSON `FeatureCollection` or `Feature` whose geometry is a closed `Polygon` (first and last coordinate vertices must be identical).
+ - Maximum area limit: $le 10	ext{ mi}^2$ on Basic/Startup, $le 50	ext{ mi}^2$ on Premium.
 3. **Date & Time Formatting:**
-   - `start_date` and `end_date` must be formatted as `YYYY-MM-DD`.
-   - `start_time` and `end_time` must be formatted as `HH:MM` in 24-hour time.
+ - `start_date` and `end_date` must be formatted as `YYYY-MM-DD`.
+ - `start_time` and `end_time` must be formatted as `HH:MM` in 24-hour time.
 4. **Date Range & Forecasting Rules:**
-   - Historical lower bound: `2019-01-01`.
-   - Heatmap forecasting upper bound: `now + 12 hours`.
-   - Any date prior to 2019-01-01 or exceeding +12h forecast is rejected with `400 Bad Request`.
-   - For Satellite, Streetview, Environmental Parameters, and Heat Intelligence, date/time should match the heatmap generated for the same location.
+ - Historical lower bound: `2019-01-01`.
+ - Heatmap forecasting upper bound: `now + 12 hours`.
+ - Any date prior to 2019-01-01 or exceeding +12h forecast is rejected with `400 Bad Request`.
+ - For Satellite, Streetview, Environmental Parameters, and Heat Intelligence, date/time should match the heatmap generated for the same location.
 5. **Filter Types:**
-   - `filter_type` must be `1` (Single Hour), `2` (Range of Hours, max 23h), `3` (Single Day), or `4` (Range of Days, max 1 month).
+ - `filter_type` must be `1` (Single Hour), `2` (Range of Hours, max 23h), `3` (Single Day), or `4` (Range of Days, max 1 month).
 6. **Granularity:**
-   - Must be one of `60m`, `80m`, or `100m`.
+ - Must be one of `60m`, `80m`, or `100m`.
 7. **Heat Intelligence Analysis:**
-   - `analysis` array must be a subset of `["geographic", "environmental", "urban", "events", "anthropogenic"]`.
+ - `analysis` array must be a subset of `["geographic", "environmental", "urban", "events", "anthropogenic"]`.
 
 ---
 
@@ -1403,7 +1403,7 @@ Requests violating these constraints return `400 Bad Request` and are **not char
 
 ---
 
-# Release Notes — FortyGuard Temperature API®
+# Release Notes - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/release-notes](https://docs-api.fortyguard.com/docs/release-notes)
 
@@ -1411,19 +1411,19 @@ A running log of every change to FortyGuard's Temperature API® and its document
 
 ---
 
-## 🚀 Version 1.0.0 — Initial Public Release
+## 🚀 Version 1.0.0 - Initial Public Release
 *Release Date: April 22, 2026*
 
 First general-availability release of the FortyGuard Enterprise API. Introduces the core Temperature API® surface, two subscription plans, credit tracking, and complete documentation for every supported endpoint.
 
 ### ✨ Added (Endpoints & Services)
-- `POST /v1/heatmap` — Generate high-resolution GeoJSON thermal maps for a polygon AOI across Single Hour, Range of Hours, Single Day, and Range of Days filters at granularity 60m / 80m / 100m. Supports Snapshot (`tcm`), Time of Measure, Exceedance, and Persistence analytics.
-- `POST /v1/satellite` — Tile-based satellite view segmentation with Base64-encoded imagery and per-class coverage metrics.
-- `POST /v1/streetview` — Ground-level street view segmentation including front (and optional back) view with per-class coverage metrics.
-- `POST /v1/heat_intelligence` — Multi-dimensional Heat Intelligence Reports across Geographic, Environmental, Urban, Events, and Anthropogenic categories, delivered via temporary presigned `download_link`.
-- `POST /v1/env_params` — Environmental Parameters including Heat Index, Apparent Temperature, Wet-Bulb Temperature, Relative Humidity, AQI ($PM_{2.5}$, $PM_{10}$, $NO_2$, $CO$, $O_3$, $SO_2$), Methane, $CO_2$, and Solar Irradiance (GHI, DNI, DHI).
-- `GET /v1/status/{activity_id}` — Unified status and result-retrieval endpoint for all asynchronous task submissions.
-- `POST /v1/system/fetch-api-key-usage` & `POST /v1/system/fetch-api-key-custom-usage` — Real-time credit usage reporting at billing-cycle and custom date-range granularity.
+- `POST /v1/heatmap` - Generate high-resolution GeoJSON thermal maps for a polygon AOI across Single Hour, Range of Hours, Single Day, and Range of Days filters at granularity 60m / 80m / 100m. Supports Snapshot (`tcm`), Time of Measure, Exceedance, and Persistence analytics.
+- `POST /v1/satellite` - Tile-based satellite view segmentation with Base64-encoded imagery and per-class coverage metrics.
+- `POST /v1/streetview` - Ground-level street view segmentation including front (and optional back) view with per-class coverage metrics.
+- `POST /v1/heat_intelligence` - Multi-dimensional Heat Intelligence Reports across Geographic, Environmental, Urban, Events, and Anthropogenic categories, delivered via temporary presigned `download_link`.
+- `POST /v1/env_params` - Environmental Parameters including Heat Index, Apparent Temperature, Wet-Bulb Temperature, Relative Humidity, AQI ($PM_{2.5}$, $PM_{10}$, $NO_2$, $CO$, $O_3$, $SO_2$), Methane, $CO_2$, and Solar Irradiance (GHI, DNI, DHI).
+- `GET /v1/status/{activity_id}` - Unified status and result-retrieval endpoint for all asynchronous task submissions.
+- `POST /v1/system/fetch-api-key-usage` & `POST /v1/system/fetch-api-key-custom-usage` - Real-time credit usage reporting at billing-cycle and custom date-range granularity.
 - **Direct API Key Header Auth:** Direct authentication via `api-key` request header (no OAuth or token exchange required).
 
 ### 🏷️ Plans & Access Control

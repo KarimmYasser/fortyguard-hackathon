@@ -1,4 +1,4 @@
-# Satellite View Segmentation — FortyGuard Temperature API®
+# Satellite View Segmentation - FortyGuard Temperature API®
 
 > **Official Endpoint:** `POST https://api.fortyguard.com/v1/satellite`  
 > **Plan Availability:** <span style="color:#8b5cf6;font-weight:bold;">PREMIUM</span> (API Premium plan only)  
@@ -125,8 +125,8 @@ Year of the satellite imagery used for the segmentation.
 #### `Segmentation` (`object`)
 Model output + metadata for the satellite image.
 • image_dimensions (object) - Output image size in pixels
-  - height (number): Pixel height
-  - width (number): Pixel width
+ - height (number): Pixel height
+ - width (number): Pixel width
 • mode (string) - Processing mode (e.g., "sat" for satellite)
 • processing_time_seconds (number) - Time taken to run segmentation (seconds)
 • request_id (string) - Internal identifier for tracing/debugging

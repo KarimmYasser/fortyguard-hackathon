@@ -1,5 +1,5 @@
 # 🔬 Research, Physical AI Models & System Specifications
-> **Thermal Sentinel Grid — FortyGuard Hackathon '26**  
+> **Thermal Sentinel Grid - FortyGuard Hackathon '26**  
 > Master catalog of academic literature, physical differential equations, IEEE/IEC/UL standards, economic models, and multi-agent system specifications.
 
 ---

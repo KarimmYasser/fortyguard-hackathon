@@ -1,8 +1,8 @@
-# Authentication — FortyGuard Temperature API®
+# Authentication - FortyGuard Temperature API®
 
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/authentication](https://docs-api.fortyguard.com/docs/authentication)
 
-FortyGuard's Enterprise API uses direct **API key–based authentication** to ensure secure and controlled access to all endpoints.
+FortyGuard's Enterprise API uses direct **API key-based authentication** to ensure secure and controlled access to all endpoints.
 
 Every request to the API must include a valid API Key provided upon registration or via your organization's FortyGuard dashboard.
 

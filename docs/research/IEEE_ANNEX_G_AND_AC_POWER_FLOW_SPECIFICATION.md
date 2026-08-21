@@ -1,6 +1,6 @@
 # 📜 IEEE C57.91 Annex G & AC Distribution Feeder Power Flow Specification
 > **Mathematical Foundations, Standards Verification & Multi-Bus Network Formulation**  
-> *Thermal Sentinel Grid — FortyGuard Hackathon '26 (Tracks 06 & 02)*
+> *Thermal Sentinel Grid - FortyGuard Hackathon '26 (Tracks 06 & 02)*
 
 ---
 

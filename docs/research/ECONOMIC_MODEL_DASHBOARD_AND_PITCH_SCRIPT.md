@@ -1,5 +1,5 @@
 # 💰 Economic Model, Operator UI Architecture & 3-Minute Pitch Script
-> **FortyGuard Hackathon '26 — Thermal Sentinel Grid**  
+> **FortyGuard Hackathon '26 - Thermal Sentinel Grid**  
 > Complete investment-grade avoided loss formulation, React/Vite operator dashboard layout, and second-by-second video pitch script.
 
 ---
@@ -105,44 +105,44 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
    [ Physical Gap ] [ Demonstration] [ & Architecture] [  ROI & GTM   ]
 ```
 
-### ⏱️ 0:00–0:12 — Opening Hook
+### ⏱️ 0:00-0:12 - Opening Hook
 * **Visual:** Split screen. Left: generic airport weather reading ($43.1^\circ\mathrm{C}$). Right: FortyGuard parcel-level Phoenix thermal map ($47.6^\circ\mathrm{C}$). Center: Substation transformer turning from amber to blinking red.
 * **Voiceover:** *"Utilities still protect billion-dollar grid assets using weather data measured miles away at airports. But during heatwaves, the temperature at a shaded airport is NOT the temperature enveloping a transformer sitting on sun-baked asphalt."*
 * **On-Screen Text:** `AIRPORT WEATHER ≠ ASSET MICROCLIMATE`
 
-### ⏱️ 0:12–0:25 — The Physical Blind Spot
+### ⏱️ 0:12-0:25 - The Physical Blind Spot
 * **Visual:** Zoom into Phoenix urban substation. Overlay: `Airport: 43.1°C`, `FortyGuard 2m: 47.6°C`, `Microclimate Delta: +4.5°C`. Highlight land cover (asphalt, concrete buildings, zero canopy).
-* **Voiceover:** *"FortyGuard gives us the missing convective and radiative boundary condition: exact 2-meter ambient air temperature, solar irradiance, land-cover context, and—critically—how long dangerous heat persists."*
+* **Voiceover:** *"FortyGuard gives us the missing convective and radiative boundary condition: exact 2-meter ambient air temperature, solar irradiance, land-cover context, and - critically - how long dangerous heat persists."*
 
-### ⏱️ 0:25–0:45 — Thermal Soak & Failure Physics
+### ⏱️ 0:25-0:45 - Thermal Soak & Failure Physics
 * **Visual:** Transition to internal transformer cutaway diagram with dynamic heat equation: $T_{hs} = T_a + \theta_o + \theta_w$. Show oil boiling and insulation aging curve accelerating exponentially.
 * **Voiceover:** *"Transformers do not fail from a brief temperature spike. Disasters occur from cumulative thermal soak. A few hours of persistent heat pushes top-oil and winding hot-spots past critical insulation thresholds, accelerating aging by up to 15 times."*
 
-### ⏱️ 0:45–1:00 — Phoenix July 2023 Replay Setup
-* **Visual:** Operator dashboard loading the **Phoenix July 24–25, 2023 heatwave** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$).
+### ⏱️ 0:45-1:00 - Phoenix July 2023 Replay Setup
+* **Visual:** Operator dashboard loading the **Phoenix July 24-25, 2023 heatwave** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$).
 * **Voiceover:** *"We replayed the record-breaking Phoenix 2023 heatwave across an urban substation with parallel distribution transformers, critical hospital loads, and battery storage."*
 
-### ⏱️ 1:00–1:15 — Baseline Failure Mode
+### ⏱️ 1:00-1:15 - Baseline Failure Mode
 * **Visual:** Baseline toggle active. Static rating mode. The red hot-spot curve climbs continuously and breaches the $140^\circ\mathrm{C}$ emergency ceiling at 15:40.
-* **Voiceover:** *"Under the baseline controller using airport weather and static ratings, the transformer remains heavily loaded into peak heat—and the projected hot-spot breaches its emergency safety ceiling."*
+* **Voiceover:** *"Under the baseline controller using airport weather and static ratings, the transformer remains heavily loaded into peak heat - and the projected hot-spot breaches its emergency safety ceiling."*
 * **On-Screen Text:** `BASELINE: CRITICAL THERMAL ENVELOPE BREACH`
 
-### ⏱️ 1:15–1:30 — FortyGuard Early Warning & Autonomous Planning
+### ⏱️ 1:15-1:30 - FortyGuard Early Warning & Autonomous Planning
 * **Visual:** FortyGuard layer activated. Dashboard displays `7h 10m persistence > 40°C`. LangGraph StateGraph nodes light up: `Thermal Forecast -> Physics Simulation -> Mitigation Planner`.
 * **Voiceover:** *"Thermal Sentinel detects 7 continuous hours of extreme persistence. Twelve hours ahead of peak, our LangGraph agent synthesizes an autonomous mitigation package: activate forced cooling, dispatch the battery, and shift flexible EV load."*
 
-### ⏱️ 1:30–1:45 — Deterministic Safety Gate
-* **Visual:** Full-screen zoom into the Safety Gate panel. Checklist items animate green: `IEEE C57.91 Envelope [PASS]`, `Voltage 0.963–1.032 pu [PASS]`, `N-1 Contingency [PASS]`, `BESS Reserve 38% > 30% [PASS]`.
+### ⏱️ 1:30-1:45 - Deterministic Safety Gate
+* **Visual:** Full-screen zoom into the Safety Gate panel. Checklist items animate green: `IEEE C57.91 Envelope [PASS]`, `Voltage 0.963-1.032 pu [PASS]`, `N-1 Contingency [PASS]`, `BESS Reserve 38% > 30% [PASS]`.
 * **Voiceover:** *"Crucially, the LLM never controls equipment directly. Every action enters a deterministic Safety Gate that mathematically validates transformer limits, grid voltage, N-1 redundancy, and battery reserves."*
 
-### ⏱️ 1:45–2:15 — Technical Defensibility & Avoided Aging
+### ⏱️ 1:45-2:15 - Technical Defensibility & Avoided Aging
 * **Visual:** Side-by-side comparison table showing Baseline vs. Thermal Sentinel Grid. Hot-spot capped at $136.8^\circ\mathrm{C}$ safe, avoiding $73.4\text{ hours}$ of insulation loss-of-life.
 * **Voiceover:** *"Under the hood, we integrate IEEE C57.91 and IEC 60076-7 thermal differential equations with power-flow validation. The agent keeps the hot-spot safely below limits and preserves critical hospital supply."*
 
-### ⏱️ 2:15–2:45 — Commercial ROI & Avoided Loss
+### ⏱️ 2:15-2:45 - Commercial ROI & Avoided Loss
 * **Visual:** Net Avoided Loss ROI card highlighting: `Avoided Outage Risk: $182K`, `Avoided Aging: $486`, `Net Avoided Loss: $175,276`, `ROI: 24.3x`.
 * **Voiceover:** *"For utilities, this prevents multi-million dollar transformer blowouts and SAIDI penalties. For property and fire insurers, it provides an auditable risk-reduction ledger."*
 
-### ⏱️ 2:45–3:00 — Final Closing Hook
+### ⏱️ 2:45-3:00 - Final Closing Hook
 * **Visual:** Clean logo animation: **Thermal Sentinel Grid · Powered by FortyGuard Temperature AI**.
-* **Voiceover:** *"We do not use AI to guess at grid safety. We use AI to orchestrate physics, constraints, and accountable physical action—before heat becomes an outage."*
+* **Voiceover:** *"We do not use AI to guess at grid safety. We use AI to orchestrate physics, constraints, and accountable physical action - before heat becomes an outage."*

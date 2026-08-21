@@ -364,7 +364,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
   };
 
   return (
-    <div className="space-y-4">
+    <div id="tour-telemetry-charts" className="space-y-4">
       {/* Chart A: Boundary Forcing */}
       <div className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-2">

@@ -1,5 +1,5 @@
 """
-Buried Cable–Soil Moisture Dryout Engine (IEC 60287 & IEC 60853)
+Buried Cable-Soil Moisture Dryout Engine (IEC 60287 & IEC 60853)
 Models non-linear soil thermal resistivity surge (rho_soil) driven by cumulative
 multi-day heat persistence and evaporative moisture loss, exposing the hidden
 underground cable thermal bottleneck.

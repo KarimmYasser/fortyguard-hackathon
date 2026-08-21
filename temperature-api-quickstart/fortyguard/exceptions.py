@@ -11,7 +11,7 @@ class TaskTimeoutError(FortyGuardError):
 
 
 class ActivityNotReadyError(FortyGuardError):
-    """The status endpoint 404'd — the activity isn't queryable yet.
+    """The status endpoint 404'd - the activity isn't queryable yet.
 
     This is expected for a short window right after submission (eventual
     consistency); pollers should retry rather than fail.

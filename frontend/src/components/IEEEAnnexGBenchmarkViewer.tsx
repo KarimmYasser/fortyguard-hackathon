@@ -27,7 +27,7 @@ export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
   return (
     <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div id="tour-ieee-header" className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div className="flex items-center gap-3.5">
           <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 p-[1px] shadow-lg shadow-blue-500/20">
             <div className="h-full w-full bg-slate-950 rounded-[15px] flex items-center justify-center">
@@ -100,7 +100,7 @@ export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
       </div>
 
       {/* Comparison Table */}
-      <div className="overflow-x-auto rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4">
+      <div id="tour-ieee-table" className="overflow-x-auto rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4">
         <table className="w-full text-left font-mono text-xs">
           <thead>
             <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px]">

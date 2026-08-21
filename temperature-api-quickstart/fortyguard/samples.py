@@ -21,7 +21,7 @@ MANHATTAN_POLYGON = {
     ],
 }
 
-# A ~10.2 x 10.2 km polygon (~104 km² / ~40 mi²) covering central San Jose, CA —
+# A ~10.2 x 10.2 km polygon (~104 km² / ~40 mi²) covering central San Jose, CA - 
 # sized for a citywide urban-planner use case and within the Premium-tier heatmap
 # area cap. Spans downtown, Japantown, SJSU, North San Jose, the West Side,
 # Willow Glen, and the East Side.
@@ -45,7 +45,7 @@ SAN_JOSE_POLYGON = {
     ],
 }
 
-# A point in downtown Chicago — used as a default for satellite / street view.
+# A point in downtown Chicago - used as a default for satellite / street view.
 CHICAGO_POINT = {"latitude": 41.8781, "longitude": -87.6298}
 
 # Filter types accepted by endpoints that take a `date_time` object.

@@ -1,6 +1,6 @@
 # 💡 Value Proposition, ROI Formulation & AI Architecture Philosophy
 > **Why Physics-Constrained Agentic AI Outperforms Black-Box Machine Learning in Critical Infrastructure**  
-> *Thermal Sentinel Grid — FortyGuard Hackathon '26 (Tracks 06 & 02)*
+> *Thermal Sentinel Grid - FortyGuard Hackathon '26 (Tracks 06 & 02)*
 
 ---
 
@@ -17,7 +17,7 @@ The answer is an unequivocal **NO**. Training a custom black-box ML model is an 
 3. **Utilities and Regulators Demand Certifiable Safety:**  
    Grid operators (e.g. APS, ConEd, PG&E, National Grid) and fire insurers will **never** allow an unconstrained black-box ML model to trip substation breakers or dispatch utility-scale BESS batteries. They require **deterministic safety barriers (CBF-QP)** and **mathematical forward-invariance**.
 4. **Alignment with Track 06 (Agentic AI) & Track 02 (Energy):**  
-   Track 06 specifically grades **Agentic AI**—multi-agent state machines (LangGraph), API tool orchestration, heuristic planning, and real-world decision execution.
+   Track 06 specifically grades **Agentic AI** - multi-agent state machines (LangGraph), API tool orchestration, heuristic planning, and real-world decision execution.
 
 ---
 

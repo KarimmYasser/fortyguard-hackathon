@@ -40,7 +40,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
   return (
     <div className="space-y-6">
       {/* Top GIS Header & Layer Controls */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div id="tour-gis-header" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
@@ -61,6 +61,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
         <div className="flex flex-wrap items-center gap-3">
           {onOpenLiveScan && (
             <button
+              id="tour-gis-scan-btn"
               onClick={onOpenLiveScan}
               className="px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 flex items-center gap-1.5 transition-all font-mono"
               title="Trigger Live Cloud API Scan"
@@ -107,7 +108,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
     </div>
 
       {/* Main Map & Parcel Inspector Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div id="tour-gis-map" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: High-Tech Interactive GIS Canvas */}
         <div className="lg:col-span-8 glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl relative min-h-[480px] flex flex-col justify-between overflow-hidden">
           {/* Top Map Status Overlay */}

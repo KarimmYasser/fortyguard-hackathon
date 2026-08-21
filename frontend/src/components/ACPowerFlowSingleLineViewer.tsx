@@ -49,7 +49,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
   return (
     <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div id="tour-powerflow-header" className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div className="flex items-center gap-3.5">
           <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-600 p-[1px] shadow-lg shadow-emerald-500/20">
             <div className="h-full w-full bg-slate-950 rounded-[15px] flex items-center justify-center">
@@ -86,7 +86,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
       </div>
 
       {/* 4-Bus Single-Line Diagram Topology */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono text-xs">
+      <div id="tour-powerflow-diagram" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono text-xs">
         {buses.map((bus: any, idx: number) => {
           const isCompliant = bus.voltage_compliant_ansi_c84;
           return (
@@ -147,7 +147,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
       </div>
 
       {/* Interactive Power Flow Grid Controls */}
-      <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4 font-mono text-xs">
+      <div id="tour-powerflow-voltvar" className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4 font-mono text-xs">
         <div className="text-slate-300 font-bold text-xs uppercase border-b border-slate-800 pb-2 flex items-center justify-between">
           <span>Interactive Grid Control & Volt/VAR Optimization</span>
           <span className="text-amber-400">ANSI C84.1 Envelope [0.95 - 1.05 pu]</span>

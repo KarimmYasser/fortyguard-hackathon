@@ -1,6 +1,6 @@
 # ⚡ Thermal Sentinel Grid
 > **Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Distribution Transformers & Urban Energy Infrastructure**  
-> **FortyGuard Hackathon '26** — *Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)*
+> **FortyGuard Hackathon '26** - *Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)*
 
 ---
 
@@ -13,14 +13,14 @@
 | :--- | :--- |
 | **Project Title** | **Thermal Sentinel Grid** |
 | **One-Line Pitch** | Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Distribution Transformers & Urban Energy Infrastructure |
-| **Primary Track** | **Track 06 — Agentic AI** |
+| **Primary Track** | **Track 06 - Agentic AI** |
 | **Secondary Track Tags** | **Track 02 (Future Buildings & Energy)** & **Track 03 (Industrial & Enterprise / Critical Assets)** |
 | **Target Audience (Who It's For)** | Substation Reliability Engineers & Grid Operators at Electric Utilities (APS, ConEd, ERCOT, PG&E) and Mission-Critical Facility Managers (Data Centers, Hospitals, Military Bases). |
-| **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** — Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+4.5^\circ\mathrm{C}$ asphalt microclimate delta). |
+| **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** - Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+4.5^\circ\mathrm{C}$ asphalt microclimate delta). |
 | **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 7.17\text{h}$), Exceedance Degree-Hours ($H_{40} = 34.25\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($4.12$), driving proactive 12-hour BESS and transformer cooling dispatch. |
 | **AI Tools Used & Purpose** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Claude 3.5 Sonnet / GPT-4o**: Multi-asset mitigation planning & operator work orders.<br>3. **Non-LLM Control Barrier Functions (CBF-QP)**: Deterministic quadratic program safety gate mathematically guaranteeing ANSI C84.1 voltage ($0.95-1.05\text{ pu}$) and IEEE thermal forward-invariance.<br>4. **HyperFrames**: Programmatic video pitch & live presentation slide rendering. |
 | **Live Demo URL** | Deployable URL / `http://localhost:8000` (Zero install, no login, full incognito compatibility). |
-| **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Rendered to `videos/thermal-sentinel-pitch/renders/video.mp4`). |
+| **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Available locally as Motion Pitch `videos/thermal-sentinel-pitch/renders/video.mp4` and Live UI Walkthrough `videos/thermal-sentinel-pitch/renders/live_product_demo.mp4`, also embedded directly into the Home screen at `/`). |
 | **GitHub Repository Link** | **[https://github.com/KarimmYasser/fortyguard-hackathon](https://github.com/KarimmYasser/fortyguard-hackathon)** *(Collaborator `hackathon@fortyguard.com` / `Hackathon-FG` invited)*. |
 | **Development Timeline Note** | *Initial repo setup & mock-data structure: 17 August 2026. Real FortyGuard API integration and core functionality: 18 August 2026 onward.* |
 
@@ -31,7 +31,7 @@
 
 During extreme heatwaves, electrical utilities manage power distribution using regional airport weather stations located 10 miles away. However, distribution transformers, switchgear, and underground feeder cables sit **0 to 2 meters above radiating black asphalt** inside dense urban canyons.
 
-In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$)—asphalt re-radiation and building canyon wind-sheltering create a **$+4.5^\circ\mathrm{C}$ to $+6.0^\circ\mathrm{C}$ localized thermal trap** that airport stations completely miss.
+In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$) - asphalt re-radiation and building canyon wind-sheltering create a **$+4.5^\circ\mathrm{C}$ to $+6.0^\circ\mathrm{C}$ localized thermal trap** that airport stations completely miss.
 
 **Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, an autonomous **LangGraph multi-agent workflow**, and a **Non-LLM Deterministic Control Barrier Function (CBF-QP) Safety Gate**.
 
@@ -39,7 +39,7 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 
 ## 📋 The 15-Minute Pre-Build Decision Checklist (Judge Alignment)
 
-*Evaluated against the official Hackathon Judge Framework (Ahmed Abdelkhalek — Head of Startups, Google Cloud):*
+*Evaluated against the official Hackathon Judge Framework (Ahmed Abdelkhalek - Head of Startups, Google Cloud):*
 
 | Dimension | Thermal Sentinel Grid Implementation |
 | :--- | :--- |
@@ -82,7 +82,7 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 
 ## 🔬 Four Asymmetric Scientific Moats & Deep Physics
 
-1. **IEC 60287 Underground Cable–Soil Moisture Dryout:**  
+1. **IEC 60287 Underground Cable-Soil Moisture Dryout:**  
    Multi-day heat persistence bakes moisture out of the soil surrounding buried cables. Soil thermal resistivity ($\rho_{\text{soil}}$) surges non-linearly from $0.90\text{ K}\cdot\text{m/W}$ to $>2.45\text{ K}\cdot\text{m/W}$, creating an unmeasured $-22\%$ ampacity bottleneck.
 2. **Oke / Evola Urban Canyon Aerodynamics:**  
    Deep building aspect ratios ($H/W = 1.85$) cause wind-sheltering ($\kappa_{\text{morph}} = 0.58$), reducing radiator fin convective heat dissipation by **$-32\%$ ($\eta_{\text{cool}} = 0.68$)**.
@@ -93,7 +93,7 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 5. **📜 IEEE Std C57.91 Annex G Reference Validation Engine:**  
    Automated verification against official IEEE Clause G.2 (Step Load Response) and Clause G.3 (Diurnal Ambient Ramp), demonstrating **$<0.0001^\circ\mathrm{C}$ error** against published standard tables. *(See **[IEEE Annex G & AC Power Flow Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/IEEE_ANNEX_G_AND_AC_POWER_FLOW_SPECIFICATION.md)**)*
 6. **🔥 72-Hour Continuous Multi-Day Compounding Heatwave Simulation:**  
-   Simulates Phoenix July 24–26, 2023 with night-time thermal soak and progressive soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
+   Simulates Phoenix July 24-26, 2023 with night-time thermal soak and progressive soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
 7. **⚡ Complex AC Distribution Feeder Power Flow (IEEE 4-Bus Network):**  
    Exact Forward-Backward Sweep AC solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
 
@@ -111,12 +111,21 @@ In historic heatwaves—such as the **Phoenix July 2023 benchmark** (31 consecut
 
 ---
 
-## 🔌 FortyGuard API Dual-Mode Ingestion Architecture
+## 🔌 FortyGuard API Dual-Mode Ingestion & System Taxonomy
 *(For the complete architectural decision record, see **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md)**)*
 
 Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ingestion** pattern:
-1. **Mode A: Live Cloud Ingestion (`POST /api/v1/scan`):** Uses [`AsyncFortyGuardClient`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fortyguard_client.py) with full submit-and-poll async lifecycle against live FortyGuard cloud endpoints (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{id}`) for ad-hoc parcel scanning.
+1. **Mode A: Live Cloud Ingestion (`POST /api/v1/scan`):** Uses [`AsyncFortyGuardClient`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fortyguard_client.py) with full submit-and-poll async lifecycle against live FortyGuard cloud endpoints (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{id}`) for ad-hoc parcel scanning with real credit billing.
 2. **Mode B: Deterministic Benchmark Replay (`POST /api/v1/replay/phoenix-2023`):** Uses the pre-ingested Phoenix July 2023 heatwave dataset ([`phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json)) to guarantee **$<15\text{ms}$ sub-second physics evaluation**, 60 FPS scrubber telemetry, 100% scientific reproducibility for IEEE Annex G validation, and zero-downtime stability during live judging presentations.
+
+### 🏛️ System Boundary & Simulation Taxonomy
+| Layer | Implementation | Status | Purpose |
+| :--- | :--- | :---: | :--- |
+| **FortyGuard Live API** | `/v1/env_params`, `/v1/heatmap`, `/v1/system/fetch-api-key-usage` | 🟢 **LIVE** | On-demand parcel scanning, microclimate index lookup & real-time quota accounting. |
+| **Physics ODE Solvers** | IEEE C57.91 Annex G, Arrhenius Aging, IEC 60287 Soil, 14-Bus AC Flow | ⚡ **CALCULATED LIVE** | Real-time continuous differential equations and CBF-QP safety barrier evaluations. |
+| **Substation Asset Digital Twin** | IEEE C57.91 standard transformer parameters (50 MVA, $\tau_{TO}$, $\tau_W$, $R$) | 📦 **SIMULATED TWIN** | Industry-standard CIM/GIS substation nameplate profiles for digital twin benchmarking. |
+| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($47.6^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=7.17\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
+| **Hardware Actuators** | SCADA dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated dispatch control commands with guaranteed CBF-QP safety invariants. |
 
 ---
 
