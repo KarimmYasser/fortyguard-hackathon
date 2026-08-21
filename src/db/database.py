@@ -61,7 +61,13 @@ class HybridDatabaseManager:
                 self.db_path = tmp_dir / "thermal_sentinel.db"
 
         self.supabase_url = os.getenv("SUPABASE_URL", "").rstrip("/")
-        self.supabase_key = os.getenv("SUPABASE_KEY", "") or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
+        # Prefer the service role key: this is trusted server-side code (never
+        # shipped to a browser), and the anon/publishable key is subject to
+        # row-level-security policies that can silently no-op writes/deletes
+        # (e.g. DELETE returning 200 with an empty body instead of an error).
+        # The service role key bypasses RLS entirely, which is what a backend
+        # acting as the source-of-truth writer/reader should use.
+        self.supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "") or os.getenv("SUPABASE_KEY", "")
         self.is_supabase_enabled = bool(self.supabase_url and self.supabase_key)
 
         self._init_sqlite_schema()
