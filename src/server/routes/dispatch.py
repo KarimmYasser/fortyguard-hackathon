@@ -43,32 +43,74 @@ async def run_mitigation_pipeline(req: MitigationTriggerRequest) -> Dict[str, An
         )
 
         # 1. Persist authorized work order to SQLite / Supabase
-        actions = res.get("dispatch_actions", {})
-        wo_id = actions.get("work_order_id", f"WO-TSG-{req.asset_id[:6]}")
+        # NOTE: the LangGraph pipeline's real output nests these under
+        # `b2b_work_order` / `safety_gate_verdict` / `candidate_actions`, not
+        # the stale `dispatch_actions` / `safety_gate_passed` / `explanation`
+        # keys previously read here (those never existed, so every run was
+        # silently falling back to defaults, including a fixed work_order_id
+        # per asset that caused every dispatch to overwrite the same row
+        # instead of accumulating history).
+        work_order = res.get("b2b_work_order", {})
+        safety_verdict = res.get("safety_gate_verdict", {})
+        candidate_actions = res.get("candidate_actions", []) or []
+        b2c_advisory = res.get("b2c_advisory", {})
+
+        import uuid
+        wo_id = work_order.get("work_order_id") or f"WO-TSG-{req.asset_id}-{uuid.uuid4().hex[:8].upper()}"
+
+        total_bess_discharge_mw = sum(
+            float(a.get("bess_discharge_mw", 0.0)) for a in candidate_actions
+        )
+        cooling_active = any(
+            a.get("action_type", "").startswith("COOLING") or a.get("cooling_boost_factor", 1.0) > 1.0
+            for a in candidate_actions
+        )
+        is_safe = bool(safety_verdict.get("is_safe", True))
+        narrative = (
+            work_order.get("gpt_narrative")
+            or b2c_advisory.get("guidance")
+            or b2c_advisory.get("headline")
+        )
+
         order_record = DispatchWorkOrderRecord(
             work_order_id=wo_id,
             asset_id=req.asset_id,
-            calculated_k_safe=float(actions.get("k_safe", 0.88)),
-            bess_dispatch_mw=float(actions.get("bess_discharge_mw", 4.5)),
-            bess_volt_var_q_mvar=float(actions.get("bess_volt_var_q_mvar", 1.2)),
-            oltc_tap_step=int(actions.get("oltc_tap_step", -1)),
-            forced_cooling_active=bool(actions.get("cooling_fans_stage", 2) > 0),
-            gpt_narrative=actions.get("gpt_narrative") or res.get("explanation"),
-            safety_status="AUTHORIZED" if res.get("safety_gate_passed", True) else "BLOCKED",
-            cbf_barrier_compliant=bool(res.get("safety_gate_passed", True)),
+            calculated_k_safe=float(safety_verdict.get("nominal_load_k", 0.88)),
+            bess_dispatch_mw=total_bess_discharge_mw,
+            bess_volt_var_q_mvar=0.0,
+            oltc_tap_step=-1,
+            forced_cooling_active=cooling_active,
+            gpt_narrative=narrative,
+            safety_status="AUTHORIZED" if safety_verdict.get("status") == "ACCEPT" else "BLOCKED",
+            cbf_barrier_compliant=is_safe,
         )
         await db_manager.save_dispatch_work_order(order_record)
 
         # 2. Persist Agent Execution Trace
-        import uuid
+        node_sequence = [step.get("node", "") for step in res.get("audit_trail", []) if step.get("node")]
+        if not node_sequence:
+            node_sequence = ["forecast_node", "physics_node", "planner_node", "safety_gate_node", "audit_dispatch_node"]
+
+        duration_ms = 2450.0
+        try:
+            from datetime import datetime
+            trail = res.get("audit_trail", [])
+            if len(trail) >= 2:
+                fmt = "%Y-%m-%d %H:%M:%SZ"
+                start = datetime.strptime(trail[0]["timestamp"], fmt)
+                end = datetime.strptime(trail[-1]["timestamp"], fmt)
+                duration_ms = max((end - start).total_seconds() * 1000.0, 0.0)
+        except Exception:
+            pass
+
         trace_record = AgentExecutionTraceRecord(
             trace_id=f"TRACE-{uuid.uuid4().hex[:8].upper()}",
             asset_id=req.asset_id,
-            duration_ms=2450.0,
-            node_sequence=["forecast_node", "physics_node", "planner_node", "safety_gate_node", "audit_dispatch_node"],
-            cbf_safety_passed=bool(res.get("safety_gate_passed", True)),
+            duration_ms=duration_ms,
+            node_sequence=node_sequence,
+            cbf_safety_passed=is_safe,
             gpt_work_order_id=wo_id,
-            gpt_advisory_text=res.get("explanation") or actions.get("gpt_narrative"),
+            gpt_advisory_text=narrative,
         )
         await db_manager.save_agent_trace(trace_record)
 
