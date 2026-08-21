@@ -166,6 +166,13 @@
       width: 1920px;
       height: 1080px;
       overflow: hidden;
+      display: none;
+      opacity: 0;
+    }
+
+    .clip.active-scene {
+      display: block;
+      opacity: 1;
     }
 
     .scene-content {
@@ -180,10 +187,11 @@
       position: absolute;
       inset: 0;
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      padding: 104px 64px 120px 64px;
+      grid-template-columns: 1fr 1fr;
+      padding: 96px 64px 110px 64px;
       gap: 48px;
       align-items: center;
+      z-index: 10;
     }
 
     .scene-single-container {
@@ -193,8 +201,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 104px 64px 120px 64px;
+      padding: 96px 64px 110px 64px;
       text-align: center;
+      z-index: 10;
     }
 
     .scene-bg-layer {
@@ -202,14 +211,18 @@
       inset: 0;
       background-size: cover;
       background-position: center;
-      opacity: 0.22;
-      filter: brightness(0.55) contrast(1.2);
+      opacity: 0.14;
+      filter: brightness(0.35) contrast(1.1) blur(4px);
+      z-index: 1;
+      pointer-events: none;
     }
 
     .scene-overlay-gradient {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 60% 40%, rgba(7, 10, 17, 0.4) 0%, rgba(7, 10, 17, 0.95) 85%);
+      background: radial-gradient(circle at 50% 50%, rgba(7, 10, 17, 0.2) 0%, rgba(7, 10, 17, 0.9) 100%);
+      z-index: 2;
+      pointer-events: none;
     }
 
     /* Hero Text Styles */
@@ -891,6 +904,10 @@
       }, null, cap.t);
     });
 
+    // Set initial scene states
+    tl.set("#scene-1", { display: "block", opacity: 1, autoAlpha: 1 }, 0);
+    tl.set(["#scene-2", "#scene-3", "#scene-4", "#scene-5", "#scene-6"], { display: "none", opacity: 0, autoAlpha: 0 }, 0);
+
     // -------------------------------------------------------------
     // SCENE 1 ANIMATIONS (0:00 - 0:30)
     // -------------------------------------------------------------
@@ -901,30 +918,33 @@
     // Laser scanning beam animation on the FLIR card using transform y
     tl.fromTo("#s1-scanner", { y: 0, opacity: 1 }, { y: 600, opacity: 1, duration: 2.5, repeat: 5, yoyo: true, ease: "sine.inOut" }, 1.5);
 
-    tl.fromTo("#s1-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 29.5);
-    tl.set("#s1-content", { opacity: 0 }, 30.0);
+    tl.fromTo("#s1-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.6);
+    tl.set("#scene-1", { display: "none", opacity: 0, autoAlpha: 0 }, 30.0);
 
     // -------------------------------------------------------------
     // SCENE 2 ANIMATIONS (0:30 - 1:00)
     // -------------------------------------------------------------
+    tl.set("#scene-2", { display: "block", opacity: 1, autoAlpha: 1 }, 30.0);
     tl.fromTo("#s2-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 30.4);
     tl.fromTo("#s2-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 30.8);
     tl.fromTo(["#s2-moat1", "#s2-moat2", "#s2-moat3", "#s2-moat4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 31.4);
-    tl.fromTo("#s2-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 59.5);
-    tl.set("#s2-content", { opacity: 0 }, 60.0);
+    tl.fromTo("#s2-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 59.6);
+    tl.set("#scene-2", { display: "none", opacity: 0, autoAlpha: 0 }, 60.0);
 
     // -------------------------------------------------------------
     // SCENE 3 ANIMATIONS (1:00 - 1:30)
     // -------------------------------------------------------------
+    tl.set("#scene-3", { display: "block", opacity: 1, autoAlpha: 1 }, 60.0);
     tl.fromTo("#s3-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 60.4);
     tl.fromTo("#s3-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 60.8);
     tl.fromTo(["#s3-step1", "#s3-step2", "#s3-step3", "#s3-step4"], { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 0.2, ease: "power2.out" }, 61.4);
-    tl.fromTo("#s3-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 89.5);
-    tl.set("#s3-content", { opacity: 0 }, 90.0);
+    tl.fromTo("#s3-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 89.6);
+    tl.set("#scene-3", { display: "none", opacity: 0, autoAlpha: 0 }, 90.0);
 
     // -------------------------------------------------------------
     // SCENE 4 ANIMATIONS (1:30 - 2:15)
     // -------------------------------------------------------------
+    tl.set("#scene-4", { display: "block", opacity: 1, autoAlpha: 1 }, 90.0);
     tl.fromTo("#s4-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 90.4);
     tl.fromTo("#s4-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 90.8);
     tl.fromTo(["#s4-m1", "#s4-m2", "#s4-m3", "#s4-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 91.4);
@@ -935,21 +955,23 @@
     tl.to("#s4-cursor", { scale: 0.85, duration: 0.2, yoyo: true, repeat: 1, ease: "power1.inOut" }, 98.0);
     tl.to("#s4-cursor", { opacity: 0, duration: 0.8, ease: "power1.out" }, 99.5);
 
-    tl.fromTo("#s4-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 134.5);
-    tl.set("#s4-content", { opacity: 0 }, 135.0);
+    tl.fromTo("#s4-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 134.6);
+    tl.set("#scene-4", { display: "none", opacity: 0, autoAlpha: 0 }, 135.0);
 
     // -------------------------------------------------------------
     // SCENE 5 ANIMATIONS (2:15 - 2:45)
     // -------------------------------------------------------------
+    tl.set("#scene-5", { display: "block", opacity: 1, autoAlpha: 1 }, 135.0);
     tl.fromTo("#s5-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 135.4);
     tl.fromTo("#s5-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 135.8);
     tl.fromTo(["#s5-m1", "#s5-m2", "#s5-m3", "#s5-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 136.4);
-    tl.fromTo("#s5-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 164.5);
-    tl.set("#s5-content", { opacity: 0 }, 165.0);
+    tl.fromTo("#s5-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 164.6);
+    tl.set("#scene-5", { display: "none", opacity: 0, autoAlpha: 0 }, 165.0);
 
     // -------------------------------------------------------------
     // SCENE 6 ANIMATIONS (2:45 - 3:00)
     // -------------------------------------------------------------
+    tl.set("#scene-6", { display: "block", opacity: 1, autoAlpha: 1 }, 165.0);
     tl.fromTo("#s6-hero", { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "power3.out" }, 165.4);
 
     window.__timelines["main"] = tl;
