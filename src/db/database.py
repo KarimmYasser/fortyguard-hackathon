@@ -549,7 +549,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("academic_research_papers", record.model_dump())
 
-    def get_academic_papers(
+    def _get_academic_papers_sqlite(
         self,
         category: Optional[str] = None,
         search: Optional[str] = None,
@@ -583,6 +583,52 @@ class HybridDatabaseManager:
                         item["authors"] = [item["authors"]]
                 results.append(item)
             return results
+
+    async def get_academic_papers(
+        self,
+        category: Optional[str] = None,
+        search: Optional[str] = None,
+        limit: int = 100,
+    ) -> List[Dict[str, Any]]:
+        """
+        Hybrid read: on Vercel/Lambda, local SQLite is ephemeral per-invocation
+        (reset on every cold start), so it can never be the source of truth for
+        data seeded directly into Supabase. Supabase Postgres is queried first
+        when enabled; local SQLite results are merged in and deduplicated by
+        paper_id as a fallback / offline cache.
+        """
+        sqlite_results = self._get_academic_papers_sqlite(category=category, search=search, limit=limit)
+
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        supabase_results = await self._supabase_select(
+            "academic_research_papers",
+            category=category,
+            search=search,
+            search_columns=["title", "abstract", "key_findings"],
+            limit=limit,
+            order="year.desc,citation_count.desc",
+        )
+
+        for item in supabase_results:
+            if isinstance(item.get("authors"), str):
+                try:
+                    item["authors"] = json.loads(item["authors"])
+                except Exception:
+                    item["authors"] = [item["authors"]]
+
+        merged: Dict[str, Dict[str, Any]] = {}
+        for item in supabase_results:
+            key = item.get("paper_id") or item.get("arxiv_id") or item.get("title", "")
+            merged[key] = item
+        for item in sqlite_results:
+            key = item.get("paper_id") or item.get("arxiv_id") or item.get("title", "")
+            merged.setdefault(key, item)
+
+        combined = list(merged.values())
+        combined.sort(key=lambda x: (x.get("year") or 0, x.get("citation_count") or 0), reverse=True)
+        return combined[:limit]
 
     # --- 5. Substation Telemetry Logging ---
     async def log_substation_telemetry(self, record: SubstationTelemetryRecord) -> None:
@@ -1111,6 +1157,47 @@ class HybridDatabaseManager:
         except Exception as e:
             logger.warning(f"Supabase sync non-fatal error for table {table}: {e}")
             return False
+
+    async def _supabase_select(
+        self,
+        table: str,
+        category: Optional[str] = None,
+        search: Optional[str] = None,
+        search_columns: Optional[List[str]] = None,
+        limit: int = 100,
+        order: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Generic read from Supabase PostgREST. Returns [] (non-fatal) on any
+        network/config error so callers can fall back to local SQLite.
+        """
+        if not self.is_supabase_enabled:
+            return []
+
+        url = f"{self.supabase_url}/rest/v1/{table}"
+        headers = {
+            "apikey": self.supabase_key,
+            "Authorization": f"Bearer {self.supabase_key}",
+        }
+        params: Dict[str, str] = {"select": "*", "limit": str(limit)}
+        if order:
+            params["order"] = order
+        if category and category != "all":
+            params["category"] = f"eq.{category}"
+        if search and search_columns:
+            or_clause = ",".join(f"{col}.ilike.*{search}*" for col in search_columns)
+            params["or"] = f"({or_clause})"
+
+        try:
+            async with httpx.AsyncClient(timeout=6.0) as client:
+                resp = await client.get(url, headers=headers, params=params)
+                if resp.status_code == 200:
+                    return resp.json()
+                logger.warning(f"Supabase read non-200 for table {table}: {resp.status_code} {resp.text[:200]}")
+                return []
+        except Exception as e:
+            logger.warning(f"Supabase read non-fatal error for table {table}: {e}")
+            return []
 
     def get_database_status(self) -> Dict[str, Any]:
         """Returns database health, active mode, and cached item counts across all 16 tables."""

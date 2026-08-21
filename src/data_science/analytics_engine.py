@@ -17,6 +17,21 @@ import pandas as pd
 logger = logging.getLogger("thermal_sentinel.data_science.analytics")
 
 
+# Columns that are tautological duplicates or pure linear/shift transforms of
+# another Gold feature already in the dataset (e.g. hour_of_day = hour_index + 6,
+# safety_margin_c = 140 - estimated_hot_spot_c). These always correlate at
+# |r| == 1 by construction and would drown out genuinely interesting
+# relationships in the "strongest correlations" report, so they are excluded
+# from correlation analysis (they remain visible in the EDA / stats views).
+_TRIVIAL_DERIVED_COLUMNS = {
+    "hour_of_day",              # = hour_index + 6
+    "delta_microclimate_c",     # duplicate of microclimate_delta_c (same formula)
+    "voltage_deviation_pu",     # = 0.02 * baseline_load_ratio_k
+    "safety_margin_c",          # = 140 - estimated_hot_spot_c
+    "diurnal_recovery_deficit", # = estimated_top_oil_rise_c - min(estimated_top_oil_rise_c)
+}
+
+
 class ThermalAnalyticsEngine:
     """
     Statistical analytics engine operating on Gold ETL features.
@@ -67,10 +82,15 @@ class ThermalAnalyticsEngine:
             return {"error": "Empty dataset"}
 
         numeric_df = gold_df.select_dtypes(include=[np.number])
-        # Filter for columns that actually vary across observations
-        varying_cols = [c for c in numeric_df.columns if numeric_df[c].std() > 1e-8]
+        # Filter for columns that actually vary across observations, and drop
+        # tautological/derived duplicates that would otherwise dominate the
+        # "strongest correlations" report with meaningless |r| == 1 pairs.
+        varying_cols = [
+            c for c in numeric_df.columns
+            if numeric_df[c].std() > 1e-8 and c not in _TRIVIAL_DERIVED_COLUMNS
+        ]
         if not varying_cols:
-            varying_cols = numeric_df.columns.tolist()
+            varying_cols = [c for c in numeric_df.columns if numeric_df[c].std() > 1e-8] or numeric_df.columns.tolist()
 
         sub_df = numeric_df[varying_cols]
         columns = varying_cols

@@ -43,7 +43,7 @@ async def get_research_corpus() -> Dict[str, Any]:
             pass
 
     # Query latest papers from SQLite / Supabase
-    db_papers = db_manager.get_academic_papers(limit=200)
+    db_papers = await db_manager.get_academic_papers(limit=200)
     if db_papers and len(db_papers) > 0:
         for p in db_papers:
             cat = p.get("category", "general")
@@ -72,7 +72,7 @@ async def get_db_papers_flat(
     """
     Returns a flat list of academic papers queried directly from the SQLite / Supabase database.
     """
-    papers = db_manager.get_academic_papers(category=category, search=search, limit=limit)
+    papers = await db_manager.get_academic_papers(category=category, search=search, limit=limit)
     return {
         "total": len(papers),
         "source": "hybrid_database" if db_manager.is_supabase_enabled else "local_database",
