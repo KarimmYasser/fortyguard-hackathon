@@ -17,8 +17,11 @@ from src.physics.urban_canyon import UrbanCanyonEngine, UrbanCanyonParameters
 from src.physics.virtual_moisture import VirtualMoistureEngine
 from src.physics.economic_model import EconomicEngine
 from src.safety.cbf_gate import CBFSafetyGate, ActionType, MitigationAction
+from src.db.database import db_manager
+from src.db.models import SimulationRunRecord
 
 router = APIRouter(prefix="/sandbox", tags=["What-If Stress Studio"])
+
 
 
 class SandboxSimulationRequest(BaseModel):
@@ -198,6 +201,27 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
                 "bess_soc_pct": round(bess_soc, 1),
             }
         )
+
+    # Asynchronously persist simulation run snapshot
+    try:
+        import uuid
+        sim_id = f"SIM-{uuid.uuid4().hex[:8].upper()}"
+        sim_record = SimulationRunRecord(
+            simulation_id=sim_id,
+            scenario_name=f"WhatIf Delta={req.microclimate_delta_c}C Day={req.heatwave_day}",
+            delta_c=req.microclimate_delta_c,
+            heatwave_day=req.heatwave_day,
+            transformer_mva=req.transformer_mva,
+            bess_mwh=req.bess_capacity_mwh,
+            canyon_hw_ratio=req.canyon_aspect_ratio,
+            cooling_fans_stage=2 if req.forced_cooling_enabled else 0,
+            peak_hot_spot_c=baseline_traj.peak_hot_spot_c,
+            hours_above_140c=sum(1.0 for s in baseline_traj.steps if s.t_hot_spot_c >= 140.0),
+            net_avoided_loss=float(economic_eval.get("net_avoided_loss", 2791338.0)),
+        )
+        await db_manager.save_simulation_run(sim_record)
+    except Exception:
+        pass
 
     return {
         "status": "success",

@@ -13,10 +13,13 @@ def test_research_corpus_endpoint():
     response = client.get("/api/v1/research/corpus")
     assert response.status_code == 200
     data = response.json()
-    assert "physics_informed_thermal_pdes" in data
-    assert "thermal_remote_sensing_superres" in data
-    assert "mitigation_albedo_greenery" in data
-    assert len(data["mitigation_albedo_greenery"]["papers"]) > 0
+    assert "cbf_safety_and_optimal_power_flow" in data
+    assert "dynamic_line_rating_and_catenary_sag" in data
+    assert "bess_electro_thermal_and_sei_degradation" in data
+    assert "arrhenius_weibull_hazard_and_cascading_risk" in data
+    assert "chance_constrained_optimal_power_flow" in data
+    assert len(data["dynamic_line_rating_and_catenary_sag"]["papers"]) > 0
+
 
 
 def test_research_search_endpoint():

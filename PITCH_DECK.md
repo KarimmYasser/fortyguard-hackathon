@@ -77,18 +77,27 @@
 * **Key Takeaway:** 4-Layer Hybrid Stack (Perception $\to$ Physical Truth $\to$ Agentic Planner $\to$ Safety Barrier).
 * **Talking Points:** Why we do NOT use black-box ML; IEEE C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error); LangGraph StateGraph decision flow.
 
-### Slide 3: Four Scientific Moats
-* **Key Takeaway:** 4 unmeasured physical cascades:
+### Slide 3: Eight Asymmetric Scientific & Heavy Computational Moats
+* **Key Takeaway:** Unmeasured physical cascades and convex optimization:
   1. IEC 60287 Cable-Soil Dryout ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$)
   2. Oke/Evola Canyon Aerodynamics ($-32\%$ cooling derate)
   3. Fickian Virtual Moisture Sensor ($RS_o = 42\%$ arcing warning)
   4. Robust CBF-QP Safety Gate ($0.95 \le V_{\text{pu}} \le 1.05$)
+  5. IEEE Std 738-2012 Dynamic Line Rating ($q_c+q_r=q_s+I^2R$, $+22.5\%$ ampacity headroom, sag $S(T_c)$)
+  6. Coupled 2-State BESS Thermal ODEs & Arrhenius SEI Capacity Fade ($55^\circ\mathrm{C}$ runaway ceiling)
+  7. Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk ($\lambda_i(t,T)$, joint $P_{\text{cascade}}$)
+  8. Chance-Constrained SOCP OPF ($95\%/99\%$ Gaussian quantile confidence bounds)
 
-### Slide 4: Multi-Day Compounding & AC Power Flow
-* **Key Takeaway:** 72-hour continuous heatwave simulation & 4-bus distribution feeder network with OLTC tap tuning.
+### Slide 4: Multi-Day Compounding & AC Distribution Feeder Network
+* **Key Takeaway:** 72-hour continuous heatwave simulation, 4-bus distribution feeder network with OLTC tap tuning, and Chance-Constrained SOCP dispatch.
+
 
 ### Slide 5: Investment-Grade Avoided Loss (LBNL ICE)
 * **Key Takeaway:** $\$2,791,338$ Net Avoided Loss; $5,952\text{x}$ ROI; $\$12.50/\text{kWh}$ VoLL.
+
+### Slide 6: Enterprise Zero-Data-Loss Dual-Storage Architecture (16 Tables)
+* **Key Takeaway:** 16-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Row Level Security (RLS) & FortyGuard API query caching.
+* **Talking Points:** MD5-hashed query cache saves paid API credits; full auditable legal trails for B2B SCADA work orders, CBF safety proofs, and LBNL ICE filings.
 
 ---
 
@@ -101,3 +110,5 @@
 | **"Why is AI justified here versus simple threshold scripts?"** | *"Deterministic scripts cannot orchestrate multi-asset, cross-feeder trade-offs (e.g. balancing BESS State of Charge, transformer top-oil time constants, and hospital feeder voltage constraints). LangGraph acts as the cognitive planner that evaluates complex multi-step mitigation paths, while CBF-QP acts as the mathematical safety barrier."* |
 | **"Would utilities trust an autonomous AI agent with circuit breakers?"** | *"No utility trusts an unconstrained LLM. That is why we designed a non-LLM Control Barrier Function (CBF-QP) as a mathematical firewall. Even if the AI planner proposes an aggressive dispatch, the CBF-QP filter strictly projects actions onto $K_{\text{safe}}$, guaranteeing zero voltage or thermal violations."* |
 | **"Are the avoided loss numbers realistic?"** | *"Yes, all financial figures are calculated directly using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard ($VoLL = \$12.50/\text{kWh}$) and IEEE C57.91 capital replacement formulas over an 180,000-hour asset life."* |
+| **"How do you handle data persistence and API cost scaling?"** | *"We built an enterprise 16-table dual-storage persistence layer (SQLite + Supabase PostgreSQL). Every FortyGuard API call is MD5-hashed and cached to prevent duplicate credit billing, while all SCADA orders, CBF certificates, and 72h telemetry are permanently indexed under Row Level Security for regulatory compliance."* |
+

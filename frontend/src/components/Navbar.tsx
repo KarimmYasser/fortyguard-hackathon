@@ -18,6 +18,7 @@ import {
   Network,
   Radio,
   BookOpen,
+  Database,
 } from 'lucide-react';
 import { ScenarioMetadata, SafetyGateVerdict } from '../types';
 
@@ -43,9 +44,11 @@ interface NavbarProps {
   onSelectTab: (tab: ActiveTab) => void;
   onRefresh: () => void;
   onOpenLiveScan?: () => void;
+  onOpenDatabaseModal?: () => void;
   onStartTour?: () => void;
   isLoading: boolean;
 }
+
 
 interface TabPreviewInfo {
   badge: string;
@@ -144,9 +147,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectTab,
   onRefresh,
   onOpenLiveScan,
+  onOpenDatabaseModal,
   onStartTour,
   isLoading,
 }) => {
+
   const [hoveredTab, setHoveredTab] = React.useState<ActiveTab | null>(null);
 
   const tabs = [
@@ -275,6 +280,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden sm:inline">Live Cloud Scan</span>
             </button>
           )}
+
+          {onOpenDatabaseModal && (
+            <button
+              id="tour-navbar-db-modal"
+              onClick={onOpenDatabaseModal}
+              className="px-3.5 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm shadow-cyan-500/10 hover:shadow-cyan-500/20 font-mono"
+              title="Open Supabase & SQLite Enterprise 16-Table Database Hub"
+            >
+              <Database className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span className="hidden sm:inline">Cloud DB (16 Tables)</span>
+            </button>
+          )}
+
 
           <button
             onClick={onRefresh}

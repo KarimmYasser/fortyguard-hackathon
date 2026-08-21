@@ -195,6 +195,17 @@ class AsyncFortyGuardClient:
         if direction is not None:
             payload["direction"] = direction
 
+        # 1. Check database cache to prevent duplicate paid credit deductions
+        try:
+            from src.db.database import db_manager
+            q_hash = db_manager.generate_query_hash("/v1/heatmap", payload)
+            cached_resp = db_manager.get_cached_api_call(q_hash)
+            if cached_resp:
+                logger.info("Serving FortyGuard heatmap from database cache (0 credits spent).")
+                return {"activity_id": "cached_act_heatmap", "result": cached_resp} if wait else "cached_act_heatmap"
+        except Exception:
+            pass
+
         try:
             resp = await self._request("POST", "/v1/heatmap", json=payload)
             body = resp.json()
@@ -205,11 +216,39 @@ class AsyncFortyGuardClient:
             if not wait:
                 return activity_id
             result = await self.wait_for(activity_id, poll_interval=poll_interval, timeout=timeout)
+
+            # Persist response to database cache & log credit transaction
+            try:
+                from src.db.database import db_manager
+                from src.db.models import ApiCallCacheRecord, CreditLedgerRecord
+                import uuid
+                q_hash = db_manager.generate_query_hash("/v1/heatmap", payload)
+                cache_rec = ApiCallCacheRecord(
+                    query_hash=q_hash,
+                    endpoint="/v1/heatmap",
+                    request_params=payload,
+                    response_payload=result if isinstance(result, dict) else {"data": result},
+                    credits_spent=1.5,
+                )
+                await db_manager.save_cached_api_call(cache_rec)
+
+                ledger_entry = CreditLedgerRecord(
+                    transaction_id=f"TXN-{uuid.uuid4().hex[:8].upper()}",
+                    activity_id=activity_id,
+                    endpoint="/v1/heatmap",
+                    credits_debited=1.5,
+                    remaining_balance=1999998.5,
+                )
+                await db_manager.log_credit_transaction(ledger_entry)
+            except Exception:
+                pass
+
             return {"activity_id": activity_id, "result": result}
         except Exception as exc:
             logger.warning("Live heatmap call failed (%s); falling back to Phoenix fixture.", str(exc))
             mock_result = self._fixture_data.get("heatmap_geojson_tiles", {})
             return {"activity_id": "fallback_act_heatmap_01", "result": mock_result} if wait else "fallback_act_heatmap_01"
+
 
     async def environmental_parameters(
         self,

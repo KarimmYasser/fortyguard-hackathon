@@ -21,7 +21,7 @@ export const startTourGuide = ({
             popover: {
               title: '🧭 Universal Interactive Tour Guide',
               description:
-                'Welcome to Thermal Sentinel Grid! This tour guide is available across ALL 10 tabs to guide you through every physics engine, simulation tool, and live API capability.',
+                'Welcome to Thermal Sentinel Grid! This interactive tour guide is available across ALL 11 operational tabs to guide you step-by-step through every physics engine, simulation studio, and live API capability.',
               side: 'bottom',
               align: 'end',
             },
@@ -29,7 +29,7 @@ export const startTourGuide = ({
           {
             element: '#tour-hero-header',
             popover: {
-              title: '🌟 Executive Mission Overview',
+              title: '🌟 Executive Mission & Architecture',
               description:
                 'Thermal Sentinel Grid couples FortyGuard 2-meter microclimate AI with IEEE differential equations and multi-agent dispatch to protect electrical power grids from heatwave thermal runaway.',
               side: 'bottom',
@@ -39,9 +39,9 @@ export const startTourGuide = ({
           {
             element: '#tour-video-showcase',
             popover: {
-              title: '🎬 3-Minute Video Showcase & Live Demo',
+              title: '🎬 3-Minute Video Showcase & Live Walkthrough',
               description:
-                'Watch the official programmatic motion illustration pitch or toggle to the full automated live UI product walkthrough. Jump directly to any timestamp using interactive chapter markers.',
+                'Watch the official programmatic motion illustration pitch or toggle to the full automated live UI product walkthrough. Jump directly to any timestamp using interactive chapter markers or download high-definition MP4 renders.',
               side: 'top',
               align: 'center',
             },
@@ -61,7 +61,7 @@ export const startTourGuide = ({
             popover: {
               title: '🛡️ Baseline vs. Mitigated Mode Switcher',
               description:
-                'Switch between unmitigated baseline operation (overheating excursion past 140°C) and physics-bounded proactive mitigation.',
+                'Switch between unmitigated baseline operation (overheating excursion past 140°C) and physics-bounded proactive mitigation across all dashboard views.',
               side: 'bottom',
               align: 'center',
             },
@@ -79,7 +79,7 @@ export const startTourGuide = ({
           {
             element: '#tour-card-overview',
             popover: {
-              title: '⚡ Tab 1: Mission Control Telemetry',
+              title: '⚡ Tab 2: Mission Control Telemetry',
               description:
                 'Scrub through the 12-hour forward forecast timeline and inspect IEEE C57.91 winding hot-spot temperatures in real time.',
               side: 'top',
@@ -89,9 +89,49 @@ export const startTourGuide = ({
           {
             element: '#tour-card-sandbox',
             popover: {
-              title: '🎛️ Tab 2: What-If Physics Studio',
+              title: '🎛️ Tab 3: What-If Physics Studio & BESS',
               description:
-                'Modulate ambient temperature spikes, battery storage MWh, and cooling fans with sub-15ms real-time ODE re-solving.',
+                'Modulate ambient temperature spikes, battery storage MWh, and cooling fans with 2-state cell electro-thermal ODEs and sub-15ms re-solving.',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tour-card-72h',
+            popover: {
+              title: '🔥 Tab 4: 72h Compounding Heatwave',
+              description:
+                'Continuous 3-day simulation showing night-time thermal soak, soil moisture desertification, and compounding insulation aging.',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tour-card-powerflow',
+            popover: {
+              title: '⚡ Tab 5: AC Power Flow & Dynamic Line Rating',
+              description:
+                '4-bus single-line diagram, IEEE 738 DLR dynamic ampacity headroom (+22.5%), catenary sag, and Chance-Constrained SOCP OPF.',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tour-card-ieee',
+            popover: {
+              title: '🏆 Tab 6: IEEE Annex G Standard Benchmark',
+              description:
+                'Direct numerical verification against Clause G.2 (Step Load) and Clause G.3 (Diurnal Ramp) standard tables (<0.0001°C error).',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tour-card-academic',
+            popover: {
+              title: '📚 Tab 7: Academic Provenance & alphaXiv Corpus',
+              description:
+                '50+ peer-reviewed papers discovered via alphaXiv, Surface Energy Balance PDEs, and live academic literature search.',
               side: 'top',
               align: 'start',
             },
@@ -99,7 +139,7 @@ export const startTourGuide = ({
           {
             element: '#tour-card-gis',
             popover: {
-              title: '🗺️ Tab 6: Hyperlocal 2m GIS Engine',
+              title: '🗺️ Tab 8: Hyperlocal 2m GIS Engine',
               description:
                 'Explore 2-meter FortyGuard convective & surface temperatures, resolving localized +4.5°C asphalt traps and urban heat canyons.',
               side: 'top',
@@ -107,11 +147,21 @@ export const startTourGuide = ({
             },
           },
           {
+            element: '#tour-card-moats',
+            popover: {
+              title: '🛡️ Tab 9: 4 Asymmetric Scientific Moats',
+              description:
+                'Underground cable-soil dryout, urban canyon aerodynamic throttling, virtual paper-oil moisture, and CBF-QP barrier.',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
             element: '#tour-card-agent',
             popover: {
-              title: '🤖 Tab 8: LangGraph Multi-Agent Stack',
+              title: '🤖 Tab 10: LangGraph Multi-Agent Stack',
               description:
-                'Inspect the 5-node cognitive pipeline with live GPT-5.4 synthesis via Siemens SDC LLM Gateway and full audit trails.',
+                'Inspect the 5-node cognitive pipeline with live GPT-5.4 work order synthesis and tamper-evident audit trails.',
               side: 'top',
               align: 'start',
             },
@@ -119,7 +169,7 @@ export const startTourGuide = ({
           {
             element: '#tour-card-roi',
             popover: {
-              title: '💰 Tab 9: Avoided Loss & ROI Audit',
+              title: '💰 Tab 11: Avoided Loss & ROI Audit',
               description:
                 'Audit investment-grade economics with the DOE LBNL ICE model showing $2.79M net savings and 5,952x economic ROI per heatwave event.',
               side: 'top',
@@ -153,19 +203,19 @@ export const startTourGuide = ({
           {
             element: '#tour-kpi-grid',
             popover: {
-              title: '📊 Real-Time Physics KPI Grid',
+              title: '📊 Real-Time Physics & Microclimate KPI Grid',
               description:
-                'Tracks IEEE winding hot-spot rise (T_hs), Arrhenius cellulose loss-of-life acceleration (V), avoided capital losses, and FortyGuard persistence (P_40).',
-              side: 'bottom',
+                'Examine the four primary telemetry indicators: FortyGuard 2m Ambient Air (47.6°C), Top-Oil Temperature (104.2°C), Winding Hot-Spot (136.8°C), and Arrhenius Insulation Aging Acceleration (2.1x vs 14.8x).',
+              side: 'top',
               align: 'center',
             },
           },
           {
             element: '#tour-telemetry-charts',
             popover: {
-              title: '📈 3-Axis Synchronized Physics Telemetry',
+              title: '📈 Apache ECharts Synchronized Multi-Axis Telemetry',
               description:
-                'Interactive Apache ECharts rendering Ambient 2m vs. Top-Oil vs. Winding Hot-Spot temperatures alongside Arrhenius aging curves and BESS dispatch schedules.',
+                'Interactive multi-layer physics charts plotting FortyGuard 2m ambient vs Airport SCADA, top-oil and winding hot-spot rises, and Arrhenius aging factor progression.',
               side: 'top',
               align: 'center',
             },
@@ -173,21 +223,21 @@ export const startTourGuide = ({
           {
             element: '#tour-safety-gate',
             popover: {
-              title: '🛡️ CBF-QP Safety Barrier Invariance',
+              title: '🛡️ Robust Control Barrier Function (CBF-QP) Gate',
               description:
-                'Control Barrier Functions (h(x) >= 0) mathematically guarantee safety sets, overriding any hallucinations with certified physical invariance.',
+                'Non-LLM deterministic quadratic program certifying that the candidate mitigation policy maintains forward-invariance of safe thermal sets and ANSI C84.1 voltage envelopes.',
               side: 'top',
-              align: 'start',
+              align: 'center',
             },
           },
           {
             element: '#tour-audit-ledger',
             popover: {
-              title: '📜 Multi-Agent Immutable Audit Ledger',
+              title: '📜 Tamper-Evident Chronological Audit Ledger',
               description:
-                'Chronological, tamper-evident audit ledger capturing every action dispatched by the LangGraph agent stack with UTC timestamps.',
+                'Full audit trail recording environmental boundary ingestion, physical state estimation, safety gate evaluations, and autonomous dispatch authorizations.',
               side: 'top',
-              align: 'end',
+              align: 'center',
             },
           },
         ];
@@ -207,19 +257,19 @@ export const startTourGuide = ({
           {
             element: '#tour-sandbox-controls',
             popover: {
-              title: '🎛️ Real-Time Parameter Sliders',
+              title: '🎛️ Real-Time Multi-Physics Sliders',
               description:
-                'Modulate key stress variables: FortyGuard 2m microclimate delta (+1°C to +8°C), heatwave duration, BESS peak shaving capacity (MW), transformer MVA rating, and auxiliary cooling fans.',
+                'Modulate key stress variables: FortyGuard 2m microclimate delta (+1°C to +8°C), heatwave duration, BESS peak shaving capacity (MW), transformer MVA rating, building canyon H/W ratio, and auxiliary cooling fans with sub-15ms re-solving.',
               side: 'bottom',
               align: 'center',
             },
           },
           {
-            element: '#tour-kpi-grid',
+            element: '#tour-bess-panel',
             popover: {
-              title: '📊 Instant Sub-15ms ODE Solver Output',
+              title: '🔋 2-State BESS Electro-Thermal & SEI Engine',
               description:
-                'Observe how customized stress variables immediately recalculate the full IEEE C57.91 2nd-order non-linear differential solver with instantaneous numerical feedback.',
+                'Simulate battery cell core (Tc) vs. surface (Ts) thermal ODEs, internal Joule heating, Arrhenius SEI capacity fade, real-time degradation cost ($/MWh), and enforcement of the 55°C thermal runaway safety barrier.',
               side: 'top',
               align: 'center',
             },
@@ -265,9 +315,19 @@ export const startTourGuide = ({
           {
             element: '#tour-powerflow-header',
             popover: {
-              title: '⚡ 14-Bus AC Distribution Feeder Power Flow',
+              title: '⚡ 4-Bus AC Distribution Feeder Power Flow',
               description:
-                'Full non-linear forward-backward sweep AC power flow solver calculating real and reactive power (P, Q), bus voltages (V, theta), and feeder line losses in real time.',
+                'Non-linear forward-backward sweep AC power flow and Second-Order Cone CC-OPF calculating active & reactive power (P, Q), bus voltages (V, theta), line losses, and dynamic ratings in real time.',
+              side: 'bottom',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tour-cc-opf-controls',
+            popover: {
+              title: '🛡️ Chance-Constrained SOCP OPF Formulation',
+              description:
+                'Toggle between Deterministic AC Power Flow and Chance-Constrained SOCP OPF with 90%, 95%, or 99% confidence guarantees under FortyGuard microclimate temperature uncertainty.',
               side: 'bottom',
               align: 'center',
             },
@@ -275,9 +335,9 @@ export const startTourGuide = ({
           {
             element: '#tour-powerflow-diagram',
             popover: {
-              title: '🗺️ Interactive Single-Line Diagram',
+              title: '🗺️ Interactive Single-Line Diagram Topology',
               description:
-                'Visual distribution network layout showing substation transformers, distributed PV solar, EV charging clusters, and BESS injection nodes.',
+                'Visual distribution network layout with probabilistic voltage intervals [V_min, V_max], active power injections, and thermal compliance status per bus.',
               side: 'top',
               align: 'center',
             },
@@ -325,7 +385,7 @@ export const startTourGuide = ({
             popover: {
               title: '📚 Peer-Reviewed Scientific Provenance',
               description:
-                'Discover the 47 peer-reviewed papers and preprints grounding FortyGuard’s thermal downscaling, cool pavement physics, and grid heatwave dispatch.',
+                'Discover 50+ peer-reviewed papers and preprints grounding FortyGuard’s thermal downscaling, cool pavement physics, Dynamic Line Rating (IEEE 738), BESS degradation, Weibull hazards, and CC-OPF dispatch.',
               side: 'bottom',
               align: 'center',
             },
@@ -333,9 +393,9 @@ export const startTourGuide = ({
           {
             element: '#tour-academic-formulas',
             popover: {
-              title: '📐 Surface Energy Balance & PINN Foundations',
+              title: '📐 Surface Energy Balance & Physical Foundations',
               description:
-                'Inspect the foundational PDEs: Surface Energy Balance (SEB) for cool pavements, Physics-Informed Neural Networks for thermal diffusion, and Spatio-Temporal Graph Neural Networks.',
+                'Inspect the foundational PDEs: Surface Energy Balance (SEB), Dynamic Line Rating heat balance, Battery 2-state thermal ODEs, and Arrhenius-Weibull hazard integrals rendered in KaTeX.',
               side: 'bottom',
               align: 'center',
             },
@@ -345,7 +405,7 @@ export const startTourGuide = ({
             popover: {
               title: '🔍 Live arXiv & alphaXiv Research Engine',
               description:
-                'Type any research query (e.g., "cool pavement albedo", "land surface temperature downscaling") to execute real-time searches across arXiv and alphaXiv.',
+                'Type any research query (e.g., "dynamic line rating", "battery degradation", "chance constrained OPF") to execute real-time searches across arXiv and alphaXiv.',
               side: 'bottom',
               align: 'center',
             },
@@ -353,9 +413,9 @@ export const startTourGuide = ({
           {
             element: '#tour-academic-filters',
             popover: {
-              title: '🏷️ 5 Multi-Disciplinary Domain Filters',
+              title: '🏷️ Specialized Domain Filters',
               description:
-                'Filter papers by specialized domains: Cool Pavements & Albedo, Satellite Thermal Downscaling (PGDM / MoCoLSK), PINNs & Thermal PDEs, ST-GNNs, and Climate RL.',
+                'Filter papers by specialized domains: Dynamic Line Rating (IEEE 738), BESS Electro-Thermal, Arrhenius-Weibull Risk, Chance-Constrained OPF, Cool Pavements, and PINNs.',
               side: 'top',
               align: 'start',
             },
@@ -373,7 +433,6 @@ export const startTourGuide = ({
         ];
 
       case 'gis_map':
-
         return [
           {
             element: '#tour-gis-header',

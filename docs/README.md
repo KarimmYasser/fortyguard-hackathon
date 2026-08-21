@@ -43,7 +43,8 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 ---
 
 ### 4. 🔬 [Research, Specifications & System Blueprints](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/README.md)
-* **[Scientific Research & alphaXiv Academic Corpus Report](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/SCIENTIFIC_RESEARCH_REPORT.md):** 47 peer-reviewed academic literature corpus grounding PINNs, cool pavements, urban microclimates, cable soil physics, and CBF-QP control barrier functions.
+* **[Advanced Mathematical & Physical Moats](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md):** Academic monograph on Dynamic Line Rating (IEEE 738), BESS Electro-Thermal & SEI Degradation (IEC 62619), Arrhenius-Weibull Cascading Outage Risk, and Chance-Constrained SOCP OPF.
+* **[Scientific Research & alphaXiv Academic Corpus Report](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/SCIENTIFIC_RESEARCH_REPORT.md):** 50+ peer-reviewed academic literature corpus grounding PINNs, cool pavements, urban microclimates, cable soil physics, and CBF-QP control barrier functions.
 * **[Thermal Sentinel Grid - Implementation Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md):** Full mathematical formulation, IEEE C57.91 / IEC 60076-7 equations, Overpass QL / EIA dataset queries, deterministic Safety Gate rules, Phoenix July 2023 replay scenario, and LangGraph schema.
 * **[IEEE Annex G & AC Power Flow Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/IEEE_ANNEX_G_AND_AC_POWER_FLOW_SPECIFICATION.md):** Standards verification benchmarks (Clause G.2 & G.3), 72-hour continuous compounding soil dryout ODEs, and 4-bus Forward-Backward Sweep AC power flow with OLTC and BESS Volt/VAR support.
 * **[Value Proposition & AI Philosophy](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md):** Why physics-constrained Agentic AI outperforms black-box ML training, the 4-layer value matrix ($2.79M avoided loss, 5952x ROI), and keynote mentorship insights.
@@ -76,3 +77,9 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 * **[Full Chat Log](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/context/chat-transcripts/FULL_CHAT_LOG.md):** Human-readable markdown transcript of brainstorming sessions.
 * **[Compact JSONL Transcript](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/context/chat-transcripts/transcript.jsonl):** Fast token-efficient JSONL action log.
 * **[Full JSONL Transcript](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/context/chat-transcripts/transcript_full.jsonl):** Complete untruncated action log.
+
+---
+
+### 8. 🗄️ [Database Architecture & Supabase Setup](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/SUPABASE_SETUP_GUIDE.md)
+* **[Supabase Setup & Enterprise Database Guide](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/SUPABASE_SETUP_GUIDE.md):** Step-by-step parallel configuration guide, Dual-Storage Hybrid Persistence (SQLite + PostgREST Supabase), complete SQL DDL schema for all 16 enterprise data tables, Row Level Security (RLS) policies, and live API cache verification.
+

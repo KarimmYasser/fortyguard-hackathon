@@ -55,10 +55,18 @@ flowchart LR
     H -->|Provably Safe| I[Autonomous Dispatch / Work Order]
 ```
 
+### Core Substation & Microclimate Moats
 1. **Buried Cable-Soil Moisture Dryout (IEC 60287):** Ingests 5-day FortyGuard persistence to infer non-linear soil thermal resistivity surge ($\rho_{\text{soil}}$ from $0.9$ to $> 2.5\text{ K}\cdot\text{m/W}$), exposing the hidden underground cable bottleneck.
 2. **Provably Safe Control Barrier Functions (CBF-QP):** Enforces forward-invariance of safe thermal sets $\mathcal{C} = \{x : h_o(x) \ge 0, h_{hs}(x) \ge 0\}$ under bounded FortyGuard forecast uncertainty ($\widehat{T}_a \pm \epsilon$).
 3. **Urban Canyon Aerodynamic Throttling (Oke / Evola):** Computes morphological wind-sheltering ($\kappa_{\text{morph}}$) and equipment cooling derate ($\eta_{\text{cool}}$) caused by deep building canyons ($H/W$) and reflected facade irradiance.
 4. **Virtual Moisture & Dielectric Risk Sensor (Fick's Law):** Models temperature-driven moisture desorption from cellulose paper into oil, alerting to dielectric arcing risk before emergency hot-spot limits trip.
+
+### Advanced Grid Physics & Heavy Computational Moats
+5. **Dynamic Line Rating & Catenary Sag (IEEE Std 738-2012):** Solves iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) to unlock dynamic ampacity headroom (+22.5%) and prevent ground flashover sag ($S(T_c)$).
+6. **BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Fade:** Integrates 2-state lumped thermal differential equations ($T_{\text{core}}$, $T_{\text{surf}}$) with Arrhenius Solid Electrolyte Interphase (SEI) kinetics ($dQ_{\text{loss}}/dt$), calculating real-time battery degradation cost (\$/MWh) and enforcing the $55^\circ\text{C}$ thermal runaway safety ceiling.
+7. **Arrhenius-Weibull Grid Fragility & Cascading Outage Risk:** Non-homogeneous Poisson-Weibull hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to compute joint cascading blackout probability ($P_{\text{cascade}}$).
+8. **Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Convex Bounds):** Second-Order Cone Programming (SOCP) convex branch flow relaxation guaranteeing 95%/99% Gaussian confidence bounds on thermal currents and ANSI C84.1 voltage profiles ($0.95-1.05\text{ pu}$) under FortyGuard microclimate uncertainty.
+
 
 ---
 
@@ -193,6 +201,56 @@ Open **[http://localhost:3004](http://localhost:3004)** in your browser (Press `
 ```bash
 npx hyperframes render videos/thermal-sentinel-pitch --quality high --output videos/thermal-sentinel-pitch/renders/video.mp4
 ```
+
+---
+
+## 🗄️ Enterprise Zero-Data-Loss Database Architecture (16 Tables)
+
+Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
+* **Without Supabase Keys:** Operates with zero external dependencies via local **SQLite** (`data/thermal_sentinel.db`), guaranteeing 100% test pass rates and instant offline judging reproducibility.
+* **With Supabase Keys:** Automatically syncs and queries **Supabase PostgreSQL** via PostgREST, providing live multi-client synchronization, Row Level Security (RLS), and permanent regulatory audit trails.
+
+```
+                               ┌────────────────────────────────┐
+                               │  Thermal Sentinel Backend API  │
+                               └───────────────┬────────────────┘
+                                               │
+                                               ▼
+                               ┌────────────────────────────────┐
+                               │     src/db/database.py Layer   │
+                               └───────┬────────────────┬───────┘
+                                       │                │
+                  [SUPABASE_URL set]   ▼                ▼  [Default / Fallback]
+                       ┌───────────────────────┐  ┌───────────────────────┐
+                       │  Supabase Cloud DB    │  │  Local SQLite DB      │
+                       │  (PostgreSQL + RLS)   │  │  (data/sentinel.db)   │
+                       └───────────────────────┘  └───────────────────────┘
+```
+
+### Complete 16-Table Enterprise Schema Matrix
+
+| # | Table Name | Data Domain & Physical Source | Zero-Data-Loss Purpose |
+| :-: | :--- | :--- | :--- |
+| **1** | `api_call_cache` | FortyGuard responses + MD5 request hash | Prevents duplicate paid API credit deductions. |
+| **2** | `dispatch_work_orders` | Authorized B2B SCADA work orders ($K_{\text{safe}}$, BESS, OLTC) | Full legal audit trail for utility control rooms. |
+| **3** | `credit_accounting_ledger` | Real-time FortyGuard credit deductions per activity | Verifiable API accounting and spend reconciliation. |
+| **4** | `academic_research_papers` | 21+ indexed research papers with LaTeX math & alphaXiv links | Scientific grounding and physical formulation lineage. |
+| **5** | `substation_telemetry_logs` | 12-hour hourly SCADA physical telemetry ($\theta_o, \theta_w, V(t)$) | NERC/FERC compliance and thermal limit verification. |
+| **6** | `simulation_runs` | What-If sandbox scenario snapshots and slider inputs | Zero session loss: allows saving, sharing, and comparing runs. |
+| **7** | `multi_day_heatwave_logs` | 72h continuous compounding progression ($\rho_{\text{soil}}$ dry-out) | Forensics on compounding underground thermal debt. |
+| **8** | `dlr_catenary_telemetry` | Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) & sag | Wildfire and flashover prevention compliance. |
+| **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, CBF proofs, and GPT tokens | Explainable AI (XAI) for control room operators. |
+| **10** | `financial_audit_snapshots` | LBNL ICE calculations ($2.79M avoided loss, 5,952× ROI) | Investment-grade rate-basing filing for utility regulators. |
+| **11** | `microclimate_parcel_store` | FortyGuard 2-meter parcel GeoJSON & asphalt heat traps | Cached offline map rendering with sub-millisecond latency. |
+| **12** | `bess_degradation_logs` | Coupled core/surface ODEs & Arrhenius SEI capacity fade | Protects million-dollar battery storage warranty limits. |
+| **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |
+| **14** | `chance_constrained_opf_logs` | Second-Order Cone (SOCP) CC-OPF quantile solutions ($z_{1-\alpha}$) | Economic dispatch justification under forecast uncertainty. |
+| **15** | `cbf_safety_certificates` | Control Barrier Function QP slack ($\xi^*$) & invariance proofs | Mathematical proof that safety envelopes were never violated. |
+| **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
+
+* **Live Database Hub in UI:** Operators can click the **`Cloud DB (16 Tables)`** navbar badge to inspect live records, credit deductions, and database health directly inside the dashboard.
+* **Setup Guide & SQL Migrations:** See [docs/SUPABASE_SETUP_GUIDE.md](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
+
 
 ---
 

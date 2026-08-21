@@ -141,17 +141,17 @@ flowchart TD
 
 ---
 
-## 📊 Summary of Asymmetric Mechanism Pipeline
+---
 
-```mermaid
-flowchart LR
-    A[FortyGuard 2m Weather\nP_theta, H_theta, Irradiance] --> D[Microclimate State]
-    B[Land-Cover Morphology\nH/W, Imperviousness %] --> D
-    C[Smart-Meter / Feeder Load\nAsset Metadata] --> E[Thermal Asset Model]
-    D --> E
-    E --> F[4 Latent States Inferred:\n1. Soil Resistivity rho_soil\n2. Canyon Coeff h_c\n3. IEEE T_o / T_hs\n4. Paper-Oil Moisture RS_o]
-    F --> G[Risk Forecaster\n12h Uncertainty Tube]
-    H[Multi-Agent Mitigation Planner\nBESS, Cooling, EV Shift] --> I[Robust CBF-QP Safety Gate]
-    G --> I
-    I --> J[Provably Safe Physical Action\n& Explainable Audit Ledger]
-```
+## 5. ⚡ Advanced Grid Physics & Heavy Computational Moats
+For complete mathematical monographs, LaTeX formulations, and arXiv citations on our four expanded engineering moats, see **[`ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md`](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md)**:
+
+1. **Dynamic Line Rating & Conductor Catenary Sag (IEEE Std 738-2012):**
+   Iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) unlocking $+22.5\%$ dynamic ampacity headroom while preventing ground flashover sag ($S(T_c)$).
+2. **Coupled 2-State BESS Electro-Thermal & Arrhenius SEI Capacity Fade:**
+   2-state lumped core ($T_c$) vs. surface ($T_s$) differential thermal equations with continuous electrochemical SEI growth ($dQ_{\text{loss}}/dt$), tracking real-time degradation cost (\$/MWh) and enforcing the $55^\circ\mathrm{C}$ thermal runaway ceiling.
+3. **Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk:**
+   Time-dependent non-homogeneous Poisson-Weibull failure hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to output joint cascading failure probability ($P_{\text{cascade}}$).
+4. **Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Convex Bounds):**
+   Convex Second-Order Cone Programming (SOCP) branch flow formulation guaranteeing $95\%/99\%$ Gaussian confidence bounds on thermal line loading and ANSI C84.1 voltage profiles under FortyGuard forecast uncertainty.
+

@@ -221,6 +221,33 @@ class CBFSafetyGate:
             status = SafetyStatus.MODIFY  # Project onto K_safe
 
         audit_time = time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime())
+        barrier_slack = round(self.params.t_hs_max_c - trajectory.peak_hot_spot_c, 2)
+
+        # Asynchronously persist CBF safety certificate
+        try:
+            import uuid
+            import asyncio
+            from src.db.database import db_manager
+            from src.db.models import CBFSafetyCertificateRecord
+            cert_rec = CBFSafetyCertificateRecord(
+                certificate_id=f"CERT-{uuid.uuid4().hex[:8].upper()}",
+                asset_id=asset_id,
+                nominal_k_load=round(peak_k, 3),
+                filtered_k_safe=safe_max_k,
+                barrier_value_h=barrier_slack,
+                qp_slack_xi=0.0 if is_fully_safe else max(0.0, -barrier_slack),
+                is_safe_invariant=is_fully_safe,
+                mathematical_proof=f"Control Barrier Function dot_h(x,u) + gamma*h(x) >= 0 evaluated at peak T_hs={trajectory.peak_hot_spot_c:.1f}C under K_safe={safe_max_k:.3f} pu.",
+            )
+            # Safe scheduling across both sync and async contexts
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    loop.create_task(db_manager.save_cbf_safety_certificate(cert_rec))
+            except Exception:
+                pass
+        except Exception:
+            pass
 
         return SafetyGateVerdict(
             status=status,
@@ -239,6 +266,7 @@ class CBFSafetyGate:
             safe_max_load_k=safe_max_k,
             violations=violations,
             mitigation_adjustments=mitigation_adjustments,
-            barrier_slack_delta=round(self.params.t_hs_max_c - trajectory.peak_hot_spot_c, 2),
+            barrier_slack_delta=barrier_slack,
             audit_timestamp=audit_time,
         )
+

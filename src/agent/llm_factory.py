@@ -14,14 +14,15 @@ logger = logging.getLogger("thermal_sentinel.llm_factory")
 
 def get_openai_client(async_mode: bool = True):
     """
-    Returns an initialized AsyncOpenAI or OpenAI client pointing to Siemens SDC Gateway.
+    Returns an initialized AsyncOpenAI or OpenAI client pointing to Siemens SDC Gateway with 4.0s timeout.
     """
     api_key = os.getenv("SDC_LLM_API_KEY", "") or os.getenv("OPENAI_API_KEY", "")
     base_url = os.getenv("SDC_LLM_BASE_URL", "https://llm.sdc.siemens.cloud/v1")
     
     if async_mode:
-        return AsyncOpenAI(api_key=api_key, base_url=base_url)
-    return OpenAI(api_key=api_key, base_url=base_url)
+        return AsyncOpenAI(api_key=api_key, base_url=base_url, timeout=4.0)
+    return OpenAI(api_key=api_key, base_url=base_url, timeout=4.0)
+
 
 
 def get_chat_model(model_name: Optional[str] = None, **kwargs: Any):
@@ -51,16 +52,19 @@ async def generate_chat_completion(
         resolved_model = "gpt-5.4"
 
     try:
+        import asyncio
         client = get_openai_client(async_mode=True)
-        resp = await client.chat.completions.create(
+        coro = client.chat.completions.create(
             model=resolved_model,
             messages=messages,
             max_completion_tokens=max_completion_tokens,
             temperature=temperature,
         )
+        resp = await asyncio.wait_for(coro, timeout=3.0)
         if resp.choices and resp.choices[0].message and resp.choices[0].message.content:
             return resp.choices[0].message.content.strip()
         return None
     except Exception as e:
-        logger.warning("LLM Gateway call failed (%s: %s). Using deterministic fallback.", type(e).__name__, e)
+        logger.warning("LLM Gateway call timed out or failed (%s: %s). Using deterministic fallback.", type(e).__name__, e)
         return None
+

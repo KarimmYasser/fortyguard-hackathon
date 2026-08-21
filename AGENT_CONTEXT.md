@@ -238,7 +238,7 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (22/22 Pytest Tests Passing)
+## 6.1 Core Tested Architecture (30/30 Pytest Tests Passing)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, automatic fallback to Phoenix July 2023 ground truth dataset.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
@@ -250,15 +250,22 @@ flowchart TD
 * **IEEE Std C57.91-2011 Annex G Benchmark Engine (`src/physics/ieee_annex_g_benchmark.py`):** Verified against Clause G.2 (Step Load) & Clause G.3 (Diurnal Ambient Ramp) with $<0.0001^\circ\mathrm{C}$ error.
 * **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Multi-day heatwave progression with continuous overnight heat soak and compounding soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
 * **AC Distribution Feeder Power Flow Engine (`src/physics/power_flow.py`):** 4-Bus radial grid solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
-* **LangGraph Multi-Agent Workflow (`src/agent/graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
-* **Operator Dashboard (9-Tab React 19 / TypeScript / Apache ECharts):**
-  1. Mission Control Overview (12h synchronized replay scrubber)
-  2. ⚡ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
-  3. 🔥 72-Hour Compounding Heatwave Viewer (Day 1 $\to$ 3 progression)
-  4. ⚡ AC Distribution Power Flow Single-Line Diagram
-  5. 📜 IEEE Annex G Standard Benchmark Table
-  6. Hyperlocal 2m GIS Viewer
-  7. Four Scientific Moats Deep-Dive
-  8. LangGraph Engine Visualizer
-  9. Avoided Loss Financial Audit
+* **4 Advanced Mathematical Moats:**
+  1. *Dynamic Line Rating (IEEE Std 738-2012) & Conductor Sag (`src/physics/dynamic_line_rating.py`)*
+  2. *Coupled Electro-Thermal BESS Degradation & SEI Kinetics (`src/physics/bess_electro_thermal.py`)*
+  3. *Arrhenius-Weibull Grid Fragility & Cascading Outage Risk (`src/physics/weibull_hazard.py`)*
+  4. *Chance-Constrained AC Optimal Power Flow SOCP (`src/physics/chance_constrained_opf.py`)*
+* **LangGraph Multi-Agent Workflow (`src/agent/agent_graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
+* **Operator Dashboard (11-Tab React 19 / TypeScript / Apache ECharts):**
+  1. 🎬 Executive Pitch & Video Showcase (Home launchpad with video + interactive slide deck)
+  2. ⚡ Mission Control Overview (12h synchronized replay scrubber & 3-axis telemetry)
+  3. 🎛️ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
+  4. 🔥 72-Hour Compounding Heatwave Viewer (Continuous 3-day thermal accumulation)
+  5. ⚡ AC Distribution Power Flow & Single-Line Diagram (DLR ampacity + Volt/VAR control)
+  6. 🏆 IEEE Annex G Standard Benchmark Suite (Clause G.2 & G.3 numerical proof)
+  7. 📚 Academic Provenance & alphaXiv Corpus (50+ peer-reviewed papers with LaTeX proofs)
+  8. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
+  9. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
+  10. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
+  11. 💰 Avoided Loss Financial Audit (DOE LBNL ICE investment-grade ROI calculator)
 

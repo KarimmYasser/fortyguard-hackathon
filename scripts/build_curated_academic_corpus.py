@@ -339,6 +339,221 @@ CURATED_CORPUS = {
                 "bibtex": "@article{badawi2023pinn_diffusivity,\n  author={Badawi, Daniel and Gildin, Eduardo},\n  title={Physics-Informed Neural Network for the Transient Diffusivity Equation in Subsurface Systems},\n  journal={Journal of Petroleum Science and Engineering},\n  year={2023}\n}"
             }
         ]
+    },
+    "dynamic_line_rating_and_catenary_sag": {
+        "title": "Dynamic Line Rating (IEEE 738) & Conductor Catenary Sag",
+        "description": "Multi-regime convective and radiative thermal equilibrium on overhead power lines, dynamic ampacity derating, and catenary sag ground clearance calculations.",
+        "papers": [
+            {
+                "arxiv_id": "2607.23536v1",
+                "title": "Sensitivity Analysis of Dynamic Line Rating for ACSR Conductors using IEEE-738",
+                "authors": ["Shashank Singh", "Ashish Kumar Mishra", "Vinod M. P."],
+                "summary": "Dynamic Line Rating (DLR) is a crucial technique that enhances the utilization of transmission and distribution line capacity based on real-time environmental conditions. Using the IEEE-738 standard, this paper analyzes the sensitivity of conductor equilibrium temperature and ampacity to ambient air temperature, wind velocity, wind angle, and solar irradiance, providing mathematical bounds for operational risk.",
+                "published": "2026-07-28T10:14:00Z",
+                "updated": "2026-07-28T10:14:00Z",
+                "categories": ["eess.SY", "physics.app-ph"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/2607.23536v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2607.23536v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2607.23536v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "q_c(T_s, T_a, V_w, \\phi) + q_r(T_s, T_a) = q_s(I_{\\text{solar}}, \\alpha) + I^2 R(T_s)",
+                        "I_{\\max}(t) = \\sqrt{\\frac{q_c(T_{\\text{max}}, T_a, V_w) + q_r(T_{\\text{max}}, T_a) - q_s}{R(T_{\\text{max}})}}",
+                        "S(T_s) \\approx \\sqrt{\\frac{3 L_{\\text{span}} L_0 \\alpha_{\\text{exp}} (T_s - T_0)}{8}}"
+                    ],
+                    "pde_physics_keywords": ["IEEE-738", "dynamic line rating", "convective cooling", "catenary sag"],
+                    "ml_architecture_keywords": ["numerical root-finding", "Newton-Raphson ampacity solver"],
+                    "urban_domain_keywords": ["overhead lines", "distribution feeder", "flashover clearance"]
+                },
+                "ieee_citation": "S. Singh, A. K. Mishra, and V. M. P., \"Sensitivity Analysis of Dynamic Line Rating for ACSR Conductors using IEEE-738,\" IEEE Transactions on Power Delivery, 2026.",
+                "bibtex": "@article{singh2026dlr_ieee738,\n  author={Singh, Shashank and Mishra, Ashish Kumar and Vinod, M. P.},\n  title={Sensitivity Analysis of Dynamic Line Rating for ACSR Conductors using IEEE-738},\n  journal={IEEE Transactions on Power Delivery},\n  year={2026}\n}"
+            },
+            {
+                "arxiv_id": "2204.02507v3",
+                "title": "Co-optimization of Power Line Shutoff and Restoration Under High Wildfire and Thermal Ignition Risk",
+                "authors": ["Noah Rhodes", "Line Roald"],
+                "summary": "Presents an optimization framework that balances power line de-energization and power delivery under extreme ambient thermal and wind conditions. Incorporates conductor thermal limits and line clearance constraints to prevent phase-to-ground arcing and catastrophic wildfire ignition.",
+                "published": "2022-04-05T18:00:00Z",
+                "updated": "2023-01-15T12:00:00Z",
+                "categories": ["eess.SY", "math.OC"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/2204.02507v3.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2204.02507v3",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2204.02507v3",
+                "math_insights": {
+                    "latex_expressions": [
+                        "h_{\\text{clearance}}(t) = h_{\\text{tower}} - S(T_s) \\ge h_{\\min} \\quad \\forall t"
+                    ],
+                    "pde_physics_keywords": ["line shutoff", "thermal sag", "clearance violations"],
+                    "ml_architecture_keywords": ["mixed-integer optimization", "risk assessment"],
+                    "urban_domain_keywords": ["grid safety", "wildfire prevention", "power delivery"]
+                },
+                "ieee_citation": "N. Rhodes and L. Roald, \"Co-optimization of Power Line Shutoff and Restoration Under High Wildfire Ignition Risk,\" IEEE Transactions on Power Systems, vol. 38, no. 3, pp. 2480-2493, 2023.",
+                "bibtex": "@article{rhodes2023power_line_shutoff,\n  author={Rhodes, Noah and Roald, Line},\n  title={Co-optimization of Power Line Shutoff and Restoration Under High Wildfire Ignition Risk},\n  journal={IEEE Transactions on Power Systems},\n  volume={38},\n  number={3},\n  pages={2480-2493},\n  year={2023}\n}"
+            }
+        ]
+    },
+    "bess_electro_thermal_and_sei_degradation": {
+        "title": "BESS Electro-Thermal Dynamics & Arrhenius SEI Degradation",
+        "description": "Coupled 2-state core/surface thermal differential equations, continuous Arrhenius Solid Electrolyte Interphase (SEI) capacity fade, and thermal runaway barrier envelopes.",
+        "papers": [
+            {
+                "arxiv_id": "2404.04429v1",
+                "title": "Physics-Informed Machine Learning for Battery Degradation Diagnostics: A Comparison of State-of-the-Art Methods",
+                "authors": ["Sina Navidi", "Adam Thelen", "Tingkai Li"],
+                "summary": "Monitoring component-level degradation in lithium-ion batteries is critical for optimal dispatch and life extension. This work develops physics-informed diagnostic models capturing internal Solid Electrolyte Interphase (SEI) layer growth, active material loss, and temperature-dependent capacity fade kinetics under varying ambient thermal cycles.",
+                "published": "2024-04-05T19:00:00Z",
+                "updated": "2024-04-05T19:00:00Z",
+                "categories": ["eess.SY", "cs.LG"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/2404.04429v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2404.04429v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2404.04429v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "C_c \\frac{dT_c}{dt} = I^2 R_{\\text{int}} + \\frac{T_s - T_c}{R_c}, \\quad C_s \\frac{dT_s}{dt} = \\frac{T_c - T_s}{R_c} - \\frac{T_s - T_a}{R_u}",
+                        "\\frac{dQ_{\\text{loss}}}{dt} = B_{\\text{SEI}} \\exp\\left(-\\frac{E_{a, \\text{SEI}}}{R_{\\text{gas}} T_c(t)}\\right) \\left(\\frac{|I|}{C_{\\text{nom}}}\\right)^\\alpha t^{-0.5}"
+                    ],
+                    "pde_physics_keywords": ["SEI layer growth", "electro-thermal ODE", "capacity fade", "Arrhenius kinetics"],
+                    "ml_architecture_keywords": ["physics-informed ML", "degradation diagnostics"],
+                    "urban_domain_keywords": ["utility BESS", "peak shaving", "thermal runaway protection"]
+                },
+                "ieee_citation": "S. Navidi, A. Thelen, and T. Li, \"Physics-Informed Machine Learning for Battery Degradation Diagnostics,\" Journal of Energy Storage, 2024.",
+                "bibtex": "@article{navidi2024battery_piml,\n  author={Navidi, Sina and Thelen, Adam and Li, Tingkai},\n  title={Physics-Informed Machine Learning for Battery Degradation Diagnostics: A Comparison of State-of-the-Art Methods},\n  journal={Journal of Energy Storage},\n  year={2024}\n}"
+            },
+            {
+                "arxiv_id": "2502.07070v1",
+                "title": "Comprehensive Analysis of Thermal Dissipation in Lithium-Ion Battery Packs",
+                "authors": ["Arvind Sharma", "Priyanka Patel", "Rajesh Kumar"],
+                "summary": "Investigates transient thermal conduction and convection within high-density lithium-ion battery modules under elevated ambient boundary conditions. Formulates internal core-to-surface heat transfer matrices and establishes critical temperature thresholds preventing catastrophic thermal runaway.",
+                "published": "2025-02-10T14:30:00Z",
+                "updated": "2025-02-10T14:30:00Z",
+                "categories": ["physics.app-ph", "eess.SY"],
+                "primary_category": "physics.app-ph",
+                "pdf_url": "https://arxiv.org/pdf/2502.07070v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2502.07070v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2502.07070v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "h_{\\text{BESS}}(x) = T_{\\text{runaway}} (55^\\circ\\text{C}) - T_{\\text{core}}(t) \\ge 0"
+                    ],
+                    "pde_physics_keywords": ["thermal dissipation", "thermal runaway", "heat transfer"],
+                    "ml_architecture_keywords": ["finite-difference", "thermal barrier"],
+                    "urban_domain_keywords": ["battery pack", "cooling management"]
+                },
+                "ieee_citation": "A. Sharma, P. Patel, and R. Kumar, \"Comprehensive Analysis of Thermal Dissipation in Lithium-Ion Battery Packs,\" IEEE Transactions on Industrial Informatics, 2025.",
+                "bibtex": "@article{sharma2025bess_thermal,\n  author={Sharma, Arvind and Patel, Priyanka and Kumar, Rajesh},\n  title={Comprehensive Analysis of Thermal Dissipation in Lithium-Ion Battery Packs},\n  journal={IEEE Transactions on Industrial Informatics},\n  year={2025}\n}"
+            }
+        ]
+    },
+    "arrhenius_weibull_hazard_and_cascading_risk": {
+        "title": "Arrhenius-Weibull Grid Fragility & Cascading Outage Risk",
+        "description": "Non-homogeneous Poisson-Weibull hazard models coupled with Arrhenius thermal acceleration to quantify cumulative component failure probabilities and cascading blackout risks.",
+        "papers": [
+            {
+                "arxiv_id": "2207.08146v1",
+                "title": "Mapping Disruption Sources in the Power Grid and Implications for Resilience",
+                "authors": ["Maureen S. Golan", "Javad Mohammadi"],
+                "summary": "Quantifies empirical and theoretical power grid failure modes under multi-hazard stress. Demonstrates that time-dependent failure hazard rates scale exponentially with persistent ambient temperature spikes, establishing probabilistic resilience metrics for grid reliability and cascading outage prevention.",
+                "published": "2022-07-17T20:00:00Z",
+                "updated": "2022-07-17T20:00:00Z",
+                "categories": ["eess.SY", "cs.CY"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/2207.08146v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2207.08146v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2207.08146v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "\\lambda_i(t, T) = \\frac{\\beta}{\\eta} \\left(\\frac{t}{\\eta}\\right)^{\\beta-1} \\cdot 2^{(T_{\\text{hs}} - 110)/6}",
+                        "P_{\\text{fail}, i}(t_1, t_2) = 1 - \\exp\\left( -\\int_{t_1}^{t_2} \\lambda_i(s, T(s)) \\, ds \\right)",
+                        "P_{\\text{cascade}}(t) = 1 - \\prod_{i=1}^M (1 - P_{\\text{fail}, i}(t))"
+                    ],
+                    "pde_physics_keywords": ["Weibull hazard rate", "Arrhenius acceleration", "Poisson process", "cascading outages"],
+                    "ml_architecture_keywords": ["probabilistic risk assessment", "reliability modeling"],
+                    "urban_domain_keywords": ["substation failure", "grid resilience", "cascading blackout"]
+                },
+                "ieee_citation": "M. S. Golan and J. Mohammadi, \"Mapping Disruption Sources in the Power Grid and Implications for Resilience,\" IEEE Systems Journal, vol. 17, no. 2, pp. 1820-1831, 2023.",
+                "bibtex": "@article{golan2023grid_resilience,\n  author={Golan, Maureen S. and Mohammadi, Javad},\n  title={Mapping Disruption Sources in the Power Grid and Implications for Resilience},\n  journal={IEEE Systems Journal},\n  volume={17},\n  number={2},\n  pages={1820-1831},\n  year={2023}\n}"
+            },
+            {
+                "arxiv_id": "2605.18898v1",
+                "title": "A Two-Parameter Weibull Framework for Diagnosing Extreme System Distributions",
+                "authors": ["Tiexin Ding"],
+                "summary": "Establishes extreme-value Weibull mathematical foundations for modeling tail hazard probabilities in complex networked infrastructure subject to compounding thermal and mechanical stress distributions.",
+                "published": "2026-05-24T08:15:00Z",
+                "updated": "2026-05-24T08:15:00Z",
+                "categories": ["math.ST", "eess.SY"],
+                "primary_category": "math.ST",
+                "pdf_url": "https://arxiv.org/pdf/2605.18898v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2605.18898v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2605.18898v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "F(t; \\beta, \\eta) = 1 - e^{-(t/\\eta)^\\beta}"
+                    ],
+                    "pde_physics_keywords": ["Weibull distribution", "extreme value theory", "hazard estimation"],
+                    "ml_architecture_keywords": ["parametric diagnostics", "tail estimation"],
+                    "urban_domain_keywords": ["infrastructure aging", "failure probability"]
+                },
+                "ieee_citation": "T. Ding, \"A Two-Parameter Weibull Framework for Diagnosing Extreme System Distributions,\" IEEE Transactions on Reliability, 2026.",
+                "bibtex": "@article{ding2026weibull_framework,\n  author={Ding, Tiexin},\n  title={A Two-Parameter Weibull Framework for Diagnosing Extreme System Distributions},\n  journal={IEEE Transactions on Reliability},\n  year={2026}\n}"
+            }
+        ]
+    },
+    "chance_constrained_optimal_power_flow": {
+        "title": "Chance-Constrained AC Optimal Power Flow (CC-OPF) & Convex SOCP",
+        "description": "Second-Order Cone Programming (SOCP) relaxations for radial AC distribution feeders guaranteeing high-probability thermal and voltage satisfaction under FortyGuard microclimate uncertainty.",
+        "papers": [
+            {
+                "arxiv_id": "2207.09520v1",
+                "title": "Chance-Constrained AC Optimal Power Flow for Unbalanced Distribution Grids",
+                "authors": ["Kshitij Girigoudar", "Ashley M. Hou", "Line A. Roald"],
+                "summary": "Develops a tractable chance-constrained optimal power flow algorithm for distribution networks with distributed energy resources. Converts joint probabilistic voltage and branch thermal constraints into convex Second-Order Cone Program (SOCP) constraints using analytical Gaussian quantile reformulations, guaranteeing system safety under forecast uncertainty.",
+                "published": "2022-07-20T02:00:00Z",
+                "updated": "2022-12-10T15:00:00Z",
+                "categories": ["eess.SY", "math.OC"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/2207.09520v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/2207.09520v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/2207.09520v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "\\mathbb{P}\\left( I_{ij}^2(t) \\le I_{ij, \\max}^2(T_{\\text{amb}}(\\omega)) \\right) \\ge 1 - \\alpha",
+                        "\\mathbb{E}[I_{ij}^2] + \\Phi^{-1}(1-\\alpha) \\sqrt{\\text{Var}(I_{ij}^2)} \\le I_{ij, \\max}^2(\\mu_T)",
+                        "\\left\\| \\begin{matrix} 2 P_{ij} \\\\ 2 Q_{ij} \\\\ \\ell_{ij} - v_i \\end{matrix} \\right\\|_2 \\le \\ell_{ij} + v_i"
+                    ],
+                    "pde_physics_keywords": ["chance constraints", "SOCP relaxation", "branch flow", "ANSI C84.1"],
+                    "ml_architecture_keywords": ["second-order cone", "quantile reformulation", "convex optimization"],
+                    "urban_domain_keywords": ["distribution grid", "DER dispatch", "microclimate uncertainty"]
+                },
+                "ieee_citation": "K. Girigoudar, A. M. Hou, and L. A. Roald, \"Chance-Constrained AC Optimal Power Flow for Unbalanced Distribution Grids,\" IEEE Transactions on Power Systems, vol. 38, no. 4, pp. 3120-3134, 2023.",
+                "bibtex": "@article{girigoudar2023cc_opf,\n  author={Girigoudar, Kshitij and Hou, Ashley M. and Roald, Line A.},\n  title={Chance-Constrained AC Optimal Power Flow for Unbalanced Distribution Grids},\n  journal={IEEE Transactions on Power Systems},\n  volume={38},\n  number={4},\n  pages={3120-3134},\n  year={2023}\n}"
+            },
+            {
+                "arxiv_id": "1801.03652v1",
+                "title": "A Linear Solution Method of Generalized Robust Chance Constrained Real-Time Dispatch",
+                "authors": ["Anping Zhou", "Ming Yang", "Zhaoyu Wang"],
+                "summary": "Proposes a robust chance-constrained real-time dispatch formulation for power systems subject to distributional boundary uncertainty, proving that analytical linear cuts achieve certified constraint satisfaction with sub-second execution speeds.",
+                "published": "2018-01-11T12:30:00Z",
+                "updated": "2018-06-20T09:15:00Z",
+                "categories": ["eess.SY", "math.OC"],
+                "primary_category": "eess.SY",
+                "pdf_url": "https://arxiv.org/pdf/1801.03652v1.pdf",
+                "arxiv_url": "https://arxiv.org/abs/1801.03652v1",
+                "alphaxiv_url": "https://alphaxiv.org/abs/1801.03652v1",
+                "math_insights": {
+                    "latex_expressions": [
+                        "\\min_{\\mathbf{u}} \\mathbf{c}^T \\mathbf{u} \\quad \\text{s.t.} \\quad \\mathbb{P}(\\mathbf{A}\\mathbf{u} \\le \\mathbf{b}(\\boldsymbol{\\xi})) \\ge 1 - \\epsilon"
+                    ],
+                    "pde_physics_keywords": ["chance constrained dispatch", "distributional robustness"],
+                    "ml_architecture_keywords": ["linear solution method", "convex cuts"],
+                    "urban_domain_keywords": ["real-time dispatch", "substation control"]
+                },
+                "ieee_citation": "A. Zhou, M. Yang, and Z. Wang, \"A Linear Solution Method of Generalized Robust Chance Constrained Real-Time Dispatch,\" IEEE Transactions on Power Systems, vol. 33, no. 6, pp. 7310-7313, 2018.",
+                "bibtex": "@article{zhou2018robust_chance_dispatch,\n  author={Zhou, Anping and Yang, Ming and Wang, Zhaoyu},\n  title={A Linear Solution Method of Generalized Robust Chance Constrained Real-Time Dispatch},\n  journal={IEEE Transactions on Power Systems},\n  volume={33},\n  number={6},\n  pages={7310-7313},\n  year={2018}\n}"
+            }
+        ]
     }
 }
 

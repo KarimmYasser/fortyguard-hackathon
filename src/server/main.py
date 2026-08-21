@@ -24,6 +24,8 @@ from src.server.routes import (
     benchmark_router,
     power_flow_router,
     research_router,
+    advanced_physics_router,
+    database_router,
 )
 
 app = FastAPI(
@@ -50,6 +52,9 @@ app.include_router(sandbox_router, prefix="/api/v1")
 app.include_router(benchmark_router)
 app.include_router(power_flow_router)
 app.include_router(research_router)
+app.include_router(advanced_physics_router, prefix="/api/v1")
+app.include_router(database_router, prefix="/api/v1")
+
 
 
 

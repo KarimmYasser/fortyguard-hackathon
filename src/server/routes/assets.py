@@ -55,10 +55,53 @@ ASSET_REGISTRY: Dict[str, InfrastructureAsset] = {
 }
 
 
+from src.db.database import db_manager
+
+
 @router.get("", response_model=List[InfrastructureAsset])
 async def list_registered_assets() -> List[InfrastructureAsset]:
-    """List all registered critical energy infrastructure assets."""
+    """List all registered critical energy infrastructure assets from the database."""
+    db_assets = db_manager.get_grid_assets()
+    if db_assets and len(db_assets) > 0:
+        assets_list = []
+        for a in db_assets:
+            a_type = AssetType.TRANSFORMER_BOX
+            if "BESS" in a.get("type", "") or "Storage" in a.get("type", ""):
+                a_type = AssetType.BATTERY_STORAGE
+            elif "Conductor" in a.get("type", "") or "Line" in a.get("type", ""):
+                a_type = AssetType.ELECTRICAL_PANEL
+
+            assets_list.append(
+                InfrastructureAsset(
+                    id=a.get("asset_id"),
+                    name=a.get("name"),
+                    asset_type=a_type,
+                    mounting_location=MountingLocation.GROUND_LEVEL,
+                    latitude=float(a.get("latitude")),
+                    longitude=float(a.get("longitude")),
+                    max_safe_ambient_temp_c=40.0,
+                    critical_explosion_temp_c=50.0,
+                    current_load_percentage=85.0 if a_type != AssetType.BATTERY_STORAGE else 60.0,
+                    owner_type="B2B",
+                    contact_email="grid-operations@phoenix-utility.com",
+                )
+            )
+        return assets_list
+
     return list(ASSET_REGISTRY.values())
+
+
+@router.get("/{asset_id}", response_model=InfrastructureAsset)
+async def get_asset_by_id(asset_id: str) -> InfrastructureAsset:
+    """Retrieve details for a single infrastructure asset."""
+    all_assets = await list_registered_assets()
+    for a in all_assets:
+        if a.id == asset_id:
+            return a
+    if asset_id in ASSET_REGISTRY:
+        return ASSET_REGISTRY[asset_id]
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"Asset {asset_id} not found in database registry")
 
 
 @router.post("/register", response_model=InfrastructureAsset)

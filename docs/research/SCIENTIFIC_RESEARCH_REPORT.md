@@ -140,6 +140,32 @@ Cities must balance capital expenditure (budget constraints) against thermal rel
 
 ---
 
+---
+
+### Pillar 6: Dynamic Line Rating (IEEE Std 738-2012) & Conductor Catenary Sag
+* **Key Papers:** [arXiv:2607.23536](https://arxiv.org/abs/2607.23536), [arXiv:2204.02507](https://arxiv.org/abs/2204.02507), [arXiv:2404.04429](https://arxiv.org/abs/2404.04429)
+* **Mathematical Core:** Steady-state heat balance $q_c(T_c, V_w, \phi) + q_r(T_c, T_a) = q_s(\alpha, I_{\text{solar}}) + I^2 R(T_c)$ solved via Newton-Raphson root-finding, paired with catenary parabolic sag $S(T_c) = \frac{w L^2}{8 H(T_c)}$ and statutory ground clearance monitoring ($h_{\text{clearance}} \ge 6.5\text{m}$).
+
+---
+
+### Pillar 7: BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Degradation
+* **Key Papers:** [arXiv:2502.07070](https://arxiv.org/abs/2502.07070), [arXiv:2508.19345](https://arxiv.org/abs/2508.19345)
+* **Mathematical Core:** 2-state lumped core ($T_c$) and surface ($T_s$) differential thermal equations with internal Joule heating $I^2 R_{\text{int}}(T_c, \text{SOC})$ and continuous Arrhenius electrochemical SEI growth $\frac{dQ_{\text{loss}}}{dt} = B_{\text{SEI}} \exp\left(-\frac{E_a}{R T_c}\right) \left(\frac{|I|}{C_{\text{nom}}}\right)^\alpha t^{-0.5}$, enforcing a $55^\circ\text{C}$ thermal runaway forward-invariance barrier.
+
+---
+
+### Pillar 8: Arrhenius-Weibull Asset Fragility & Cascading Outage Models
+* **Key Papers:** [arXiv:2207.08146](https://arxiv.org/abs/2207.08146), [arXiv:2605.18898](https://arxiv.org/abs/2605.18898)
+* **Mathematical Core:** Non-homogeneous Poisson-Weibull failure hazard model $\lambda_i(t, T) = \frac{\beta}{\eta} (t/\eta)^{\beta-1} \cdot 2^{(T-T_{\text{ref}})/6}$ integrated over time to compute individual component failure probabilities $P_{\text{fail}, i}(t)$ and joint cascading blackout risk $P_{\text{cascade}}(t) = 1 - \prod (1 - P_{\text{fail}, i})$.
+
+---
+
+### Pillar 9: Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Bounds)
+* **Key Papers:** [arXiv:2207.09520](https://arxiv.org/abs/2207.09520), [arXiv:1801.03652](https://arxiv.org/abs/1801.03652)
+* **Mathematical Core:** Second-Order Cone Programming (SOCP) convex branch flow relaxation with analytical Gaussian quantile chance constraints ($\mathbb{P}(I_{ij}^2 \le I_{\max}^2) \ge 1 - \alpha$, $\mathbb{P}(0.95 \le V_k \le 1.05) \ge 1 - \alpha$) under FortyGuard 2m temperature uncertainty.
+
+---
+
 ## 2. Synthesis Matrix & Direct Application to FortyGuard
 
 | Research Pillar | Key Paper Citation | Direct FortyGuard / Thermal Sentinel Implementation |
@@ -148,8 +174,13 @@ Cities must balance capital expenditure (budget constraints) against thermal rel
 | **Multi-Modal LST Fusion** | *Dai et al., 2024 (MoCoLSK)* [2409.19835v2](https://arxiv.org/abs/2409.19835v2) | Cross-modal feature conditioning (optical NDVI + Sentinel SAR + Elevation + FortyGuard IoT). |
 | **Cool Pavements Physics** | *Hendel, 2024 (Cool Pavements)* [2409.12242v2](https://arxiv.org/abs/2409.12242v2) | Provides analytical equations for albedo modification ($\alpha = 0.12 \to 0.45$) and sensible heat flux reduction in the simulation engine. |
 | **Physics-Informed PDEs** | *PINN Diffusivity* [2309.17345v3](https://arxiv.org/abs/2309.17345v3) | Enforces energy conservation laws in `ThermalForecaster` to prevent unrealistic thermal drift. |
+| **Dynamic Line Rating (DLR)** | *DLR Survey* [2607.23536](https://arxiv.org/abs/2607.23536) | Implements IEEE Std 738-2012 dynamic ampacity and catenary sag in [`dynamic_line_rating.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/dynamic_line_rating.py). |
+| **BESS Electro-Thermal** | *Battery Degradation* [2502.07070](https://arxiv.org/abs/2502.07070) | 2-state thermal ODEs and continuous Arrhenius SEI capacity fade in [`bess_electro_thermal.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/bess_electro_thermal.py). |
+| **Arrhenius-Weibull Risk** | *Grid Reliability* [2207.08146](https://arxiv.org/abs/2207.08146) | Time-dependent Poisson-Weibull hazard integration in [`weibull_hazard.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/weibull_hazard.py). |
+| **Chance-Constrained OPF** | *Convex SOCP OPF* [2207.09520](https://arxiv.org/abs/2207.09520) | Second-Order Cone OPF with Gaussian quantile chance constraints in [`chance_constrained_opf.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/chance_constrained_opf.py). |
 | **Spatio-Temporal GNN** | *Jin et al., 2023 (STGNN Survey)* [2303.14483v3](https://arxiv.org/abs/2303.14483v3) | Drives the Thermal Sentinel Grid spatial graph connectivity and canyon wind diffusion modeling. |
 | **Dynamic Pareto Optimization**| *Lei et al., 2024 (DMOPs)* [2410.05787v2](https://arxiv.org/abs/2410.05787v2) | Multi-objective countermeasure allocator for city planners (budget vs. heat reduction vs. equity). |
+
 
 ---
 

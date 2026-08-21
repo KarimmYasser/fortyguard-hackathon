@@ -72,6 +72,9 @@ dist-ssr/
 **/.thumbnails/
 *.wav
 scratch/
-
+*.db
+*.sqlite
+data/
 
 .vercel
+

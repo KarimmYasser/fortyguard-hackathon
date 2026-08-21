@@ -19,6 +19,8 @@ import {
   Download,
   HelpCircle,
   Compass,
+  Activity,
+  BookOpen,
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { startTourGuide } from '../utils/tourGuide';
@@ -332,33 +334,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Card 1: 2m GIS Heatmap */}
-          <div
-            id="tour-card-gis"
-            onClick={() => onNavigateTab('gis_map')}
-            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-amber-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="p-2.5 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 group-hover:scale-110 transition-transform">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 6</span>
-              </div>
-              <h3 className="text-base font-bold text-white font-heading group-hover:text-amber-400 transition-colors">
-                Hyperlocal 2m GIS Engine
-              </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                FortyGuard 2-meter convective and radiative temperature layers resolving localized +4.5°C urban asphalt heat traps.
-              </p>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-bold pt-4">
-              <span>Explore GIS Heatmap</span>
-              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 2: Mission Control Overview */}
+          {/* Card 1: Mission Control Overview */}
           <div
             id="tour-card-overview"
             onClick={() => onNavigateTab('overview')}
@@ -369,10 +345,10 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 <div className="p-2.5 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 group-hover:scale-110 transition-transform">
                   <Zap className="h-5 w-5" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 1</span>
+                <span className="text-[11px] font-mono text-slate-500">TAB 2</span>
               </div>
               <h3 className="text-base font-bold text-white font-heading group-hover:text-amber-400 transition-colors">
-                Mission Control & Physics Telemetry
+                Mission Control & Telemetry
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
                 12-hour forward forecast scrubber, IEEE C57.91 hot-spot differential ODEs, and baseline vs mitigated comparison.
@@ -384,7 +360,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
           </div>
 
-          {/* Card 3: What-If Studio */}
+          {/* Card 2: What-If Studio */}
           <div
             id="tour-card-sandbox"
             onClick={() => onNavigateTab('sandbox')}
@@ -395,13 +371,13 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-110 transition-transform">
                   <Sliders className="h-5 w-5" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 2</span>
+                <span className="text-[11px] font-mono text-slate-500">TAB 3</span>
               </div>
               <h3 className="text-base font-bold text-white font-heading group-hover:text-cyan-400 transition-colors">
-                What-If Stress Studio
+                What-If Stress Studio & BESS
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Interactive parameter modulation (ambient spike, BESS MWh, load factor) with sub-15ms real-time ODE re-solving.
+                Interactive parameter modulation (ambient spike, BESS MWh, load factor) with 2-state cell electro-thermal ODEs.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-cyan-400 font-bold pt-4">
@@ -410,33 +386,137 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
           </div>
 
-          {/* Card 4: LangGraph Engine */}
+          {/* Card 3: 72h Compounding */}
           <div
-            id="tour-card-agent"
-            onClick={() => onNavigateTab('agent_graph')}
-            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-purple-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between"
+            id="tour-card-72h"
+            onClick={() => onNavigateTab('multi_day_72h')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-orange-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-orange-500/10 flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="p-2.5 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:scale-110 transition-transform">
-                  <Cpu className="h-5 w-5" />
+                <div className="p-2.5 rounded-2xl bg-orange-500/10 text-orange-400 border border-orange-500/20 group-hover:scale-110 transition-transform">
+                  <Flame className="h-5 w-5" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 8</span>
+                <span className="text-[11px] font-mono text-slate-500">TAB 4</span>
               </div>
-              <h3 className="text-base font-bold text-white font-heading group-hover:text-purple-400 transition-colors">
-                LangGraph Multi-Agent Stack
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-orange-400 transition-colors">
+                72h Compounding Heatwave
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Autonomous 4-node cognitive pipeline synthesizing multi-asset dispatch schedules with full LLM reasoning audit trails.
+                Continuous 3-day simulation showing night-time thermal soak, soil moisture desertification, and compounding aging.
               </p>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-bold pt-4">
-              <span>Inspect Agent Graph</span>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-orange-400 font-bold pt-4">
+              <span>View 72h Simulation</span>
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
-          {/* Card 5: 4 Scientific Moats & CBF-QP */}
+          {/* Card 4: AC Power Flow & DLR */}
+          <div
+            id="tour-card-powerflow"
+            onClick={() => onNavigateTab('power_flow')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-emerald-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-emerald-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                  <Activity className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 5</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-emerald-400 transition-colors">
+                AC Power Flow & Dynamic Line Rating
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                4-bus single-line diagram, IEEE 738 DLR ampacity headroom (+22.5%), catenary sag, and Chance-Constrained SOCP OPF.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold pt-4">
+              <span>Open AC Power Flow</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 5: IEEE Annex G */}
+          <div
+            id="tour-card-ieee"
+            onClick={() => onNavigateTab('ieee_annex_g')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-blue-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-blue-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 group-hover:scale-110 transition-transform">
+                  <Award className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 6</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-blue-400 transition-colors">
+                IEEE Std C57.91 Annex G Benchmark
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Exact verification against Clause G.2 (Step Load) and Clause G.3 (Diurnal Ramp) standard tables (&lt;0.0001°C error).
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 font-bold pt-4">
+              <span>Inspect IEEE Standards</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 6: Academic Provenance & alphaXiv */}
+          <div
+            id="tour-card-academic"
+            onClick={() => onNavigateTab('academic_provenance')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-teal-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-teal-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-teal-500/10 text-teal-400 border border-teal-500/20 group-hover:scale-110 transition-transform">
+                  <BookOpen className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 7</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-teal-400 transition-colors">
+                Academic Provenance & alphaXiv
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                50+ peer-reviewed papers discovered via alphaXiv, Surface Energy Balance PDEs, and live academic literature search.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-teal-400 font-bold pt-4">
+              <span>Search Academic Corpus</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 7: 2m GIS Heatmap */}
+          <div
+            id="tour-card-gis"
+            onClick={() => onNavigateTab('gis_map')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-rose-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-rose-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 group-hover:scale-110 transition-transform">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 8</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-rose-400 transition-colors">
+                Hyperlocal 2m GIS Engine
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                FortyGuard 2-meter convective and radiative temperature layers resolving localized +4.5°C urban asphalt heat traps.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-rose-400 font-bold pt-4">
+              <span>Explore GIS Heatmap</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 8: 4 Scientific Moats & CBF-QP */}
           <div
             id="tour-card-moats"
             onClick={() => onNavigateTab('physics_moats')}
@@ -447,7 +527,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 <div className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 group-hover:scale-110 transition-transform">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 7</span>
+                <span className="text-[11px] font-mono text-slate-500">TAB 9</span>
               </div>
               <h3 className="text-base font-bold text-white font-heading group-hover:text-emerald-400 transition-colors">
                 4 Asymmetric Scientific Moats
@@ -462,7 +542,33 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
           </div>
 
-          {/* Card 6: Avoided Loss & ROI Audit */}
+          {/* Card 9: LangGraph Engine */}
+          <div
+            id="tour-card-agent"
+            onClick={() => onNavigateTab('agent_graph')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-purple-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:scale-110 transition-transform">
+                  <Cpu className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 10</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-purple-400 transition-colors">
+                LangGraph Multi-Agent Stack
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Autonomous 5-node cognitive pipeline synthesizing multi-asset dispatch schedules with live GPT-5.4 work orders.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-bold pt-4">
+              <span>Inspect Agent Graph</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 10: Avoided Loss & ROI Audit */}
           <div
             id="tour-card-roi"
             onClick={() => onNavigateTab('financial_roi')}
@@ -473,7 +579,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 <div className="p-2.5 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 group-hover:scale-110 transition-transform">
                   <Calculator className="h-5 w-5" />
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">TAB 9</span>
+                <span className="text-[11px] font-mono text-slate-500">TAB 11</span>
               </div>
               <h3 className="text-base font-bold text-white font-heading group-hover:text-amber-400 transition-colors">
                 Investment-Grade Avoided Loss ROI
@@ -489,6 +595,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
         </div>
       </section>
+
 
       {/* 4. Verification & Submission Standard Strip */}
       <section className="glass-panel rounded-3xl p-6 border border-slate-800 bg-[#070b14] space-y-4">

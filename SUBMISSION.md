@@ -96,6 +96,15 @@ In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecut
    Simulates Phoenix July 24-26, 2023 with night-time thermal soak and progressive soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
 7. **⚡ Complex AC Distribution Feeder Power Flow (IEEE 4-Bus Network):**  
    Exact Forward-Backward Sweep AC solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
+8. **Dynamic Line Rating & Conductor Catenary Sag (IEEE Std 738-2012):**  
+   Iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) unlocking $+22.5\%$ dynamic ampacity headroom while preventing ground flashover sag ($S(T_c)$).
+9. **Coupled 2-State BESS Electro-Thermal & Arrhenius SEI Capacity Fade:**  
+   2-state lumped core ($T_c$) vs. surface ($T_s$) differential thermal equations with continuous electrochemical SEI growth ($dQ_{\text{loss}}/dt$), tracking real-time degradation cost (\$/MWh) and enforcing the $55^\circ\mathrm{C}$ thermal runaway ceiling.
+10. **Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk:**  
+    Time-dependent non-homogeneous Poisson-Weibull failure hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to output joint cascading failure probability ($P_{\text{cascade}}$).
+11. **Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Convex Bounds):**  
+    Convex Second-Order Cone Programming (SOCP) branch flow formulation guaranteeing $95\%/99\%$ Gaussian confidence bounds on thermal line loading and ANSI C84.1 voltage profiles under FortyGuard forecast uncertainty.
+
 
 ---
 
@@ -132,9 +141,32 @@ Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ing
 ## 💻 Tech Stack
 
 * **Backend & Physics:** Python 3.13, FastAPI, NumPy, SciPy, Pydantic v2, Uvicorn
-* **Agentic Architecture:** LangGraph, LangChain, StateGraph
-* **Standards & Formulations:** IEEE Std C57.91-2011, IEC 60076-7, IEC 60287-1-1, ANSI C84.1, LBNL ICE Calculator
+* **Agentic Architecture:** LangGraph, LangChain, StateGraph, Siemens SDC Gateway (GPT-5.4 / GPT-5.5)
+* **Enterprise Persistence (Zero Data Loss):** SQLite 3 (Local Store), Supabase PostgreSQL (Cloud Sync), PostgREST, Row Level Security (RLS) across 16 enterprise data tables
+* **Standards & Formulations:** IEEE Std C57.91-2011, IEEE Std 738-2012, IEC 60076-7, IEC 60287-1-1, ANSI C84.1, LBNL ICE Calculator
 * **Frontend Dashboard:** React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Lucide Icons
+
+---
+
+## 🗄️ Enterprise Zero-Data-Loss Database Layer (16 Tables)
+
+Thermal Sentinel Grid incorporates a **Graceful Dual-Storage Persistence Layer** (Local SQLite + PostgREST Live Supabase Cloud PostgreSQL) with **Row Level Security (RLS)** across all 16 tables:
+1. **`api_call_cache`:** Stores raw FortyGuard responses with MD5 request hashes, preventing duplicate paid credit deductions.
+2. **`dispatch_work_orders`:** Historical record of authorized B2B SCADA mitigation orders ($K_{\text{safe}}$, BESS MW, OLTC tap steps).
+3. **`credit_accounting_ledger`:** Audit trail of FortyGuard credit deductions per activity and remaining balances.
+4. **`academic_research_papers`:** 21+ peer-reviewed scientific papers with LaTeX equations and alphaXiv links.
+5. **`substation_telemetry_logs`:** 12-hour hourly SCADA physical telemetry steps ($\theta_o, \theta_w, V(t)$, MVA load).
+6. **`simulation_runs`:** What-If sandbox scenario snapshots and slider experiments saved by users.
+7. **`multi_day_heatwave_logs`:** 72h continuous compounding heatwave progression ($\rho_{\text{soil}}$, cumulative aging hours).
+8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
+9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
+10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.79M net avoided loss, 5,952× ROI).
+11. **`microclimate_parcel_store`:** FortyGuard 2-meter microclimate parcel GeoJSON polygons and asphalt heat trap deltas.
+12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (\$/hr).
+13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) & $VoLL$ at risk.
+14. **`chance_constrained_opf_logs`:** Second-Order Cone (SOCP) CC-OPF quantile solutions under Gaussian uncertainty ($z_{1-\alpha}$).
+15. **`cbf_safety_certificates`:** Control Barrier Function QP slack ($\xi^*$) & forward invariance proofs.
+16. **`grid_assets_registry`:** Digital twin asset catalog (transformers, substations, BESS units, health scores).
 
 ---
 
@@ -146,26 +178,30 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (23 Tests Passing)
+### 2. Run Automated Pytest Suite (47 Tests Passing - 100% Green)
 ```bash
 pytest tests/ -v
 ```
+
 
 ### 3. Launch Backend Server & Operator Dashboard
 ```bash
 python3 -m uvicorn src.server.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Open **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 9 dashboard tabs:
-1. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
-2. **⚡ What-If Studio:** Interactive real-time sandbox allowing judges to modulate FortyGuard 2m delta, heatwave duration, BESS capacity, and transformer MVA with sub-15ms live ODE recalculation.
-3. **🔥 72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
-4. **⚡ AC Power Flow:** 4-bus single-line diagram with live OLTC tap tuning and BESS Volt/VAR support.
-5. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-6. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector.
-7. **4 Scientific Moats:** Deep-dive physical formulations.
-8. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation.
-9. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+Open **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 11 dashboard tabs:
+1. **Home:** Interactive pitch, live demo video player, and 11-module operational launchpad.
+2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
+3. **What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
+4. **72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
+5. **AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and Chance-Constrained SOCP OPF.
+6. **IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
+7. **Scientific Provenance:** 50+ peer-reviewed papers with LaTeX proofs and alphaXiv live search engine.
+8. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+9. **4 Scientific Moats:** Deep-dive physical formulations.
+10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and GPT-5.4 work order synthesis.
+11. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+
 
 ### 4. Launch 3-Minute Video Pitch (HyperFrames Studio Timeline)
 ```bash

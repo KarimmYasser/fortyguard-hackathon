@@ -87,12 +87,26 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
 └───────────────────────────────────────────────┴─────────────────────────────┘
 ```
 
-### 2.2 Technology Stack
+### 2.2 11-Module Operational Suite
+The platform is organized into 11 dedicated operational tabs:
+1. **Home:** Interactive pitch, live demo video player, and 11-module operational launchpad.
+2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
+3. **⚡ What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
+4. **🔥 72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
+5. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and Chance-Constrained SOCP OPF.
+6. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
+7. **📚 Scientific Provenance:** 50+ peer-reviewed papers with LaTeX proofs and alphaXiv live search engine.
+8. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+9. **4 Scientific Moats:** Deep-dive physical formulations.
+10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and GPT-5.4 work order synthesis.
+11. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+
+### 2.3 Technology Stack
 * **Framework:** React 19 + Vite + TypeScript
-* **State Management:** Zustand (incident/replay state) + TanStack Query (API caching & async polling)
-* **Geospatial Rendering:** Deck.gl + MapLibre GL / Mapbox GL
+* **Math & Formulations:** KaTeX rendering with full LaTeX mathematical typography
 * **Physics Charts:** Apache ECharts (multi-axis, high-performance synchronized time-series)
-* **UI & Styling:** Tailwind CSS + Lucide Icons + Glassmorphic dark aesthetic
+* **UI & Styling:** Tailwind CSS v4 + Lucide Icons + Glassmorphic dark aesthetic + Driver.js interactive tours
+
 
 ---
 

@@ -17,6 +17,7 @@ import { AcademicProvenanceViewer } from './components/AcademicProvenanceViewer'
 import { SafetyGateCard } from './components/SafetyGateCard';
 import { AuditLedger } from './components/AuditLedger';
 import { LiveApiScanModal } from './components/LiveApiScanModal';
+import { DatabaseAuditModal } from './components/DatabaseAuditModal';
 import { HomePitchViewer } from './components/HomePitchViewer';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
@@ -32,6 +33,8 @@ export const App: React.FC = () => {
   const [isMitigatedMode, setIsMitigatedMode] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [isLiveScanOpen, setIsLiveScanOpen] = useState<boolean>(false);
+  const [isDbModalOpen, setIsDbModalOpen] = useState<boolean>(false);
+
 
   // Fetch replay dataset from backend
   const fetchReplayData = useCallback(async () => {
@@ -113,6 +116,7 @@ export const App: React.FC = () => {
         onSelectTab={setActiveTab}
         onRefresh={fetchReplayData}
         onOpenLiveScan={() => setIsLiveScanOpen(true)}
+        onOpenDatabaseModal={() => setIsDbModalOpen(true)}
         onStartTour={() =>
           startTourGuide({
             activeTab,
@@ -122,6 +126,7 @@ export const App: React.FC = () => {
         }
         isLoading={isLoading}
       />
+
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 md:px-8 py-6 space-y-6">
@@ -276,6 +281,13 @@ export const App: React.FC = () => {
         isOpen={isLiveScanOpen}
         onClose={() => setIsLiveScanOpen(false)}
       />
+
+      {/* Enterprise Database Hub & Audit Modal */}
+      <DatabaseAuditModal
+        isOpen={isDbModalOpen}
+        onClose={() => setIsDbModalOpen(false)}
+      />
+
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-[#050810] py-4 px-6 text-center text-xs text-slate-500 font-mono flex items-center justify-between max-w-[1600px] mx-auto w-full">

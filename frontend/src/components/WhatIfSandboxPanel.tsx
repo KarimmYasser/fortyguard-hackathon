@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { ReplayDataset } from '../types';
+import { BESSDegradationViewer } from './BESSDegradationViewer';
 
 interface WhatIfSandboxPanelProps {
   onSimulateResult: (result: ReplayDataset) => void;
@@ -363,6 +364,10 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
           </div>
         </div>
       </div>
+
+      {/* BESS Electro-Thermal & SEI Degradation Sub-Engine */}
+      <BESSDegradationViewer />
     </div>
   );
 };
+
