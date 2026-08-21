@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080">
   <title>Thermal Sentinel Grid — Official 3-Minute Video Pitch</title>
-  
+
   <!-- GSAP 3.14.2 -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 
@@ -325,10 +326,21 @@
       letter-spacing: -0.5px;
     }
 
-    .metric-val.red { color: #f87171; }
-    .metric-val.green { color: #34d399; }
-    .metric-val.cyan { color: #38bdf8; }
-    .metric-val.gold { color: #fbbf24; }
+    .metric-val.red {
+      color: #f87171;
+    }
+
+    .metric-val.green {
+      color: #34d399;
+    }
+
+    .metric-val.cyan {
+      color: #38bdf8;
+    }
+
+    .metric-val.gold {
+      color: #fbbf24;
+    }
 
     /* Scene 2 Moat Cards */
     .moat-grid-4 {
@@ -443,7 +455,7 @@
       width: 32px;
       height: 32px;
       z-index: 80;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
     }
 
     /* Outro Centered Lockup */
@@ -481,6 +493,7 @@
     }
   </style>
 </head>
+
 <body>
   <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="180">
     <!-- Top Persistent Header -->
@@ -500,12 +513,17 @@
     <div class="caption-dock" id="caption-dock">
       <div class="caption-indicator" id="caption-time">0:00</div>
       <div class="caption-text" id="caption-content">
-        During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away...
+        During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure
+        using airport weather stations 10 miles away...
       </div>
     </div>
 
     <!-- Video Progress Bar -->
     <div class="timeline-progress-bar" id="timeline-progress"></div>
+
+    <!-- Audio Master Track: Cinematic Ambient BGM + Voiceover Narration -->
+    <audio id="audio-master" src="assets/audio/bgm_cyber_ambient.mp3" class="clip" data-start="0" data-duration="180"
+      data-track-index="2"></audio>
 
     <!-- ========================================================================= -->
     <!-- SCENE 1: THE HOOK & THE 2-METER BLINDSPOT (0:00 - 0:30, 30s)             -->
@@ -521,7 +539,9 @@
             <div class="eyebrow"><span style="color:#ef4444">●</span> THE $2.8M URBAN HEAT BLINDSPOT</div>
             <h1 class="scene-heading">Airport Weather Stations Miss the 2-Meter Heat Trap</h1>
             <p class="scene-subheading">
-              In Phoenix July 2023, while airport sensors reported 43.1°C, radiating asphalt enveloped street transformers in 47.6°C air (+4.5°C delta)—accelerating insulation aging by 15x and causing catastrophic substation blowouts.
+              In Phoenix July 2023, while airport sensors reported 43.1°C, radiating asphalt enveloped street
+              transformers in 47.6°C air (+4.5°C delta)—accelerating insulation aging by 15x and causing catastrophic
+              substation blowouts.
             </p>
             <div class="metric-grid">
               <div class="metric-card alert" id="s1-m1">
@@ -561,7 +581,8 @@
     <!-- ========================================================================= -->
     <section id="scene-2" class="clip" data-start="30" data-duration="30" data-track-index="1">
       <div class="scene-content" id="s2-content">
-        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_physics_moats.png');"></div>
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_physics_moats.png');">
+        </div>
         <div class="scene-overlay-gradient"></div>
 
         <div class="scene-container">
@@ -570,7 +591,8 @@
             <div class="eyebrow"><span style="color:#06b6d4">●</span> FIRST-PRINCIPLES PHYSICAL RESILIENCE</div>
             <h1 class="scene-heading">FortyGuard 2m AI + IEEE Differential Physics</h1>
             <p class="scene-subheading">
-              We couple FortyGuard's 2-meter Temperature AI with exact IEEE Std C57.91 and IEC 60287 differential thermal equations, capturing four latent physical cascades legacy SCADA completely ignores.
+              We couple FortyGuard's 2-meter Temperature AI with exact IEEE Std C57.91 and IEC 60287 differential
+              thermal equations, capturing four latent physical cascades legacy SCADA completely ignores.
             </p>
 
             <div class="moat-grid-4">
@@ -627,7 +649,9 @@
             <div class="eyebrow"><span style="color:#8b5cf6">●</span> TRACK 06: AGENTIC AI ARCHITECTURE</div>
             <h1 class="scene-heading">LangGraph Planner + Non-LLM CBF-QP Safety Gate</h1>
             <p class="scene-subheading">
-              Utilities cannot trust unconstrained, hallucinating neural nets. We built a 4-layer hybrid stack: exact physics handles the math, LangGraph coordinates multi-asset dispatch, and a deterministic Control Barrier Function (CBF-QP) acts as a mathematical firewall.
+              Utilities cannot trust unconstrained, hallucinating neural nets. We built a 4-layer hybrid stack: exact
+              physics handles the math, LangGraph coordinates multi-asset dispatch, and a deterministic Control Barrier
+              Function (CBF-QP) acts as a mathematical firewall.
             </p>
 
             <div class="pipeline-container">
@@ -674,8 +698,10 @@
         <div class="scene-overlay-gradient"></div>
 
         <!-- Simulated Interactive Mouse Cursor -->
-        <svg class="simulated-cursor" id="s4-cursor" viewBox="0 0 24 24" fill="none" style="top: 300px; left: 1400px; opacity: 0;">
-          <path d="M4 2L19 14L12 15L9 22L4 2Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+        <svg class="simulated-cursor" id="s4-cursor" viewBox="0 0 24 24" fill="none"
+          style="top: 300px; left: 1400px; opacity: 0;">
+          <path d="M4 2L19 14L12 15L9 22L4 2Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"
+            stroke-linejoin="round" />
         </svg>
 
         <div class="scene-container">
@@ -684,7 +710,9 @@
             <div class="eyebrow"><span style="color:#10b981">●</span> LIVE OPERATOR MISSION CONTROL</div>
             <h1 class="scene-heading">Proactive Dispatch &amp; Sub-15ms What-If Sandbox</h1>
             <p class="scene-subheading">
-              At 1:00 PM, the unmitigated baseline blows past the 140°C limit to 143.2°C. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW BESS to cap the hot-spot safely at 136.8°C.
+              At 1:00 PM, the unmitigated baseline blows past the 140°C limit to 143.2°C. Thermal Sentinel Grid engages
+              12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW BESS to cap the hot-spot
+              safely at 136.8°C.
             </p>
 
             <div class="metric-grid">
@@ -724,7 +752,8 @@
     <!-- ========================================================================= -->
     <section id="scene-5" class="clip" data-start="135" data-duration="30" data-track-index="1">
       <div class="scene-content" id="s5-content">
-        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_financial_roi.png');"></div>
+        <div class="scene-bg-layer" style="background-image: url('assets/dashboard/dashboard_financial_roi.png');">
+        </div>
         <div class="scene-overlay-gradient"></div>
 
         <div class="scene-container">
@@ -733,7 +762,9 @@
             <div class="eyebrow"><span style="color:#f59e0b">●</span> INVESTMENT-GRADE ECONOMIC VALUE</div>
             <h1 class="scene-heading">$2.79M Net Avoided Loss at 5,952× ROI</h1>
             <p class="scene-subheading">
-              Using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard (VoLL = $12.50/kWh), Thermal Sentinel Grid quantifies non-overlapping avoided catastrophic outage costs and deferred capital asset replacement.
+              Using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard (VoLL = $12.50/kWh),
+              Thermal Sentinel Grid quantifies non-overlapping avoided catastrophic outage costs and deferred capital
+              asset replacement.
             </p>
 
             <div class="metric-grid">
@@ -777,10 +808,12 @@
         <div class="scene-overlay-gradient"></div>
 
         <div class="scene-single-container" id="s6-hero">
-          <div class="eyebrow" style="justify-content:center;"><span style="color:#06b6d4">●</span> FORTYGUARD HACKATHON '26 SUBMISSION</div>
+          <div class="eyebrow" style="justify-content:center;"><span style="color:#06b6d4">●</span> FORTYGUARD HACKATHON
+            '26 SUBMISSION</div>
           <h1 class="scene-heading" style="font-size:64px; margin-bottom:12px;">Thermal Sentinel Grid</h1>
           <p class="scene-subheading" style="max-width:900px; margin:0 auto 28px auto;">
-            Physics-Constrained Agentic Thermal Resilience &amp; Dispatch Engine for Distribution Transformers &amp; Urban Energy Infrastructure
+            Physics-Constrained Agentic Thermal Resilience &amp; Dispatch Engine for Distribution Transformers &amp;
+            Urban Energy Infrastructure
           </p>
 
           <div class="outro-badge-row">
@@ -864,10 +897,10 @@
     tl.fromTo("#s1-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 0.4);
     tl.fromTo("#s1-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.8);
     tl.fromTo(["#s1-m1", "#s1-m2", "#s1-m3", "#s1-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 1.4);
-    
+
     // Laser scanning beam animation on the FLIR card using transform y
     tl.fromTo("#s1-scanner", { y: 0, opacity: 1 }, { y: 600, opacity: 1, duration: 2.5, repeat: 5, yoyo: true, ease: "sine.inOut" }, 1.5);
-    
+
     tl.fromTo("#s1-content", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in" }, 29.5);
     tl.set("#s1-content", { opacity: 0 }, 30.0);
 
@@ -895,7 +928,7 @@
     tl.fromTo("#s4-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 90.4);
     tl.fromTo("#s4-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 90.8);
     tl.fromTo(["#s4-m1", "#s4-m2", "#s4-m3", "#s4-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 91.4);
-    
+
     // Simulated cursor interaction: moves, clicks BESS slider, hot-spot drops
     tl.fromTo("#s4-cursor", { x: 0, y: 0, opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 95.0);
     tl.to("#s4-cursor", { x: -180, y: 140, duration: 2.0, ease: "power2.inOut" }, 96.0);
@@ -922,4 +955,5 @@
     window.__timelines["main"] = tl;
   </script>
 </body>
+
 </html>

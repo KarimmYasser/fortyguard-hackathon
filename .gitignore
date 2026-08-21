@@ -70,6 +70,7 @@ dist-ssr/
 # Media & Render Artifacts
 **/renders/
 **/.thumbnails/
+*.wav
 scratch/
 
 
