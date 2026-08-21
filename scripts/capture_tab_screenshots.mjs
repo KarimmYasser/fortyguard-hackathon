@@ -1,0 +1,67 @@
+import puppeteer from 'puppeteer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, '..');
+const DASHBOARD_DIR = path.resolve(projectRoot, 'videos/thermal-sentinel-pitch/assets/dashboard');
+
+fs.mkdirSync(DASHBOARD_DIR, { recursive: true });
+
+const tabsToCapture = [
+  { tabText: 'Home', filename: 'dashboard_home.png' },
+  { tabText: 'Overview', filename: 'dashboard_overview.png' },
+  { tabText: 'What-If', filename: 'dashboard_sandbox.png' },
+  { tabText: '72h Heatwave', filename: 'dashboard_72h_heatwave.png' },
+  { tabText: 'Power Flow', filename: 'dashboard_power_flow.png' },
+  { tabText: 'IEEE Annex G', filename: 'dashboard_ieee_annex_g.png' },
+  { tabText: '2m GIS Heatmap', filename: 'dashboard_gis_map.png' },
+  { tabText: 'Scientific Moats', filename: 'dashboard_physics_moats.png' },
+  { tabText: 'LangGraph', filename: 'dashboard_agent_graph.png' },
+  { tabText: 'Financial ROI', filename: 'dashboard_financial_roi.png' },
+];
+
+async function captureAllTabs() {
+  console.log('🚀 Launching Puppeteer to capture all tab screenshots in 1920x1080...');
+  const browser = await puppeteer.launch({
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1920,1080'],
+    defaultViewport: { width: 1920, height: 1080, deviceScaleFactor: 2 },
+  });
+
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
+
+  console.log('🌐 Opening http://127.0.0.1:8000 ...');
+  await page.goto('http://127.0.0.1:8000', { waitUntil: 'networkidle0', timeout: 30000 });
+  await new Promise((r) => setTimeout(r, 1500));
+
+  for (const { tabText, filename } of tabsToCapture) {
+    console.log(`📸 Capturing tab: "${tabText}" -> ${filename}...`);
+    try {
+      await page.evaluate((text) => {
+        const btns = Array.from(document.querySelectorAll('nav button'));
+        const target = btns.find((b) => b.textContent && b.textContent.includes(text));
+        if (target) target.click();
+      }, tabText);
+
+      await new Promise((r) => setTimeout(r, 1200));
+
+      const outPath = path.resolve(DASHBOARD_DIR, filename);
+      await page.screenshot({ path: outPath, type: 'png' });
+      console.log(`✅ Saved ${outPath}`);
+    } catch (err) {
+      console.error(`❌ Failed capturing tab "${tabText}":`, err.message);
+    }
+  }
+
+  await browser.close();
+  console.log('🎉 All tab screenshots successfully captured!');
+}
+
+captureAllTabs().catch((err) => {
+  console.error('Fatal error:', err);
+  process.exit(1);
+});
