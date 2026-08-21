@@ -8,6 +8,7 @@ from .power_flow import router as power_flow_router
 from .research import router as research_router
 from .advanced_physics import router as advanced_physics_router
 from .database_ops import router as database_router
+from .analytics import router as analytics_router
 
 __all__ = [
     "scan_router",
@@ -20,5 +21,6 @@ __all__ = [
     "research_router",
     "advanced_physics_router",
     "database_router",
+    "analytics_router",
 ]
 

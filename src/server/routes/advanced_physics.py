@@ -163,22 +163,23 @@ async def solve_chance_constrained_opf(req: CC_OPF_Request) -> CC_OPF_Solution:
     """
     Solves Chance-Constrained Second-Order Cone AC-OPF with Gaussian forecast variance quantile bounds.
     """
+    import time
     engine = ChanceConstrainedOPFEngine()
-    solution = engine.solve_optimal_dispatch(req)
+    solution = engine.solve_cc_opf(req)
 
     # Persist CC-OPF solution
     try:
         from src.db.models import ChanceConstrainedOPFRecord
         opf_rec = ChanceConstrainedOPFRecord(
-            solve_id=solution.solve_id,
+            solve_id=f"cc_opf_{int(time.time())}",
             confidence_level_pct=solution.confidence_level_pct,
-            total_generation_mw=solution.total_generation_mw,
-            bess_optimal_power_mw=solution.bess_dispatch_p_mw,
-            oltc_optimal_tap=solution.oltc_tap_step,
-            total_dispatch_cost_usd=solution.total_dispatch_cost_usd,
-            solver_status=solution.solver_status,
+            total_generation_mw=req.total_grid_load_mw,
+            bess_optimal_power_mw=solution.optimal_bess_active_mw,
+            oltc_optimal_tap=solution.optimal_oltc_tap_step,
+            total_dispatch_cost_usd=solution.objective_cost_usd_per_hr,
+            solver_status=solution.robustness_status,
         )
-        await db_manager.log_chance_constrained_opf(opf_rec)
+        db_manager.save_chance_constrained_opf_log(opf_rec)
     except Exception:
         pass
 

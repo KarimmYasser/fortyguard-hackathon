@@ -33,7 +33,8 @@ export type ActiveTab =
   | 'gis_map'
   | 'physics_moats'
   | 'agent_graph'
-  | 'financial_roi';
+  | 'financial_roi'
+  | 'data_science';
 
 interface NavbarProps {
   metadata: ScenarioMetadata;
@@ -136,6 +137,13 @@ const TAB_PREVIEWS: Record<ActiveTab, TabPreviewInfo> = {
     summary: 'Auditable financial impact quantifying customer interruption savings (VoLL), asset capital deferral, and net operational ROI.',
     highlights: ['Customer Interruption Costs', 'Capital Replacement Deferral', '>24x Operational ROI Multiple'],
   },
+  data_science: {
+    badge: 'DATA SCIENCE & AI/ML',
+    badgeColor: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
+    tagline: 'IBM Data Science Methodology',
+    summary: 'Bronze→Silver→Gold ETL pipeline, physics-surrogate ML, Isolation Forest anomaly detection, and Weibull survival analysis.',
+    highlights: ['Medallion ETL Architecture', 'Ridge Surrogate R²>0.99', 'Weibull RUL Forecasting'],
+  },
 };
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -166,6 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'physics_moats', label: '4 Scientific Moats', icon: Layers },
     { id: 'agent_graph', label: 'LangGraph Engine', icon: Cpu },
     { id: 'financial_roi', label: 'Avoided Loss ROI', icon: Calculator },
+    { id: 'data_science', label: 'Data Science Studio', icon: BarChart3 },
   ] as const;
 
   return (

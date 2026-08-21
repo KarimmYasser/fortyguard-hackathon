@@ -19,6 +19,7 @@ import { AuditLedger } from './components/AuditLedger';
 import { LiveApiScanModal } from './components/LiveApiScanModal';
 import { DatabaseAuditModal } from './components/DatabaseAuditModal';
 import { HomePitchViewer } from './components/HomePitchViewer';
+import { DataScienceStudio } from './components/DataScienceStudio';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
 import { API_BASE } from './utils/api';
@@ -273,6 +274,11 @@ export const App: React.FC = () => {
             baselineSummary={dataset.baseline_summary}
             mitigatedSummary={dataset.mitigated_summary}
           />
+        )}
+
+        {/* TAB 12: Data Science & Analytics Studio */}
+        {activeTab === 'data_science' && (
+          <DataScienceStudio />
         )}
       </main>
 

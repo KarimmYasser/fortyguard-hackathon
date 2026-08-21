@@ -99,13 +99,18 @@
 * **Key Takeaway:** 16-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Row Level Security (RLS) & FortyGuard API query caching.
 * **Talking Points:** MD5-hashed query cache saves paid API credits; full auditable legal trails for B2B SCADA work orders, CBF safety proofs, and LBNL ICE filings.
 
+### Slide 7: Data Science, Analytics & ML Intelligence (IBM Certified Methodology)
+* **Key Takeaway:** End-to-end data lifecycle: Bronze→Silver→Gold ETL Medallion pipeline (18 engineered features), fast Ridge Physics-Surrogate ($R^2 > 0.98, 5000\times$ speedup), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival analysis.
+* **Talking Points:** Standalone Jupyter Notebook (`notebooks/Thermal_Sentinel_DataScience.ipynb`) + interactive in-app Data Science Studio tab; paired $t$-test confirms microclimate divergence is statistically significant ($p < 0.001$, Cohen's $d > 0.8$).
+
 ---
 
 ## 🛡️ Judge Q&A Defense Cheat-Sheet
 
 | Likely Judge Question | Winning Technical Defense |
 | :--- | :--- |
-| **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging are governed by exact physical ODEs (IEEE Std C57.91). Training an approximate neural net introduces hallucinations and prevents certification by utilities."* |
+| **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging are governed by exact physical ODEs (IEEE Std C57.91). Rather than replacing exact physics, we built a Physics-Surrogate ML Regressor ($R^2 > 0.98$) that accelerates the ODE solver by $5000\times$ for city-scale screening of 10,000+ assets."* |
+| **"What data science and engineering principles did you apply?"** | *"We implemented the complete IBM Data Science Lifecycle: a Bronze→Silver→Gold medallion architecture extracting 18 engineered features, rigorous hypothesis testing (paired $t$-test confirming $+4.5^\circ\mathrm{C}$ microclimate bias at $p < 0.001$), Isolation Forest unsupervised anomaly detection for sensor drift, and Weibull survival analysis for asset RUL forecasting."* |
 | **"How is this different from existing utility SCADA alarms?"** | *"SCADA alarms are reactive - they trip 5 minutes before failure when equipment is already overheated. Thermal Sentinel Grid ingests FortyGuard's 12-hour forecast to proactively pre-cool radiators at 8:00 AM off-peak and schedule BESS peak shaving hours in advance."* |
 | **"Why is AI justified here versus simple threshold scripts?"** | *"Deterministic scripts cannot orchestrate multi-asset, cross-feeder trade-offs (e.g. balancing BESS State of Charge, transformer top-oil time constants, and hospital feeder voltage constraints). LangGraph acts as the cognitive planner that evaluates complex multi-step mitigation paths, while CBF-QP acts as the mathematical safety barrier."* |
 | **"Would utilities trust an autonomous AI agent with circuit breakers?"** | *"No utility trusts an unconstrained LLM. That is why we designed a non-LLM Control Barrier Function (CBF-QP) as a mathematical firewall. Even if the AI planner proposes an aggressive dispatch, the CBF-QP filter strictly projects actions onto $K_{\text{safe}}$, guaranteeing zero voltage or thermal violations."* |
