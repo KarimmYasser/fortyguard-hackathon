@@ -12,6 +12,7 @@ import { WhatIfSandboxPanel } from './components/WhatIfSandboxPanel';
 import { MultiDay72hHeatwaveViewer } from './components/MultiDay72hHeatwaveViewer';
 import { ACPowerFlowSingleLineViewer } from './components/ACPowerFlowSingleLineViewer';
 import { IEEEAnnexGBenchmarkViewer } from './components/IEEEAnnexGBenchmarkViewer';
+import { AcademicProvenanceViewer } from './components/AcademicProvenanceViewer';
 import { SafetyGateCard } from './components/SafetyGateCard';
 import { AuditLedger } from './components/AuditLedger';
 import { LiveApiScanModal } from './components/LiveApiScanModal';
@@ -19,6 +20,7 @@ import { HomePitchViewer } from './components/HomePitchViewer';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
 import { API_BASE } from './utils/api';
+
 
 export const App: React.FC = () => {
   const [data, setData] = useState<ReplayDataset | null>(null);
@@ -224,9 +226,15 @@ export const App: React.FC = () => {
           <IEEEAnnexGBenchmarkViewer />
         )}
 
-        {/* TAB 6: Hyperlocal 2m GIS Map */}
+        {/* TAB 6: Academic Provenance & alphaXiv Literature */}
+        {activeTab === 'academic_provenance' && (
+          <AcademicProvenanceViewer />
+        )}
+
+        {/* TAB 7: Hyperlocal 2m GIS Map */}
         {activeTab === 'gis_map' && (
           <GeospatialMicroclimateViewer
+
             heatmapData={dataset.heatmap_geojson_tiles}
             currentAmbient2m={currentStep.fortyguard_2m_ambient_c}
             airportAmbient={currentStep.airport_reference_temp_c}

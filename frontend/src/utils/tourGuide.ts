@@ -318,7 +318,62 @@ export const startTourGuide = ({
           },
         ];
 
+      case 'academic_provenance':
+        return [
+          {
+            element: '#tour-academic-header',
+            popover: {
+              title: '📚 Peer-Reviewed Scientific Provenance',
+              description:
+                'Discover the 47 peer-reviewed papers and preprints grounding FortyGuard’s thermal downscaling, cool pavement physics, and grid heatwave dispatch.',
+              side: 'bottom',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tour-academic-formulas',
+            popover: {
+              title: '📐 Surface Energy Balance & PINN Foundations',
+              description:
+                'Inspect the foundational PDEs: Surface Energy Balance (SEB) for cool pavements, Physics-Informed Neural Networks for thermal diffusion, and Spatio-Temporal Graph Neural Networks.',
+              side: 'bottom',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tour-academic-search',
+            popover: {
+              title: '🔍 Live arXiv & alphaXiv Research Engine',
+              description:
+                'Type any research query (e.g., "cool pavement albedo", "land surface temperature downscaling") to execute real-time searches across arXiv and alphaXiv.',
+              side: 'bottom',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tour-academic-filters',
+            popover: {
+              title: '🏷️ 5 Multi-Disciplinary Domain Filters',
+              description:
+                'Filter papers by specialized domains: Cool Pavements & Albedo, Satellite Thermal Downscaling (PGDM / MoCoLSK), PINNs & Thermal PDEs, ST-GNNs, and Climate RL.',
+              side: 'top',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tour-academic-cards',
+            popover: {
+              title: '⚡ Interactive Citations & alphaXiv Discussions',
+              description:
+                'Click "alphaXiv Discuss" to explore community discussions, read full PDFs, or click "IEEE Cite" to copy publication-ready citations.',
+              side: 'top',
+              align: 'center',
+            },
+          },
+        ];
+
       case 'gis_map':
+
         return [
           {
             element: '#tour-gis-header',

@@ -5,6 +5,7 @@ from .dispatch import router as dispatch_router
 from .sandbox import router as sandbox_router
 from .benchmark import router as benchmark_router
 from .power_flow import router as power_flow_router
+from .research import router as research_router
 
 __all__ = [
     "scan_router",
@@ -14,4 +15,6 @@ __all__ = [
     "sandbox_router",
     "benchmark_router",
     "power_flow_router",
+    "research_router",
 ]
+

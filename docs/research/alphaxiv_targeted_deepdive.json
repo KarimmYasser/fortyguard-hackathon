@@ -1,0 +1,485 @@
+{
+  "urban heat island physics informed neural network": [
+    {
+      "arxiv_id": "1609.04846v1",
+      "title": "A Tutorial about Random Neural Networks in Supervised Learning",
+      "authors": [
+        "Sebasti\u00e1n Basterrech",
+        "Gerardo Rubino"
+      ],
+      "summary": "Random Neural Networks (RNNs) are a class of Neural Networks (NNs) that can also be seen as a specific type of queuing network. They have been successfully used in several domains during the last 25 years, as queuing networks to analyze the performance of resource sharing in many engineering areas, as learning tools and in combinatorial optimization, where they are seen as neural systems, and also as models of neurological aspects of living beings. In this article we focus on their learning capabilities, and more specifically, we present a practical guide for using the RNN to solve supervised learning problems. We give a general description of these models using almost indistinctly the terminology of Queuing Theory and the neural one. We present the standard learning procedures used by RNNs, adapted from similar well-established improvements in the standard NN field. We describe in particular a set of learning algorithms covering techniques based on the use of first order and, then, of second order derivatives. We also discuss some issues related to these objects and present new perspectives about their use in supervised learning problems. The tutorial describes their most relevant applications, and also provides a large bibliography.",
+      "published": "2016-09-15T20:21:30Z",
+      "updated": "2016-09-15T20:21:30Z",
+      "categories": [
+        "cs.NE"
+      ],
+      "primary_category": "cs.NE",
+      "pdf_url": "https://arxiv.org/pdf/1609.04846v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/1609.04846v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/1609.04846v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Sebasti\u00e1n Basterrech and Gerardo Rubino, \"A Tutorial about Random Neural Networks in Supervised Learning,\" arXiv preprint arXiv:1609.04846v1, 2016.",
+      "bibtex": "@article{basterrech20161609_048,\n  author    = {Sebasti\u00e1n Basterrech and Gerardo Rubino},\n  title     = {{A Tutorial about Random Neural Networks in Supervised Learning}},\n  journal   = {arXiv preprint arXiv:1609.04846v1},\n  year      = {2016}\n}"
+    },
+    {
+      "arxiv_id": "2309.17345v3",
+      "title": "Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering",
+      "authors": [
+        "Daniel Badawi",
+        "Eduardo Gildin"
+      ],
+      "summary": "Physics-Informed machine learning models have recently emerged with some interesting and unique features that can be applied to reservoir engineering. In particular, physics-informed neural networks (PINN) leverage the fact that neural networks are a type of universal function approximators that can embed the knowledge of any physical laws that govern a given data-set in the learning process, and can be described by partial differential equations. The transient diffusivity equation is a fundamental equation in reservoir engineering and the general solution to this equation forms the basis for Pressure Transient Analysis (PTA). The diffusivity equation is derived by combining three physical principles, the continuity equation, Darcy's equation, and the equation of state for a slightly compressible liquid. Obtaining general solutions to this equation is imperative to understand flow regimes in porous media. Analytical solutions of the transient diffusivity equation are usually hard to obtain due to the stiff nature of the equation caused by the steep gradients of the pressure near the well. In this work we apply physics-informed neural networks to the one and two dimensional diffusivity equation and demonstrate that decomposing the space domain into very few subdomains can overcome the stiffness problem of the equation. Additionally, we demonstrate that the inverse capabilities of PINNs can estimate missing physics such as permeability and distance from sealing boundary similar to buildup tests without shutting in the well.",
+      "published": "2023-09-29T15:52:04Z",
+      "updated": "2023-11-29T18:42:45Z",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "pdf_url": "https://arxiv.org/pdf/2309.17345v3.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2309.17345v3",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2309.17345v3",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [
+          "PINN",
+          "physics-informed"
+        ],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Daniel Badawi and Eduardo Gildin, \"Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering,\" arXiv preprint arXiv:2309.17345v3, 2023.",
+      "bibtex": "@article{badawi20232309_173,\n  author    = {Daniel Badawi and Eduardo Gildin},\n  title     = {{Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering}},\n  journal   = {arXiv preprint arXiv:2309.17345v3},\n  year      = {2023}\n}"
+    },
+    {
+      "arxiv_id": "2211.00355v1",
+      "title": "Urban Mobility",
+      "authors": [
+        "Laura Alessandretti",
+        "Michael Szell"
+      ],
+      "summary": "In this chapter, we discuss urban mobility from a complexity science perspective. First, we give an overview of the datasets that enable this approach, such as mobile phone records, location-based social network traces, or GPS trajectories from sensors installed on vehicles. We then review the empirical and theoretical understanding of the properties of human movements, including the distribution of travel distances and times, the entropy of trajectories, and the interplay between exploration and exploitation of locations. Next, we explain generative and predictive models of individual mobility, and their limitations due to intrinsic limits of predictability. Finally, we discuss urban transport from a systemic perspective, including system-wide challenges like ridesharing, multimodality, and sustainable transport.",
+      "published": "2022-11-01T09:58:49Z",
+      "updated": "2022-11-01T09:58:49Z",
+      "categories": [
+        "physics.soc-ph",
+        "cs.CY"
+      ],
+      "primary_category": "physics.soc-ph",
+      "pdf_url": "https://arxiv.org/pdf/2211.00355v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2211.00355v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2211.00355v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Laura Alessandretti and Michael Szell, \"Urban Mobility,\" arXiv preprint arXiv:2211.00355v1, 2022.",
+      "bibtex": "@article{alessandretti20222211_003,\n  author    = {Laura Alessandretti and Michael Szell},\n  title     = {{Urban Mobility}},\n  journal   = {arXiv preprint arXiv:2211.00355v1},\n  year      = {2022}\n}"
+    },
+    {
+      "arxiv_id": "2107.00465v2",
+      "title": "Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow",
+      "authors": [
+        "Rahul Nellikkath",
+        "Spyros Chatzivasileiadis"
+      ],
+      "summary": "Physics-informed neural networks exploit the existing models of the underlying physical systems to generate higher accuracy results with fewer data. Such approaches can help drastically reduce the computation time and generate a good estimate of computationally intensive processes in power systems, such as dynamic security assessment or optimal power flow. Combined with the extraction of worst-case guarantees for the neural network performance, such neural networks can be applied in safety-critical applications in power systems and build a high level of trust among power system operators. This paper takes the first step and applies, for the first time to our knowledge, Physics-Informed Neural Networks with Worst-Case Guarantees for the DC Optimal Power Flow problem. We look for guarantees related to (i) maximum constraint violations, (ii) maximum distance between predicted and optimal decision variables, and (iii) maximum sub-optimality in the entire input domain. In a range of PGLib-OPF networks, we demonstrate how physics-informed neural networks can be supplied with worst-case guarantees and how they can lead to reduced worst-case violations compared with conventional neural networks.",
+      "published": "2021-06-28T10:45:22Z",
+      "updated": "2021-09-27T13:52:15Z",
+      "categories": [
+        "eess.SY",
+        "cs.LG"
+      ],
+      "primary_category": "eess.SY",
+      "pdf_url": "https://arxiv.org/pdf/2107.00465v2.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2107.00465v2",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2107.00465v2",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [
+          "physics-informed"
+        ],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Rahul Nellikkath and Spyros Chatzivasileiadis, \"Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow,\" arXiv preprint arXiv:2107.00465v2, 2021.",
+      "bibtex": "@article{nellikkath20212107_004,\n  author    = {Rahul Nellikkath and Spyros Chatzivasileiadis},\n  title     = {{Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow}},\n  journal   = {arXiv preprint arXiv:2107.00465v2},\n  year      = {2021}\n}"
+    }
+  ],
+  "land surface temperature downscaling thermal infrared": [
+    {
+      "arxiv_id": "2511.05964v1",
+      "title": "PGDM: Physically guided diffusion model for land surface temperature downscaling",
+      "authors": [
+        "Huanyu Zhang",
+        "Bo-Hui Tang",
+        "Tian Hu",
+        "Yun Jiang",
+        "Zhao-Liang Li"
+      ],
+      "summary": "Land surface temperature (LST) is a fundamental parameter in thermal infrared remote sensing, while current LST products are often constrained by the trade-off between spatial and temporal resolutions. To mitigate this limitation, numerous studies have been conducted to enhance the resolutions of LST data, with a particular emphasis on the spatial dimension (commonly known as LST downscaling). Nevertheless, a comprehensive benchmark dataset tailored for this task remains scarce. In addition, existing downscaling models face challenges related to accuracy, practical usability, and the capability to self-evaluate their uncertainties. To overcome these challenges, this study first compiled three representative datasets, including one dataset over mainland China containing 22,909 image patches for model training and evaluation, as well as two datasets covering 40 heterogeneous regions worldwide for external evaluation. Subsequently, grounded in the surface energy balance (SEB)-based geophysical reasoning, we proposed the physically guided diffusion model (PGDM) for LST downscaling. In this framework, the downscaling task was formulated as an inference problem, aiming to sample from the posterior distribution of high-spatial-resolution (HR) LST conditioned on low-spatial-resolution (LR) LST observations and a suite of HR geophysical priors. Comprehensive evaluations demonstrate the effectiveness of PGDM, which generates high-quality downscaling results and outperforms existing representative interpolation, kernel-driven, hybrid, and deep learning approaches. Finally, by exploiting the inherent stochasticity of PGDM, the scene-level standard deviation of multiple generations was computed, revealing a strong positive linear correlation with the actual downscaling error...",
+      "published": "2025-11-08T10:42:02Z",
+      "updated": "2025-11-08T10:42:02Z",
+      "categories": [
+        "physics.geo-ph"
+      ],
+      "primary_category": "physics.geo-ph",
+      "pdf_url": "https://arxiv.org/pdf/2511.05964v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2511.05964v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2511.05964v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [
+          "diffusion"
+        ],
+        "ml_architecture_keywords": [
+          "diffusion model"
+        ],
+        "urban_domain_keywords": [
+          "land surface temperature"
+        ]
+      },
+      "ieee_citation": "Huanyu Zhang et al., \"PGDM: Physically guided diffusion model for land surface temperature downscaling,\" arXiv preprint arXiv:2511.05964v1, 2025.",
+      "bibtex": "@article{zhang20252511_059,\n  author    = {Huanyu Zhang and Bo-Hui Tang and Tian Hu and Yun Jiang and Zhao-Liang Li},\n  title     = {{PGDM: Physically guided diffusion model for land surface temperature downscaling}},\n  journal   = {arXiv preprint arXiv:2511.05964v1},\n  year      = {2025}\n}"
+    },
+    {
+      "arxiv_id": "2409.19835v2",
+      "title": "MoCoLSK: Modality Conditioned High-Resolution Downscaling for Land Surface Temperature",
+      "authors": [
+        "Qun Dai",
+        "Chunyang Yuan",
+        "Yimian Dai",
+        "Yuxuan Li",
+        "Xiang Li",
+        "Kang Ni",
+        "Jianhui Xu",
+        "Xiangbo Shu",
+        "Jian Yang"
+      ],
+      "summary": "Land Surface Temperature (LST) is a critical parameter for environmental studies, but directly obtaining high spatial resolution LST data remains challenging due to the spatio-temporal trade-off in satellite remote sensing. Guided LST downscaling has emerged as an alternative solution to overcome these limitations, but current methods often neglect spatial non-stationarity, and there is a lack of an open-source ecosystem for deep learning methods. In this paper, we propose the Modality-Conditional Large Selective Kernel (MoCoLSK) Network, a novel architecture that dynamically fuses multi-modal data through modality-conditioned projections. MoCoLSK achieves a confluence of dynamic receptive field adjustment and multi-modal feature fusion, leading to enhanced LST prediction accuracy. Furthermore, we establish the GrokLST project, a comprehensive open-source ecosystem featuring the GrokLST dataset, a high-resolution benchmark, and the GrokLST toolkit, an open-source PyTorch-based toolkit encapsulating MoCoLSK alongside 40+ state-of-the-art approaches. Extensive experimental results validate MoCoLSK's effectiveness in capturing complex dependencies and subtle variations within multispectral data, outperforming existing methods in LST downscaling. Our code, dataset, and toolkit are available at https://github.com/GrokCV/GrokLST.",
+      "published": "2024-09-30T00:17:00Z",
+      "updated": "2025-03-02T07:32:50Z",
+      "categories": [
+        "cs.CV",
+        "eess.IV"
+      ],
+      "primary_category": "cs.CV",
+      "pdf_url": "https://arxiv.org/pdf/2409.19835v2.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2409.19835v2",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2409.19835v2",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": [
+          "land surface temperature"
+        ]
+      },
+      "ieee_citation": "Qun Dai et al., \"MoCoLSK: Modality Conditioned High-Resolution Downscaling for Land Surface Temperature,\" arXiv preprint arXiv:2409.19835v2, 2024.",
+      "bibtex": "@article{dai20242409_198,\n  author    = {Qun Dai and Chunyang Yuan and Yimian Dai and Yuxuan Li and Xiang Li and Kang Ni and Jianhui Xu and Xiangbo Shu and Jian Yang},\n  title     = {{MoCoLSK: Modality Conditioned High-Resolution Downscaling for Land Surface Temperature}},\n  journal   = {arXiv preprint arXiv:2409.19835v2},\n  year      = {2024}\n}"
+    },
+    {
+      "arxiv_id": "2603.29478v1",
+      "title": "30-meter Land Surface Temperature from Landsat via Progressive Self-Training Downscaling",
+      "authors": [
+        "Huanfeng Shen",
+        "Chan Li",
+        "Menghui Jiang",
+        "Penghai Wu",
+        "Guanhao Zhang",
+        "Tian Xie"
+      ],
+      "summary": "Land surface temperature (LST) is a critical parameter for characterizing surface energy balance and hydrothermal processes. While Landsat provides invaluable LST observations at medium spatial resolution for over 40 years, its native spatial resolution of thermal bands (e.g., 100 m) remains insufficient compared to its 30 m optical bands, failing to meet the demands of fine-scale studies. To address this issues, this study proposes a progressive self-training framework for downscaling Landsat LST to 30 m without relying on fine-scale ground truth, while maintaining minimal data dependence. The framework progressively optimizes a cross-modal fusion network to refine thermal details in a coarse-to-fine manner, characterized by one pre-training and two fine-tuning stages. Spatial validation against SDGSAT-1 30 m LST and temporal validation using in situ measurements confirm its reliability and accuracy, with both station-averaged MAE and RMSE outperforming the official cubic product by approximately 0.4 K. Further performance comparison experiments demonstrate that the proposed framework consistently reconstructs coherent fine-scale thermal patterns while preserving spatial heterogeneity. Multi spatial resolution evaluations and ablation studies verify the effectiveness of the proposed strategy and network design. Overall, the framework provides a stable pathway for enhancing the spatial resolution of Landsat LST, providing fine-resolution data support for fine-scale surface process studies and localized environmental monitoring.",
+      "published": "2026-03-31T09:24:58Z",
+      "updated": "2026-03-31T09:24:58Z",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "primary_category": "physics.ao-ph",
+      "pdf_url": "https://arxiv.org/pdf/2603.29478v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2603.29478v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2603.29478v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": [
+          "land surface temperature"
+        ]
+      },
+      "ieee_citation": "Huanfeng Shen et al., \"30-meter Land Surface Temperature from Landsat via Progressive Self-Training Downscaling,\" arXiv preprint arXiv:2603.29478v1, 2026.",
+      "bibtex": "@article{shen20262603_294,\n  author    = {Huanfeng Shen and Chan Li and Menghui Jiang and Penghai Wu and Guanhao Zhang and Tian Xie},\n  title     = {{30-meter Land Surface Temperature from Landsat via Progressive Self-Training Downscaling}},\n  journal   = {arXiv preprint arXiv:2603.29478v1},\n  year      = {2026}\n}"
+    },
+    {
+      "arxiv_id": "2009.05074v1",
+      "title": "Thermal Model of an Omnimagnet for Performance Assessment and Temperature Control",
+      "authors": [
+        "Fateme Esmailie",
+        "Matthew S. Cavilla",
+        "Jake J. Abbott",
+        "Tim A. Ameel"
+      ],
+      "summary": "An Omnimagnet is an electromagnetic device that enables remote magnetic manipulation of devices such as medical implants and microrobots. It is comprised of three orthogonal nested solenoids with a ferromagnetic core at the center. Electrical current within the solenoids leads to Joule heating, resulting in undesired temperature increase within the Omnimagnet. If the temperature exceeds the melting point of the wire insulation, device failure will occur. Thus, a study of heat transfer within an Omnimagnet is a necessity, particularly to maximize the performance of the device. For the first time, a transient heat transfer model, that incorporates all three heat transfer modes, is proposed and validated with experimental data for an Omnimagnet with maximum root mean square error equal to 8${\\%}$ (4$^{\\circ}$C). This transient model is not computationally expensive. It is relatively easy to apply to Omnimagnets with different structures. The accuracy of this model depends on the accuracy of the input data. The code is applied to calculate the maximum safe operational time at a fixed input current or the maximum safe input current for a fixed time interval. The maximum safe operational time and maximum safe input current depend on size and structure of the Omnimagnet and the lowest melting point of all the Omnimagnet materials. A parametric study shows that increasing convective heat transfer during cooling, and during heating with low input currents, is an effective method to increase the maximum operational time of the Omnimagnet.The thermal model is also presented in a state-space equation format that can be used in a real-time Kalman filter current controller to avoid device failure due to excessive heating.",
+      "published": "2020-09-10T18:21:00Z",
+      "updated": "2020-09-10T18:21:00Z",
+      "categories": [
+        "physics.app-ph",
+        "physics.flu-dyn"
+      ],
+      "primary_category": "physics.app-ph",
+      "pdf_url": "https://arxiv.org/pdf/2009.05074v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2009.05074v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2009.05074v1",
+      "math_insights": {
+        "latex_expressions": [
+          "${\\%}$",
+          "$^{\\circ}$"
+        ],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Fateme Esmailie et al., \"Thermal Model of an Omnimagnet for Performance Assessment and Temperature Control,\" arXiv preprint arXiv:2009.05074v1, 2020.",
+      "bibtex": "@article{esmailie20202009_050,\n  author    = {Fateme Esmailie and Matthew S. Cavilla and Jake J. Abbott and Tim A. Ameel},\n  title     = {{Thermal Model of an Omnimagnet for Performance Assessment and Temperature Control}},\n  journal   = {arXiv preprint arXiv:2009.05074v1},\n  year      = {2020}\n}"
+    }
+  ],
+  "urban microclimate CFD surrogate deep learning": [
+    {
+      "arxiv_id": "2306.11113v2",
+      "title": "Learn to Accumulate Evidence from All Training Samples: Theory and Practice",
+      "authors": [
+        "Deep Pandey",
+        "Qi Yu"
+      ],
+      "summary": "Evidential deep learning, built upon belief theory and subjective logic, offers a principled and computationally efficient way to turn a deterministic neural network uncertainty-aware. The resultant evidential models can quantify fine-grained uncertainty using the learned evidence. To ensure theoretically sound evidential models, the evidence needs to be non-negative, which requires special activation functions for model training and inference. This constraint often leads to inferior predictive performance compared to standard softmax models, making it challenging to extend them to many large-scale datasets. To unveil the real cause of this undesired behavior, we theoretically investigate evidential models and identify a fundamental limitation that explains the inferior performance: existing evidential activation functions create zero evidence regions, which prevent the model to learn from training samples falling into such regions. A deeper analysis of evidential activation functions based on our theoretical underpinning inspires the design of a novel regularizer that effectively alleviates this fundamental limitation. Extensive experiments over many challenging real-world datasets and settings confirm our theoretical findings and demonstrate the effectiveness of our proposed approach.",
+      "published": "2023-06-19T18:27:12Z",
+      "updated": "2023-06-24T17:45:51Z",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "primary_category": "cs.LG",
+      "pdf_url": "https://arxiv.org/pdf/2306.11113v2.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2306.11113v2",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2306.11113v2",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [
+          "PINN"
+        ],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Deep Pandey and Qi Yu, \"Learn to Accumulate Evidence from All Training Samples: Theory and Practice,\" arXiv preprint arXiv:2306.11113v2, 2023.",
+      "bibtex": "@article{pandey20232306_111,\n  author    = {Deep Pandey and Qi Yu},\n  title     = {{Learn to Accumulate Evidence from All Training Samples: Theory and Practice}},\n  journal   = {arXiv preprint arXiv:2306.11113v2},\n  year      = {2023}\n}"
+    },
+    {
+      "arxiv_id": "2105.04026v2",
+      "title": "The Modern Mathematics of Deep Learning",
+      "authors": [
+        "Julius Berner",
+        "Philipp Grohs",
+        "Gitta Kutyniok",
+        "Philipp Petersen"
+      ],
+      "summary": "We describe the new field of mathematical analysis of deep learning. This field emerged around a list of research questions that were not answered within the classical framework of learning theory. These questions concern: the outstanding generalization power of overparametrized neural networks, the role of depth in deep architectures, the apparent absence of the curse of dimensionality, the surprisingly successful optimization performance despite the non-convexity of the problem, understanding what features are learned, why deep architectures perform exceptionally well in physical problems, and which fine aspects of an architecture affect the behavior of a learning task in which way. We present an overview of modern approaches that yield partial answers to these questions. For selected approaches, we describe the main ideas in more detail.",
+      "published": "2021-05-09T21:30:42Z",
+      "updated": "2023-02-08T16:48:49Z",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "primary_category": "cs.LG",
+      "pdf_url": "https://arxiv.org/pdf/2105.04026v2.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2105.04026v2",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2105.04026v2",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Julius Berner et al., \"The Modern Mathematics of Deep Learning,\" arXiv preprint arXiv:2105.04026v2, 2021.",
+      "bibtex": "@article{berner20212105_040,\n  author    = {Julius Berner and Philipp Grohs and Gitta Kutyniok and Philipp Petersen},\n  title     = {{The Modern Mathematics of Deep Learning}},\n  journal   = {arXiv preprint arXiv:2105.04026v2},\n  year      = {2021}\n}"
+    },
+    {
+      "arxiv_id": "2301.00942v1",
+      "title": "Deep Learning and Computational Physics (Lecture Notes)",
+      "authors": [
+        "Deep Ray",
+        "Orazio Pinti",
+        "Assad A. Oberai"
+      ],
+      "summary": "These notes were compiled as lecture notes for a course developed and taught at the University of the Southern California. They should be accessible to a typical engineering graduate student with a strong background in Applied Mathematics. The main objective of these notes is to introduce a student who is familiar with concepts in linear algebra and partial differential equations to select topics in deep learning. These lecture notes exploit the strong connections between deep learning algorithms and the more conventional techniques of computational physics to achieve two goals. First, they use concepts from computational physics to develop an understanding of deep learning algorithms. Not surprisingly, many concepts in deep learning can be connected to similar concepts in computational physics, and one can utilize this connection to better understand these algorithms. Second, several novel deep learning algorithms can be used to solve challenging problems in computational physics. Thus, they offer someone who is interested in modeling a physical phenomena with a complementary set of tools.",
+      "published": "2023-01-03T03:56:19Z",
+      "updated": "2023-01-03T03:56:19Z",
+      "categories": [
+        "cs.LG",
+        "math-ph"
+      ],
+      "primary_category": "cs.LG",
+      "pdf_url": "https://arxiv.org/pdf/2301.00942v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2301.00942v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2301.00942v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Deep Ray et al., \"Deep Learning and Computational Physics (Lecture Notes),\" arXiv preprint arXiv:2301.00942v1, 2023.",
+      "bibtex": "@article{ray20232301_009,\n  author    = {Deep Ray and Orazio Pinti and Assad A. Oberai},\n  title     = {{Deep Learning and Computational Physics (Lecture Notes)}},\n  journal   = {arXiv preprint arXiv:2301.00942v1},\n  year      = {2023}\n}"
+    },
+    {
+      "arxiv_id": "2211.00355v1",
+      "title": "Urban Mobility",
+      "authors": [
+        "Laura Alessandretti",
+        "Michael Szell"
+      ],
+      "summary": "In this chapter, we discuss urban mobility from a complexity science perspective. First, we give an overview of the datasets that enable this approach, such as mobile phone records, location-based social network traces, or GPS trajectories from sensors installed on vehicles. We then review the empirical and theoretical understanding of the properties of human movements, including the distribution of travel distances and times, the entropy of trajectories, and the interplay between exploration and exploitation of locations. Next, we explain generative and predictive models of individual mobility, and their limitations due to intrinsic limits of predictability. Finally, we discuss urban transport from a systemic perspective, including system-wide challenges like ridesharing, multimodality, and sustainable transport.",
+      "published": "2022-11-01T09:58:49Z",
+      "updated": "2022-11-01T09:58:49Z",
+      "categories": [
+        "physics.soc-ph",
+        "cs.CY"
+      ],
+      "primary_category": "physics.soc-ph",
+      "pdf_url": "https://arxiv.org/pdf/2211.00355v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2211.00355v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2211.00355v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Laura Alessandretti and Michael Szell, \"Urban Mobility,\" arXiv preprint arXiv:2211.00355v1, 2022.",
+      "bibtex": "@article{alessandretti20222211_003,\n  author    = {Laura Alessandretti and Michael Szell},\n  title     = {{Urban Mobility}},\n  journal   = {arXiv preprint arXiv:2211.00355v1},\n  year      = {2022}\n}"
+    }
+  ],
+  "outdoor thermal comfort UTCI machine learning": [
+    {
+      "arxiv_id": "2306.04338v1",
+      "title": "Changing Data Sources in the Age of Machine Learning for Official Statistics",
+      "authors": [
+        "Cedric De Boom",
+        "Michael Reusens"
+      ],
+      "summary": "Data science has become increasingly essential for the production of official statistics, as it enables the automated collection, processing, and analysis of large amounts of data. With such data science practices in place, it enables more timely, more insightful and more flexible reporting. However, the quality and integrity of data-science-driven statistics rely on the accuracy and reliability of the data sources and the machine learning techniques that support them. In particular, changes in data sources are inevitable to occur and pose significant risks that are crucial to address in the context of machine learning for official statistics. This paper gives an overview of the main risks, liabilities, and uncertainties associated with changing data sources in the context of machine learning for official statistics. We provide a checklist of the most prevalent origins and causes of changing data sources; not only on a technical level but also regarding ownership, ethics, regulation, and public perception. Next, we highlight the repercussions of changing data sources on statistical reporting. These include technical effects such as concept drift, bias, availability, validity, accuracy and completeness, but also the neutrality and potential discontinuation of the statistical offering. We offer a few important precautionary measures, such as enhancing robustness in both data sourcing and statistical techniques, and thorough monitoring. In doing so, machine learning-based official statistics can maintain integrity, reliability, consistency, and relevance in policy-making, decision-making, and public discourse.",
+      "published": "2023-06-07T11:08:12Z",
+      "updated": "2023-06-07T11:08:12Z",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "primary_category": "stat.ML",
+      "pdf_url": "https://arxiv.org/pdf/2306.04338v1.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2306.04338v1",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2306.04338v1",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Cedric De Boom and Michael Reusens, \"Changing Data Sources in the Age of Machine Learning for Official Statistics,\" arXiv preprint arXiv:2306.04338v1, 2023.",
+      "bibtex": "@article{boom20232306_043,\n  author    = {Cedric De Boom and Michael Reusens},\n  title     = {{Changing Data Sources in the Age of Machine Learning for Official Statistics}},\n  journal   = {arXiv preprint arXiv:2306.04338v1},\n  year      = {2023}\n}"
+    },
+    {
+      "arxiv_id": "2006.16189v4",
+      "title": "DOME: Recommendations for supervised machine learning validation in biology",
+      "authors": [
+        "Ian Walsh",
+        "Dmytro Fishman",
+        "Dario Garcia-Gasulla",
+        "Tiina Titma",
+        "Gianluca Pollastri",
+        "The ELIXIR Machine Learning focus group",
+        "Jen Harrow",
+        "Fotis E. Psomopoulos",
+        "Silvio C. E. Tosatto"
+      ],
+      "summary": "Modern biology frequently relies on machine learning to provide predictions and improve decision processes. There have been recent calls for more scrutiny on machine learning performance and possible limitations. Here we present a set of community-wide recommendations aiming to help establish standards of supervised machine learning validation in biology. Adopting a structured methods description for machine learning based on data, optimization, model, evaluation (DOME) will aim to help both reviewers and readers to better understand and assess the performance and limitations of a method or outcome. The recommendations are formulated as questions to anyone wishing to pursue implementation of a machine learning algorithm. Answers to these questions can be easily included in the supplementary material of published papers.",
+      "published": "2020-06-25T12:01:39Z",
+      "updated": "2021-01-07T07:29:24Z",
+      "categories": [
+        "q-bio.OT",
+        "cs.LG"
+      ],
+      "primary_category": "q-bio.OT",
+      "pdf_url": "https://arxiv.org/pdf/2006.16189v4.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2006.16189v4",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2006.16189v4",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Ian Walsh et al., \"DOME: Recommendations for supervised machine learning validation in biology,\" arXiv preprint arXiv:2006.16189v4, 2020.",
+      "bibtex": "@article{walsh20202006_161,\n  author    = {Ian Walsh and Dmytro Fishman and Dario Garcia-Gasulla and Tiina Titma and Gianluca Pollastri and The ELIXIR Machine Learning focus group and Jen Harrow and Fotis E. Psomopoulos and Silvio C. E. Tosatto},\n  title     = {{DOME: Recommendations for supervised machine learning validation in biology}},\n  journal   = {arXiv preprint arXiv:2006.16189v4},\n  year      = {2020}\n}"
+    },
+    {
+      "arxiv_id": "2201.12150v2",
+      "title": "Learning Curves for Decision Making in Supervised Machine Learning: A Survey",
+      "authors": [
+        "Felix Mohr",
+        "Jan N. van Rijn"
+      ],
+      "summary": "Learning curves are a concept from social sciences that has been adopted in the context of machine learning to assess the performance of a learning algorithm with respect to a certain resource, e.g., the number of training examples or the number of training iterations. Learning curves have important applications in several machine learning contexts, most notably in data acquisition, early stopping of model training, and model selection. For instance, learning curves can be used to model the performance of the combination of an algorithm and its hyperparameter configuration, providing insights into their potential suitability at an early stage and often expediting the algorithm selection process. Various learning curve models have been proposed to use learning curves for decision making. Some of these models answer the binary decision question of whether a given algorithm at a certain budget will outperform a certain reference performance, whereas more complex models predict the entire learning curve of an algorithm. We contribute a framework that categorises learning curve approaches using three criteria: the decision-making situation they address, the intrinsic learning curve question they answer and the type of resources they use. We survey papers from the literature and classify them into this framework.",
+      "published": "2022-01-28T14:34:32Z",
+      "updated": "2025-01-28T14:39:26Z",
+      "categories": [
+        "cs.LG"
+      ],
+      "primary_category": "cs.LG",
+      "pdf_url": "https://arxiv.org/pdf/2201.12150v2.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2201.12150v2",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2201.12150v2",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Felix Mohr and Jan N. van Rijn, \"Learning Curves for Decision Making in Supervised Machine Learning: A Survey,\" arXiv preprint arXiv:2201.12150v2, 2022.",
+      "bibtex": "@article{mohr20222201_121,\n  author    = {Felix Mohr and Jan N. van Rijn},\n  title     = {{Learning Curves for Decision Making in Supervised Machine Learning: A Survey}},\n  journal   = {arXiv preprint arXiv:2201.12150v2},\n  year      = {2022}\n}"
+    },
+    {
+      "arxiv_id": "2302.08893v4",
+      "title": "Active learning for data streams: a survey",
+      "authors": [
+        "Davide Cacciarelli",
+        "Murat Kulahci"
+      ],
+      "summary": "Online active learning is a paradigm in machine learning that aims to select the most informative data points to label from a data stream. The problem of minimizing the cost associated with collecting labeled observations has gained a lot of attention in recent years, particularly in real-world applications where data is only available in an unlabeled form. Annotating each observation can be time-consuming and costly, making it difficult to obtain large amounts of labeled data. To overcome this issue, many active learning strategies have been proposed in the last decades, aiming to select the most informative observations for labeling in order to improve the performance of machine learning models. These approaches can be broadly divided into two categories: static pool-based and stream-based active learning. Pool-based active learning involves selecting a subset of observations from a closed pool of unlabeled data, and it has been the focus of many surveys and literature reviews. However, the growing availability of data streams has led to an increase in the number of approaches that focus on online active learning, which involves continuously selecting and labeling observations as they arrive in a stream. This work aims to provide an overview of the most recently proposed approaches for selecting the most informative observations from data streams in real time. We review the various techniques that have been proposed and discuss their strengths and limitations, as well as the challenges and opportunities that exist in this area of research.",
+      "published": "2023-02-17T14:24:13Z",
+      "updated": "2023-11-29T21:07:15Z",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.ME"
+      ],
+      "primary_category": "stat.ML",
+      "pdf_url": "https://arxiv.org/pdf/2302.08893v4.pdf",
+      "arxiv_url": "https://arxiv.org/abs/2302.08893v4",
+      "alphaxiv_url": "https://alphaxiv.org/abs/2302.08893v4",
+      "math_insights": {
+        "latex_expressions": [],
+        "pde_physics_keywords": [],
+        "ml_architecture_keywords": [],
+        "urban_domain_keywords": []
+      },
+      "ieee_citation": "Davide Cacciarelli and Murat Kulahci, \"Active learning for data streams: a survey,\" arXiv preprint arXiv:2302.08893v4, 2023.",
+      "bibtex": "@article{cacciarelli20232302_088,\n  author    = {Davide Cacciarelli and Murat Kulahci},\n  title     = {{Active learning for data streams: a survey}},\n  journal   = {arXiv preprint arXiv:2302.08893v4},\n  year      = {2023}\n}"
+    }
+  ]
+}

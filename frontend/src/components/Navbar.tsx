@@ -17,6 +17,7 @@ import {
   Flame,
   Network,
   Radio,
+  BookOpen,
 } from 'lucide-react';
 import { ScenarioMetadata, SafetyGateVerdict } from '../types';
 
@@ -27,6 +28,7 @@ export type ActiveTab =
   | 'multi_day_72h'
   | 'power_flow'
   | 'ieee_annex_g'
+  | 'academic_provenance'
   | 'gis_map'
   | 'physics_moats'
   | 'agent_graph'
@@ -64,11 +66,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'multi_day_72h', label: '72h Compounding', icon: Flame },
     { id: 'power_flow', label: 'AC Power Flow', icon: Network },
     { id: 'ieee_annex_g', label: 'IEEE Annex G', icon: Award },
+    { id: 'academic_provenance', label: 'Academic Provenance', icon: BookOpen },
     { id: 'gis_map', label: 'Hyperlocal 2m GIS', icon: MapPin },
     { id: 'physics_moats', label: '4 Scientific Moats', icon: Layers },
     { id: 'agent_graph', label: 'LangGraph Engine', icon: Cpu },
     { id: 'financial_roi', label: 'Avoided Loss ROI', icon: Calculator },
   ] as const;
+
 
   return (
     <header className="border-b border-slate-800/90 bg-[#080C14]/95 backdrop-blur-2xl sticky top-0 z-50 transition-all">

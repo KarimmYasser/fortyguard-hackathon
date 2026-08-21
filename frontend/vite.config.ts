@@ -17,4 +17,16 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-echarts': ['echarts', 'echarts-for-react'],
+          'vendor-ui': ['lucide-react', 'driver.js', 'clsx', 'tailwind-merge'],
+        },
+      },
+    },
+  },
 });

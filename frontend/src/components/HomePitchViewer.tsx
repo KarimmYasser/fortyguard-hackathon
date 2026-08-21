@@ -501,7 +501,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
-            <span>23 Automated Pytests Passing (100% Coverage)</span>
+            <span>25 Automated Pytests Passing (100% Coverage)</span>
           </div>
         </div>
 

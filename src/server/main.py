@@ -23,6 +23,7 @@ from src.server.routes import (
     sandbox_router,
     benchmark_router,
     power_flow_router,
+    research_router,
 )
 
 app = FastAPI(
@@ -48,6 +49,8 @@ app.include_router(dispatch_router, prefix="/api/v1")
 app.include_router(sandbox_router, prefix="/api/v1")
 app.include_router(benchmark_router)
 app.include_router(power_flow_router)
+app.include_router(research_router)
+
 
 
 @app.get("/health", tags=["System Health"])
