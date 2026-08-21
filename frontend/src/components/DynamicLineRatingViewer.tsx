@@ -4,7 +4,7 @@ import { API_BASE } from '../utils/api';
 
 export const DynamicLineRatingViewer: React.FC = () => {
   const [currentAmps, setCurrentAmps] = useState<number>(820.0);
-  const [ambientTempC, setAmbientTempC] = useState<number>(47.6);
+  const [ambientTempC, setAmbientTempC] = useState<number>(42.7);
   const [windSpeed, setWindSpeed] = useState<number>(1.2);
   const [windAngle, setWindAngle] = useState<number>(90.0);
   const [solarFlux, setSolarFlux] = useState<number>(950.0);

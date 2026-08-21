@@ -119,11 +119,11 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
               <span className="text-slate-500">(33.4484° N, 112.0740° W)</span>
             </div>
 
-            {/* Airport delta comparison badge */}
+            {/* Natural-terrain reference delta badge */}
             <div className="bg-rose-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-rose-800/80 text-xs font-mono text-rose-300 font-bold flex items-center gap-2 shadow-lg">
               <Flame className="h-4 w-4 text-rose-400" />
               <span>Parcel: {currentAmbient2m.toFixed(1)}°C</span>
-              <span className="text-slate-400 text-[10px]">(Airport: {airportAmbient.toFixed(1)}°C · +{deltaAmbient.toFixed(1)}°C)</span>
+              <span className="text-slate-400 text-[10px]">(Coolest tile: {airportAmbient.toFixed(1)}°C · +{deltaAmbient.toFixed(1)}°C)</span>
             </div>
           </div>
 
@@ -194,14 +194,14 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
               })}
             </div>
 
-            {/* Airport Station Reference Annotation Box */}
+            {/* Natural-terrain reference annotation box */}
             <div className="mt-6 z-10 p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono flex items-center justify-between text-slate-400">
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 text-slate-500" />
-                Sky Harbor International Airport Station (7.2 mi East): <strong>43.1°C</strong>
+                South Mountain natural desert (9.5 mi S): <strong>41.6°C</strong>
               </span>
               <span className="text-rose-400 font-bold">
-                Convective Heat Island Gap: +4.5°C
+                Measured land-cover delta: +1.1°C
               </span>
             </div>
           </div>
@@ -264,7 +264,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
           <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-slate-300 flex items-start gap-2">
             <Info className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              Standard utility SCADA uses airport weather that is <strong>4.5°C cooler</strong>. FortyGuard’s 2-meter model reveals the true cumulative thermal soak surrounding equipment coils.
+              Against natural desert terrain the measured land-cover delta is <strong>+1.1°C</strong> — modest on its own. What damages the asset is that FortyGuard’s 2-meter model holds it above 40°C for <strong>12 unbroken hours</strong>. Aging integrates over time, so it is the soak, not the peak, that drives insulation loss. (We also probed Sky Harbor: it reads <em>warmer</em> than downtown — an airport ringed by runways is itself a heat island, not a cool reference.)
             </p>
           </div>
         </div>

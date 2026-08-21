@@ -53,11 +53,11 @@ Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential O
 - voiceover: "In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM..."
 - src: index.html#scene-4
 
-High-fidelity Mission Control view. Baseline temperature curve spikes to $143.2^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $136.8^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms solver speed, and 4-bus AC Power Flow demonstrates 100% hospital feeder uptime.
+High-fidelity Mission Control view. Baseline temperature curve spikes to $165.7^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $112.2^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms solver speed, and 4-bus AC Power Flow demonstrates 100% hospital feeder uptime.
 
 ## Frame 5 - Auditable ROI & Financial Impact (LBNL ICE Standard)
 
-- scene: Investment-grade financial audit with LBNL ICE Standard, 5,952x ROI badge, and $2.79M avoided loss breakdown
+- scene: Investment-grade financial audit with LBNL ICE Standard, 5,835x ROI badge, and $2.79M avoided loss breakdown
 - duration: 30s
 - poster: 145s
 - transition_in: rack-focus
@@ -65,7 +65,7 @@ High-fidelity Mission Control view. Baseline temperature curve spikes to $143.2^
 - voiceover: "Our economic engine uses the Department of Energy's LBNL ICE standard: we quantify avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs..."
 - src: index.html#scene-5
 
-Prominent gold and emerald financial audit card: $5,952.7\text{x}$ ROI hero badge, $\$2,791,338$ Net Avoided Loss, $846.8$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and $100\%$ critical medical uptime.
+Prominent gold and emerald financial audit card: $5,834.9\text{x}$ ROI hero badge, $\$2,736,106$ Net Avoided Loss, $604.6$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and $100\%$ critical medical uptime.
 
 ## Frame 6 - Outro & Official Submission Lockup
 

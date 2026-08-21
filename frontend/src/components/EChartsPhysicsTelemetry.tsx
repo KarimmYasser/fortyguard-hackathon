@@ -377,12 +377,12 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 A. Hyperlocal Thermal Boundary Forcing (FortyGuard 2m vs Airport Weather)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Capturing the +4.5°C asphalt microclimate delta and 980 W/m² solar irradiance
+                Capturing the +1.1°C measured land-cover delta, 890 W/m² solar irradiance, and 12h above 40°C
               </p>
             </div>
           </div>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold hidden sm:inline">
-            MICROCLIMATE GAP: +4.5°C
+            LAND-COVER DELTA: +1.1°C · P₄₀ 12.0h
           </span>
         </div>
         <ReactECharts
@@ -404,7 +404,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 B. Internal Physical State Estimation (IEEE Std C57.91 & IEC 60076-7)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Baseline hot-spot breaches 140°C limit; Thermal Sentinel safely caps at 136.8°C
+                Baseline hot-spot breaches 140°C limit; Thermal Sentinel safely caps at 112.2°C
               </p>
             </div>
           </div>
@@ -431,7 +431,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 C. Insulation Loss-of-Life (Arrhenius V(t)) & BESS State of Charge
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Accelerated aging reduced from 14.8x to 2.1x (73.4 avoided equivalent loss-of-life hours)
+                Accelerated aging reduced from 144.3x to 2.1x (73.4 avoided equivalent loss-of-life hours)
               </p>
             </div>
           </div>

@@ -163,7 +163,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
                 : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
             }`}
           >
-            🚨 Airport SCADA Blindspot (0°C)
+            🚨 Station-Weather Blindspot (0°C)
           </button>
           <button
             onClick={() => applyPreset('desertification_31d')}
@@ -213,8 +213,8 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
             className="w-full accent-rose-500 cursor-pointer"
           />
           <div className="flex justify-between text-[10px] font-mono text-slate-500">
-            <span>0.0°C (Airport Weather)</span>
-            <span>+4.5°C (Phoenix 2m)</span>
+            <span>0.0°C (Station Weather)</span>
+            <span>+1.1°C (Phoenix 2m, measured)</span>
             <span>+6.0°C (Extreme)</span>
           </div>
         </div>

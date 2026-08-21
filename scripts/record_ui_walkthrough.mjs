@@ -262,7 +262,7 @@ async function recordLiveWalkthrough() {
     await new Promise((r) => setTimeout(r, 400));
     await hourButtons[5].click(); // Hour 5 (ramp)
     await new Promise((r) => setTimeout(r, 400));
-    await hourButtons[7].click(); // Hour 7 (peak 47.6°C)
+    await hourButtons[7].click(); // Hour 7 (peak 42.7°C)
     await new Promise((r) => setTimeout(r, 600));
   }
 

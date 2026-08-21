@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { ReplayControlBar } from './components/ReplayControlBar';
 import { HeroKpiGrid } from './components/HeroKpiGrid';
+import { DataProvenanceBadge } from './components/DataProvenanceBadge';
 import { EChartsPhysicsTelemetry } from './components/EChartsPhysicsTelemetry';
 import { GeospatialMicroclimateViewer } from './components/GeospatialMicroclimateViewer';
 import { ScientificMoatsViewer } from './components/ScientificMoatsViewer';
@@ -160,6 +161,15 @@ export const App: React.FC = () => {
         {/* TAB 1: Mission Control Overview */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
+            {/* State the data's origin up front, rather than letting a
+                fixture-backed replay read as though it were a live feed. */}
+            <div className="flex items-center justify-end">
+              <DataProvenanceBadge
+                source={dataset.scenario_metadata.persistence_metrics.data_source}
+                analysisDate={dataset.scenario_metadata.persistence_metrics.analysis_date}
+              />
+            </div>
+
             <HeroKpiGrid
               isMitigated={isMitigatedMode}
               baselineSummary={dataset.baseline_summary}

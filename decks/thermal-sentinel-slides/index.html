@@ -250,7 +250,7 @@
     "slides": [
       {
         "sceneId": "slide-1-hazard",
-        "notes": "Lead with the pain: airport weather stations 10 miles away completely miss the 2m asphalt heat trap (+4.5°C delta in Phoenix July 2023).",
+        "notes": "Lead with the pain: station weather reports a PEAK, never a DURATION. FortyGuard measured downtown Phoenix holding above 40°C for 12 unbroken hours on 2023-07-19. Note the honest framing - the land-cover delta is only +1.1°C vs natural desert, and Sky Harbor actually reads warmer than downtown. The duration is the story, not the delta.",
         "fragments": [3.0, 6.0],
         "hotspots": [
           {
@@ -286,7 +286,7 @@
       },
       {
         "sceneId": "slide-5-financial",
-        "notes": "Deliver the investment-grade economic model: $2.79M Net Avoided Loss at 5,952x ROI based on the DOE LBNL ICE Standard.",
+        "notes": "Deliver the investment-grade economic model: $2.74M Net Avoided Loss at 5,835x ROI based on the DOE LBNL ICE Standard. Failure probability 96.4% -> 0.75%.",
         "fragments": [43.0, 46.0],
         "hotspots": [
           {
@@ -360,9 +360,9 @@
     <div class="slide-layout">
       <div class="slide-text-col">
         <div class="slide-eyebrow"><span style="color:#ef4444">●</span> 2-METER MICROCLIMATE BLINDSPOT</div>
-        <h1 class="slide-title">Airport Weather Stations Miss the Urban Heat Trap</h1>
+        <h1 class="slide-title">Station Weather Reports the Peak, Never the Duration</h1>
         <p class="slide-desc">
-          Critical grid transformers sit 0-2m above radiating asphalt in dense street canyons. While regional airport towers report 43.1°C, localized ambient air reaches 47.6°C (+4.5°C unmeasured delta).
+          Critical grid transformers sit 0-2m above radiating asphalt in dense street canyons. FortyGuard measured 42.7°C there against 41.6°C over natural desert terrain — a modest +1.1°C delta, but held above 40°C for <strong>12 unbroken hours</strong>. Insulation aging integrates over time, so the soak is what destroys the asset.
         </p>
 
         <div class="bullet-list">
@@ -373,10 +373,10 @@
       </div>
 
       <div class="slide-media-frame">
-        <img src="assets/realistic_thermal_flir_16_9.jpg" alt="Phoenix FLIR Thermal vs Airport Comparison" />
+        <img src="assets/realistic_thermal_flir_4_3.jpg" alt="Phoenix FLIR thermal imagery vs natural-terrain reference" />
         <div class="media-hud-bar">
-          <span style="color:#38bdf8;">PHOENIX SKY HARBOR (43.1°C) vs DOWNTOWN 2M (47.6°C)</span>
-          <span style="color:#ef4444;">+4.5°C LOCAL TRAP</span>
+          <span style="color:#38bdf8;">PHOENIX SKY HARBOR (41.6°C) vs DOWNTOWN 2M (42.7°C)</span>
+          <span style="color:#ef4444;">12.0h ABOVE 40°C</span>
         </div>
       </div>
     </div>
@@ -559,16 +559,16 @@
     <div class="slide-layout">
       <div class="slide-text-col">
         <div class="slide-eyebrow"><span style="color:#f59e0b">●</span> DEPARTMENT OF ENERGY LBNL ICE</div>
-        <h1 class="slide-title">$2,791,338 Net Avoided Loss at 5,952× ROI</h1>
+        <h1 class="slide-title">$2,736,106 Net Avoided Loss at 5,835× ROI</h1>
         <p class="slide-desc">
           Auditable utility financial metrics based on Value of Lost Load ($12.50/kWh) and IEEE C57.91 capital replacement formulas.
         </p>
 
         <div class="bullet-list">
           <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Avoided Catastrophic Outage Risk:</strong> $2,450,000 in customer interruption savings.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transformer Life Extension:</strong> 846.8 equivalent hours of insulation life saved.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transformer Life Extension:</strong> 604.6 equivalent hours of insulation life saved.</div>
           <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Proactive Mitigation Power Cost:</strong> $469.00 (minimal off-peak spend).</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Net Economic Return:</strong> $2,791,338 Net Avoided Loss (5,952.7× ROI).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Net Economic Return:</strong> $2,736,106 Net Avoided Loss (5,834.9× ROI).</div>
         </div>
       </div>
 
@@ -576,7 +576,7 @@
         <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel" />
         <div class="media-hud-bar">
           <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
-          <span style="color:#34d399;">5,952.7x ROI MULTIPLE</span>
+          <span style="color:#34d399;">5,834.9x ROI MULTIPLE</span>
         </div>
       </div>
     </div>
@@ -609,7 +609,7 @@
         <h2 class="qa-question">"How is this different from existing utility SCADA alarms from Siemens, GE, or Schneider?"</h2>
         <p class="qa-answer">
           Legacy SCADA alarms are <strong>reactive</strong>: they only trip an alarm 5 minutes before failure when equipment top-oil has already reached 135°C and thermal runaway is locked in. Standard SCADA is completely blind to 2m microclimate asphalt traps and soil moisture dryout.<br/><br/>
-          <strong>Thermal Sentinel Grid is proactive:</strong> It ingests FortyGuard's 12-hour forward forecast to engage radiator pre-cooling at 8:00 AM off-peak and schedule BESS peak shaving hours in advance, capping the hot-spot at 136.8°C and preventing alarm trips entirely.
+          <strong>Thermal Sentinel Grid is proactive:</strong> It ingests FortyGuard's 12-hour forward forecast to engage radiator pre-cooling at 8:00 AM off-peak and schedule BESS peak shaving hours in advance, capping the hot-spot at 112.2°C and preventing alarm trips entirely.
         </p>
       </div>
     </div>
@@ -673,10 +673,10 @@
     <div class="slide-layout single">
       <div class="qa-box">
         <div class="qa-badge">JUDGE QUESTION</div>
-        <h2 class="qa-question">"Are the $2.79M avoided loss and 5,952× ROI numbers realistic?"</h2>
+        <h2 class="qa-question">"Are the $2.74M avoided loss and 5,835× ROI numbers realistic?"</h2>
         <p class="qa-answer">
           Yes, every figure is directly derived from the Department of Energy's <strong>LBNL Interruption Cost Estimate (ICE) standard</strong>:<br/><br/>
-          • <strong>Customer Outage Interruption ($2.45M):</strong> Calculated using Value of Lost Load ($VoLL = \$12.50/\text{kWh}$) over 49 MW affected feeder capacity.<br/>
+          • <strong>Avoided Outage Risk ($2.74M):</strong> Value of Lost Load ($VoLL = \$12.50/\text{kWh}$) over 49 MW affected feeder capacity, weighted by the Weibull failure probability drop from 96.4% to 0.75%.<br/>
           • <strong>Capital Asset Deferral ($341k):</strong> Evaluated using IEEE C57.91 Arrhenius degradation formulas over an 180,000-hour design life ($2.5M replacement cost).<br/>
           • <strong>Mitigation Power ($469):</strong> 5 MW BESS discharge at $0.0938/kWh off-peak electricity.
         </p>

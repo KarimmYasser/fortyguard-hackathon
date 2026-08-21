@@ -552,14 +552,14 @@
             <div class="eyebrow"><span style="color:#ef4444">●</span> THE $2.8M URBAN HEAT BLINDSPOT</div>
             <h1 class="scene-heading">Airport Weather Stations Miss the 2-Meter Heat Trap</h1>
             <p class="scene-subheading">
-              In Phoenix July 2023, while airport sensors reported 43.1°C, radiating asphalt enveloped street
-              transformers in 47.6°C air (+4.5°C delta) - accelerating insulation aging by 15x and causing catastrophic
+              On July 19th 2023, FortyGuard measured downtown Phoenix at 42.7°C against 41.6°C over natural desert
+              terrain. The delta is modest — but it held above 40°C for 12 unbroken hours, aging insulation 144x faster and causing catastrophic
               substation blowouts.
             </p>
             <div class="metric-grid">
               <div class="metric-card alert" id="s1-m1">
-                <div class="metric-label">Microclimate Heat Delta</div>
-                <div class="metric-val red" id="s1-counter-delta">+4.5°C</div>
+                <div class="metric-label">Persistence Above 40°C</div>
+                <div class="metric-val red" id="s1-counter-delta">12.0h &gt;40°C</div>
               </div>
               <div class="metric-card alert" id="s1-m2">
                 <div class="metric-label">Insulation Aging Speedup</div>
@@ -670,7 +670,7 @@
             <div class="pipeline-container">
               <div class="pipeline-step" id="s3-step1">
                 <div class="pipeline-icon">1</div>
-                <div><strong>Perception:</strong> FortyGuard 2m Convective AI &amp; 12-Hour Forecast (P40 = 7.17h)</div>
+                <div><strong>Perception:</strong> FortyGuard 2m Convective AI &amp; 12-Hour Forecast (P40 = 12.0h)</div>
               </div>
               <div class="pipeline-arrow">▼</div>
               <div class="pipeline-step" id="s3-step2">
@@ -723,19 +723,19 @@
             <div class="eyebrow"><span style="color:#10b981">●</span> LIVE OPERATOR MISSION CONTROL</div>
             <h1 class="scene-heading">Proactive Dispatch &amp; Sub-15ms What-If Sandbox</h1>
             <p class="scene-subheading">
-              At 1:00 PM, the unmitigated baseline blows past the 140°C limit to 143.2°C. Thermal Sentinel Grid engages
+              Fed the real measured soak, the unmitigated baseline blows past the 140°C limit to 165.7°C. Thermal Sentinel Grid engages
               12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW BESS to cap the hot-spot
-              safely at 136.8°C.
+              safely at 112.2°C.
             </p>
 
             <div class="metric-grid">
               <div class="metric-card alert" id="s4-m1">
                 <div class="metric-label">Baseline Peak Hot-Spot</div>
-                <div class="metric-val red" id="s4-hotspot-base">143.2°C (Trip)</div>
+                <div class="metric-val red" id="s4-hotspot-base">165.7°C (Trip)</div>
               </div>
               <div class="metric-card success" id="s4-m2">
                 <div class="metric-label">Sentinel Mitigated Hot-Spot</div>
-                <div class="metric-val green" id="s4-hotspot-mit">136.8°C (Safe)</div>
+                <div class="metric-val green" id="s4-hotspot-mit">112.2°C (Safe)</div>
               </div>
               <div class="metric-card cyan" id="s4-m3">
                 <div class="metric-label">What-If Studio Solver Latency</div>
@@ -773,7 +773,7 @@
           <!-- Left Hero Text -->
           <div class="hero-text-col" id="s5-hero">
             <div class="eyebrow"><span style="color:#f59e0b">●</span> INVESTMENT-GRADE ECONOMIC VALUE</div>
-            <h1 class="scene-heading">$2.79M Net Avoided Loss at 5,952× ROI</h1>
+            <h1 class="scene-heading">$2.74M Net Avoided Loss at 5,835× ROI</h1>
             <p class="scene-subheading">
               Using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard (VoLL = $12.50/kWh),
               Thermal Sentinel Grid quantifies non-overlapping avoided catastrophic outage costs and deferred capital
@@ -783,15 +783,15 @@
             <div class="metric-grid">
               <div class="metric-card success" id="s5-m1">
                 <div class="metric-label">Net Avoided Loss (Per Heatwave)</div>
-                <div class="metric-val gold" id="s5-counter-loss">$2,791,338</div>
+                <div class="metric-val gold" id="s5-counter-loss">$2,736,106</div>
               </div>
               <div class="metric-card success" id="s5-m2">
                 <div class="metric-label">Operational ROI Multiple</div>
-                <div class="metric-val gold" id="s5-counter-roi">5,952.7×</div>
+                <div class="metric-val gold" id="s5-counter-roi">5,834.9×</div>
               </div>
               <div class="metric-card cyan" id="s5-m3">
                 <div class="metric-label">Transformer Insulation Life Saved</div>
-                <div class="metric-val cyan">846.8 Hours</div>
+                <div class="metric-val cyan">604.6 Hours</div>
               </div>
               <div class="metric-card success" id="s5-m4">
                 <div class="metric-label">Proactive Mitigation Cost</div>
@@ -805,7 +805,7 @@
             <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel">
             <div class="hud-chip">
               <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
-              <span style="color:#34d399;">5,952.7x ROI MULTIPLE</span>
+              <span style="color:#34d399;">5,834.9x ROI MULTIPLE</span>
             </div>
           </div>
         </div>
@@ -880,19 +880,19 @@
 
     // Dynamic Captions and Timecodes
     const captions = [
-      { t: 0, time: "0:00", text: "During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away..." },
-      { t: 12, time: "0:12", text: "In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in damages." },
+      { t: 0, time: "0:00", text: "During extreme heatwaves, utilities manage hundreds of millions of dollars of infrastructure using weather stations that report a peak. SCADA only reacts at 135°C, when failure is already locked in..." },
+      { t: 12, time: "0:12", text: "But transformers don't fail from a peak — they fail from a soak. On July 19th 2023, FortyGuard measured downtown Phoenix holding above 40°C for twelve unbroken hours, aging insulation 144x faster." },
       { t: 30, time: "0:30", text: "Introducing Thermal Sentinel Grid: the world's first physics-constrained agentic resilience engine for urban energy infrastructure." },
-      { t: 44, time: "0:44", text: "We combine FortyGuard's 2-meter Temperature AI with exact IEEE C57.91 and IEC 60287 differential thermal equations, modeling soil moisture dryout, canyon wind throttling, and virtual paper moisture." },
+      { t: 44, time: "0:44", text: "We pair FortyGuard's 2-meter Temperature AI — and its persistence and exceedance analytics — with exact IEEE C57.91 and IEC 60287 thermal equations, modeling soil dryout, canyon wind throttling, and paper-oil moisture." },
       { t: 60, time: "1:00", text: "Rather than training an unverified black-box neural net that hallucinates, we built a hybrid Physical-AI architecture." },
-      { t: 74, time: "1:14", text: "Exact physics ODEs handle the thermal math, FortyGuard provides the 12-hour forecast, LangGraph coordinates multi-agent dispatch, and Non-LLM CBF-QP acts as a mathematical firewall." },
-      { t: 90, time: "1:30", text: "In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM." },
-      { t: 105, time: "1:45", text: "Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW of BESS to cap the hot-spot safely at 136.8°C." },
+      { t: 74, time: "1:14", text: "Exact physics ODEs handle the thermal math, FortyGuard supplies the measured boundary, LangGraph coordinates dispatch, and a non-LLM CBF quadratic program acts as a mathematical firewall. The LLM writes the explanation — it never touches the safety decision." },
+      { t: 90, time: "1:30", text: "In Mission Control, fed the real measured soak, the baseline hot-spot runs away to 165.7°C — 25 degrees past the IEEE emergency ceiling." },
+      { t: 105, time: "1:45", text: "Thermal Sentinel Grid sees it twelve hours ahead: pre-cooling radiators at 8 AM while power is cheap, then discharging 5 MW of storage to cap the hot-spot at 112°C — a 53-degree reduction." },
       { t: 120, time: "2:00", text: "In our What-If Studio, judges can modulate microclimate deltas in real time (<15ms ODE re-solving), while our AC power flow solver maintains 100% hospital feeder uptime." },
       { t: 135, time: "2:15", text: "Our economic engine uses the Department of Energy's LBNL ICE standard: quantifying avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs." },
-      { t: 150, time: "2:30", text: "For a single heatwave event, Thermal Sentinel Grid delivers $2.79 million in net avoided loss at a 5,952x ROI, saving 846 equivalent aging hours and protecting critical medical feeders." },
-      { t: 165, time: "2:45", text: "By coupling FortyGuard's Temperature AI with first-principles physics and deterministic safety guarantees, Thermal Sentinel Grid makes cities and power grids truly heat-resilient." },
-      { t: 173, time: "2:53", text: "Thank you, and we invite you to test our live platform at https://fortyguard-hackathon.vercel.app!" }
+      { t: 150, time: "2:30", text: "For a single heatwave event: $2.74 million in net avoided loss, roughly 5,800-to-1 ROI, and 605 equivalent aging hours returned — with failure probability dropping from 96% to under 1%." },
+      { t: 165, time: "2:45", text: "Every number you just saw came back from the live FortyGuard API — and we publish the field notes, including where our own early assumptions turned out to be wrong." },
+      { t: 173, time: "2:53", text: "Physics you can verify. Safety you can prove. Test the live platform at fortyguard-hackathon.vercel.app" }
     ];
 
     captions.forEach((cap) => {
@@ -904,9 +904,12 @@
       }, null, cap.t);
     });
 
-    // Set initial scene states
-    tl.set("#scene-1", { display: "block", opacity: 1, autoAlpha: 1 }, 0);
-    tl.set(["#scene-2", "#scene-3", "#scene-4", "#scene-5", "#scene-6"], { display: "none", opacity: 0, autoAlpha: 0 }, 0);
+    // Scene visibility is owned by the framework via data-start/data-duration
+    // on each .clip section - we only drive the inner content wrappers here.
+    // Each wrapper gets an explicit opacity:1 at its scene start and a hard
+    // opacity:0 kill at its scene end so non-linear seeking can never land on
+    // stale visibility state mid-fade.
+    tl.set("#s1-content", { opacity: 1 }, 0);
 
     // -------------------------------------------------------------
     // SCENE 1 ANIMATIONS (0:00 - 0:30)
@@ -919,32 +922,32 @@
     tl.fromTo("#s1-scanner", { y: 0, opacity: 1 }, { y: 600, opacity: 1, duration: 2.5, repeat: 5, yoyo: true, ease: "sine.inOut" }, 1.5);
 
     tl.fromTo("#s1-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.6);
-    tl.set("#scene-1", { display: "none", opacity: 0, autoAlpha: 0 }, 30.0);
+    tl.set("#s1-content", { opacity: 0 }, 30.0);
 
     // -------------------------------------------------------------
     // SCENE 2 ANIMATIONS (0:30 - 1:00)
     // -------------------------------------------------------------
-    tl.set("#scene-2", { display: "block", opacity: 1, autoAlpha: 1 }, 30.0);
+    tl.set("#s2-content", { opacity: 1 }, 30.0);
     tl.fromTo("#s2-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 30.4);
     tl.fromTo("#s2-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 30.8);
     tl.fromTo(["#s2-moat1", "#s2-moat2", "#s2-moat3", "#s2-moat4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 31.4);
     tl.fromTo("#s2-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 59.6);
-    tl.set("#scene-2", { display: "none", opacity: 0, autoAlpha: 0 }, 60.0);
+    tl.set("#s2-content", { opacity: 0 }, 60.0);
 
     // -------------------------------------------------------------
     // SCENE 3 ANIMATIONS (1:00 - 1:30)
     // -------------------------------------------------------------
-    tl.set("#scene-3", { display: "block", opacity: 1, autoAlpha: 1 }, 60.0);
+    tl.set("#s3-content", { opacity: 1 }, 60.0);
     tl.fromTo("#s3-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 60.4);
     tl.fromTo("#s3-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 60.8);
     tl.fromTo(["#s3-step1", "#s3-step2", "#s3-step3", "#s3-step4"], { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 0.2, ease: "power2.out" }, 61.4);
     tl.fromTo("#s3-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 89.6);
-    tl.set("#scene-3", { display: "none", opacity: 0, autoAlpha: 0 }, 90.0);
+    tl.set("#s3-content", { opacity: 0 }, 90.0);
 
     // -------------------------------------------------------------
     // SCENE 4 ANIMATIONS (1:30 - 2:15)
     // -------------------------------------------------------------
-    tl.set("#scene-4", { display: "block", opacity: 1, autoAlpha: 1 }, 90.0);
+    tl.set("#s4-content", { opacity: 1 }, 90.0);
     tl.fromTo("#s4-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 90.4);
     tl.fromTo("#s4-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 90.8);
     tl.fromTo(["#s4-m1", "#s4-m2", "#s4-m3", "#s4-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 91.4);
@@ -956,22 +959,22 @@
     tl.to("#s4-cursor", { opacity: 0, duration: 0.8, ease: "power1.out" }, 99.5);
 
     tl.fromTo("#s4-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 134.6);
-    tl.set("#scene-4", { display: "none", opacity: 0, autoAlpha: 0 }, 135.0);
+    tl.set("#s4-content", { opacity: 0 }, 135.0);
 
     // -------------------------------------------------------------
     // SCENE 5 ANIMATIONS (2:15 - 2:45)
     // -------------------------------------------------------------
-    tl.set("#scene-5", { display: "block", opacity: 1, autoAlpha: 1 }, 135.0);
+    tl.set("#s5-content", { opacity: 1 }, 135.0);
     tl.fromTo("#s5-hero", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out" }, 135.4);
     tl.fromTo("#s5-card", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }, 135.8);
     tl.fromTo(["#s5-m1", "#s5-m2", "#s5-m3", "#s5-m4"], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.4)" }, 136.4);
     tl.fromTo("#s5-content", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in" }, 164.6);
-    tl.set("#scene-5", { display: "none", opacity: 0, autoAlpha: 0 }, 165.0);
+    tl.set("#s5-content", { opacity: 0 }, 165.0);
 
     // -------------------------------------------------------------
     // SCENE 6 ANIMATIONS (2:45 - 3:00)
     // -------------------------------------------------------------
-    tl.set("#scene-6", { display: "block", opacity: 1, autoAlpha: 1 }, 165.0);
+    tl.set("#s6-content", { opacity: 1 }, 165.0);
     tl.fromTo("#s6-hero", { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "power3.out" }, 165.4);
 
     window.__timelines["main"] = tl;

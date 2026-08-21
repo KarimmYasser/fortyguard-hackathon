@@ -26,7 +26,7 @@ router = APIRouter(prefix="/physics", tags=["Advanced Mathematical Moats"])
 # --- 1. DLR Models & Endpoint ---
 class DLRSolveRequest(BaseModel):
     current_amps: float = Field(default=820.0, ge=0.0, le=2000.0, description="Load current (Amps)")
-    t_ambient_c: float = Field(default=47.6, ge=0.0, le=60.0, description="FortyGuard 2m ambient air (°C)")
+    t_ambient_c: float = Field(default=42.7, ge=0.0, le=60.0, description="FortyGuard 2m ambient air (°C), measured benchmark peak")
     wind_speed_m_per_s: float = Field(default=1.2, ge=0.0, le=25.0, description="Perpendicular wind velocity (m/s)")
     wind_angle_deg: float = Field(default=90.0, ge=0.0, le=90.0, description="Wind incidence angle (deg)")
     solar_irradiance_w_per_m2: float = Field(default=950.0, ge=0.0, le=1400.0, description="Solar irradiance (W/m²)")
@@ -79,7 +79,8 @@ async def simulate_bess_thermal_trajectory(req: BESSSimulateRequest) -> List[BES
     Simulates coupled 2-state core/surface thermal ODEs and continuous SEI capacity degradation.
     """
     engine = BESSElectroThermalEngine()
-    ambient_temps = req.ambient_temps_c or [38.2, 40.5, 43.1, 45.8, 47.6, 46.9, 45.2, 43.0, 40.8, 39.0, 37.5, 36.0]
+    # Measured FortyGuard 2m curve, downtown Phoenix AOI, 2023-07-19 06:00-17:00.
+    ambient_temps = req.ambient_temps_c or [36.1, 37.34, 38.64, 39.49, 40.58, 41.53, 42.15, 42.46, 42.72, 42.74, 42.69, 42.61]
     dispatch_powers = req.dispatch_powers_mw or [2.0, 4.0, 6.5, 8.0, 7.5, 6.0, 4.5, 3.0, 2.0, 1.0, 0.0, 0.0]
 
     results = engine.simulate_dispatch_trajectory(

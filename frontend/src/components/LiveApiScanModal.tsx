@@ -307,7 +307,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">2m Ambient:</div>
                   <div className="text-sm font-bold text-rose-400">
-                    {scanResult?.scan_data?.result?.heat_index_celsius || '47.6'}°C
+                    {scanResult?.scan_data?.result?.heat_index_celsius || '42.7'}°C
                   </div>
                 </div>
                 <div className="p-2 rounded-xl bg-slate-950/80">
@@ -325,7 +325,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">Persistence (P40):</div>
                   <div className="text-sm font-bold text-emerald-400">
-                    {scanResult?.persistence_layer?.persistence_hours_p40 || '7.17'}h
+                    {scanResult?.persistence_layer?.persistence_hours_p40 || '12.0'}h
                   </div>
                 </div>
               </div>

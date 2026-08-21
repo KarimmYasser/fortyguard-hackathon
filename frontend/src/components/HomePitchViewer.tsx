@@ -71,7 +71,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   };
 
   const chapters: ChapterMarker[] = [
-    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix +4.5°C Heat Trap ($2.8M Risk)', icon: Flame },
+    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.8M Risk)', icon: Flame },
     { time: 30, label: '0:30 4 Scientific Moats', desc: 'Soil Dryout & IEEE Physics ODEs', icon: Layers },
     { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + CBF-QP Safety Barrier', icon: Cpu },
     { time: 90, label: '1:30 Live Mission Control', desc: '12h Proactive Dispatch & What-If Studio', icon: Sliders },
@@ -178,19 +178,19 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             <div className="space-y-2 divide-y divide-slate-800/60">
               <div className="flex items-center justify-between pt-1">
                 <span className="text-slate-400">Net Avoided Loss:</span>
-                <span className="text-emerald-400 font-bold">$2,791,338 / event</span>
+                <span className="text-emerald-400 font-bold">$2,736,106 / event</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Economic ROI:</span>
-                <span className="text-amber-400 font-bold">5,952.7x (LBNL ICE)</span>
+                <span className="text-amber-400 font-bold">5,834.9x (LBNL ICE)</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Microclimate Trap:</span>
-                <span className="text-rose-400 font-bold">+4.5°C Asphalt Delta</span>
+                <span className="text-rose-400 font-bold">12h Above 40°C</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Aging Life Saved:</span>
-                <span className="text-cyan-400 font-bold">846.8 Equiv. Hours</span>
+                <span className="text-cyan-400 font-bold">604.6 Equiv. Hours</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Hospital Feeder Uptime:</span>
@@ -509,7 +509,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 Hyperlocal 2m GIS Engine
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                FortyGuard 2-meter convective and radiative temperature layers resolving localized +4.5°C urban asphalt heat traps.
+                FortyGuard 2-meter convective and radiative temperature layers resolving the measured +1.1°C land-cover delta and the 12-hour thermal soak that drives insulation aging.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-rose-400 font-bold pt-4">
@@ -587,7 +587,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 Investment-Grade Avoided Loss ROI
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Department of Energy LBNL ICE certified model: $2.79M net avoided loss and 5,952.7x ROI for utility rate basing.
+                Department of Energy LBNL ICE certified model: $2.74M net avoided loss and 5,834.9x ROI for utility rate basing.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-bold pt-4">

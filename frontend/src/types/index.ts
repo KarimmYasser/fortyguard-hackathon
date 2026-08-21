@@ -7,12 +7,24 @@ export interface ScenarioLocation {
   substation_name: string;
 }
 
+/**
+ * Where a payload's numbers actually came from. The backend stamps this on
+ * every analytics response so the UI can never present fixture data as live.
+ */
+export type DataSourceTag = 'fortyguard_live' | 'fortyguard_live_partial' | 'phoenix_fixture';
+
 export interface PersistenceMetrics {
   threshold_c: number;
   persistence_hours_p40: number;
+  /** Hours above threshold, straight from the `exceedance` analytic. */
+  exceedance_hours_e40?: number;
   exceedance_degree_hours_h40: number;
   thermal_soak_index_tsi: number;
   consecutive_heatwave_days: number;
+  /** Tile count backing the persistence statistic. */
+  n_cells?: number;
+  analysis_date?: string;
+  data_source?: DataSourceTag;
 }
 
 export interface UrbanCanyonMetrics {
@@ -52,10 +64,22 @@ export interface TimelineStep {
   time_label: string;
   
   // Boundary Condition
+  /**
+   * Coolest tile in the AOI. Named for historical reasons — this is NOT an
+   * airport station reading. Sky Harbor measures *warmer* than downtown.
+   */
   airport_reference_temp_c: number;
   fortyguard_2m_ambient_c: number;
+  /** Measured spatial spread within the AOI (mean − min), not an assumed constant. */
   microclimate_delta_c: number;
   solar_irradiance_w_m2: number;
+  /** Hottest tile in the AOI — what the most exposed asset actually sees. */
+  tile_peak_2m_c?: number;
+  relative_humidity_pct?: number;
+  wet_bulb_temp_c?: number;
+  heat_index_c?: number;
+  cloud_cover_pct?: number;
+  data_source?: DataSourceTag;
   
   // Internal State
   baseline_top_oil_c: number;

@@ -88,7 +88,7 @@ export const ReplayScrubber: React.FC<ReplayScrubberProps> = ({
         <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
           <span>06:00 AM (Sunrise)</span>
           <span className="text-rose-400 font-bold flex items-center gap-1">
-            <AlertCircle className="h-3 w-3" /> 01:00 PM Peak (47.6°C / 117.7°F)
+            <AlertCircle className="h-3 w-3" /> 01:00 PM Peak (42.7°C / 108.9°F)
           </span>
           <span>05:00 PM (Evening)</span>
         </div>

@@ -12,13 +12,13 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:12 UTC',
     category: 'INGEST',
-    message: 'FortyGuard 2-meter API: Ingested 7h 10m continuous persistence (>40°C) and 12h forward forecast (47.6°C peak).',
+    message: 'FortyGuard 2-meter API: Ingested 12.0h continuous persistence (>40°C) and 12h forward forecast (42.7°C peak, live capture 2023-07-19).',
     status: 'INFO',
   },
   {
     timestamp: '14:05:15 UTC',
     category: 'PHYSICS',
-    message: 'IEEE C57.91 Solver: Baseline controller projects 143.2°C hot-spot (breaches 140°C emergency ceiling). Aging factor V = 14.8x.',
+    message: 'IEEE C57.91 Solver: Baseline controller projects 165.7°C hot-spot (breaches 140°C emergency ceiling). Aging factor V = 144.3x.',
     status: 'WARN',
   },
   {
@@ -30,7 +30,7 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:22 UTC',
     category: 'SAFETY_GATE',
-    message: 'Non-LLM CBF-QP Gate: Filtered candidate plan, solved safe maximum load K_safe = 0.98 pu, capped hot-spot at 136.8°C.',
+    message: 'Non-LLM CBF-QP Gate: Filtered candidate plan, solved safe maximum load K_safe = 0.98 pu, capped hot-spot at 112.2°C.',
     status: 'SUCCESS',
   },
   {

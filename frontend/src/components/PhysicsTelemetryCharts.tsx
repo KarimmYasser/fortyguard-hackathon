@@ -68,7 +68,7 @@ export const PhysicsTelemetryCharts: React.FC<PhysicsTelemetryChartsProps> = ({
               <span className="h-2 w-2 rounded-full bg-slate-400 inline-block"></span> Airport Weather
             </span>
             <span className="flex items-center gap-1 text-rose-400 font-bold">
-              <span className="h-2 w-2 rounded-full bg-rose-500 inline-block"></span> FortyGuard 2m (+4.5°C)
+              <span className="h-2 w-2 rounded-full bg-rose-500 inline-block"></span> FortyGuard 2m (+1.1°C measured)
             </span>
           </div>
         </div>
@@ -172,7 +172,7 @@ export const PhysicsTelemetryCharts: React.FC<PhysicsTelemetryChartsProps> = ({
           </div>
           <div className="flex items-center gap-3 text-[11px] font-mono">
             <span className="flex items-center gap-1 text-rose-400">
-              <span className="h-2 w-2 rounded-full bg-rose-500 inline-block"></span> Baseline V (Peak: 14.8x)
+              <span className="h-2 w-2 rounded-full bg-rose-500 inline-block"></span> Baseline V (Peak: 144.3x)
             </span>
             <span className="flex items-center gap-1 text-purple-400 font-bold">
               <span className="h-2 w-2 rounded-full bg-purple-500 inline-block"></span> Mitigated V (2.1x)

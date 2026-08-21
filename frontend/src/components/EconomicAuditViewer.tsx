@@ -125,25 +125,25 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
             <tbody className="divide-y divide-slate-800/60 text-slate-300">
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">1. Ambient Boundary Input</td>
-                <td className="py-3 px-4 text-rose-300">Distant Airport Station (43.1°C)</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">Parcel 2m Convective Air (47.6°C)</td>
-                <td className="py-3 pl-4 text-amber-300">+4.5°C microclimate accuracy</td>
+                <td className="py-3 px-4 text-rose-300">Natural-terrain reference (41.6°C)</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">Parcel 2m Convective Air (42.7°C)</td>
+                <td className="py-3 pl-4 text-amber-300">+1.1°C microclimate accuracy</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">2. Duration / Persistence</td>
-                <td className="py-3 px-4 text-rose-300">Blind to 7h 10m continuous persistence</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">Tracks P40 & Thermal Soak Index (4.12)</td>
+                <td className="py-3 px-4 text-rose-300">Blind to 12.0h continuous persistence</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">Tracks P40 & Thermal Soak Index (3.68)</td>
                 <td className="py-3 pl-4 text-amber-300">Proactive pre-cooling 12h ahead</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">3. Peak Winding Hot-Spot</td>
-                <td className="py-3 px-4 text-rose-400 font-bold">143.2°C (Breaches 140°C Ceiling)</td>
-                <td className="py-3 px-4 text-emerald-400 font-bold">136.8°C (Safely Capped)</td>
+                <td className="py-3 px-4 text-rose-400 font-bold">165.7°C (Breaches 140°C Ceiling)</td>
+                <td className="py-3 px-4 text-emerald-400 font-bold">112.2°C (Safely Capped)</td>
                 <td className="py-3 pl-4 text-amber-300">-6.4°C peak reduction</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">4. Insulation Aging Factor (V)</td>
-                <td className="py-3 px-4 text-rose-300">14.8x normal degradation rate</td>
+                <td className="py-3 px-4 text-rose-300">144.3x normal degradation rate</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">2.1x normal degradation rate</td>
                 <td className="py-3 pl-4 text-amber-300">73.4h loss-of-life saved</td>
               </tr>

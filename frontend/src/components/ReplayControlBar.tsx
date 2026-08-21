@@ -158,7 +158,7 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
             <Sun className="h-3.5 w-3.5 text-amber-400" /> 06:00 AM (Sunrise · 34.2°C)
           </span>
           <span className="text-rose-400 font-bold flex items-center gap-1 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-800/40 animate-pulse">
-            <Flame className="h-3.5 w-3.5" /> 01:00 PM Peak Forcing (47.6°C / 117.7°F)
+            <Flame className="h-3.5 w-3.5" /> 01:00 PM Peak Forcing (42.7°C / 108.9°F)
           </span>
           <span className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5 text-slate-500" /> 05:00 PM (Evening · 44.1°C)

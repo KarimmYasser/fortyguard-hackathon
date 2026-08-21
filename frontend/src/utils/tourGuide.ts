@@ -141,7 +141,7 @@ export const startTourGuide = ({
             popover: {
               title: '🗺️ Tab 8: Hyperlocal 2m GIS Engine',
               description:
-                'Explore 2-meter FortyGuard convective & surface temperatures, resolving localized +4.5°C asphalt traps and urban heat canyons.',
+                'Explore 2-meter FortyGuard convective & surface temperatures, resolving the measured +1.1°C asphalt land-cover delta and the 12-hour thermal soak it sustains.',
               side: 'top',
               align: 'start',
             },
@@ -171,7 +171,7 @@ export const startTourGuide = ({
             popover: {
               title: '💰 Tab 11: Avoided Loss & ROI Audit',
               description:
-                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.79M net savings and 5,952x economic ROI per heatwave event.',
+                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.79M net savings and 5,835x economic ROI per heatwave event.',
               side: 'top',
               align: 'start',
             },
@@ -205,7 +205,7 @@ export const startTourGuide = ({
             popover: {
               title: '📊 Real-Time Physics & Microclimate KPI Grid',
               description:
-                'Examine the four primary telemetry indicators: FortyGuard 2m Ambient Air (47.6°C), Top-Oil Temperature (104.2°C), Winding Hot-Spot (136.8°C), and Arrhenius Insulation Aging Acceleration (2.1x vs 14.8x).',
+                'Examine the four primary telemetry indicators: FortyGuard 2m Ambient Air (42.7°C), Top-Oil Temperature (134.5°C baseline / 84.8°C mitigated), Winding Hot-Spot (165.7°C baseline / 112.2°C mitigated), and Arrhenius Insulation Aging Acceleration (144.3x vs 1.25x).',
               side: 'top',
               align: 'center',
             },
@@ -215,7 +215,7 @@ export const startTourGuide = ({
             popover: {
               title: '📈 Apache ECharts Synchronized Multi-Axis Telemetry',
               description:
-                'Interactive multi-layer physics charts plotting FortyGuard 2m ambient vs Airport SCADA, top-oil and winding hot-spot rises, and Arrhenius aging factor progression.',
+                'Interactive multi-layer physics charts plotting FortyGuard 2m ambient vs natural-terrain reference, top-oil and winding hot-spot rises, and Arrhenius aging factor progression.',
               side: 'top',
               align: 'center',
             },
@@ -249,7 +249,7 @@ export const startTourGuide = ({
             popover: {
               title: '⚡ Instant Scenario Stress Presets',
               description:
-                'Click one-click stress presets: Phoenix 23 Peak, Airport SCADA Blindspot (0°C delta), 31-Day Desertification, or Zero-BESS Stress to instantly reconfigure the environment.',
+                'Click one-click stress presets: Phoenix 23 Peak, Station-Weather Blindspot (0°C delta), 31-Day Desertification, or Zero-BESS Stress to instantly reconfigure the environment.',
               side: 'bottom',
               align: 'center',
             },
@@ -447,9 +447,9 @@ export const startTourGuide = ({
           {
             element: '#tour-gis-map',
             popover: {
-              title: '🌡️ Resolving +4.5°C Urban Asphalt Traps',
+              title: '🌡️ Resolving the 12-Hour Asphalt Thermal Soak',
               description:
-                'Demonstrates why generic 10km airport weather fails: dark asphalt and heat canyons create localized microclimates 4.5°C hotter than airport readings.',
+                'Demonstrates why generic station weather fails: it reports a peak, not a duration. Dark asphalt and heat canyons hold 2m air above 40°C for 12 unbroken hours — a measured +1.1°C over natural desert terrain, sustained long enough to age insulation 144x faster.',
               side: 'top',
               align: 'center',
             },
@@ -581,7 +581,7 @@ export const startTourGuide = ({
             popover: {
               title: '📊 Comparative Advantage Matrix',
               description:
-                'Demonstrates up to $2.79M net avoided loss per extreme heatwave event with >24x to 5,952x operational ROI over baseline airport controllers.',
+                'Demonstrates up to $2.74M net avoided loss per extreme heatwave event with >24x to 5,835x operational ROI over baseline station-weather controllers.',
               side: 'top',
               align: 'center',
             },

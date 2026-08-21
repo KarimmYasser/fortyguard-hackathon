@@ -24,30 +24,57 @@ async def test_async_fortyguard_client_mock():
     env = await client.environmental_parameters(
         latitude=33.4484,
         longitude=-112.0740,
-        temperature=47.6,
-        start_date="2023-07-24",
+        temperature=42.7,
+        start_date="2023-07-19",
     )
     assert "result" in env
     assert "solar_irradiance" in env["result"]
     assert env["result"]["solar_irradiance"] > 0
 
-    # Test 12h forecast
+    # Test 12h forecast. The fixture is a real cached FortyGuard capture
+    # (2023-07-19 downtown Phoenix), so assert on physical properties rather
+    # than on literals that a re-capture would legitimately change.
     forecast = await client.get_12h_forecast()
     assert len(forecast) == 12
-    assert forecast[7]["fortyguard_2m_ambient_c"] == 47.6
-    assert forecast[7]["microclimate_delta_c"] == 4.5
+
+    temps = [h["fortyguard_2m_ambient_c"] for h in forecast]
+    assert all(35.0 < t < 50.0 for t in temps), temps
+    # Heat-of-day window: it should warm from the 06:00 start toward the peak.
+    assert max(temps) > temps[0]
+    assert max(temps) > 40.0, "benchmark scenario must exceed the 40C threshold"
+
+    # Delta is measured spatial spread within the AOI, not an assumed constant.
+    assert all(h["microclimate_delta_c"] >= 0 for h in forecast)
 
     # Test persistence
     persist = await client.get_persistence_and_exceedance()
-    assert persist["persistence_hours_p40"] == 7.17
-    assert persist["exceedance_degree_hours_h40"] == 34.25
+    assert 0.0 <= persist["persistence_hours_p40"] <= 24.0
+    assert persist["exceedance_degree_hours_h40"] > 0
+    assert persist["thermal_soak_index_tsi"] > 0
 
 
 def test_sync_fortyguard_client_mock():
     client = FortyGuardClient(mock_mode=True)
     forecast = client.get_12h_forecast()
     assert len(forecast) == 12
-    assert forecast[0]["fortyguard_2m_ambient_c"] == 34.2
+    assert 30.0 < forecast[0]["fortyguard_2m_ambient_c"] < 45.0
+
+
+def test_fixture_is_a_real_api_capture():
+    """
+    Guards the regression this fixture was created to fix: it used to be
+    hand-authored (peak 47.6C, P40 7.17h) while being documented as cached
+    ground truth, so replay mode and live mode disagreed.
+    """
+    fixture = load_phoenix_fixture()
+    prov = fixture["scenario_metadata"].get("provenance", {})
+    assert prov.get("data_source") == "fortyguard_live", "fixture must be a real API capture"
+
+    peak = max(h["fortyguard_2m_ambient_c"] for h in fixture["hourly_forecast_12h"])
+    assert peak != 47.6, "47.6C was the old synthetic peak"
+
+    metrics = fixture["scenario_metadata"]["persistence_metrics"]
+    assert metrics["persistence_hours_p40"] != 7.17, "7.17h was the old synthetic value"
 
 
 def test_load_phoenix_fixture():

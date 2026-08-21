@@ -44,7 +44,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          base_ambient_temp_c: 47.6,
+          base_ambient_temp_c: 42.7,
           forecast_std_dev_c: 1.85,
           confidence_level_pct: conf,
           total_grid_load_mw: 22.8 * loadMultiplier,
