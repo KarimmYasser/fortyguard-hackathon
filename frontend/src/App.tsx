@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { ReplayControlBar } from './components/ReplayControlBar';
 import { HeroKpiGrid } from './components/HeroKpiGrid';
@@ -285,6 +286,9 @@ export const App: React.FC = () => {
 
       {/* Vercel Speed Insights */}
       <SpeedInsights />
+      
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 };
