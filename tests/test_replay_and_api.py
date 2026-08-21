@@ -78,7 +78,18 @@ def test_vercel_serverless_path_normalizer():
     assert res2.status_code == 200
     assert "timeline_steps" in res2.json()
 
-    # 3. Health checks
+    # 3. Header-based rewrites (when Vercel passes /api/index.py with x-matched-path)
+    res_hdr1 = client.get("/api/index.py", headers={"x-matched-path": "/api/v1/replay/phoenix-2023"})
+    assert res_hdr1.status_code == 200
+    assert "timeline_steps" in res_hdr1.json()
+
+    res_hdr2 = client.get("/api/index.py", headers={"x-now-route-matches": "1=v1%2Freplay%2Fphoenix-2023"})
+    assert res_hdr2.status_code == 200
+    assert "timeline_steps" in res_hdr2.json()
+
+    # 4. Health checks
     assert client.get("/health").status_code == 200
+    assert client.get("/api").status_code == 200
     assert client.get("/api/health").status_code == 200
     assert client.get("/v1/health").status_code == 200
+

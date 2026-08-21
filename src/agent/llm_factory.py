@@ -5,6 +5,7 @@ models routed through https://llm.sdc.siemens.cloud/v1.
 """
 
 import os
+import re
 import logging
 from typing import Optional, Any, List, Dict
 from openai import AsyncOpenAI, OpenAI
@@ -48,19 +49,39 @@ async def generate_chat_completion(
         return None
 
     resolved_model = model or os.getenv("DEFAULT_LLM_MODEL", "gpt-5.4")
-    if resolved_model == "gpt-5-4":
-        resolved_model = "gpt-5.4"
+    # The gateway expects dotted minor versions (gpt-5.5), but env/config values
+    # are frequently written with a hyphen (gpt-5-5), which 404s as MODEL_NOT_FOUND
+    # and silently degrades every narrative to the deterministic fallback.
+    # Normalize the whole gpt-5-N family rather than a single hardcoded case.
+    if re.fullmatch(r"gpt-5-\d+", resolved_model):
+        resolved_model = resolved_model.replace("gpt-5-", "gpt-5.")
+
+    import asyncio
+    client = get_openai_client(async_mode=True)
+    request_timeout = float(os.getenv("LLM_REQUEST_TIMEOUT_S", "12.0"))
+
+    async def _call(include_temperature: bool):
+        kwargs = {
+            "model": resolved_model,
+            "messages": messages,
+            "max_completion_tokens": max_completion_tokens,
+        }
+        if include_temperature:
+            kwargs["temperature"] = temperature
+        coro = client.chat.completions.create(**kwargs)
+        return await asyncio.wait_for(coro, timeout=request_timeout)
 
     try:
-        import asyncio
-        client = get_openai_client(async_mode=True)
-        coro = client.chat.completions.create(
-            model=resolved_model,
-            messages=messages,
-            max_completion_tokens=max_completion_tokens,
-            temperature=temperature,
-        )
-        resp = await asyncio.wait_for(coro, timeout=3.0)
+        try:
+            resp = await _call(include_temperature=True)
+        except Exception as e:
+            # Newer reasoning models (gpt-5.x) reject any non-default temperature.
+            # Retry once without it instead of silently degrading to the fallback.
+            if "temperature" in str(e).lower():
+                logger.info("Model %s rejected temperature=%s; retrying with default.", resolved_model, temperature)
+                resp = await _call(include_temperature=False)
+            else:
+                raise
         if resp.choices and resp.choices[0].message and resp.choices[0].message.content:
             return resp.choices[0].message.content.strip()
         return None

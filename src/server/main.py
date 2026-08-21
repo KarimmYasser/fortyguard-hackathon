@@ -64,6 +64,9 @@ app.include_router(analytics_router, prefix="/api/v1")
 @app.get("/api/health", tags=["System Health"])
 @app.get("/v1/health", tags=["System Health"])
 @app.get("/api/v1/health", tags=["System Health"])
+@app.get("/api", tags=["System Health"])
+@app.get("/api/", tags=["System Health"])
+@app.get("/api/index.py", tags=["System Health"])
 async def health_check():
     """System health check and FortyGuard API status."""
     mock_mode = os.getenv("MOCK_FORTYGUARD_API", "").lower() in ("true", "1", "yes") or not bool(os.getenv("FORTYGUARD_API_KEY"))
