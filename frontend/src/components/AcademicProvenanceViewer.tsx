@@ -16,6 +16,8 @@ import {
   Network,
 } from 'lucide-react';
 import { API_BASE } from '../utils/api';
+import { MathView } from './MathView';
+
 
 interface Paper {
   arxiv_id: string;
@@ -161,45 +163,52 @@ export const AcademicProvenanceViewer: React.FC = () => {
 
       {/* Physics Moats & Mathematical Mapping Accordion */}
       <div id="tour-academic-formulas" className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-amber-500/40 transition-colors">
-          <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
-            <Flame className="h-4 w-4" />
-            Surface Energy Balance (SEB)
+        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-amber-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
+              <Flame className="h-4 w-4" />
+              Surface Energy Balance (SEB)
+            </div>
+            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-amber-200">
+              <MathView math="R_n = (1 - \alpha) S_{\downarrow} + \epsilon (L_{\downarrow} - \sigma T_s^4) = Q_H + Q_E + Q_G" />
+            </div>
           </div>
-          <p className="text-xs text-slate-300 font-mono bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/60 mb-2">
-            R_n = (1 - α)S↓ + ε(L↓ - σT_s⁴) = Q_H + Q_E + Q_G
-          </p>
-          <p className="text-[11px] text-slate-400">
-            Governs cool pavement albedo modification (α: 0.10 → 0.45+) and sensible heat flux reduction into pedestrian air layers.
+          <p className="text-[11px] text-slate-400 leading-relaxed">
+            Governs cool pavement albedo modification (<MathView math="\alpha: 0.10 \to 0.45+" displayMode={false} />) and sensible heat flux reduction (<MathView math="Q_H" displayMode={false} />) into pedestrian air layers.
           </p>
         </div>
 
-        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-cyan-500/40 transition-colors">
-          <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
-            <Atom className="h-4 w-4" />
-            Thermal Diffusion & PINNs
+        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-cyan-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
+              <Atom className="h-4 w-4" />
+              Thermal Diffusion & PINNs
+            </div>
+            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-cyan-200">
+              <MathView math="\frac{\partial T}{\partial t} + \mathbf{u} \cdot \nabla T = \nabla \cdot (\kappa \nabla T) + S(\mathbf{x}, t)" />
+            </div>
           </div>
-          <p className="text-xs text-slate-300 font-mono bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/60 mb-2">
-            ∂T/∂t + u·∇T = ∇·(κ∇T) + S(x, t)
-          </p>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
             Enforces energy conservation laws in neural forecasting, eliminating non-physical temperature drift in heatwaves.
           </p>
         </div>
 
-        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-emerald-500/40 transition-colors">
-          <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
-            <Network className="h-4 w-4" />
-            Graph Neural Heat Flow
+        <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-emerald-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider font-mono mb-2">
+              <Network className="h-4 w-4" />
+              Graph Neural Heat Flow
+            </div>
+            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-emerald-200">
+              <MathView math="\mathbf{H}^{(l+1)} = \sigma \left( \sum_{k=0}^{K} \mathbf{P}^k \mathbf{H}^{(l)} \mathbf{W}_k \right)" />
+            </div>
           </div>
-          <p className="text-xs text-slate-300 font-mono bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/60 mb-2">
-            H^(l+1) = σ(∑ P^k H^(l) W_k)
-          </p>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
             Models advective heat propagation across non-Euclidean urban street canyons and FortyGuard IoT sensor meshes.
           </p>
         </div>
       </div>
+
 
       {/* Live Search & Filter Bar */}
       <div id="tour-academic-search" className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-4">

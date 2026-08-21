@@ -24,9 +24,11 @@ export default defineConfig({
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
           'vendor-echarts': ['echarts', 'echarts-for-react'],
+          'vendor-math': ['katex'],
           'vendor-ui': ['lucide-react', 'driver.js', 'clsx', 'tailwind-merge'],
         },
       },
     },
   },
+
 });

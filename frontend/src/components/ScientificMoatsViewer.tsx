@@ -13,6 +13,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { SoilCableState, VirtualMoistureState, SafetyGateVerdict } from '../types';
+import { MathView } from './MathView';
 
 interface ScientificMoatsViewerProps {
   soilState: SoilCableState;
@@ -94,30 +95,30 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
 
             {/* Formula & Live Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs">
-                <div className="text-amber-400 font-bold text-xs uppercase">Mathematical Formulation</div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-amber-300">
-                  ρ_soil(t) = ρ_wet + (ρ_dry - ρ_wet) / [1 + exp(a · (θ_v(t) - θ_crit))]
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
+                <div className="text-amber-400 font-bold text-xs uppercase tracking-wider">Mathematical Formulation</div>
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-amber-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
+                  <MathView math="\rho_{\text{soil}}(t) = \rho_{\text{wet}} + \frac{\rho_{\text{dry}} - \rho_{\text{wet}}}{1 + \exp\left(a \cdot (\theta_v(t) - \theta_{\text{crit}})\right)}" />
                 </div>
-                <div className="text-slate-400 text-[11px] space-y-1">
-                  <div>• Conductor Temp: <span className="text-slate-200">T_c = T_soil,∞ + q_loss · R_th(ρ_soil)</span></div>
+                <div className="text-slate-400 text-[11px] space-y-1.5">
+                  <div className="flex items-center gap-1.5">• Conductor Temp: <MathView math="T_c = T_{\text{soil},\infty} + q_{\text{loss}} \cdot R_{\text{th}}(\rho_{\text{soil}})" displayMode={false} className="text-slate-200" /></div>
                   <div>• Critical Moisture: <span className="text-slate-200">θ_crit = 0.12 m³/m³</span></div>
                   <div>• Dryout Plateau: <span className="text-slate-200">ρ_dry = 2.50 K·m/W</span></div>
                 </div>
               </div>
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
-                <div className="text-emerald-400 font-bold text-xs uppercase">Live Inferencing Telemetry</div>
+                <div className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Live Inferencing Telemetry</div>
                 <div className="space-y-2">
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Current Soil Resistivity (ρ):</span>
                     <span className="text-amber-400 font-bold">{soilState.soil_thermal_resistivity_rho_soil} K·m/W (+172% Surge)</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Cable Conductor Temp (T_c):</span>
                     <span className="text-rose-400 font-bold">{soilState.cable_conductor_temp_c}°C (Limit: 90°C)</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Underground Ampacity Derate:</span>
                     <span className="text-amber-300 font-bold">{((1 - soilState.cable_ampacity_derate) * 100).toFixed(0)}% Capacity Loss</span>
                   </div>
@@ -150,30 +151,30 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs">
-                <div className="text-emerald-400 font-bold text-xs uppercase">Quadratic Program Formulation</div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-emerald-300">
-                  u* = argmin ||u - u_nom||² s.t. h_i(F(x, u, T_a + ε)) ≥ (1 - γ)h_i(x)
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
+                <div className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Quadratic Program Formulation</div>
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-emerald-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
+                  <MathView math="\mathbf{u}^* = \arg\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" />
                 </div>
-                <div className="text-slate-400 text-[11px] space-y-1">
-                  <div>• Safe Set: <span className="text-slate-200">C = {'{x : T_o ≤ 110°C, T_hs ≤ 140°C}'}</span></div>
+                <div className="text-slate-400 text-[11px] space-y-1.5">
+                  <div>• Safe Set: <MathView math="\mathcal{C} = \{\mathbf{x} : T_o \le 110^\circ\text{C}, T_{\text{hs}} \le 140^\circ\text{C}\}" displayMode={false} className="text-slate-200" /></div>
                   <div>• Bounded Uncertainty: <span className="text-slate-200">ε_a = ±1.5°C</span></div>
                   <div>• ANSI C84.1 Voltage: <span className="text-slate-200">0.95 ≤ V_pu ≤ 1.05</span></div>
                 </div>
               </div>
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
-                <div className="text-cyan-400 font-bold text-xs uppercase">Deterministic Gate Output</div>
+                <div className="text-cyan-400 font-bold text-xs uppercase tracking-wider">Deterministic Gate Output</div>
                 <div className="space-y-2">
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Safety Gate Status:</span>
                     <span className="text-emerald-400 font-bold">{verdict.status} [PROVABLY SAFE]</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Projected Safe Load (K_safe):</span>
                     <span className="text-amber-300 font-bold">{verdict.safe_max_load_k} pu (Nominal: {verdict.nominal_load_k} pu)</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Barrier Slack Margin:</span>
                     <span className="text-emerald-300 font-bold">+{verdict.barrier_slack_delta}°C Margin to Ceiling</span>
                   </div>
@@ -206,30 +207,30 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs">
-                <div className="text-cyan-400 font-bold text-xs uppercase">Aerodynamic Formulations</div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-cyan-300">
-                  U_eff = U_ref · clip[exp(-β₁·H/W - β₂·λ_f + β₃·φ), κ_min, 1.0]
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
+                <div className="text-cyan-400 font-bold text-xs uppercase tracking-wider">Aerodynamic Formulations</div>
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-cyan-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
+                  <MathView math="U_{\text{eff}} = U_{\text{ref}} \cdot \operatorname{clip}\left[\exp\left(-\beta_1 \frac{H}{W} - \beta_2 \lambda_f + \beta_3 \phi\right),\, \kappa_{\min},\, 1.0\right]" />
                 </div>
-                <div className="text-slate-400 text-[11px] space-y-1">
-                  <div>• Convective Coeff: <span className="text-slate-200">h_c = 5.7 + 3.8 · U_eff</span></div>
+                <div className="text-slate-400 text-[11px] space-y-1.5">
+                  <div className="flex items-center gap-1.5">• Convective Coeff: <MathView math="h_c = 5.7 + 3.8 \cdot U_{\text{eff}}" displayMode={false} className="text-slate-200" /></div>
                   <div>• Canyon Aspect Ratio: <span className="text-slate-200">H/W = 1.85 (Deep Street Canyon)</span></div>
                   <div>• Wind Penetration: <span className="text-slate-200">κ_morph = 0.58</span></div>
                 </div>
               </div>
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
-                <div className="text-amber-400 font-bold text-xs uppercase">Equipment Cooling Capacity</div>
+                <div className="text-amber-400 font-bold text-xs uppercase tracking-wider">Equipment Cooling Capacity</div>
                 <div className="space-y-2">
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Cooling Derate (η_cool):</span>
                     <span className="text-rose-400 font-bold">0.68 (-32% Dissipation Capacity)</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Mitigation Response:</span>
                     <span className="text-emerald-400 font-bold">Engage Forced Cooling Stage 2 (+35%)</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Net Effective Dissipation:</span>
                     <span className="text-cyan-300 font-bold">0.92 pu (Restores Normal Convection)</span>
                   </div>
@@ -262,20 +263,21 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs">
-                <div className="text-purple-400 font-bold text-xs uppercase">Fickian State Space</div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-purple-300">
-                  RS_o = w_o / w_sat(T_o), where log10(w_sat) = 7.0895 - 1567 / T_k
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
+                <div className="text-purple-400 font-bold text-xs uppercase tracking-wider">Fickian State Space</div>
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-purple-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
+                  <MathView math="RS_o = \frac{w_o}{w_{\text{sat}}(T_o)}, \quad \log_{10}(w_{\text{sat}}) = 7.0895 - \frac{1567}{T_k}" />
                 </div>
-                <div className="text-slate-400 text-[11px] space-y-1">
-                  <div>• Paper Diffusion: <span className="text-slate-200">D_p(T) = D_p0 · exp(-E_a / (R_g · T))</span></div>
+                <div className="text-slate-400 text-[11px] space-y-1.5">
+                  <div className="flex items-center gap-1.5">• Paper Diffusion: <MathView math="D_p(T) = D_{p0} \cdot \exp\left(-\frac{E_a}{R_g \cdot T}\right)" displayMode={false} className="text-slate-200" /></div>
                   <div>• Activation Energy: <span className="text-slate-200">E_a = 45.0 kJ/mol</span></div>
                   <div>• Dielectric Warning: <span className="text-slate-200">RS_o ≥ 50%</span></div>
                 </div>
               </div>
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
-                <div className="text-rose-400 font-bold text-xs uppercase">Virtual Sensor Reading</div>
+                <div className="text-rose-400 font-bold text-xs uppercase tracking-wider">Virtual Sensor Reading</div>
+
                 <div className="space-y-2">
                   <div className="flex justify-between p-2 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Relative Oil Saturation:</span>
