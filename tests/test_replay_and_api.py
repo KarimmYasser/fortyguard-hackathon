@@ -62,3 +62,23 @@ def test_fastapi_endpoints():
     assert res_usage.status_code == 200
     assert "status" in res_usage.json()
 
+
+def test_vercel_serverless_path_normalizer():
+    """Verify that api.index.app correctly handles /v1/... and /api/v1/... routes."""
+    from api.index import app as vercel_app
+    client = TestClient(vercel_app)
+
+    # 1. Unstripped path
+    res1 = client.get("/api/v1/replay/phoenix-2023")
+    assert res1.status_code == 200
+    assert "timeline_steps" in res1.json()
+
+    # 2. Stripped path (/v1/...)
+    res2 = client.get("/v1/replay/phoenix-2023")
+    assert res2.status_code == 200
+    assert "timeline_steps" in res2.json()
+
+    # 3. Health checks
+    assert client.get("/health").status_code == 200
+    assert client.get("/api/health").status_code == 200
+    assert client.get("/v1/health").status_code == 200

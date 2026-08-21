@@ -31,7 +31,10 @@ from src.server.main import app
 
 
 @pytest.fixture
-def temp_db():
+def temp_db(monkeypatch):
+    monkeypatch.setenv("SUPABASE_URL", "")
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "")
+    monkeypatch.setenv("SUPABASE_KEY", "")
     with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
         db_path = f.name
     manager = HybridDatabaseManager(db_path=db_path)
@@ -40,9 +43,10 @@ def temp_db():
         os.remove(db_path)
 
 
-def test_sqlite_database_init(temp_db):
+@pytest.mark.asyncio
+async def test_sqlite_database_init(temp_db):
     """Verify all 16 tables are initialized with proper schemas."""
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["status"] == "healthy"
     assert "counts" in status
     assert status["counts"]["api_call_cache"] == 0
@@ -68,19 +72,19 @@ async def test_api_call_caching_and_hits(temp_db):
     )
 
     # Initial cache miss
-    cached = temp_db.get_cached_api_call(q_hash)
+    cached = await temp_db.get_cached_api_call(q_hash)
     assert cached is None
 
     # Save to cache
     await temp_db.save_cached_api_call(record)
 
     # Cache hit
-    cached_payload = temp_db.get_cached_api_call(q_hash)
+    cached_payload = await temp_db.get_cached_api_call(q_hash)
     assert cached_payload is not None
     assert cached_payload["temperature_raster"] == [42.5, 45.1, 47.6]
 
     # Verify hit count increment
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["api_call_cache"] == 1
 
 
@@ -102,7 +106,7 @@ async def test_dispatch_work_order_persistence(temp_db):
 
     await temp_db.save_dispatch_work_order(order)
 
-    history = temp_db.get_dispatch_history(asset_id="SUB-PHX-DOWNTOWN-04")
+    history = await temp_db.get_dispatch_history(asset_id="SUB-PHX-DOWNTOWN-04")
     assert len(history) == 1
     assert history[0]["work_order_id"] == "WO-TEST-001"
     assert history[0]["calculated_k_safe"] == 0.84
@@ -123,7 +127,7 @@ async def test_credit_accounting_ledger(temp_db):
 
     await temp_db.log_credit_transaction(entry)
 
-    ledger = temp_db.get_credit_ledger(limit=10)
+    ledger = await temp_db.get_credit_ledger(limit=10)
     assert len(ledger) == 1
     assert ledger[0]["transaction_id"] == "TXN-CREDIT-001"
     assert ledger[0]["credits_debited"] == 2.0
@@ -144,7 +148,7 @@ async def test_substation_telemetry_logging(temp_db):
         is_mitigated=True,
     )
     await temp_db.log_substation_telemetry(record)
-    logs = temp_db.get_substation_telemetry(asset_id="TX-SUB-PHX-01")
+    logs = await temp_db.get_substation_telemetry(asset_id="TX-SUB-PHX-01")
     assert len(logs) == 1
     assert logs[0]["hot_spot_c"] == 136.8
     assert logs[0]["is_mitigated"] == 1
@@ -167,7 +171,7 @@ async def test_simulation_run_persistence(temp_db):
         net_avoided_loss=2791338.0,
     )
     await temp_db.save_simulation_run(sim)
-    runs = temp_db.get_simulation_runs()
+    runs = await temp_db.get_simulation_runs()
     assert len(runs) == 1
     assert runs[0]["simulation_id"] == "SIM-PHX-TEST-99"
     assert runs[0]["delta_c"] == 5.5
@@ -184,7 +188,7 @@ async def test_multi_day_heatwave_logging(temp_db):
         max_hot_spot_c=139.1,
     )
     await temp_db.log_multi_day_step(m_log)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["multi_day_heatwave_logs"] == 1
 
 
@@ -202,7 +206,7 @@ async def test_dlr_catenary_telemetry_logging(temp_db):
         clearance_margin_m=8.18,
     )
     await temp_db.log_dlr_telemetry(dlr)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["dlr_catenary_telemetry"] == 1
 
 
@@ -219,7 +223,7 @@ async def test_agent_execution_trace_persistence(temp_db):
         gpt_advisory_text="Authorized proactive 4.5 MW BESS discharge under CBF safety barrier.",
     )
     await temp_db.save_agent_trace(trace)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["agent_execution_traces"] == 1
 
 
@@ -236,7 +240,7 @@ async def test_financial_audit_snapshot_persistence(temp_db):
         economic_roi_multiplier=5952.7,
     )
     await temp_db.save_financial_audit(audit)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["financial_audit_snapshots"] == 1
 
 
@@ -251,7 +255,7 @@ async def test_microclimate_parcel_store(temp_db):
         asphalt_heat_trap_delta=4.5,
     )
     await temp_db.save_microclimate_parcel(parcel)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["microclimate_parcel_store"] == 1
 
 
@@ -270,7 +274,7 @@ async def test_bess_degradation_logging(temp_db):
         degradation_cost_usd=14.25,
     )
     await temp_db.log_bess_degradation(b_rec)
-    logs = temp_db.get_bess_degradation_logs(bess_id="BESS-PHX-CENTRAL-01")
+    logs = await temp_db.get_bess_degradation_logs(bess_id="BESS-PHX-CENTRAL-01")
     assert len(logs) == 1
     assert logs[0]["core_temp_c"] == 46.2
     assert logs[0]["degradation_cost_usd"] == 14.25
@@ -289,7 +293,7 @@ async def test_cascading_risk_snapshot_persistence(temp_db):
         total_voll_risk_usd=1541338.0,
     )
     await temp_db.save_cascading_risk_snapshot(c_rec)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["cascading_risk_snapshots"] == 1
 
 
@@ -306,7 +310,7 @@ async def test_chance_constrained_opf_logging(temp_db):
         solver_status="OPTIMAL_FEASIBLE",
     )
     await temp_db.log_chance_constrained_opf(opf)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["chance_constrained_opf_logs"] == 1
 
 
@@ -324,7 +328,7 @@ async def test_cbf_safety_certificate_persistence(temp_db):
         mathematical_proof="Lie derivative L_f h(x) + gamma h(x) >= 0 satisfied.",
     )
     await temp_db.save_cbf_safety_certificate(cert)
-    status = temp_db.get_database_status()
+    status = await temp_db.get_database_status()
     assert status["counts"]["cbf_safety_certificates"] == 1
 
 
@@ -343,7 +347,7 @@ async def test_grid_asset_registry_crud(temp_db):
         current_health_score=97.5,
     )
     await temp_db.upsert_grid_asset(new_asset)
-    assets = temp_db.get_grid_assets()
+    assets = await temp_db.get_grid_assets()
     assert len(assets) >= 6
     found = next((a for a in assets if a["asset_id"] == "SUB-PHX-TEMPE-01"), None)
     assert found is not None

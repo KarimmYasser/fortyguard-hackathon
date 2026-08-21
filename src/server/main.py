@@ -61,6 +61,8 @@ app.include_router(analytics_router, prefix="/api/v1")
 
 
 @app.get("/health", tags=["System Health"])
+@app.get("/api/health", tags=["System Health"])
+@app.get("/v1/health", tags=["System Health"])
 @app.get("/api/v1/health", tags=["System Health"])
 async def health_check():
     """System health check and FortyGuard API status."""
