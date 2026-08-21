@@ -3,14 +3,22 @@
   "outputDirectory": "frontend/dist",
   "headers": [
     {
-      "comment": "Vite emits content-hashed asset filenames, so they can be cached forever. Each deployment only serves its own hashes.",
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "comment": "index.html must never be cached: a stale copy references asset hashes that no longer exist on the current deployment, which 404s and yields a blank page.",
       "source": "/",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     }
   ],
   "functions": {
