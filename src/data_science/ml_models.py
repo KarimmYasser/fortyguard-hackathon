@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-from scipy import stats as sp_stats
 
 logger = logging.getLogger("thermal_sentinel.data_science.ml")
 
@@ -295,24 +294,23 @@ class SurvivalAnalysisEngine:
         # Remaining life = total budget - consumed
         remaining = (self.NORMAL_INSULATION_LIFE_HOURS - simulated_life_consumed).clip(min=1.0)
 
-        # Fit Weibull distribution to remaining life
-        try:
-            shape, loc, scale = sp_stats.weibull_min.fit(remaining, floc=0)
-            self.weibull_shape = float(shape)
-            self.weibull_scale = float(scale)
-            self.median_rul_hours = float(sp_stats.weibull_min.median(shape, loc=0, scale=scale))
-            self.is_fitted = True
-        except Exception as e:
-            logger.warning("Weibull fit failed: %s — using analytical estimate", e)
-            self.weibull_shape = 2.5
-            self.weibull_scale = float(self.NORMAL_INSULATION_LIFE_HOURS - projected_aging)
-            self.median_rul_hours = self.weibull_scale * 0.8
-            self.is_fitted = True
+        # Analytical Weibull parameter estimation (Method of Moments)
+        mean_rem = float(np.mean(remaining))
+        std_rem = float(np.std(remaining, ddof=1)) if len(remaining) > 1 else 1e-8
+        
+        # Shape parameter k estimation via coefficient of variation
+        cv = max(std_rem / max(mean_rem, 1e-8), 0.01)
+        self.weibull_shape = float(max(1.0 / cv**1.086, 1.2))
+        # Scale parameter lambda = mean / gamma(1 + 1/k)
+        gamma_approx = math.gamma(1.0 + 1.0 / self.weibull_shape)
+        self.weibull_scale = float(mean_rem / max(gamma_approx, 1e-8))
+        self.median_rul_hours = float(self.weibull_scale * (math.log(2.0) ** (1.0 / self.weibull_shape)))
+        self.is_fitted = True
 
-        # Compute survival curve at evaluation points
+        # Compute survival curve S(x) = exp(-(x/scale)^shape)
         eval_points = list(range(0, int(self.NORMAL_INSULATION_LIFE_HOURS), max(1, int(self.NORMAL_INSULATION_LIFE_HOURS / 50))))
         survival_probs = [
-            float(sp_stats.weibull_min.sf(x, self.weibull_shape, loc=0, scale=self.weibull_scale))
+            float(math.exp(-((x / max(self.weibull_scale, 1e-8)) ** self.weibull_shape)))
             for x in eval_points
         ]
 

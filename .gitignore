@@ -71,6 +71,11 @@ dist-ssr/
 **/renders/
 **/.thumbnails/
 *.wav
+*.mp4
+*.webm
+*.mov
+videos/
+frontend/public/videos/
 scratch/
 *.db
 *.sqlite
@@ -78,3 +83,4 @@ data/
 
 .vercel
 
+.env*

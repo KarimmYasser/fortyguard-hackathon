@@ -1,7 +1,11 @@
 {
-  "framework": "vite",
-  "buildCommand": "cd frontend && npm install && npm run build",
+  "buildCommand": "cd frontend && npm install --ignore-scripts && npm run build",
   "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "src/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

@@ -56,12 +56,14 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   const videoSources = {
     pitch: {
       url: '/videos/video.mp4',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Can be updated with real YouTube video ID
       title: '🎬 3-Minute Motion Illustration Pitch',
       badge: 'Official Pitch Video',
       description: 'Programmatic motion-graphics pitch breaking down the market blindspot, 4 scientific moats, and hybrid Physical-AI architecture.',
     },
     live_demo: {
       url: '/videos/live_product_demo.mp4',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       title: '💻 Live UI Product Demo Walkthrough',
       badge: 'Interactive Product Demo',
       description: 'Full 1080p automated recording of the live running React + FastAPI platform, What-If Studio, and AC power flow.',
