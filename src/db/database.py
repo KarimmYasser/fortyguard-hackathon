@@ -47,11 +47,18 @@ class HybridDatabaseManager:
     def __init__(self, db_path: Optional[str] = None) -> None:
         if db_path:
             self.db_path = Path(db_path)
+            self.db_path.parent.mkdir(parents=True, exist_ok=True)
         else:
             base_dir = Path(__file__).resolve().parent.parent.parent
-            self.db_path = base_dir / "data" / "thermal_sentinel.db"
-
-        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+            target_path = base_dir / "data" / "thermal_sentinel.db"
+            try:
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                self.db_path = target_path
+            except (OSError, PermissionError):
+                # Vercel / AWS Lambda read-only filesystem fallback to /tmp
+                tmp_dir = Path("/tmp")
+                tmp_dir.mkdir(parents=True, exist_ok=True)
+                self.db_path = tmp_dir / "thermal_sentinel.db"
 
         self.supabase_url = os.getenv("SUPABASE_URL", "").rstrip("/")
         self.supabase_key = os.getenv("SUPABASE_KEY", "") or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
@@ -64,7 +71,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             logger.info(f"⚡ Supabase Cloud Database Connected: {self.supabase_url}")
         else:
-            logger.info("📦 Operating in Local SQLite Persistence Mode (data/thermal_sentinel.db)")
+            logger.info(f"📦 Operating in Local SQLite Persistence Mode ({self.db_path})")
 
     def _get_connection(self) -> sqlite3.Connection:
         conn = sqlite3.connect(str(self.db_path))
