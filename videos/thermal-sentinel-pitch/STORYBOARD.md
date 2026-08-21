@@ -9,7 +9,7 @@ mode: autonomous
 
 ## Frame 1 - The Hook & Market Blindspot ($2.8M Problem)
 
-- scene: Split screen comparing Phoenix Sky Harbor airport station (43.1°C) vs downtown substation 2m asphalt heat trap (47.6°C, +4.5°C delta)
+- scene: Split screen comparing South Mountain natural desert terrain (41.6°C) vs downtown substation 2m asphalt heat trap (42.7°C, +1.1°C delta held for 12 unbroken hours)
 - duration: 30s
 - poster: 8s
 - transition_in: cut
@@ -17,7 +17,7 @@ mode: autonomous
 - voiceover: "During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away..."
 - src: index.html#scene-1
 
-Open on a stark split-screen contrast: airport open terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $43.1^\circ\mathrm{C}$ vs $47.6^\circ\mathrm{C}$, the $+4.5^\circ\mathrm{C}$ microclimate delta, 15x accelerated aging factor, and $2.8M in catastrophic blackout damage.
+Open on a stark split-screen contrast: natural desert terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $41.6^\circ\mathrm{C}$ vs $42.7^\circ\mathrm{C}$, the $+1.1^\circ\mathrm{C}$ land-cover delta, and the figure that actually matters — $P_{40}=12.0\text{h}$ above $40^\circ\mathrm{C}$ — driving a 124x aging acceleration factor and $2.8M in catastrophic blackout damage.
 
 ## Frame 2 - The Solution: FortyGuard 2m AI + IEEE Differential Engine
 

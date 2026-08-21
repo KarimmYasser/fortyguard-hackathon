@@ -1,7 +1,31 @@
 # 🔌 FortyGuard API Integration, Live Ingestion & Simulation Architecture Specification
 > **Architecture Decision Record (ADR): Dual-Mode Microclimate Ingestion & System Boundary Specification**  
-> **Status:** Accepted & Implemented (Intended Production Design)  
+> **Status:** Accepted & Implemented — *revised after live integration*  
 > **Applicable Tracks:** Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)
+
+---
+
+## ⚠️ Revision Note (post live-integration)
+
+The first version of this ADR described Mode A as implemented. **It was not.**
+Both of the agent's data inputs returned fixture data on every code path:
+
+- `get_12h_forecast()` issued a real `env_params` call, discarded the result,
+  and returned the bundled Phoenix fixture on the mock, success *and* exception
+  branches — spending a credit to produce a hardcoded answer.
+- `get_persistence_and_exceedance()` never called the API at all. It derived
+  $P_{40}$ from the caller's straight-line distance to downtown Phoenix.
+
+The root cause of the silent fallback was date handling: the client requested
+`start_date = today`, which the API rejects (see
+[§12 Known Limitations](../api-documentation/12-known-limitations.md) and
+[§14 Field Notes](../api-documentation/14-field-notes-live-integration.md)).
+Every live attempt failed and fell through to the fixture without surfacing an
+error.
+
+Mode A is now genuinely wired. §6 below documents the as-built ingestion path,
+and the taxonomy in §2 has been corrected — most importantly, **`env_params`
+cannot supply air temperature**, which the original table wrongly implied.
 
 ---
 
@@ -38,8 +62,9 @@ These components communicate with real external cloud services and update remote
 | Component | Endpoint / Service | Live Behavior |
 | :--- | :--- | :--- |
 | **FortyGuard Quota Hub** | `POST /v1/system/fetch-api-key-usage` | Fetches real-time billing cycles, plan status, and remaining credit balances. |
-| **Ad-Hoc Microclimate Scan** | `POST /v1/env_params` | Dispatches live cloud tasks; polls async status queue; returns live Heat Index, Apparent Temp, Wet Bulb, AQI, and Clear-Sky Solar Irradiance ($GHI$). Deducts live credits upon completion. |
-| **Spatial AOI Heatmap** | `POST /v1/heatmap` | Generates 2-meter thermal raster GeoJSON tiles across user-specified polygon coordinates. Deducts live credits. |
+| **Derived Index Layer** | `POST /v1/env_params` | Returns live 24-point hourly arrays for Heat Index, Apparent Temp, Relative Humidity, Wet Bulb, Cloud Cover and AQI, plus a **daily-aggregate** Clear-Sky $GHI$. ⚠️ **Does not measure air temperature** — the `location.temperature` field echoes back the value supplied in the request (verified: sent `12.345`, received `12.345`). Deducts live credits. |
+| **2m Air Temperature** | `POST /v1/heatmap` (`analytic_type: tcm`) | The **only** source of measured 2-meter convective air temperature. One job per forecast hour (`filter_type: 1`). Returns `stats_data.temperature_stats` (min/max/mean) plus per-tile GeoJSON. Deducts live credits. |
+| **Persistence & Exceedance** | `POST /v1/heatmap` (`analytic_type: persistence` \| `exceedance`) | Native analytics returning hours above a threshold, in `units: "hour"`, over the AOI (`filter_type: 2`, 00:00–23:00). Flat stats shape — *not* the nested `tcm` shape. Deducts live credits. |
 | **Siemens SDC LLM Gateway** | `https://llm.sdc.siemens.cloud/v1` | Routes LangGraph agent reasoning through GPT-5 / Claude Sonnet models when API keys are configured. |
 
 ---
@@ -62,7 +87,8 @@ These are **not static mocks or hardcoded tables**. Every value is computed in r
 
 | Item | Source Location | Status | Architectural Justification |
 | :--- | :--- | :---: | :--- |
-| **Phoenix July 2023 Replay Dataset** | [`src/api/fixtures/phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json) | **Cached Fixture** | Pre-ingested benchmark ground truth. Enables sub-10ms scrubbing on the interactive 12-hour replay bar and offline judging tests without burning API credits on every slider tick. |
+| **Phoenix July 2023 Replay Dataset** | [`src/api/fixtures/phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json) | **Cached Fixture** | Pre-ingested benchmark ground truth. Enables sub-10ms scrubbing on the interactive 12-hour replay bar and offline judging tests without burning API credits on every slider tick. Now reached only via an **explicitly labelled** replay path (`data_source: "phoenix_fixture"`), never as a silent fallback masquerading as live data. |
+| **Grid-Side Telemetry** | `hourly_forecast[].wind_speed_m_s`, `baseline_load_ratio_k`, `hospital_critical_load_mw`, `bess_soc_pct` | **Modelled** | FortyGuard is an environmental API and exposes no SCADA telemetry. These four fields are modelled from the diurnal load profile and are labelled as modelled in every response. |
 | **Utility Substation Assets** | [`src/server/routes/assets.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/server/routes/assets.py) | **Synthetic Asset Registry** | 3 representative transformer nameplate profiles (Phoenix TX-04 50 MVA, San Jose Diridon 35 MVA, Las Vegas Strip 60 MVA) parameterized per IEEE standards. |
 | **Baseline Grid Load Curve** | [`src/physics/transformer_thermal.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/transformer_thermal.py) | **Simulated Profile** | Diurnal load curve ($0.75\,\text{pu}$ morning ramp to $1.18\,\text{pu}$ afternoon peak) modeling desert urban summer air conditioning demand. |
 | **Hardware Actuator Signals** | [`src/models/safety.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/models/safety.py) | **Simulated Actuation** | Generates schema-validated dispatch commands (`COOLING_STAGE_2`, `BESS_PEAK_SHAVING`, `EV_SMART_CURTAIL`, `FEEDER_TRANSFER`) for software state machines rather than physical substation SCADA RTUs. |
@@ -135,3 +161,132 @@ curl -X POST "https://fortyguard-hackathon.vercel.app/api/v1/scan" \
 
 ### C. Live Quickstart Notebooks
 Navigate to [`temperature-api-quickstart/notebooks/`](file:///Users/karim/Development/projects/fortyguard-hackathon/temperature-api-quickstart/notebooks/) and execute any notebook (e.g. `01_create_heatmap.ipynb`, `02_environmental_parameters.ipynb`) with `REFRESH = True` to run live cloud queries against FortyGuard's infrastructure.
+
+---
+
+## 🔧 6. As-Built Live Ingestion Path
+
+### A. Request topology per scan
+
+```
+                        ┌──────────────────────────────────────────┐
+                        │  get_12h_forecast(lat, lon)              │
+                        └────────────────────┬─────────────────────┘
+                                             │
+              ① uncontended, first           │
+        ┌────────────────────────────────────▼─────────────────────────────────┐
+        │  POST /v1/env_params   filter_type 3   (~5 s)                        │
+        │  → hourly RH, wet-bulb, heat index, cloud cover; daily GHI           │
+        │  Runs ALONE: batched behind ② it starved >600 s in 'processing'.     │
+        └────────────────────────────────────┬─────────────────────────────────┘
+                                             │
+              ② bounded fan-out              │  asyncio.Semaphore(6)
+        ┌────────────────────────────────────▼─────────────────────────────────┐
+        │  POST /v1/heatmap  analytic_type=tcm  filter_type 1   × 12 hours     │
+        │  → measured 2m air temperature, hours 06:00–17:00     (~90 s cold)   │
+        └────────────────────────────────────┬─────────────────────────────────┘
+                                             │
+        ┌────────────────────────────────────▼─────────────────────────────────┐
+        │  POST /v1/heatmap  persistence + exceedance  filter_type 2 (~21 s)   │
+        │  → P₄₀ (units: hour); H₄₀ integrated from the measured 2m curve      │
+        └──────────────────────────────────────────────────────────────────────┘
+```
+
+Every response is memoised by request hash in the durable `api_call_cache`
+(Supabase-backed), so a repeat scan of the same AOI/date costs **0 credits** and
+returns in **~1.2 s** instead of ~90 s.
+
+### B. Why the hour loop exists
+
+There is **no time-series endpoint** in the OpenAPI surface — the paths are
+`/v1/heatmap`, `/v1/satellite`, `/v1/streetview`, `/v1/heat_intelligence`,
+`/v1/env_params`, `/v1/status/{id}` and two usage endpoints. An hourly 2m
+temperature curve must therefore be assembled from **N single-hour `tcm` calls**.
+This is the single largest cost and latency driver in the system, and the reason
+caching is not optional.
+
+### C. Field provenance
+
+| Field | Source | Kind |
+| :--- | :--- | :--- |
+| `fortyguard_2m_ambient_c` | `tcm` `temperature_stats.mean` | 🟢 Measured |
+| `tile_peak_2m_c` | `tcm` `temperature_stats.maximum` | 🟢 Measured |
+| `airport_reference_temp_c` | `tcm` `temperature_stats.minimum` | 🟡 Coolest-tile proxy — see caveat below |
+| `microclimate_delta_c` | `mean − min` within AOI | 🟡 Derived (small; see §7) |
+| `relative_humidity_pct`, `wet_bulb_temp_c`, `heat_index_c`, `cloud_cover_pct` | `env_params` hourly arrays | 🟢 Measured |
+| `solar_irradiance_w_m2` | daily GHI × solar-geometry shape × cloud attenuation | 🟡 Modelled magnitude, measured attenuation |
+| `persistence_hours_p40` | `persistence` analytic | 🟢 Measured |
+| `exceedance_degree_hours_h40` | integrated from measured 2m curve | 🟢 Derived from measured |
+| `wind_speed_m_s`, `baseline_load_ratio_k`, `hospital_critical_load_mw`, `bess_soc_pct` | diurnal load model | 🔴 Modelled |
+
+> **Caveat on `airport_reference_temp_c`:** the name is historical. It is the
+> AOI's coolest tile, **not** an airport station reading. We measured Sky Harbor
+> directly and it came back *warmer* than downtown (42.78 vs 42.74 °C) — an
+> airport ringed by runways is itself a heat island.
+
+### D. Provenance contract
+
+| `data_source` | Meaning |
+| :--- | :--- |
+| `fortyguard_live` | 2m temperature, persistence, exceedance and hourly humidity all live. |
+| `fortyguard_live_partial` | Live 2m temperature and persistence; `env_params` unavailable, humidity/solar from benchmark. |
+| `phoenix_fixture` | Fully offline labelled replay. |
+
+Provenance is decided by **response content** (presence of the `locations` key),
+not by the absence of an exception — the client wrapper returns a fixture on
+failure, so a well-formed dict does not imply live data.
+
+### E. Configuration
+
+| Variable | Default | Purpose |
+| :--- | :--- | :--- |
+| `FORTYGUARD_ANALYSIS_DATE` | `2023-07-19` | Pinned reproducible benchmark date inside the supported window. |
+| `FORTYGUARD_MAX_CONCURRENCY` | `6` | Semaphore bound on heatmap fan-out. |
+| `FORTYGUARD_ENV_TIMEOUT_S` | `180` | Poll deadline for `env_params`. |
+| `MOCK_FORTYGUARD_API` | `false` | Forces labelled fixture mode (used by the test suite). |
+
+---
+
+## 📈 7. Verified Live Results
+
+End-to-end through the deployed agent, benchmark date `2023-07-19`:
+
+| City | Peak 2m | $P_{40}$ | $H_{40}$ | TSI |
+| :--- | ---: | ---: | ---: | ---: |
+| Phoenix, AZ | 42.74 °C | 12.00 h | 17.48 °C·h | 3.68 |
+| Seattle, WA | 30.41 °C | **0.00 h** | 0.00 °C·h | 0.00 |
+
+Seattle correctly reports **zero** hours above 40 °C. Under the previous
+synthetic path both cities returned Phoenix's 47.6 °C, because persistence was a
+function of distance from Phoenix rather than of weather. This divergence is the
+clearest single proof that the ingestion path is live.
+
+Two honest caveats, also recorded in `SUBMISSION.md`:
+
+- $P_{40} = 12.0\,\text{h}$ is the **full width of the sampling window**
+  (06:00–17:00). The temperature stayed above 40 °C for every sampled hour, so
+  the metric is bounded by our window, not by the weather.
+- The measured land-cover delta is $+1.14\,^\circ\mathrm{C}$ (downtown 42.74 vs
+  South Mountain natural desert 41.60), **not** the $+4.5\,^\circ\mathrm{C}$
+  originally assumed.
+
+---
+
+## 🧾 8. Regression Guards
+
+The failure mode here was not a crash — it was a system that looked healthy
+while serving synthetic data. Guards now in place:
+
+1. **Provenance on every response.** No caller can consume a metric without
+   being able to see where it came from.
+2. **Cross-city divergence check.** Phoenix and Seattle must not return
+   identical temperatures; identical output means the synthetic path is back.
+3. **No hardcoded physics constants.** `simulate_trajectory()` previously pinned
+   `p_40 = 7.17` / `h_40 = 34.25` internally, overriding the live layer even
+   when it was working. These are now parameters.
+4. **No fixed-length forecast assumptions.** `forecast[7]` assumed the fixture's
+   12-entry shape and raised `IndexError` on shorter live series. Consumers now
+   resolve the peak hour by search.
+5. **Hermetic tests.** `tests/conftest.py` forces `MOCK_FORTYGUARD_API=true` and
+   blanks Supabase credentials, so the suite exercises our own physics and
+   persistence logic deterministically and never bills credits.

@@ -57,3 +57,35 @@ Requests violating these constraints return `400 Bad Request` and are **not char
 - **Failed Tasks:** Tasks failing during engine execution (`status: "Failed"`) do **not** consume credits.
 - **Cycle Rollover:** Unused monthly credits do not roll over; they reset on your `credits_reset_date`.
 - **Support Contact:** If you encounter unexpected behavior or limits, reach out to `support@fortyguard.com`.
+
+---
+
+## 🔬 Observed Constraints (Not In The Official Docs)
+
+Measured during live integration. Full detail and reproduction steps in
+[14 — Field Notes: Live Integration](./14-field-notes-live-integration.md).
+
+| Observation | Practical consequence |
+| :--- | :--- |
+| **`env_params` echoes `location.temperature`** back unchanged — it is an index endpoint, not a measurement source. | Measured 2m air temperature is available **only** from `/v1/heatmap` with `analytic_type: "tcm"`. |
+| **`cloud_cover_octas` is reported on a 0–100 percent scale**, despite the name (octas cap at 8). | Dividing by 8 produces attenuation factors below zero. Normalise by 100 and clamp. |
+| **No time-series endpoint exists.** | An hourly curve requires N single-hour `tcm` calls (`filter_type: 1`) — the dominant cost and latency driver. |
+| **Work appears to serialise per API key.** A small `env_params` job batched behind 12 heatmap jobs sat in `processing` for >600 s; the same call alone takes ~5 s. | Issue latency-sensitive calls first, and bound fan-out with a semaphore. |
+| **`solar_irradiance.clear_sky.ghi` is a daily aggregate**, while the comfort indices are 24-point hourly arrays. | Hourly irradiance must be reconstructed from the daily total. |
+| **`persistence` / `exceedance` use a flat stats shape** (`{units, n_cells, min, max, mean}`), unlike `tcm`'s nested `stats_data.temperature_stats`. | One parser cannot serve both analytic types. |
+| **`overall_temperature_distribution` is a 5-point quantile summary**, not one entry per cell. | Use `n_cells` for the true tile count. |
+| **Spatial contrast at 100m granularity is ~0.1–1 °C.** A 1.9 mi² AOI spans 0.06 °C; 7.7 mi² spans 0.31 °C. Sky Harbor airport measured *warmer* than downtown Phoenix. | Urban-heat-island deltas must be drawn against **natural land cover**, not against an airport station. |
+| **Clock skew silently breaks everything.** A host clock ahead of the archive puts every request outside `2019-01-01 → now + 12h`. | Requests fail as `400` and any fallback path will mask it. Pin an explicit analysis date. |
+
+### Measured latencies (Basic plan, ~1.9 mi², granularity 100m)
+
+| Call | Cold |
+| :--- | :--- |
+| `env_params`, `filter_type: 3`, uncontended | ~5 s |
+| `heatmap` `tcm`, `filter_type: 1` | ~20 s |
+| `heatmap` `persistence` + `exceedance` concurrently | ~21 s |
+| 12-hour scan (12 × `tcm`, semaphore 6) | ~90 s |
+| Same scan from cache | ~1.2 s |
+
+> A 12-hour scan exceeds the default serverless function timeout on most
+> platforms. Cache by request hash and raise `maxDuration` accordingly.

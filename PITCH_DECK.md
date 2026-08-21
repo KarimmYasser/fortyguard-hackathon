@@ -20,10 +20,10 @@
 ```
 
 ### 🎬 Scene 1: The Hook & Market Blindspot (0:00 - 0:30)
-* **Visual:** Split-screen showing Phoenix Sky Harbor Airport station ($43.1^\circ\mathrm{C}$) vs. Downtown Substation sitting 2 meters above black asphalt ($47.6^\circ\mathrm{C}$, $+4.5^\circ\mathrm{C}$ delta).
+* **Visual:** Split-screen showing South Mountain natural desert terrain ($41.6^\circ\mathrm{C}$) vs. Downtown Substation sitting 2 meters above black asphalt ($42.7^\circ\mathrm{C}$, $+1.1^\circ\mathrm{C}$ measured delta).
 * **Voiceover:**
   > *"During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. Multi-billion dollar SCADA giants like Siemens, GE, and Schneider only react when an alarm trips at 135°C - when failure is already locked in.*  
-  > *In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in blackout damages. Standard weather apps and legacy SCADA completely missed it."*
+  > *In Phoenix July 2023, downtown asphalt held 2m air temperature above 40°C for 12 unbroken hours — a +1.1°C land-cover delta over natural desert, sustained. It is the persistence, not the peak, that accelerates transformer insulation aging. Standard weather apps and legacy SCADA report neither."*
 
 ---
 
@@ -70,7 +70,7 @@
 ## 🏛️ PART 2: 5-Minute Live Presentation Slide Deck & Judge Defense
 
 ### Slide 1: The Invisible 2-Meter Hazard
-* **Key Takeaway:** Airport weather ($10\text{m}$) has a $+4.5^\circ\mathrm{C}$ blindspot relative to $2\text{m}$ urban asphalt.
+* **Key Takeaway:** Station weather is blind to *duration*. The measured land-cover delta is $+1.1^\circ\mathrm{C}$, but it is held for $12$ unbroken hours above $40^\circ\mathrm{C}$ — and thermal damage integrates over time.
 * **Talking Points:** Phoenix July 2023 case study; $119^\circ\mathrm{F}$ peak; 31 consecutive days $\ge 110^\circ\mathrm{F}$; why SCADA fails without $2\text{m}$ boundary layer data.
 
 ### Slide 2: The Physical-AI Architecture
@@ -110,7 +110,7 @@
 | Likely Judge Question | Winning Technical Defense |
 | :--- | :--- |
 | **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging are governed by exact physical ODEs (IEEE Std C57.91). Rather than replacing exact physics, we built a Physics-Surrogate ML Regressor ($R^2 > 0.98$) that accelerates the ODE solver by $5000\times$ for city-scale screening of 10,000+ assets."* |
-| **"What data science and engineering principles did you apply?"** | *"We implemented the complete IBM Data Science Lifecycle: a Bronze→Silver→Gold medallion architecture extracting 18 engineered features, rigorous hypothesis testing (paired $t$-test confirming $+4.5^\circ\mathrm{C}$ microclimate bias at $p < 0.001$), Isolation Forest unsupervised anomaly detection for sensor drift, and Weibull survival analysis for asset RUL forecasting."* |
+| **"What data science and engineering principles did you apply?"** | *"We implemented the complete IBM Data Science Lifecycle: a Bronze→Silver→Gold medallion architecture extracting 18 engineered features, rigorous hypothesis testing (paired $t$-test on the measured urban-vs-natural land-cover delta, $+1.1^\circ\mathrm{C}$), Isolation Forest unsupervised anomaly detection for sensor drift, and Weibull survival analysis for asset RUL forecasting."* |
 | **"How is this different from existing utility SCADA alarms?"** | *"SCADA alarms are reactive - they trip 5 minutes before failure when equipment is already overheated. Thermal Sentinel Grid ingests FortyGuard's 12-hour forecast to proactively pre-cool radiators at 8:00 AM off-peak and schedule BESS peak shaving hours in advance."* |
 | **"Why is AI justified here versus simple threshold scripts?"** | *"Deterministic scripts cannot orchestrate multi-asset, cross-feeder trade-offs (e.g. balancing BESS State of Charge, transformer top-oil time constants, and hospital feeder voltage constraints). LangGraph acts as the cognitive planner that evaluates complex multi-step mitigation paths, while CBF-QP acts as the mathematical safety barrier."* |
 | **"Would utilities trust an autonomous AI agent with circuit breakers?"** | *"No utility trusts an unconstrained LLM. That is why we designed a non-LLM Control Barrier Function (CBF-QP) as a mathematical firewall. Even if the AI planner proposes an aggressive dispatch, the CBF-QP filter strictly projects actions onto $K_{\text{safe}}$, guaranteeing zero voltage or thermal violations."* |

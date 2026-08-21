@@ -2,6 +2,13 @@
 
 Welcome to the complete, official FortyGuard Temperature API® documentation repository, fully scraped and organized for instant offline and programmatic access.
 
+> **⚠️ Read [14 — Field Notes](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/14-field-notes-live-integration.md) before writing integration code.**
+> Sections 01–13 are the vendor's own documentation. Section 14 records behaviour
+> we *measured* that the official docs do not state — including two cases where
+> a field's name actively misleads (`env_params.temperature` echoes your input;
+> `cloud_cover_octas` is a 0–100 percentage). Both silently corrupted our output
+> before we caught them.
+
 ---
 
 ## 🗂️ Documentation Navigation
@@ -21,5 +28,6 @@ Welcome to the complete, official FortyGuard Temperature API® documentation rep
 | **11** | [Error Handling](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/11-error-handling.md) | HTTP status codes, error payload format, retry logic | `11-error-handling.md` |
 | **12** | [Known Limitations](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/12-known-limitations.md) | Area limits (10 vs 50 mi²), date rules (2019 to now+12h), regional coverage | `12-known-limitations.md` |
 | **13** | [Release Notes](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/13-release-notes.md) | Changelog and platform updates (v1.0.0 GA) | `13-release-notes.md` |
+| **14** | [🔬 Field Notes: Live Integration](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/14-field-notes-live-integration.md) | **Measured, not documented.** Misleading field semantics, per-key job serialisation, real latencies, spatial-contrast findings | `14-field-notes-live-integration.md` |
 | 📄 | [All-in-One Master Reference](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/FORTYGUARD_API_MASTER_REFERENCE.md) | Single consolidated reference file containing everything | `FORTYGUARD_API_MASTER_REFERENCE.md` |
 | ⚡ | [OpenAPI 3.1 Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/openapi.json) | Machine-readable API schema for Postman, Swagger, SDK generators | `openapi.json` |

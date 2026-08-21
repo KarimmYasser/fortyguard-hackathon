@@ -13,11 +13,11 @@ style_preset: cyber-slate
 
 ## Intent
 
-Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track 06 Agentic AI & Track 02 Future Buildings & Energy). Demonstrates why standard airport weather forecasts miss localized 2m asphalt thermal traps (+4.5°C delta), how IEEE C57.91 physics ODEs solve the thermal cascades without black-box ML hallucinations, how LangGraph coordinates autonomous 12-hour proactive dispatch, and how a deterministic Non-LLM Control Barrier Function (CBF-QP) mathematically guarantees grid voltage and temperature safety limits.
+Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track 06 Agentic AI & Track 02 Future Buildings & Energy). Demonstrates why standard weather forecasts miss localized 2m asphalt thermal traps (+1.1°C land-cover delta sustained over 12h), how IEEE C57.91 physics ODEs solve the thermal cascades without black-box ML hallucinations, how LangGraph coordinates autonomous 12-hour proactive dispatch, and how a deterministic Non-LLM Control Barrier Function (CBF-QP) mathematically guarantees grid voltage and temperature safety limits.
 
 ## Assets
 
-- `assets/scene1.jpg` - Split screen: Airport meteorological station (43.1°C) vs Urban 2m asphalt canyon with transformer (47.6°C).
+- `assets/scene1.jpg` - Split screen: Natural desert terrain reference (41.6°C) vs Urban 2m asphalt canyon with transformer (42.7°C, 12h above 40°C).
 - `assets/scene2.jpg` - 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
 - `assets/scene3.jpg` - 4-Layer Agentic Architecture & CBF-QP Mathematical Safety Shield.
 - `assets/scene4.jpg` - Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
@@ -27,7 +27,7 @@ Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track
 ## Customizations
 
 - Full 180.0s timeline with 6 choreographed scenes.
-- Dynamic animated number counters ($2.8M, +4.5°C, 5,952x ROI, $2,791,338 Net Avoided Loss).
+- Dynamic animated number counters ($2.8M, P40 = 12.0h, +1.1°C, 5,952x ROI, $2,791,338 Net Avoided Loss).
 - Glowing HUD overlays, pulse rings, and progress indicators.
 - Synchronized subtitles and kinetic callouts for key technical takeaways.
 

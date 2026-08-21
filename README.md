@@ -382,3 +382,33 @@ To ensure full transparency with the judging committee, here are current prototy
 * **Portfolio:** [karim-yasser.vercel.app](https://karim-yasser.vercel.app) · **GitHub:** [@KarimmYasser](https://github.com/KarimmYasser)
 
 
+
+---
+
+## 🔎 Data Provenance
+
+Every analytics response carries an explicit `data_source` field, so no metric
+can be consumed without knowing where it came from:
+
+| `data_source` | Meaning |
+| :--- | :--- |
+| `fortyguard_live` | 2m temperature, persistence, exceedance and hourly humidity all returned by the live API. |
+| `fortyguard_live_partial` | Live 2m temperature and persistence; `env_params` was unavailable, so humidity/solar fell back to the benchmark. |
+| `phoenix_fixture` | Fully offline, explicitly labelled replay of the bundled July 2023 fixture. |
+
+Live results for the pinned benchmark date (`2023-07-19`), reproducible by
+replaying the same request:
+
+| City | Peak 2m | $P_{40}$ | $H_{40}$ | TSI |
+| :--- | ---: | ---: | ---: | ---: |
+| Phoenix, AZ | 42.74 °C | 12.00 h | 17.48 °C·h | 3.68 |
+| Seattle, WA | 30.41 °C | 0.00 h | 0.00 °C·h | 0.00 |
+
+Grid-side quantities (`wind_speed_m_s`, `baseline_load_ratio_k`,
+`hospital_critical_load_mw`, `bess_soc_pct`) are **modelled**, not measured —
+FortyGuard is an environmental API and exposes no SCADA telemetry.
+
+> **Integrating against this API yourself?** Read
+> [`docs/api-documentation/14-field-notes-live-integration.md`](docs/api-documentation/14-field-notes-live-integration.md)
+> first. It documents behaviour we measured that the official docs don't state,
+> including two fields whose names actively mislead.

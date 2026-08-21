@@ -2,7 +2,7 @@
 
 ## Scene 1: The Hook & Market Blindspot (0:00 - 0:30, 30s)
 During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away. Multi-billion dollar SCADA giants like Siemens, GE, and Schneider only react when an alarm trips at 135°C - when failure is already locked in.
-In Phoenix July 2023, an invisible +4.5°C radiating asphalt microclimate accelerated transformer insulation aging by 15 times, triggering catastrophic substation blowouts and $2.8 million in blackout damages. Standard weather apps and legacy SCADA completely missed it.
+In Phoenix July 2023, downtown asphalt held the air two meters above it over 40 degrees for twelve unbroken hours. Not a spike — a soak. That is what accelerated transformer insulation aging a hundred and twenty-four times over, triggering substation blowouts and 2.8 million dollars in blackout damages. Standard weather apps report the peak. They never report the duration.
 
 ## Scene 2: The Solution (0:30 - 1:00, 30s)
 Introducing Thermal Sentinel Grid: the world's first physics-constrained agentic resilience engine for urban energy infrastructure.

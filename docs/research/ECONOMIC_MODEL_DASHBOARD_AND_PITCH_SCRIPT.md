@@ -74,7 +74,7 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
 │  • Airport Reference Marker   │  • Action: Enable Stage 2 Cooling + BESS    │
 ├───────────────────────────────┴─────────────────────────────────────────────┤
 │ Physics Telemetry (Apache ECharts 3-Axis Synchronized Timeline):            │
-│ Chart A: Boundary Temp (Airport 43.1°C vs FortyGuard 2m 47.6°C [+4.5°C])   │
+│ Chart A: Boundary Temp (Natural 41.6°C vs FortyGuard 2m 42.7°C [+1.1°C])   │
 │ Chart B: Internal State (Top-Oil 104.2°C < 110°C, Hot-Spot 136.8°C < 140°C) │
 │ Chart C: Aging Factor V(t) (Log scale: 1x -> 14.8x) & Load Ratio K(t)       │
 ├───────────────────────────────────────────────┬─────────────────────────────┤
@@ -120,12 +120,12 @@ The platform is organized into 11 dedicated operational tabs:
 ```
 
 ### ⏱️ 0:00-0:12 - Opening Hook
-* **Visual:** Split screen. Left: generic airport weather reading ($43.1^\circ\mathrm{C}$). Right: FortyGuard parcel-level Phoenix thermal map ($47.6^\circ\mathrm{C}$). Center: Substation transformer turning from amber to blinking red.
+* **Visual:** Split screen. Left: natural-terrain reference reading ($41.6^\circ\mathrm{C}$). Right: FortyGuard parcel-level Phoenix thermal map ($42.7^\circ\mathrm{C}$, held $>40^\circ\mathrm{C}$ for 12h). Center: Substation transformer turning from amber to blinking red.
 * **Voiceover:** *"Utilities still protect billion-dollar grid assets using weather data measured miles away at airports. But during heatwaves, the temperature at a shaded airport is NOT the temperature enveloping a transformer sitting on sun-baked asphalt."*
 * **On-Screen Text:** `AIRPORT WEATHER ≠ ASSET MICROCLIMATE`
 
 ### ⏱️ 0:12-0:25 - The Physical Blind Spot
-* **Visual:** Zoom into Phoenix urban substation. Overlay: `Airport: 43.1°C`, `FortyGuard 2m: 47.6°C`, `Microclimate Delta: +4.5°C`. Highlight land cover (asphalt, concrete buildings, zero canopy).
+* **Visual:** Zoom into Phoenix urban substation. Overlay: `Natural terrain: 41.6°C`, `FortyGuard 2m: 42.7°C`, `Land-cover delta: +1.1°C`, `P₄₀: 12.0h`. Highlight land cover (asphalt, concrete buildings, zero canopy).
 * **Voiceover:** *"FortyGuard gives us the missing convective and radiative boundary condition: exact 2-meter ambient air temperature, solar irradiance, land-cover context, and - critically - how long dangerous heat persists."*
 
 ### ⏱️ 0:25-0:45 - Thermal Soak & Failure Physics
