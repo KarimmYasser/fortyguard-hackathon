@@ -13,12 +13,17 @@ from src.api.alphaxiv_client import AlphaXivClient
 
 router = APIRouter(prefix="/api/v1/research", tags=["Academic Provenance & Research"])
 
-CORPUS_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
-    "docs",
-    "research",
-    "alphaxiv_research_corpus.json",
-)
+def _get_corpus_path() -> Optional[str]:
+    candidates = [
+        os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), "docs", "research", "alphaxiv_research_corpus.json"),
+        os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data", "alphaxiv_research_corpus.json"),
+        os.path.join(os.getcwd(), "docs", "research", "alphaxiv_research_corpus.json"),
+        os.path.join(os.getcwd(), "src", "data", "alphaxiv_research_corpus.json"),
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    return None
 
 
 @router.get("/corpus")
@@ -27,21 +32,22 @@ async def get_research_corpus() -> Dict[str, Any]:
     Returns the indexed academic research corpus (47 peer-reviewed papers & preprints)
     grounding the Thermal Sentinel Grid physics, cool pavements, and satellite super-resolution models.
     """
-    if os.path.exists(CORPUS_PATH):
+    corpus_path = _get_corpus_path()
+    if corpus_path and os.path.exists(corpus_path):
         try:
-            with open(CORPUS_PATH, "r", encoding="utf-8") as f:
+            with open(corpus_path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Failed to read research corpus: {e}")
 
     # Fallback if file not found at relative path
-    client = AlphaXivClient()
     return {
         "physics_informed_thermal_pdes": {
             "title": "Physics-Informed Neural Networks (PINNs) & Thermal PDEs",
             "papers": [],
         }
     }
+
 
 
 @router.get("/search")
