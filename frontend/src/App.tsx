@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { ReplayControlBar } from './components/ReplayControlBar';
 import { HeroKpiGrid } from './components/HeroKpiGrid';
@@ -273,6 +274,9 @@ export const App: React.FC = () => {
         <span>Building the World's Temperature AI · Tracks 06 & 02</span>
         <span>IEEE Std C57.91 & ANSI C84.1 Compliant</span>
       </footer>
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
     </div>
   );
 };
