@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Flame, Clock, TrendingUp, AlertTriangle, ShieldCheck, Zap, Droplets, ArrowRight } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 export const MultiDay72hHeatwaveViewer: React.FC = () => {
   const [data72h, setData72h] = useState<any>(null);
   const [selectedDay, setSelectedDay] = useState<number>(1);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/v1/replay/72h-compounding')
+    fetch(`${API_BASE}/api/v1/replay/72h-compounding`)
       .then((res) => res.json())
       .then((data) => setData72h(data))
       .catch((err) => console.error('Failed to load 72h data', err));

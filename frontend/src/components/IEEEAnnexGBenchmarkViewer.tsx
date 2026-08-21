@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Award, BookOpen, CheckCircle2, ShieldCheck, FileCheck, Layers, ArrowRight } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [activeClause, setActiveClause] = useState<'clause_g2' | 'clause_g3'>('clause_g2');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/v1/benchmark/ieee-annex-g')
+    fetch(`${API_BASE}/api/v1/benchmark/ieee-annex-g`)
       .then((res) => res.json())
       .then((data) => setBenchmarkData(data))
       .catch((err) => console.error('Failed to load IEEE Annex G data', err));

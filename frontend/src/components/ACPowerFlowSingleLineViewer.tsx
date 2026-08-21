@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Zap, Activity, ShieldCheck, AlertTriangle, Sliders, Battery, Hospital, Building2 } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 export const ACPowerFlowSingleLineViewer: React.FC = () => {
   const [solution, setSolution] = useState<any>(null);
@@ -10,7 +11,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
 
   const fetchSolution = async (tap: number, p: number, q: number, k: number) => {
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/power-flow/solve', {
+      const resp = await fetch(`${API_BASE}/api/v1/power-flow/solve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

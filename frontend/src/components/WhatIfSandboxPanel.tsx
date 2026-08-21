@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   Play,
 } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 import { ReplayDataset } from '../types';
 
 interface WhatIfSandboxPanelProps {
@@ -43,7 +44,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
   ) => {
     setIsSimulating(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/sandbox/simulate', {
+      const resp = await fetch(`${API_BASE}/api/v1/sandbox/simulate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

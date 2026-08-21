@@ -17,6 +17,7 @@ import { LiveApiScanModal } from './components/LiveApiScanModal';
 import { HomePitchViewer } from './components/HomePitchViewer';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
+import { API_BASE } from './utils/api';
 
 export const App: React.FC = () => {
   const [data, setData] = useState<ReplayDataset | null>(null);
@@ -32,7 +33,7 @@ export const App: React.FC = () => {
   const fetchReplayData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/replay/phoenix-2023');
+      const resp = await fetch(`${API_BASE}/api/v1/replay/phoenix-2023`);
       if (resp.ok) {
         const json = await resp.json();
         setData(json);

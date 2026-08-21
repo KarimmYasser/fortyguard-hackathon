@@ -15,6 +15,7 @@ import {
   Sun,
   Activity,
 } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 interface LiveApiScanModalProps {
   isOpen: boolean;
@@ -66,7 +67,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
   const fetchUsage = async () => {
     setIsFetchingUsage(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/scan/usage');
+      const resp = await fetch(`${API_BASE}/api/v1/scan/usage`);
       if (resp.ok) {
         const json = await resp.json();
         setUsage(json);
@@ -97,7 +98,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
     setScanError(null);
 
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/scan', {
+      const resp = await fetch(`${API_BASE}/api/v1/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

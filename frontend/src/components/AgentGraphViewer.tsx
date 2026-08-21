@@ -13,6 +13,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { SafetyGateVerdict, EconomicEvaluation } from '../types';
+import { API_BASE } from '../utils/api';
 
 interface AgentGraphViewerProps {
   verdict: SafetyGateVerdict;
@@ -91,7 +92,7 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
     setExecutionStatus('Compiling and executing LangGraph StateGraph pipeline...');
     const startTime = performance.now();
     try {
-      const resp = await fetch('http://127.0.0.1:8000/api/v1/dispatch/run-mitigation', {
+      const resp = await fetch(`${API_BASE}/api/v1/dispatch/run-mitigation`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
