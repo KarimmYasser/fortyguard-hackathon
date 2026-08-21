@@ -23,16 +23,29 @@ async def forecast_node(state: ThermalSentinelState) -> Dict[str, Any]:
         latitude=loc.get("lat", 33.4484),
         longitude=loc.get("lon", -112.0740),
     )
+    # Pass the measured hourly curve so exceedance degree-hours (C*h) is
+    # integrated from real 2m temperatures rather than assumed.
     persistence = await client.get_persistence_and_exceedance(
         latitude=loc.get("lat", 33.4484),
         longitude=loc.get("lon", -112.0740),
         threshold_c=40.0,
+        hourly_forecast=forecast,
     )
 
+    peak_2m = max(
+        (h.get("fortyguard_2m_ambient_c", 0.0) for h in forecast),
+        default=0.0,
+    )
+    source = persistence.get("data_source", "unknown")
     audit_entry = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
         "node": "forecast_node",
-        "message": f"Ingested 12h forecast for {state.get('target_city', 'Phoenix, AZ')} (Peak 2m ambient: {forecast[7]['fortyguard_2m_ambient_c']}°C, Persistence: {persistence.get('persistence_hours_p40')}h > 40°C)",
+        "message": (
+            f"Ingested 12h forecast for {state.get('target_city', 'Phoenix, AZ')} "
+            f"(Peak 2m ambient: {peak_2m}°C, "
+            f"Persistence: {persistence.get('persistence_hours_p40')}h > 40°C, "
+            f"source: {source})"
+        ),
     }
 
     audit_trail = list(state.get("audit_trail", []))

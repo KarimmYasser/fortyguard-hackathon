@@ -76,6 +76,12 @@ async def health_check():
         "version": "1.0.0",
         "mock_mode": mock_mode,
         "active_scenario": "Phoenix July 2023 Heatwave",
+        # Provenance is reported per-response on the analytics payloads
+        # (data_source: fortyguard_live | fortyguard_live_partial |
+        # phoenix_fixture). mock_mode alone only reflects configuration, not
+        # whether a given response actually came back from the live API.
+        "live_api_configured": not mock_mode,
+        "analysis_date": os.getenv("FORTYGUARD_ANALYSIS_DATE", "2023-07-19"),
     }
 
 

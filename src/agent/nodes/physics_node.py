@@ -29,9 +29,17 @@ async def physics_node(state: ThermalSentinelState) -> Dict[str, Any]:
     canyon_engine = UrbanCanyonEngine()
     moisture_engine = VirtualMoistureEngine()
 
+    # Index 7 was the fixture's peak hour; a live forecast can be a different
+    # length, so resolve the hottest hour instead of assuming a position.
+    peak_hour = max(
+        forecast,
+        key=lambda h: h.get("fortyguard_2m_ambient_c", 0.0),
+        default={},
+    ) if forecast else {}
+
     # 1. Urban Canyon Cooling Derate
     canyon_res = canyon_engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=forecast[7].get("fortyguard_2m_ambient_c", 47.6),
+        fortyguard_2m_ambient_c=peak_hour.get("fortyguard_2m_ambient_c", 47.6),
         reference_wind_speed_m_s=3.0,
     )
     eta_cool = canyon_res.get("cooling_derate_eta_cool", 0.68)
@@ -42,13 +50,15 @@ async def physics_node(state: ThermalSentinelState) -> Dict[str, Any]:
         hourly_forecast=forecast,
         cooling_derate=eta_cool,
         forced_cooling_active=False,
+        persistence_hours_p40=persist.get("persistence_hours_p40"),
+        exceedance_degree_hours_h40=persist.get("exceedance_degree_hours_h40"),
     )
 
     # 3. Underground Cable - Soil Dryout State
     soil_res = soil_engine.evaluate_compound_site_margin(
         consecutive_heatwave_days=persist.get("consecutive_heatwave_days", 24),
         initial_moisture=0.18,
-        cable_load_k=forecast[7].get("baseline_load_ratio_k", 1.18),
+        cable_load_k=peak_hour.get("baseline_load_ratio_k", 1.18),
         transformer_top_oil_c=baseline_traj.peak_top_oil_c,
         transformer_hot_spot_c=baseline_traj.peak_hot_spot_c,
     )

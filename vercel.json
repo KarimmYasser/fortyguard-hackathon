@@ -3,7 +3,8 @@
   "outputDirectory": "frontend/dist",
   "functions": {
     "api/index.py": {
-      "includeFiles": "src/**"
+      "includeFiles": "src/**",
+      "maxDuration": 300
     }
   }
 }
