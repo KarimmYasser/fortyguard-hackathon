@@ -34,8 +34,9 @@ async function captureAllTabs() {
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
 
-  console.log('🌐 Opening http://127.0.0.1:8000 ...');
-  await page.goto('http://127.0.0.1:8000', { waitUntil: 'networkidle0', timeout: 30000 });
+  const TARGET_URL = process.env.TARGET_URL || 'https://fortyguard-hackathon.vercel.app';
+  console.log(`🌐 Opening ${TARGET_URL} ...`);
+  await page.goto(TARGET_URL, { waitUntil: 'networkidle0', timeout: 30000 });
   await new Promise((r) => setTimeout(r, 1500));
 
   for (const { tabText, filename } of tabsToCapture) {

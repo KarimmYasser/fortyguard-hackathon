@@ -19,7 +19,7 @@
 | **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** - Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+4.5^\circ\mathrm{C}$ asphalt microclimate delta). |
 | **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 7.17\text{h}$), Exceedance Degree-Hours ($H_{40} = 34.25\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($4.12$), driving proactive 12-hour BESS and transformer cooling dispatch. |
 | **AI Tools Used & Purpose** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Claude 3.5 Sonnet / GPT-4o**: Multi-asset mitigation planning & operator work orders.<br>3. **Non-LLM Control Barrier Functions (CBF-QP)**: Deterministic quadratic program safety gate mathematically guaranteeing ANSI C84.1 voltage ($0.95-1.05\text{ pu}$) and IEEE thermal forward-invariance.<br>4. **HyperFrames**: Programmatic video pitch & live presentation slide rendering. |
-| **Live Demo URL** | Deployable URL / `http://localhost:8000` (Zero install, no login, full incognito compatibility). |
+| **Live Demo URL** | **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (Zero install, no login, full incognito compatibility) · *Local:* `http://localhost:8000` |
 | **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Available locally as Motion Pitch `videos/thermal-sentinel-pitch/renders/video.mp4` and Live UI Walkthrough `videos/thermal-sentinel-pitch/renders/live_product_demo.mp4`, also embedded directly into the Home screen at `/`). |
 | **GitHub Repository Link** | **[https://github.com/KarimmYasser/fortyguard-hackathon](https://github.com/KarimmYasser/fortyguard-hackathon)** *(Collaborator `hackathon@fortyguard.com` / `Hackathon-FG` invited)*. |
 | **Development Timeline Note** | *Initial repo setup & mock-data structure: 17 August 2026. Real FortyGuard API integration and core functionality: 18 August 2026 onward.* |
@@ -153,10 +153,10 @@ pytest tests/ -v
 
 ### 3. Launch Backend Server & Operator Dashboard
 ```bash
-python3 -m uvicorn src.server.main:app --host 127.0.0.1 --port 8000 --reload
+python3 -m uvicorn src.server.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser to interact with all 9 dashboard tabs:
+Open **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 9 dashboard tabs:
 1. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 2. **⚡ What-If Studio:** Interactive real-time sandbox allowing judges to modulate FortyGuard 2m delta, heatwave duration, BESS capacity, and transformer MVA with sub-15ms live ODE recalculation.
 3. **🔥 72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.

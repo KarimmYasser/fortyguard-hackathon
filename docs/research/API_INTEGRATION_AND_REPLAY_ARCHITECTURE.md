@@ -118,7 +118,8 @@ print("Credits Used This Cycle:", usage["credit_summary"]["cycle_credits_used"])
 
 ### B. Live Spatial Scan Execution (cURL)
 ```bash
-curl -X POST "http://127.0.0.1:8000/api/v1/scan" \
+# Cloud Deployment:
+curl -X POST "https://fortyguard-hackathon.vercel.app/api/v1/scan" \
   -H "Content-Type: application/json" \
   -d '{
     "city": "San Jose, CA (Diridon Energy Hub)",
@@ -128,6 +129,8 @@ curl -X POST "http://127.0.0.1:8000/api/v1/scan" \
     "analytic_type": "tcm",
     "threshold_c": 35.0
   }'
+
+# Or Local Server (http://localhost:8000/api/v1/scan)
 ```
 
 ### C. Live Quickstart Notebooks

@@ -1,6 +1,6 @@
 # 🎙️ Thermal Sentinel Grid - Official Pitch Deck & Presentation Guide
 > **Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy) - FortyGuard Hackathon '26**  
-> *Author:* Karim Yasser · *Live Demo:* `http://127.0.0.1:8000`
+> *Author:* Karim Yasser · *Live Demo:* **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (Zero install, no login, full incognito compatibility)
 
 ---
 
@@ -44,7 +44,7 @@
 ---
 
 ### 🎬 Scene 4: Live Dashboard Demo (1:30 - 2:15)
-* **Visual:** Screen capture of `http://127.0.0.1:8000`. Show scrubber moving through 12-hour timeline, switch to **⚡ What-If Studio** dragging sliders, and show the **⚡ AC Power Flow** single-line diagram.
+* **Visual:** Screen capture of `https://fortyguard-hackathon.vercel.app`. Show scrubber moving through 12-hour timeline, switch to **⚡ What-If Studio** dragging sliders, and show the **⚡ AC Power Flow** single-line diagram.
 * **Voiceover:**
   > *"In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW of BESS to cap the hot-spot safely at 136.8°C.*  
   > *In our What-If Studio, judges can modulate microclimate deltas, multi-day heatwaves, and battery sizes in real time with sub-15 millisecond ODE re-solving, while our AC power flow solver optimizes On-Load Tap Changers and BESS Volt/VAR support to maintain 100% hospital feeder uptime."*
