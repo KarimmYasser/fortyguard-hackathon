@@ -47,6 +47,94 @@ interface NavbarProps {
   isLoading: boolean;
 }
 
+interface TabPreviewInfo {
+  badge: string;
+  badgeColor: string;
+  tagline: string;
+  summary: string;
+  highlights: string[];
+}
+
+const TAB_PREVIEWS: Record<ActiveTab, TabPreviewInfo> = {
+  home: {
+    badge: 'HYPERFRAMES STUDIO',
+    badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    tagline: 'Executive Presentation & Pitch',
+    summary: '3-minute synchronized video pitch and interactive 5-minute slide deck with embedded audio narration and full screenplay transcripts.',
+    highlights: ['3-Minute Video Pitch (1080p)', '5-Minute Presenter Slide Deck', 'Interactive Screenplay & Controls'],
+  },
+  overview: {
+    badge: 'MISSION CRITICAL',
+    badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    tagline: 'Real-Time 12h Telemetry & Dispatch',
+    summary: 'Synchronized Phoenix July 2023 heatwave timeline scrubber with 3-axis Apache ECharts physics telemetry and real-time mitigation dispatch.',
+    highlights: ['12-Hour Timeline Scrubber', 'Top-Oil & Hot-Spot Dynamic Rises', 'Real-Time Dispatch Actuation'],
+  },
+  sandbox: {
+    badge: 'INTERACTIVE LAB',
+    badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+    tagline: 'Live Physics Stress Studio',
+    summary: 'Modulate FortyGuard 2m delta (0 to +6°C), heatwave dryout days (1–31), and BESS capacity with sub-15ms live ODE recalculation.',
+    highlights: ['FortyGuard 2m Delta Slider', 'Multi-Day Persistence Sweep', 'Sub-15ms ODE Solvers'],
+  },
+  multi_day_72h: {
+    badge: 'HEATWAVE ACCUMULATION',
+    badgeColor: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
+    tagline: 'Multi-Day Thermal Ratcheting',
+    summary: 'Tracks cumulative 3-day diurnal heat cycles, nocturnal recovery deficit, and compounding Kraft paper insulation loss of life.',
+    highlights: ['72h Continuous ODE Timeline', 'Nightly Recovery Deficit Debt', 'Compounded Aging Multipliers'],
+  },
+  power_flow: {
+    badge: 'GRID VOLTAGE STABILITY',
+    badgeColor: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+    tagline: '4-Bus Forward-Backward Sweep',
+    summary: 'Full AC power flow solver calculating line thermal I²R losses, OLTC transformer tap changes, and BESS Volt/VAR reactive support.',
+    highlights: ['4-Bus Radial Distribution', 'ANSI C84.1 Voltage Envelope', 'BESS Volt/VAR Injection'],
+  },
+  ieee_annex_g: {
+    badge: 'STANDARDS BENCHMARK',
+    badgeColor: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
+    tagline: 'IEEE Std C57.91-2011 Verification',
+    summary: 'Step-by-step numerical verification comparing Thermal Sentinel continuous ODE solver directly against IEEE Standard reference tables.',
+    highlights: ['Clause G.2 & G.3 Compliance', 'Top-Oil Time Constant τ_TO', 'Zero-Drift Benchmark Match'],
+  },
+  academic_provenance: {
+    badge: 'ALPHAXIV DISCOVERY',
+    badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    tagline: 'Peer-Reviewed Literature Grounding',
+    summary: 'Curated repository of peer-reviewed papers discovered via alphaXiv, covering PINNs, cool pavements, and CBF safety filters.',
+    highlights: ['Live alphaXiv Discussion Links', 'IEEE/BibTeX Formatted Citations', 'Publication-Grade LaTeX Proofs'],
+  },
+  gis_map: {
+    badge: 'MICROCLIMATE TILES',
+    badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    tagline: '60m Urban Parcel Resolution',
+    summary: 'Spatial boundary layer temperature heatmaps mapped to Phoenix substation coordinates, street canyons, and building footprints.',
+    highlights: ['2m Convective Heat Map', 'Land-Cover Albedo Overlay', 'Substation Asset Inspector'],
+  },
+  physics_moats: {
+    badge: 'ASYMMETRIC IP',
+    badgeColor: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+    tagline: 'First-Principles Physics Engines',
+    summary: 'Deep dives into Cable-Soil Dryout (IEC 60287), CBF-QP Safety Gate, Canyon Aerodynamics, and Virtual Moisture Sensor.',
+    highlights: ['Non-Linear Soil Resistivity', 'Control Barrier Functions', 'Fickian Paper-Oil Diffusion'],
+  },
+  agent_graph: {
+    badge: 'AUTONOMOUS ORCHESTRATION',
+    badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+    tagline: 'StateGraph Multi-Agent Harness',
+    summary: 'Live visualization of LangGraph state execution: Sensor validation, Thermal forecasting, Risk audit, and deterministic Safety Gate.',
+    highlights: ['Live Node State Inspector', 'Deterministic Non-LLM Gate', 'Autonomous Work Orders'],
+  },
+  financial_roi: {
+    badge: 'FINANCIAL AUDIT',
+    badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    tagline: 'LBNL ICE Avoided Loss Calculator',
+    summary: 'Auditable financial impact quantifying customer interruption savings (VoLL), asset capital deferral, and net operational ROI.',
+    highlights: ['Customer Interruption Costs', 'Capital Replacement Deferral', '>24x Operational ROI Multiple'],
+  },
+};
+
 export const Navbar: React.FC<NavbarProps> = ({
   metadata,
   verdict,
@@ -59,6 +147,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onStartTour,
   isLoading,
 }) => {
+  const [hoveredTab, setHoveredTab] = React.useState<ActiveTab | null>(null);
+
   const tabs = [
     { id: 'home', label: 'Pitch & Video', icon: Sparkles },
     { id: 'overview', label: 'Mission Control', icon: Activity },
@@ -72,7 +162,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'agent_graph', label: 'LangGraph Engine', icon: Cpu },
     { id: 'financial_roi', label: 'Avoided Loss ROI', icon: Calculator },
   ] as const;
-
 
   return (
     <header className="border-b border-slate-800/90 bg-[#080C14]/95 backdrop-blur-2xl sticky top-0 z-50 transition-all">
@@ -199,24 +288,85 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Dedicated Expanded Navigation Bar (Directly Under Header) */}
-      <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner">
+      <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner relative">
         <nav id="tour-navbar-tabs" className="max-w-[1600px] mx-auto flex items-center justify-between gap-1 sm:gap-1.5 overflow-x-auto lg:overflow-x-visible no-scrollbar w-full">
-          {tabs.map((tab) => {
+          {tabs.map((tab, idx) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
+            const isHovered = hoveredTab === tab.id;
+            const preview = TAB_PREVIEWS[tab.id as ActiveTab];
+
+            // Placement calculation so preview tooltip stays cleanly inside screen
+            const alignClass =
+              idx <= 2
+                ? 'left-0 sm:left-0'
+                : idx >= tabs.length - 3
+                ? 'right-0 sm:right-0'
+                : 'left-1/2 -translate-x-1/2';
+
             return (
-              <button
+              <div
                 key={tab.id}
-                onClick={() => onSelectTab(tab.id as ActiveTab)}
-                className={`flex-1 min-w-max lg:min-w-0 px-2.5 sm:px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 whitespace-nowrap ${
-                  isActive
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg shadow-amber-500/25 ring-1 ring-amber-300/50 scale-[1.02]'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/70 bg-slate-900/50 border border-slate-800/70'
-                }`}
+                className="relative flex-1 min-w-max lg:min-w-0"
+                onMouseEnter={() => setHoveredTab(tab.id as ActiveTab)}
+                onMouseLeave={() => setHoveredTab(null)}
               >
-                <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
-                <span className="truncate">{tab.label}</span>
-              </button>
+                <button
+                  onClick={() => onSelectTab(tab.id as ActiveTab)}
+                  className={`w-full px-2.5 sm:px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                    isActive
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg shadow-amber-500/25 ring-1 ring-amber-300/50 scale-[1.02]'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/70 bg-slate-900/50 border border-slate-800/70'
+                  }`}
+                >
+                  <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
+                  <span className="truncate">{tab.label}</span>
+                </button>
+
+                {/* Floating Preview Card on Hover */}
+                {isHovered && preview && (
+                  <div
+                    className={`absolute top-full pt-2 z-50 w-72 sm:w-80 pointer-events-none transition-all duration-200 animate-in fade-in zoom-in-95 ${alignClass}`}
+                  >
+                    <div className="glass-panel p-4 rounded-2xl border border-slate-700/80 bg-slate-950/95 backdrop-blur-2xl shadow-2xl shadow-black/80 space-y-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${preview.badgeColor}`}>
+                          {preview.badge}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-mono">
+                          {isActive ? 'ACTIVE VIEW' : 'CLICK TO VIEW'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-bold text-white font-heading flex items-center gap-1.5">
+                          <Icon className="h-3.5 w-3.5 text-amber-400" />
+                          {tab.label}
+                        </h4>
+                        <p className="text-[11px] text-amber-300/90 font-medium mt-0.5">
+                          {preview.tagline}
+                        </p>
+                      </div>
+
+                      <p className="text-[11px] text-slate-300 leading-relaxed font-sans border-t border-slate-800/80 pt-2">
+                        {preview.summary}
+                      </p>
+
+                      <div className="bg-slate-900/90 rounded-xl p-2 border border-slate-800 space-y-1">
+                        <div className="text-[10px] uppercase font-mono text-slate-400 font-bold">Key Capabilities:</div>
+                        <ul className="space-y-0.5">
+                          {preview.highlights.map((h, i) => (
+                            <li key={i} className="text-[10.5px] text-slate-300 flex items-center gap-1.5 font-mono">
+                              <span className="h-1 w-1 rounded-full bg-amber-400"></span>
+                              {h}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
@@ -224,3 +374,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+
