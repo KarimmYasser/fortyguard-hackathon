@@ -1,0 +1,17 @@
+.venv
+venv
+ENV
+env
+__pycache__
+*.pyc
+node_modules
+frontend/node_modules
+scratch
+decks
+docs
+temperature-api-quickstart
+videos
+.git
+.github
+.agents
+tests
