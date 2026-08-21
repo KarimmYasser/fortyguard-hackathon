@@ -22,7 +22,9 @@
       "exceedance_degree_hours_h40": 17.48,
       "thermal_soak_index_tsi": 3.68,
       "consecutive_heatwave_days": 24,
-      "n_cells": 480
+      "n_cells": 480,
+      "data_source": "phoenix_fixture",
+      "analysis_date": "2023-07-19"
     },
     "urban_canyon_metrics": {
       "height_to_width_ratio_hw": 1.85,

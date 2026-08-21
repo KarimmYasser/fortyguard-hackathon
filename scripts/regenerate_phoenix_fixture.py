@@ -91,6 +91,9 @@ async def main() -> int:
         "thermal_soak_index_tsi": persistence["thermal_soak_index_tsi"],
         "consecutive_heatwave_days": meta["persistence_metrics"]["consecutive_heatwave_days"],
         "n_cells": persistence["n_cells"],
+        # Served via the replay route, i.e. a real capture replayed offline.
+        "data_source": "phoenix_fixture",
+        "analysis_date": persistence["analysis_date"],
     }
     meta["provenance"] = {
         "data_source": "fortyguard_live",
