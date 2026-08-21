@@ -199,7 +199,7 @@ class AsyncFortyGuardClient:
         try:
             from src.db.database import db_manager
             q_hash = db_manager.generate_query_hash("/v1/heatmap", payload)
-            cached_resp = db_manager.get_cached_api_call(q_hash)
+            cached_resp = await db_manager.get_cached_api_call(q_hash)
             if cached_resp:
                 logger.info("Serving FortyGuard heatmap from database cache (0 credits spent).")
                 return {"activity_id": "cached_act_heatmap", "result": cached_resp} if wait else "cached_act_heatmap"

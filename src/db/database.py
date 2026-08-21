@@ -376,7 +376,7 @@ class HybridDatabaseManager:
         return hashlib.md5(normalized_str.encode("utf-8")).hexdigest()
 
     # --- 1. API Cache Operations ---
-    def get_cached_api_call(self, query_hash: str) -> Optional[Dict[str, Any]]:
+    def _get_cached_api_call_sqlite(self, query_hash: str) -> Optional[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -392,6 +392,32 @@ class HybridDatabaseManager:
                 conn.commit()
                 return json.loads(row["response_payload"])
         return None
+
+    async def get_cached_api_call(self, query_hash: str) -> Optional[Dict[str, Any]]:
+        """
+        Hybrid cache lookup: checks durable Supabase first so a paid FortyGuard
+        API response cached by one serverless invocation is actually reused by
+        a *different* cold-started invocation (local SQLite is ephemeral and
+        was previously causing duplicate credit charges across cold starts).
+        Falls back to local SQLite, which also serves warm-container hits fast.
+        """
+        if self.is_supabase_enabled:
+            rows = await self._supabase_select(
+                "api_call_cache",
+                filters={"query_hash": f"eq.{query_hash}"},
+                limit=1,
+            )
+            if rows:
+                payload = rows[0].get("response_payload")
+                if isinstance(payload, str):
+                    try:
+                        payload = json.loads(payload)
+                    except Exception:
+                        pass
+                if payload is not None:
+                    return payload
+
+        return self._get_cached_api_call_sqlite(query_hash)
 
     async def save_cached_api_call(self, record: ApiCallCacheRecord) -> None:
         payload_str = json.dumps(record.response_payload)
@@ -458,7 +484,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("dispatch_work_orders", record.model_dump())
 
-    def get_dispatch_history(self, asset_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+    def _get_dispatch_history_sqlite(self, asset_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             if asset_id:
@@ -472,6 +498,23 @@ class HybridDatabaseManager:
                     (limit,),
                 )
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_dispatch_history(self, asset_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback)."""
+        sqlite_results = self._get_dispatch_history_sqlite(asset_id=asset_id, limit=limit)
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        filters = {"asset_id": f"eq.{asset_id}"} if asset_id else None
+        supabase_results = await self._supabase_select(
+            "dispatch_work_orders", filters=filters, limit=limit, order="created_at.desc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: x.get("work_order_id"),
+            sort_key=lambda x: x.get("created_at") or "",
+            limit=limit,
+        )
 
     # --- 3. Credit Ledger Operations ---
     async def log_credit_transaction(self, record: CreditLedgerRecord) -> None:
@@ -499,7 +542,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("credit_accounting_ledger", record.model_dump())
 
-    def get_credit_ledger(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def _get_credit_ledger_sqlite(self, limit: int = 50) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -507,6 +550,22 @@ class HybridDatabaseManager:
                 (limit,),
             )
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_credit_ledger(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback)."""
+        sqlite_results = self._get_credit_ledger_sqlite(limit=limit)
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        supabase_results = await self._supabase_select(
+            "credit_accounting_ledger", limit=limit, order="created_at.desc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: x.get("transaction_id"),
+            sort_key=lambda x: x.get("created_at") or "",
+            limit=limit,
+        )
 
     # --- 4. Academic Research Papers Operations ---
     async def save_academic_paper(self, record: AcademicPaperRecord) -> None:
@@ -602,9 +661,10 @@ class HybridDatabaseManager:
         if not self.is_supabase_enabled:
             return sqlite_results
 
+        filters = {"category": f"eq.{category}"} if category and category != "all" else None
         supabase_results = await self._supabase_select(
             "academic_research_papers",
-            category=category,
+            filters=filters,
             search=search,
             search_columns=["title", "abstract", "key_findings"],
             limit=limit,
@@ -618,17 +678,9 @@ class HybridDatabaseManager:
                 except Exception:
                     item["authors"] = [item["authors"]]
 
-        merged: Dict[str, Dict[str, Any]] = {}
-        for item in supabase_results:
-            key = item.get("paper_id") or item.get("arxiv_id") or item.get("title", "")
-            merged[key] = item
-        for item in sqlite_results:
-            key = item.get("paper_id") or item.get("arxiv_id") or item.get("title", "")
-            merged.setdefault(key, item)
-
-        combined = list(merged.values())
-        combined.sort(key=lambda x: (x.get("year") or 0, x.get("citation_count") or 0), reverse=True)
-        return combined[:limit]
+        key_fn = lambda x: x.get("paper_id") or x.get("arxiv_id") or x.get("title", "")
+        sort_key = lambda x: (x.get("year") or 0, x.get("citation_count") or 0)
+        return self._merge_by_key(supabase_results, sqlite_results, key_fn, sort_key=sort_key, limit=limit)
 
     # --- 5. Substation Telemetry Logging ---
     async def log_substation_telemetry(self, record: SubstationTelemetryRecord) -> None:
@@ -659,7 +711,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("substation_telemetry_logs", record.model_dump())
 
-    def get_substation_telemetry(self, asset_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+    def _get_substation_telemetry_sqlite(self, asset_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             if asset_id:
@@ -673,6 +725,24 @@ class HybridDatabaseManager:
                     (limit,),
                 )
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_substation_telemetry(self, asset_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback).
+        Rows have no shared cross-system id, so dedup uses a composite natural key."""
+        sqlite_results = self._get_substation_telemetry_sqlite(asset_id=asset_id, limit=limit)
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        filters = {"asset_id": f"eq.{asset_id}"} if asset_id else None
+        supabase_results = await self._supabase_select(
+            "substation_telemetry_logs", filters=filters, limit=limit, order="recorded_at.desc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: (x.get("asset_id"), x.get("hour_step"), x.get("recorded_at")),
+            sort_key=lambda x: x.get("recorded_at") or "",
+            limit=limit,
+        )
 
     # --- 6. What-If Simulation Runs ---
     async def save_simulation_run(self, record: SimulationRunRecord) -> None:
@@ -706,7 +776,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("simulation_runs", record.model_dump())
 
-    def get_simulation_runs(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def _get_simulation_runs_sqlite(self, limit: int = 50) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -714,6 +784,22 @@ class HybridDatabaseManager:
                 (limit,),
             )
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_simulation_runs(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback)."""
+        sqlite_results = self._get_simulation_runs_sqlite(limit=limit)
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        supabase_results = await self._supabase_select(
+            "simulation_runs", limit=limit, order="created_at.desc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: x.get("simulation_id"),
+            sort_key=lambda x: x.get("created_at") or "",
+            limit=limit,
+        )
 
     # --- 7. 72-Hour Multi-Day Logs ---
     async def log_multi_day_step(self, record: MultiDayHeatwaveRecord) -> None:
@@ -879,7 +965,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("bess_degradation_logs", record.model_dump())
 
-    def get_bess_degradation_logs(self, bess_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+    def _get_bess_degradation_logs_sqlite(self, bess_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             if bess_id:
@@ -893,6 +979,24 @@ class HybridDatabaseManager:
                     (limit,),
                 )
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_bess_degradation_logs(self, bess_id: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback).
+        Rows have no shared cross-system id, so dedup uses a composite natural key."""
+        sqlite_results = self._get_bess_degradation_logs_sqlite(bess_id=bess_id, limit=limit)
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        filters = {"bess_id": f"eq.{bess_id}"} if bess_id else None
+        supabase_results = await self._supabase_select(
+            "bess_degradation_logs", filters=filters, limit=limit, order="recorded_at.desc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: (x.get("bess_id"), x.get("hour_step"), x.get("recorded_at")),
+            sort_key=lambda x: x.get("recorded_at") or "",
+            limit=limit,
+        )
 
     # --- 13. Cascading Outage Risk Snapshots ---
     async def save_cascading_risk_snapshot(self, record: CascadingRiskRecord) -> None:
@@ -1010,11 +1114,26 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("grid_assets_registry", record.model_dump())
 
-    def get_grid_assets(self) -> List[Dict[str, Any]]:
+    def _get_grid_assets_sqlite(self) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM grid_assets_registry ORDER BY criticality_tier DESC, name ASC")
             return [dict(row) for row in cursor.fetchall()]
+
+    async def get_grid_assets(self) -> List[Dict[str, Any]]:
+        """Hybrid read: Supabase (durable) merged with local SQLite (ephemeral fallback)."""
+        sqlite_results = self._get_grid_assets_sqlite()
+        if not self.is_supabase_enabled:
+            return sqlite_results
+
+        supabase_results = await self._supabase_select(
+            "grid_assets_registry", limit=500, order="criticality_tier.desc,name.asc",
+        )
+        return self._merge_by_key(
+            supabase_results, sqlite_results,
+            key_fn=lambda x: x.get("asset_id"),
+            sort_key=lambda x: (x.get("criticality_tier") or 0, x.get("name") or ""),
+        )
 
     def seed_default_assets_if_empty(self) -> int:
         """Seeds standard digital twin grid assets into SQLite and Supabase on initial startup."""
@@ -1161,15 +1280,17 @@ class HybridDatabaseManager:
     async def _supabase_select(
         self,
         table: str,
-        category: Optional[str] = None,
+        filters: Optional[Dict[str, str]] = None,
         search: Optional[str] = None,
         search_columns: Optional[List[str]] = None,
         limit: int = 100,
         order: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
         """
-        Generic read from Supabase PostgREST. Returns [] (non-fatal) on any
-        network/config error so callers can fall back to local SQLite.
+        Generic read from Supabase PostgREST. `filters` maps column name to a
+        raw PostgREST filter fragment, e.g. {"asset_id": "eq.SUB-PHX-04"}.
+        Returns [] (non-fatal) on any network/config error so callers can fall
+        back to local SQLite.
         """
         if not self.is_supabase_enabled:
             return []
@@ -1182,8 +1303,8 @@ class HybridDatabaseManager:
         params: Dict[str, str] = {"select": "*", "limit": str(limit)}
         if order:
             params["order"] = order
-        if category and category != "all":
-            params["category"] = f"eq.{category}"
+        for col, frag in (filters or {}).items():
+            params[col] = frag
         if search and search_columns:
             or_clause = ",".join(f"{col}.ilike.*{search}*" for col in search_columns)
             params["or"] = f"({or_clause})"
@@ -1199,8 +1320,55 @@ class HybridDatabaseManager:
             logger.warning(f"Supabase read non-fatal error for table {table}: {e}")
             return []
 
-    def get_database_status(self) -> Dict[str, Any]:
-        """Returns database health, active mode, and cached item counts across all 16 tables."""
+    async def _supabase_count(self, table: str) -> Optional[int]:
+        """Exact row count for a Supabase table via PostgREST count header. None on failure."""
+        if not self.is_supabase_enabled:
+            return None
+        url = f"{self.supabase_url}/rest/v1/{table}"
+        headers = {
+            "apikey": self.supabase_key,
+            "Authorization": f"Bearer {self.supabase_key}",
+            "Prefer": "count=exact",
+        }
+        try:
+            async with httpx.AsyncClient(timeout=6.0) as client:
+                resp = await client.head(url, headers=headers, params={"select": "*"})
+                content_range = resp.headers.get("content-range", "")
+                if "/" in content_range:
+                    total = content_range.split("/")[-1]
+                    if total.isdigit():
+                        return int(total)
+                return None
+        except Exception as e:
+            logger.warning(f"Supabase count non-fatal error for table {table}: {e}")
+            return None
+
+    @staticmethod
+    def _merge_by_key(
+        primary: List[Dict[str, Any]],
+        fallback: List[Dict[str, Any]],
+        key_fn,
+        sort_key=None,
+        reverse: bool = True,
+        limit: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
+        """Merge Supabase (primary/authoritative) rows with local SQLite (fallback)
+        rows, deduplicating by key_fn. Primary wins on key collisions."""
+        merged: Dict[Any, Dict[str, Any]] = {}
+        for item in primary:
+            merged[key_fn(item)] = item
+        for item in fallback:
+            merged.setdefault(key_fn(item), item)
+        combined = list(merged.values())
+        if sort_key:
+            combined.sort(key=sort_key, reverse=reverse)
+        return combined[:limit] if limit else combined
+
+    async def get_database_status(self) -> Dict[str, Any]:
+        """Returns database health, active mode, and item counts across all 16 tables.
+        When Supabase is enabled, its counts are authoritative (durable across cold
+        starts); local SQLite counts are also reported since that store is ephemeral
+        per-invocation on serverless deployments."""
         tables = [
             "api_call_cache",
             "dispatch_work_orders",
@@ -1219,15 +1387,26 @@ class HybridDatabaseManager:
             "cbf_safety_certificates",
             "grid_assets_registry",
         ]
-        counts: Dict[str, int] = {}
+        sqlite_counts: Dict[str, int] = {}
         with self._get_connection() as conn:
             cursor = conn.cursor()
             for t in tables:
                 try:
                     cursor.execute(f"SELECT COUNT(*) as cnt FROM {t}")
-                    counts[t] = cursor.fetchone()["cnt"]
+                    sqlite_counts[t] = cursor.fetchone()["cnt"]
                 except Exception:
-                    counts[t] = 0
+                    sqlite_counts[t] = 0
+
+        counts = sqlite_counts
+        supabase_counts: Dict[str, int] = {}
+        if self.is_supabase_enabled:
+            import asyncio as _asyncio
+            results = await _asyncio.gather(*[self._supabase_count(t) for t in tables])
+            for t, c in zip(tables, results):
+                if c is not None:
+                    supabase_counts[t] = c
+            # Supabase is the durable source of truth; prefer it where available.
+            counts = {t: supabase_counts.get(t, sqlite_counts.get(t, 0)) for t in tables}
 
         return {
             "status": "healthy",
@@ -1236,6 +1415,8 @@ class HybridDatabaseManager:
             "supabase_connected": self.is_supabase_enabled,
             "supabase_url": self.supabase_url if self.is_supabase_enabled else None,
             "counts": counts,
+            "sqlite_counts": sqlite_counts,
+            "supabase_counts": supabase_counts if self.is_supabase_enabled else None,
         }
 
 

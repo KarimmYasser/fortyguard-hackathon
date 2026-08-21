@@ -18,7 +18,7 @@ async def get_db_status() -> Dict[str, Any]:
     """
     Returns persistence mode (Local SQLite vs Supabase PostgreSQL) and active table counts.
     """
-    return db_manager.get_database_status()
+    return await db_manager.get_database_status()
 
 
 @router.get("/credit-ledger")
@@ -26,7 +26,7 @@ async def get_credit_ledger_entries(limit: int = Query(default=50, ge=1, le=500)
     """
     Returns recent FortyGuard API credit expenditures and remaining balance ledger.
     """
-    return db_manager.get_credit_ledger(limit=limit)
+    return await db_manager.get_credit_ledger(limit=limit)
 
 
 @router.get("/dispatch-history")
@@ -37,4 +37,4 @@ async def get_dispatch_history_entries(
     """
     Returns historical B2B SCADA work orders authorized by the multi-agent system.
     """
-    return db_manager.get_dispatch_history(asset_id=asset_id, limit=limit)
+    return await db_manager.get_dispatch_history(asset_id=asset_id, limit=limit)

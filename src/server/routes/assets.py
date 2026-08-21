@@ -61,7 +61,7 @@ from src.db.database import db_manager
 @router.get("", response_model=List[InfrastructureAsset])
 async def list_registered_assets() -> List[InfrastructureAsset]:
     """List all registered critical energy infrastructure assets from the database."""
-    db_assets = db_manager.get_grid_assets()
+    db_assets = await db_manager.get_grid_assets()
     if db_assets and len(db_assets) > 0:
         assets_list = []
         for a in db_assets:
