@@ -97,8 +97,8 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-amber-400 font-bold text-xs uppercase tracking-wider">Mathematical Formulation</div>
-                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-amber-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
-                  <MathView math="\rho_{\text{soil}}(t) = \rho_{\text{wet}} + \frac{\rho_{\text{dry}} - \rho_{\text{wet}}}{1 + \exp\left(a \cdot (\theta_v(t) - \theta_{\text{crit}})\right)}" />
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-amber-200 text-center overflow-hidden flex items-center justify-center min-h-[64px] w-full">
+                  <MathView math="\rho_{\text{soil}}(t) = \rho_{\text{wet}} + \frac{\rho_{\text{dry}} - \rho_{\text{wet}}}{1 + \exp\left(a \cdot (\theta_v(t) - \theta_{\text{crit}})\right)}" scale="auto" />
                 </div>
                 <div className="text-slate-400 text-[11px] space-y-1.5">
                   <div className="flex items-center gap-1.5">• Conductor Temp: <MathView math="T_c = T_{\text{soil},\infty} + q_{\text{loss}} \cdot R_{\text{th}}(\rho_{\text{soil}})" displayMode={false} className="text-slate-200" /></div>
@@ -153,8 +153,8 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Quadratic Program Formulation</div>
-                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-emerald-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
-                  <MathView math="\mathbf{u}^* = \arg\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" />
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-emerald-200 text-center overflow-hidden flex items-center justify-center min-h-[64px] w-full">
+                  <MathView math="\mathbf{u}^* = \arg\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" scale="sm" />
                 </div>
                 <div className="text-slate-400 text-[11px] space-y-1.5">
                   <div>• Safe Set: <MathView math="\mathcal{C} = \{\mathbf{x} : T_o \le 110^\circ\text{C}, T_{\text{hs}} \le 140^\circ\text{C}\}" displayMode={false} className="text-slate-200" /></div>
@@ -162,6 +162,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
                   <div>• ANSI C84.1 Voltage: <span className="text-slate-200">0.95 ≤ V_pu ≤ 1.05</span></div>
                 </div>
               </div>
+
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-cyan-400 font-bold text-xs uppercase tracking-wider">Deterministic Gate Output</div>
@@ -209,8 +210,8 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-cyan-400 font-bold text-xs uppercase tracking-wider">Aerodynamic Formulations</div>
-                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-cyan-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
-                  <MathView math="U_{\text{eff}} = U_{\text{ref}} \cdot \operatorname{clip}\left[\exp\left(-\beta_1 \frac{H}{W} - \beta_2 \lambda_f + \beta_3 \phi\right),\, \kappa_{\min},\, 1.0\right]" />
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-cyan-200 text-center overflow-hidden flex items-center justify-center min-h-[64px] w-full">
+                  <MathView math="U_{\text{eff}} = U_{\text{ref}} \cdot \operatorname{clip}\left[\exp\left(-\beta_1 \frac{H}{W} - \beta_2 \lambda_f + \beta_3 \phi\right),\, \kappa_{\min},\, 1.0\right]" scale="sm" />
                 </div>
                 <div className="text-slate-400 text-[11px] space-y-1.5">
                   <div className="flex items-center gap-1.5">• Convective Coeff: <MathView math="h_c = 5.7 + 3.8 \cdot U_{\text{eff}}" displayMode={false} className="text-slate-200" /></div>
@@ -265,8 +266,8 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-purple-400 font-bold text-xs uppercase tracking-wider">Fickian State Space</div>
-                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-purple-200 text-center overflow-x-auto flex items-center justify-center min-h-[64px]">
-                  <MathView math="RS_o = \frac{w_o}{w_{\text{sat}}(T_o)}, \quad \log_{10}(w_{\text{sat}}) = 7.0895 - \frac{1567}{T_k}" />
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-purple-200 text-center overflow-hidden flex items-center justify-center min-h-[64px] w-full">
+                  <MathView math="RS_o = \frac{w_o}{w_{\text{sat}}(T_o)}, \quad \log_{10}(w_{\text{sat}}) = 7.0895 - \frac{1567}{T_k}" scale="sm" />
                 </div>
                 <div className="text-slate-400 text-[11px] space-y-1.5">
                   <div className="flex items-center gap-1.5">• Paper Diffusion: <MathView math="D_p(T) = D_{p0} \cdot \exp\left(-\frac{E_a}{R_g \cdot T}\right)" displayMode={false} className="text-slate-200" /></div>
@@ -274,6 +275,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
                   <div>• Dielectric Warning: <span className="text-slate-200">RS_o ≥ 50%</span></div>
                 </div>
               </div>
+
 
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
                 <div className="text-rose-400 font-bold text-xs uppercase tracking-wider">Virtual Sensor Reading</div>

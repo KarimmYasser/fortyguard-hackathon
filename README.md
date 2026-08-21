@@ -151,7 +151,8 @@ fortyguard-hackathon/
 │   ├── models/                         # Asset, Risk, and Thermal Pydantic Schemas
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
-└── tests/                              # Automated Pytest Physics & Safety Validation Suite
+│       └── routes/                     # Modular API Routers (Replay, Live Scan, Research/alphaXiv)
+└── tests/                              # Automated Pytest Physics & Safety Validation Suite (25 Tests)
 ```
 
 ---
@@ -164,10 +165,11 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (23 Tests Passing)
+### 2. Run Automated Pytest Suite (25 Tests Passing)
 ```bash
 pytest tests/ -v
 ```
+
 
 ### 3. Launch Backend API & Interactive Dashboard
 ```bash
@@ -301,10 +303,15 @@ To ensure full transparency with the judging committee, here are current prototy
 
 * **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 * **⚡ Live "What-If" Physics Stress Studio:** Interactive real-time sandbox allowing judges to modulate FortyGuard 2m delta ($0^\circ\mathrm{C} \to +6^\circ\mathrm{C}$), multi-day heatwave dryout (Day 1 to 31), BESS capacity ($0 \to 50\text{ MWh}$), and transformer MVA with sub-15ms live ODE recalculation.
+* **📚 Academic Provenance & alphaXiv Literature Explorer:** Search engine and curated repository of **47 peer-reviewed papers & preprints** directly mapped to FortyGuard 2-meter physical models with live discussion retrieval.
+* **📐 Publication-Grade LaTeX Mathematical Engine (KaTeX):** Full LaTeX typography and auto-scaled, responsive mathematical equations across all telemetry, safety certificates, and scientific moat cards.
+* **🗓️ 72-Hour Multi-Day Cumulative Heatwave Analyzer:** Ingests 3-day continuous FortyGuard diurnal cycles to track thermal ratcheting, nightly recovery debt, and cumulative Kraft paper degradation.
+* **🏛️ IEEE C57.91 Annex G Validation Benchmark:** Side-by-side ODE step-by-step verification against the IEEE Standard Annex G reference test dataset.
 * **Hyperlocal 2-Meter GIS Viewer:** Parcel-level convective heat tiles ($60\text{m}$ resolution) and interactive asset inspector.
 * **Four Scientific Moats Viewer:** First-principles deep dives into Cable-Soil dryout, CBF-QP safety filter, Canyon aerodynamics, and Virtual moisture sensor.
 * **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation.
 * **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+
 
 ---
 

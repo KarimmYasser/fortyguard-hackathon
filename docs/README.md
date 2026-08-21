@@ -43,6 +43,7 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 ---
 
 ### 4. 🔬 [Research, Specifications & System Blueprints](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/README.md)
+* **[Scientific Research & alphaXiv Academic Corpus Report](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/SCIENTIFIC_RESEARCH_REPORT.md):** 47 peer-reviewed academic literature corpus grounding PINNs, cool pavements, urban microclimates, cable soil physics, and CBF-QP control barrier functions.
 * **[Thermal Sentinel Grid - Implementation Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md):** Full mathematical formulation, IEEE C57.91 / IEC 60076-7 equations, Overpass QL / EIA dataset queries, deterministic Safety Gate rules, Phoenix July 2023 replay scenario, and LangGraph schema.
 * **[IEEE Annex G & AC Power Flow Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/IEEE_ANNEX_G_AND_AC_POWER_FLOW_SPECIFICATION.md):** Standards verification benchmarks (Clause G.2 & G.3), 72-hour continuous compounding soil dryout ODEs, and 4-bus Forward-Backward Sweep AC power flow with OLTC and BESS Volt/VAR support.
 * **[Value Proposition & AI Philosophy](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md):** Why physics-constrained Agentic AI outperforms black-box ML training, the 4-layer value matrix ($2.79M avoided loss, 5952x ROI), and keynote mentorship insights.
@@ -51,6 +52,7 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 * **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md):** Comprehensive synthesized distillation of keynotes (*Google, Autodesk, FortyGuard*), idea selection philosophy, 6 demonstrated industry blueprints, and winning hackathon strategies.
 * **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md):** Architecture Decision Record (ADR) justifying Dual-Mode Ingestion (Live Cloud Ingestion vs. Deterministic Phoenix Benchmark Replay), sub-15ms operator latency, and IEEE ground truth reproducibility.
 * **[Physical-AI Research & Standards Synthesis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md):** Academic literature foundation, IEEE/IEC/UL standards equations, multi-agent control architecture, and comparative concept benchmarks.
+
 
 ---
 

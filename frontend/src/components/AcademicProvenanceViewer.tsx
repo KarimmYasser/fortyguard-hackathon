@@ -169,8 +169,8 @@ export const AcademicProvenanceViewer: React.FC = () => {
               <Flame className="h-4 w-4" />
               Surface Energy Balance (SEB)
             </div>
-            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-amber-200">
-              <MathView math="R_n = (1 - \alpha) S_{\downarrow} + \epsilon (L_{\downarrow} - \sigma T_s^4) = Q_H + Q_E + Q_G" />
+            <div className="bg-slate-950/90 p-2.5 rounded-xl border border-slate-800/80 mb-2.5 overflow-hidden text-center flex items-center justify-center min-h-[56px] text-amber-200 w-full">
+              <MathView math="R_n = (1 - \alpha) S_{\downarrow} + \epsilon (L_{\downarrow} - \sigma T_s^4) = Q_H + Q_E + Q_G" scale="auto" />
             </div>
           </div>
           <p className="text-[11px] text-slate-400 leading-relaxed">
@@ -184,8 +184,8 @@ export const AcademicProvenanceViewer: React.FC = () => {
               <Atom className="h-4 w-4" />
               Thermal Diffusion & PINNs
             </div>
-            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-cyan-200">
-              <MathView math="\frac{\partial T}{\partial t} + \mathbf{u} \cdot \nabla T = \nabla \cdot (\kappa \nabla T) + S(\mathbf{x}, t)" />
+            <div className="bg-slate-950/90 p-2.5 rounded-xl border border-slate-800/80 mb-2.5 overflow-hidden text-center flex items-center justify-center min-h-[56px] text-cyan-200 w-full">
+              <MathView math="\frac{\partial T}{\partial t} + \mathbf{u} \cdot \nabla T = \nabla \cdot (\kappa \nabla T) + S(\mathbf{x}, t)" scale="auto" />
             </div>
           </div>
           <p className="text-[11px] text-slate-400 leading-relaxed">
@@ -199,8 +199,8 @@ export const AcademicProvenanceViewer: React.FC = () => {
               <Network className="h-4 w-4" />
               Graph Neural Heat Flow
             </div>
-            <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800/80 mb-2.5 overflow-x-auto text-center flex items-center justify-center min-h-[56px] text-emerald-200">
-              <MathView math="\mathbf{H}^{(l+1)} = \sigma \left( \sum_{k=0}^{K} \mathbf{P}^k \mathbf{H}^{(l)} \mathbf{W}_k \right)" />
+            <div className="bg-slate-950/90 p-2.5 rounded-xl border border-slate-800/80 mb-2.5 overflow-hidden text-center flex items-center justify-center min-h-[56px] text-emerald-200 w-full">
+              <MathView math="\mathbf{H}^{(l+1)} = \sigma \left( \sum_{k=0}^{K} \mathbf{P}^k \mathbf{H}^{(l)} \mathbf{W}_k \right)" scale="auto" />
             </div>
           </div>
           <p className="text-[11px] text-slate-400 leading-relaxed">
@@ -208,6 +208,7 @@ export const AcademicProvenanceViewer: React.FC = () => {
           </p>
         </div>
       </div>
+
 
 
       {/* Live Search & Filter Bar */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, AlertOctagon, CheckCircle2, XCircle, Sliders, Lock, Cpu } from 'lucide-react';
 import { SafetyGateVerdict } from '../types';
+import { MathView } from './MathView';
 
 interface SafetyGateCardProps {
   verdict: SafetyGateVerdict;
@@ -39,59 +40,55 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
               </>
             ) : (
               <>
-                <AlertOctagon className="h-4 w-4" /> {verdict.status} [PROJECTED K_SAFE]
+                <AlertOctagon className="h-4 w-4" /> REJECT [OVERRIDE ACTIVE]
               </>
             )}
           </span>
         </div>
 
-        {/* 5-Point Formal Safety Checklist */}
-        <div className="space-y-2.5 mb-4">
-          {/* Check 1: Hot-Spot */}
-          <div className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
-            <div className="flex items-center gap-2">
-              {verdict.hot_spot_compliant && isMitigated ? (
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              ) : (
-                <XCircle className="h-4 w-4 text-rose-400 flex-shrink-0" />
-              )}
-              <span className="text-slate-200 font-medium">1. IEEE C57.91 Hot-Spot Ceiling</span>
-            </div>
-            <span className="font-mono text-[11px] text-slate-300">
-              {isMitigated ? `${verdict.projected_peak_hot_spot_c}°C ≤ 140°C` : '143.2°C > 140°C (BREACH)'}
-            </span>
-          </div>
-
-          {/* Check 2: Top-Oil */}
+        {/* 5-Point Safety Checks */}
+        <div className="space-y-2 mb-4">
+          {/* Check 1: Top-Oil */}
           <div className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              <span className="text-slate-200 font-medium">2. IEC 60076-7 Top-Oil Limit</span>
+              <span className="text-slate-200 font-medium">1. Top-Oil Temperature Margin</span>
             </div>
             <span className="font-mono text-[11px] text-slate-300">
               {verdict.projected_peak_top_oil_c}°C ≤ 110°C
             </span>
           </div>
 
-          {/* Check 3: Voltage Envelope */}
+          {/* Check 2: Winding Hot-Spot */}
           <div className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              <span className="text-slate-200 font-medium">3. ANSI C84.1 Grid Voltage Range</span>
+              <span className="text-slate-200 font-medium">2. Hot-Spot Thermal Limit</span>
             </div>
             <span className="font-mono text-[11px] text-slate-300">
-              0.963 - 1.032 pu [0.95 - 1.05]
+              {verdict.projected_peak_hot_spot_c}°C ≤ 140°C
             </span>
           </div>
 
-          {/* Check 4: N-1 Feeder Contingency */}
+          {/* Check 3: Voltage Band */}
           <div className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-              <span className="text-slate-200 font-medium">4. N-1 Feeder & Tie Reserve</span>
+              <span className="text-slate-200 font-medium">3. ANSI C84.1 Voltage Band</span>
             </div>
-            <span className="font-mono text-[11px] text-emerald-400 font-bold">
-              VERIFIED COMPLIANT
+            <span className="font-mono text-[11px] text-slate-300">
+              {verdict.voltage_pu_min}–{verdict.voltage_pu_max} pu [0.95–1.05]
+            </span>
+          </div>
+
+          {/* Check 4: Transformer MVA Loading */}
+          <div className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+              <span className="text-slate-200 font-medium">4. Dynamic Loading Ceiling</span>
+            </div>
+            <span className="font-mono text-[11px] text-slate-300">
+              K = {verdict.nominal_load_k} pu ≤ {verdict.safe_max_load_k} pu
             </span>
           </div>
 
@@ -106,19 +103,25 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
             </span>
           </div>
         </div>
+
       </div>
 
       {/* Projection & Mathematical Guarantee Box */}
-      <div className="p-3 rounded-xl bg-slate-950 border border-amber-500/20 text-xs space-y-1.5 font-mono">
+      <div className="p-3 rounded-xl bg-slate-950 border border-amber-500/20 text-xs space-y-2 font-mono">
         <div className="flex items-center justify-between text-slate-400 text-[11px]">
-          <span className="flex items-center gap-1 text-amber-400 font-bold">
-            <Sliders className="h-3 w-3" /> Safe Maximum Load Projection:
+          <span className="flex items-center gap-1.5 text-amber-400 font-bold">
+            <Sliders className="h-3.5 w-3.5" /> Safe Maximum Load Projection:
           </span>
-          <span className="text-slate-200 font-bold">K_safe = {verdict.safe_max_load_k} pu</span>
+          <span className="text-slate-200 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+            <MathView math={`K_{\\text{safe}} = ${verdict.safe_max_load_k}\\,\\text{pu}`} displayMode={false} className="text-amber-300 font-bold" />
+          </span>
         </div>
-        <div className="text-[10px] text-slate-400 leading-relaxed font-sans">
-          Formula: <span className="font-mono text-amber-300">min ||u - u_nom||² s.t. h_i(F(x, u, T_a + ε)) ≥ (1-γ)h_i(x)</span>
+        
+        <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/80 text-center overflow-hidden text-amber-200 flex items-center justify-center min-h-[48px] w-full">
+          <MathView math="\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" scale="sm" />
         </div>
+
+
         <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800/80 flex items-center justify-between">
           <span>Barrier Slack: +{verdict.barrier_slack_delta}°C</span>
           <span>Verified: {verdict.audit_timestamp}</span>
