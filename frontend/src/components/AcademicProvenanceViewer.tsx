@@ -139,18 +139,18 @@ export const AcademicProvenanceViewer: React.FC = () => {
             </h1>
             <p className="text-slate-400 text-sm mt-1 max-w-3xl">
               Thermal Sentinel Grid’s thermal downscaling, cool pavement physics, and grid heatwave dispatch
-              are grounded in <strong>47 peer-reviewed papers and preprints</strong> discovered via our automated
+              are grounded in peer-reviewed scientific literature and IEEE/IEC standards discovered via our automated
               alphaXiv and arXiv research adapter.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-center">
-              <span className="block text-2xl font-bold text-amber-400 font-mono">47</span>
+              <span className="block text-2xl font-bold text-amber-400 font-mono">{allPapers.length}</span>
               <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">Indexed Papers</span>
             </div>
             <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-center">
-              <span className="block text-2xl font-bold text-cyan-400 font-mono">5</span>
+              <span className="block text-2xl font-bold text-cyan-400 font-mono">{Object.keys(corpus).length}</span>
               <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">Physics Domains</span>
             </div>
             <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-center">
@@ -160,6 +160,7 @@ export const AcademicProvenanceViewer: React.FC = () => {
           </div>
         </div>
       </div>
+
 
       {/* Physics Moats & Mathematical Mapping Accordion */}
       <div id="tour-academic-formulas" className="grid grid-cols-1 md:grid-cols-3 gap-4">

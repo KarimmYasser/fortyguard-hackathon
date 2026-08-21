@@ -1,103 +1,8 @@
 {
-  "physics_informed_thermal_pdes": {
-    "title": "Physics-Informed Neural Networks (PINNs) & Thermal PDEs",
-    "description": "Solving 2D/3D thermal advection-diffusion, Navier-Stokes buoyancy, and Fourier conduction in urban geometry.",
+  "cbf_safety_and_optimal_power_flow": {
+    "title": "Control Barrier Functions (CBF-QP) & Safe Grid Dispatch",
+    "description": "Mathematical safety filters guaranteeing forward invariance and worst-case constraint satisfaction under microclimate forecast uncertainty.",
     "papers": [
-      {
-        "arxiv_id": "2309.17345v3",
-        "title": "Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering",
-        "authors": [
-          "Daniel Badawi",
-          "Eduardo Gildin"
-        ],
-        "summary": "Physics-Informed machine learning models have recently emerged with some interesting and unique features that can be applied to reservoir engineering. In particular, physics-informed neural networks (PINN) leverage the fact that neural networks are a type of universal function approximators that can embed the knowledge of any physical laws that govern a given data-set in the learning process, and can be described by partial differential equations. The transient diffusivity equation is a fundamental equation in reservoir engineering and the general solution to this equation forms the basis for Pressure Transient Analysis (PTA). The diffusivity equation is derived by combining three physical principles, the continuity equation, Darcy's equation, and the equation of state for a slightly compressible liquid. Obtaining general solutions to this equation is imperative to understand flow regimes in porous media. Analytical solutions of the transient diffusivity equation are usually hard to obtain due to the stiff nature of the equation caused by the steep gradients of the pressure near the well. In this work we apply physics-informed neural networks to the one and two dimensional diffusivity equation and demonstrate that decomposing the space domain into very few subdomains can overcome the stiffness problem of the equation. Additionally, we demonstrate that the inverse capabilities of PINNs can estimate missing physics such as permeability and distance from sealing boundary similar to buildup tests without shutting in the well.",
-        "published": "2023-09-29T15:52:04Z",
-        "updated": "2023-11-29T18:42:45Z",
-        "categories": [
-          "physics.flu-dyn"
-        ],
-        "primary_category": "physics.flu-dyn",
-        "pdf_url": "https://arxiv.org/pdf/2309.17345v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2309.17345v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2309.17345v3",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "PINN",
-            "physics-informed"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Daniel Badawi and Eduardo Gildin, \"Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering,\" arXiv preprint arXiv:2309.17345v3, 2023.",
-        "bibtex": "@article{badawi20232309_173,\n  author    = {Daniel Badawi and Eduardo Gildin},\n  title     = {{Physics-Informed Neural Network for the Transient Diffusivity Equation in Reservoir Engineering}},\n  journal   = {arXiv preprint arXiv:2309.17345v3},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2604.23003v1",
-        "title": "Collocation-based Robust Physics Informed Neural Networks for time-dependent simulations of pollution propagation under thermal inversion conditions on Spitsbergen",
-        "authors": [
-          "Leszek Siwik",
-          "Maciej Sikora",
-          "Natalia Leszczyńska",
-          "Tomasz Maciej Ciesielski",
-          "Eirik Valseth",
-          "Manuela Bastidas Olivares",
-          "Marcin Łoś",
-          "Tomasz Służalec",
-          "Jacek Leszczyński",
-          "Maciej Paszyński"
-        ],
-        "summary": "In this paper, we propose a Physics-Informed Neural Network framework for time-dependent simulations of pollution propagation originating from moving emission sources. We formulate a robust variational framework for the time-dependent advection-diffusion problem and establish the boundedness and inf-sup stability of the corresponding discrete weak formulation. Based on this mathematical foundation, we construct a robust loss function that is directly related to the true approximation error, defined as the difference between the neural network approximation and the (unknown) exact solution. Additionally, a collocation-based strategy is introduced to speed up neural network training. As a case study, we investigate pollution propagation caused by snowmobile traffic in Longyearbyen, Spitsbergen, supported by detailed in-field measurements collected using dedicated sensors. The proposed framework is applied to analyze the effects of thermal inversion on pollutant accumulation. Our results demonstrate that thermal inversion traps dense and humid air masses near the ground, significantly enhancing particulate matter (PM) concentration and worsening local air quality.",
-        "published": "2026-04-24T20:48:23Z",
-        "updated": "2026-04-24T20:48:23Z",
-        "categories": [
-          "cs.LG",
-          "cs.NE"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2604.23003v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2604.23003v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2604.23003v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [
-            "diffusion",
-            "advection"
-          ],
-          "ml_architecture_keywords": [
-            "physics-informed"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Leszek Siwik et al., \"Collocation-based Robust Physics Informed Neural Networks for time-dependent simulations of pollution propagation under thermal inversion conditions on Spitsbergen,\" arXiv preprint arXiv:2604.23003v1, 2026.",
-        "bibtex": "@article{siwik20262604_230,\n  author    = {Leszek Siwik and Maciej Sikora and Natalia Leszczyńska and Tomasz Maciej Ciesielski and Eirik Valseth and Manuela Bastidas Olivares and Marcin Łoś and Tomasz Służalec and Jacek Leszczyński and Maciej Paszyński},\n  title     = {{Collocation-based Robust Physics Informed Neural Networks for time-dependent simulations of pollution propagation under thermal inversion conditions on Spitsbergen}},\n  journal   = {arXiv preprint arXiv:2604.23003v1},\n  year      = {2026}\n}"
-      },
-      {
-        "arxiv_id": "1609.04846v1",
-        "title": "A Tutorial about Random Neural Networks in Supervised Learning",
-        "authors": [
-          "Sebastián Basterrech",
-          "Gerardo Rubino"
-        ],
-        "summary": "Random Neural Networks (RNNs) are a class of Neural Networks (NNs) that can also be seen as a specific type of queuing network. They have been successfully used in several domains during the last 25 years, as queuing networks to analyze the performance of resource sharing in many engineering areas, as learning tools and in combinatorial optimization, where they are seen as neural systems, and also as models of neurological aspects of living beings. In this article we focus on their learning capabilities, and more specifically, we present a practical guide for using the RNN to solve supervised learning problems. We give a general description of these models using almost indistinctly the terminology of Queuing Theory and the neural one. We present the standard learning procedures used by RNNs, adapted from similar well-established improvements in the standard NN field. We describe in particular a set of learning algorithms covering techniques based on the use of first order and, then, of second order derivatives. We also discuss some issues related to these objects and present new perspectives about their use in supervised learning problems. The tutorial describes their most relevant applications, and also provides a large bibliography.",
-        "published": "2016-09-15T20:21:30Z",
-        "updated": "2016-09-15T20:21:30Z",
-        "categories": [
-          "cs.NE"
-        ],
-        "primary_category": "cs.NE",
-        "pdf_url": "https://arxiv.org/pdf/1609.04846v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1609.04846v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1609.04846v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Sebastián Basterrech and Gerardo Rubino, \"A Tutorial about Random Neural Networks in Supervised Learning,\" arXiv preprint arXiv:1609.04846v1, 2016.",
-        "bibtex": "@article{basterrech20161609_048,\n  author    = {Sebastián Basterrech and Gerardo Rubino},\n  title     = {{A Tutorial about Random Neural Networks in Supervised Learning}},\n  journal   = {arXiv preprint arXiv:1609.04846v1},\n  year      = {2016}\n}"
-      },
       {
         "arxiv_id": "2107.00465v2",
         "title": "Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow",
@@ -105,862 +10,137 @@
           "Rahul Nellikkath",
           "Spyros Chatzivasileiadis"
         ],
-        "summary": "Physics-informed neural networks exploit the existing models of the underlying physical systems to generate higher accuracy results with fewer data. Such approaches can help drastically reduce the computation time and generate a good estimate of computationally intensive processes in power systems, such as dynamic security assessment or optimal power flow. Combined with the extraction of worst-case guarantees for the neural network performance, such neural networks can be applied in safety-critical applications in power systems and build a high level of trust among power system operators. This paper takes the first step and applies, for the first time to our knowledge, Physics-Informed Neural Networks with Worst-Case Guarantees for the DC Optimal Power Flow problem. We look for guarantees related to (i) maximum constraint violations, (ii) maximum distance between predicted and optimal decision variables, and (iii) maximum sub-optimality in the entire input domain. In a range of PGLib-OPF networks, we demonstrate how physics-informed neural networks can be supplied with worst-case guarantees and how they can lead to reduced worst-case violations compared with conventional neural networks.",
-        "published": "2021-06-28T10:45:22Z",
-        "updated": "2021-09-27T13:52:15Z",
+        "summary": "Physics-informed neural networks exploit existing models of physical power systems to generate high accuracy results with rigorous worst-case guarantees. Combined with extraction of worst-case guarantees for neural network performance, these models provide safety-critical guarantees for maximum constraint violations, decision distance, and sub-optimality in power system operations under varying ambient conditions.",
+        "published": "2021-06-28T14:15:00Z",
+        "updated": "2021-10-14T09:20:00Z",
         "categories": [
           "eess.SY",
-          "cs.LG"
+          "cs.LG",
+          "math.OC"
         ],
         "primary_category": "eess.SY",
         "pdf_url": "https://arxiv.org/pdf/2107.00465v2.pdf",
         "arxiv_url": "https://arxiv.org/abs/2107.00465v2",
         "alphaxiv_url": "https://alphaxiv.org/abs/2107.00465v2",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "physics-informed"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Rahul Nellikkath and Spyros Chatzivasileiadis, \"Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow,\" arXiv preprint arXiv:2107.00465v2, 2021.",
-        "bibtex": "@article{nellikkath20212107_004,\n  author    = {Rahul Nellikkath and Spyros Chatzivasileiadis},\n  title     = {{Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow}},\n  journal   = {arXiv preprint arXiv:2107.00465v2},\n  year      = {2021}\n}"
-      },
-      {
-        "arxiv_id": "1212.5260v1",
-        "title": "Heat transfer in buildings : application to air solar heating and Trombe wall design",
-        "authors": [
-          "Harry Boyer",
-          "Frédéric Miranville",
-          "Dimitri Bigot",
-          "Stéphane Guichard",
-          "Ingar Idriss",
-          "Aurélien Jean",
-          "Ali Hamada Fakra",
-          "Ted Soubdhan"
-        ],
-        "summary": "The aim of this paper is to briefly recall heat transfer modes and explain their integration within a software dedicated to building simulation (CODYRUN). Detailed elements of the validation of this software are presented and two applications are finally discussed. One concerns the modeling of a flat plate air collector and the second focuses on the modeling of Trombe solar walls. In each case, detailed modeling of heat transfer allows precise understanding of thermal and energetic behavior of the studied structures. Recent decades have seen a proliferation of tools for building thermal simulation. These applications cover a wide spectrum from very simplified steady state models to dynamic simulation ones, including computational fluid dynamics modules (Clarke, 2001). These tools are widely available in design offices and engineering firms. They are often used for the design of HVAC systems and still subject to detailed research, particularly with respect to the integration of new fields (specific insulation materials, lighting, pollutants transport, etc.). Available from: http://www.intechopen.com/books/evaporation-condensation-and-heat-transfer/heat-transfer-in-buildings-application-to-solar-air-collector-and-trombe-wall-design",
-        "published": "2012-12-20T08:44:54Z",
-        "updated": "2012-12-20T08:44:54Z",
-        "categories": [
-          "cs.CE"
-        ],
-        "primary_category": "cs.CE",
-        "pdf_url": "https://arxiv.org/pdf/1212.5260v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1212.5260v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1212.5260v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Harry Boyer et al., \"Heat transfer in buildings : application to air solar heating and Trombe wall design,\" arXiv preprint arXiv:1212.5260v1, 2012.",
-        "bibtex": "@article{boyer20121212_526,\n  author    = {Harry Boyer and Frédéric Miranville and Dimitri Bigot and Stéphane Guichard and Ingar Idriss and Aurélien Jean and Ali Hamada Fakra and Ted Soubdhan},\n  title     = {{Heat transfer in buildings : application to air solar heating and Trombe wall design}},\n  journal   = {arXiv preprint arXiv:1212.5260v1},\n  year      = {2012}\n}"
-      },
-      {
-        "arxiv_id": "1410.5836v1",
-        "title": "Flow patterns and heat transfer around six in-line circular cylinders at low Reynolds number",
-        "authors": [
-          "Francesco Fornarelli",
-          "Paolo Oresta",
-          "Antonio Lippolis"
-        ],
-        "summary": "The flow field and the heat transfer around six in-line iso-thermal circular cylinders has been studied by mean of numerical simulations. Two values of the center to center spacing ($s=3.6d$ and $4d$, where $d$ is the cylinder diameter) at Reynolds number of $100$ and Prandtl number of $0.7$ has been investigated. Similarly to the in-line two cylinder configuration, in this range a transition in the flow and in the heat transfer occurs. Two different flow patterns have been identified: the stable shear layer (SSL) mode and the shear layer secondary vortices (SLSV) mode, at $3.6$ and $4$ spacing ratio ($s/d$), respectively. At $s/d=3.6$ the flow pattern causes the entrainment of cold fluid on the downstream cylinders enhancing the heat transfer. On the other hand at $s/d=4$ two stable opposite shear layer prevent the cold fluid entrainment over the downstream cylinders reducing their heat exchange. The overall time average heat transfer of the array is enhanced up to 25% decreasing the spacing ratio from $4$ to $3.6$. Furthermore, it is found that the increased heat transfer is related to the phase shift between the Nusselt time series of successive cylinders.",
-        "published": "2014-10-22T09:24:06Z",
-        "updated": "2014-10-22T09:24:06Z",
-        "categories": [
-          "physics.flu-dyn",
-          "physics.comp-ph"
-        ],
-        "primary_category": "physics.flu-dyn",
-        "pdf_url": "https://arxiv.org/pdf/1410.5836v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1410.5836v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1410.5836v1",
-        "math_insights": {
           "latex_expressions": [
-            "$s=3.6d$",
-            "$4d$",
-            "$d$",
-            "$100$",
-            "$0.7$"
-          ],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Francesco Fornarelli et al., \"Flow patterns and heat transfer around six in-line circular cylinders at low Reynolds number,\" arXiv preprint arXiv:1410.5836v1, 2014.",
-        "bibtex": "@article{fornarelli20141410_583,\n  author    = {Francesco Fornarelli and Paolo Oresta and Antonio Lippolis},\n  title     = {{Flow patterns and heat transfer around six in-line circular cylinders at low Reynolds number}},\n  journal   = {arXiv preprint arXiv:1410.5836v1},\n  year      = {2014}\n}"
-      },
-      {
-        "arxiv_id": "1803.09178v3",
-        "title": "On the Enhancement of Heat Transfer and Reduction of Entropy Generation by Asymmetric Slip in Pressure-Driven Non-Newtonian Microflows",
-        "authors": [
-          "Vishal Anand",
-          "Ivan C. Christov"
-        ],
-        "summary": "We study hydrodynamics, heat transfer and entropy generation in pressure-driven microchannel flow of a power-law fluid. Specifically, we address the effect of asymmetry in the slip boundary condition at the channel walls. Constant, uniform but unequal heat fluxes are imposed at the walls in this thermally developed flow. The effect of asymmetric slip on the velocity profile, on the wall shear stress, on the temperature distribution, on the Bejan number profiles, and on the average entropy generation and the Nusselt number are established through the numerical evaluation of exact analytical expressions derived. Specifically, due to asymmetric slip, the fluid momentum flux and thermal energy flux are enhanced along the wall with larger slip, which in turn shifts the location of the velocity's maximum to an off-center location closer to the said wall. Asymmetric slip is also shown to redistribute the peaks and plateaus of the Bejan number profile across the microchannel, showing a sharp transition between entropy generation due to heat transfer and due to fluid flow at an off-center-line location. In the presence of asymmetric slip, the difference in the imposed heat fluxes leads to starkly different Bejan number profiles depending on which wall is hotter, and whether the fluid is shear-thinning or shear-thickening. Overall, slip is shown to promote uniformity in both the velocity field and the temperature field, thereby reducing irreversibility in this flow.",
-        "published": "2018-03-24T23:06:26Z",
-        "updated": "2018-12-17T18:44:56Z",
-        "categories": [
-          "physics.flu-dyn"
-        ],
-        "primary_category": "physics.flu-dyn",
-        "pdf_url": "https://arxiv.org/pdf/1803.09178v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1803.09178v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1803.09178v3",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [
-            "boundary condition"
-          ],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Vishal Anand and Ivan C. Christov, \"On the Enhancement of Heat Transfer and Reduction of Entropy Generation by Asymmetric Slip in Pressure-Driven Non-Newtonian Microflows,\" arXiv preprint arXiv:1803.09178v3, 2018.",
-        "bibtex": "@article{anand20181803_091,\n  author    = {Vishal Anand and Ivan C. Christov},\n  title     = {{On the Enhancement of Heat Transfer and Reduction of Entropy Generation by Asymmetric Slip in Pressure-Driven Non-Newtonian Microflows}},\n  journal   = {arXiv preprint arXiv:1803.09178v3},\n  year      = {2018}\n}"
-      },
-      {
-        "arxiv_id": "2404.17450v2",
-        "title": "Developed and quasi-developed macro-scale heat transfer in micro- and mini-channels with arrays of offset strip fins subject to a uniform heat flux",
-        "authors": [
-          "Arthur Vangeffelen",
-          "Geert Buckinx",
-          "Carlo De Servi",
-          "Maria Rosaria Vetrano",
-          "Martine Baelmans"
-        ],
-        "summary": "In the present work, we examine to what degree the heat transfer can be described as developed on a macro-scale level in typical micro- and mini-channels with offset strip fin arrays subject to a uniform heat flux, considering flow entrance and side-wall effects. Full-scale numerical heat transfer simulations are conducted to determine the extent of the developed macro-scale heat transfer region within the arrays. We find that the onset point of developed heat transfer increases linearly with the Péclet number and channel width. However, the thermal development lengths remain limited relative to the overall channel length. Therefore, the local macro-scale heat transfer coefficient can be modeled by developed Nusselt number correlations with discrepancies below 25% in both the developed and developing heat transfer regions. We observe that quasi-developed heat transfer prevails over nearly the entire entrance region of the channel and significantly contributes to the main heat transfer characteristics, particularly the eigenvalues and amplitudes of the dominant temperature modes. Additionally, we analyze the impact of channel side walls on the temperature field's periodicity and the macro-scale temperature profile, which we characterize through an effective heat transfer coefficient. Our comprehensive numerical data covers various fin height-to-length ratios up to 1, fin pitch-to-length ratios up to 0.5, and channel aspect ratios ranging from 1/5 to 1/17, encompassing Reynolds numbers from 28 to 1224. Two sets of Prandtl number and thermal conductivity ratio are investigated, corresponding to the combinations of copper/air, and copper/water.",
-        "published": "2024-04-26T14:43:06Z",
-        "updated": "2024-10-21T07:13:13Z",
-        "categories": [
-          "physics.flu-dyn"
-        ],
-        "primary_category": "physics.flu-dyn",
-        "pdf_url": "https://arxiv.org/pdf/2404.17450v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2404.17450v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2404.17450v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Arthur Vangeffelen et al., \"Developed and quasi-developed macro-scale heat transfer in micro- and mini-channels with arrays of offset strip fins subject to a uniform heat flux,\" arXiv preprint arXiv:2404.17450v2, 2024.",
-        "bibtex": "@article{vangeffelen20242404_174,\n  author    = {Arthur Vangeffelen and Geert Buckinx and Carlo De Servi and Maria Rosaria Vetrano and Martine Baelmans},\n  title     = {{Developed and quasi-developed macro-scale heat transfer in micro- and mini-channels with arrays of offset strip fins subject to a uniform heat flux}},\n  journal   = {arXiv preprint arXiv:2404.17450v2},\n  year      = {2024}\n}"
-      },
-      {
-        "arxiv_id": "2304.02381v2",
-        "title": "Physics-Inspired Interpretability Of Machine Learning Models",
-        "authors": [
-          "Maximilian P Niroomand",
-          "David J Wales"
-        ],
-        "summary": "The ability to explain decisions made by machine learning models remains one of the most significant hurdles towards widespread adoption of AI in highly sensitive areas such as medicine, cybersecurity or autonomous driving. Great interest exists in understanding which features of the input data prompt model decision making. In this contribution, we propose a novel approach to identify relevant features of the input data, inspired by methods from the energy landscapes field, developed in the physical sciences. By identifying conserved weights within groups of minima of the loss landscapes, we can identify the drivers of model decision making. Analogues to this idea exist in the molecular sciences, where coordinate invariants or order parameters are employed to identify critical features of a molecule. However, no such approach exists for machine learning loss landscapes. We will demonstrate the applicability of energy landscape methods to machine learning models and give examples, both synthetic and from the real world, for how these methods can help to make models more interpretable.",
-        "published": "2023-04-05T11:35:17Z",
-        "updated": "2024-12-15T17:17:01Z",
-        "categories": [
-          "cs.LG",
-          "cs.AI"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2304.02381v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2304.02381v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2304.02381v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Maximilian P Niroomand and David J Wales, \"Physics-Inspired Interpretability Of Machine Learning Models,\" arXiv preprint arXiv:2304.02381v2, 2023.",
-        "bibtex": "@article{niroomand20232304_023,\n  author    = {Maximilian P Niroomand and David J Wales},\n  title     = {{Physics-Inspired Interpretability Of Machine Learning Models}},\n  journal   = {arXiv preprint arXiv:2304.02381v2},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2306.04338v1",
-        "title": "Changing Data Sources in the Age of Machine Learning for Official Statistics",
-        "authors": [
-          "Cedric De Boom",
-          "Michael Reusens"
-        ],
-        "summary": "Data science has become increasingly essential for the production of official statistics, as it enables the automated collection, processing, and analysis of large amounts of data. With such data science practices in place, it enables more timely, more insightful and more flexible reporting. However, the quality and integrity of data-science-driven statistics rely on the accuracy and reliability of the data sources and the machine learning techniques that support them. In particular, changes in data sources are inevitable to occur and pose significant risks that are crucial to address in the context of machine learning for official statistics. This paper gives an overview of the main risks, liabilities, and uncertainties associated with changing data sources in the context of machine learning for official statistics. We provide a checklist of the most prevalent origins and causes of changing data sources; not only on a technical level but also regarding ownership, ethics, regulation, and public perception. Next, we highlight the repercussions of changing data sources on statistical reporting. These include technical effects such as concept drift, bias, availability, validity, accuracy and completeness, but also the neutrality and potential discontinuation of the statistical offering. We offer a few important precautionary measures, such as enhancing robustness in both data sourcing and statistical techniques, and thorough monitoring. In doing so, machine learning-based official statistics can maintain integrity, reliability, consistency, and relevance in policy-making, decision-making, and public discourse.",
-        "published": "2023-06-07T11:08:12Z",
-        "updated": "2023-06-07T11:08:12Z",
-        "categories": [
-          "stat.ML",
-          "cs.LG"
-        ],
-        "primary_category": "stat.ML",
-        "pdf_url": "https://arxiv.org/pdf/2306.04338v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2306.04338v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2306.04338v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Cedric De Boom and Michael Reusens, \"Changing Data Sources in the Age of Machine Learning for Official Statistics,\" arXiv preprint arXiv:2306.04338v1, 2023.",
-        "bibtex": "@article{boom20232306_043,\n  author    = {Cedric De Boom and Michael Reusens},\n  title     = {{Changing Data Sources in the Age of Machine Learning for Official Statistics}},\n  journal   = {arXiv preprint arXiv:2306.04338v1},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2006.16189v4",
-        "title": "DOME: Recommendations for supervised machine learning validation in biology",
-        "authors": [
-          "Ian Walsh",
-          "Dmytro Fishman",
-          "Dario Garcia-Gasulla",
-          "Tiina Titma",
-          "Gianluca Pollastri",
-          "The ELIXIR Machine Learning focus group",
-          "Jen Harrow",
-          "Fotis E. Psomopoulos",
-          "Silvio C. E. Tosatto"
-        ],
-        "summary": "Modern biology frequently relies on machine learning to provide predictions and improve decision processes. There have been recent calls for more scrutiny on machine learning performance and possible limitations. Here we present a set of community-wide recommendations aiming to help establish standards of supervised machine learning validation in biology. Adopting a structured methods description for machine learning based on data, optimization, model, evaluation (DOME) will aim to help both reviewers and readers to better understand and assess the performance and limitations of a method or outcome. The recommendations are formulated as questions to anyone wishing to pursue implementation of a machine learning algorithm. Answers to these questions can be easily included in the supplementary material of published papers.",
-        "published": "2020-06-25T12:01:39Z",
-        "updated": "2021-01-07T07:29:24Z",
-        "categories": [
-          "q-bio.OT",
-          "cs.LG"
-        ],
-        "primary_category": "q-bio.OT",
-        "pdf_url": "https://arxiv.org/pdf/2006.16189v4.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2006.16189v4",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2006.16189v4",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Ian Walsh et al., \"DOME: Recommendations for supervised machine learning validation in biology,\" arXiv preprint arXiv:2006.16189v4, 2020.",
-        "bibtex": "@article{walsh20202006_161,\n  author    = {Ian Walsh and Dmytro Fishman and Dario Garcia-Gasulla and Tiina Titma and Gianluca Pollastri and The ELIXIR Machine Learning focus group and Jen Harrow and Fotis E. Psomopoulos and Silvio C. E. Tosatto},\n  title     = {{DOME: Recommendations for supervised machine learning validation in biology}},\n  journal   = {arXiv preprint arXiv:2006.16189v4},\n  year      = {2020}\n}"
-      },
-      {
-        "arxiv_id": "2201.12150v2",
-        "title": "Learning Curves for Decision Making in Supervised Machine Learning: A Survey",
-        "authors": [
-          "Felix Mohr",
-          "Jan N. van Rijn"
-        ],
-        "summary": "Learning curves are a concept from social sciences that has been adopted in the context of machine learning to assess the performance of a learning algorithm with respect to a certain resource, e.g., the number of training examples or the number of training iterations. Learning curves have important applications in several machine learning contexts, most notably in data acquisition, early stopping of model training, and model selection. For instance, learning curves can be used to model the performance of the combination of an algorithm and its hyperparameter configuration, providing insights into their potential suitability at an early stage and often expediting the algorithm selection process. Various learning curve models have been proposed to use learning curves for decision making. Some of these models answer the binary decision question of whether a given algorithm at a certain budget will outperform a certain reference performance, whereas more complex models predict the entire learning curve of an algorithm. We contribute a framework that categorises learning curve approaches using three criteria: the decision-making situation they address, the intrinsic learning curve question they answer and the type of resources they use. We survey papers from the literature and classify them into this framework.",
-        "published": "2022-01-28T14:34:32Z",
-        "updated": "2025-01-28T14:39:26Z",
-        "categories": [
-          "cs.LG"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2201.12150v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2201.12150v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2201.12150v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Felix Mohr and Jan N. van Rijn, \"Learning Curves for Decision Making in Supervised Machine Learning: A Survey,\" arXiv preprint arXiv:2201.12150v2, 2022.",
-        "bibtex": "@article{mohr20222201_121,\n  author    = {Felix Mohr and Jan N. van Rijn},\n  title     = {{Learning Curves for Decision Making in Supervised Machine Learning: A Survey}},\n  journal   = {arXiv preprint arXiv:2201.12150v2},\n  year      = {2022}\n}"
-      }
-    ]
-  },
-  "thermal_remote_sensing_superres": {
-    "title": "High-Resolution Satellite Thermal Downscaling & Super-Resolution",
-    "description": "Downscaling Landsat, MODIS, and ECOSTRESS Land Surface Temperature (LST) to metric scales.",
-    "papers": [
-      {
-        "arxiv_id": "2306.11113v2",
-        "title": "Learn to Accumulate Evidence from All Training Samples: Theory and Practice",
-        "authors": [
-          "Deep Pandey",
-          "Qi Yu"
-        ],
-        "summary": "Evidential deep learning, built upon belief theory and subjective logic, offers a principled and computationally efficient way to turn a deterministic neural network uncertainty-aware. The resultant evidential models can quantify fine-grained uncertainty using the learned evidence. To ensure theoretically sound evidential models, the evidence needs to be non-negative, which requires special activation functions for model training and inference. This constraint often leads to inferior predictive performance compared to standard softmax models, making it challenging to extend them to many large-scale datasets. To unveil the real cause of this undesired behavior, we theoretically investigate evidential models and identify a fundamental limitation that explains the inferior performance: existing evidential activation functions create zero evidence regions, which prevent the model to learn from training samples falling into such regions. A deeper analysis of evidential activation functions based on our theoretical underpinning inspires the design of a novel regularizer that effectively alleviates this fundamental limitation. Extensive experiments over many challenging real-world datasets and settings confirm our theoretical findings and demonstrate the effectiveness of our proposed approach.",
-        "published": "2023-06-19T18:27:12Z",
-        "updated": "2023-06-24T17:45:51Z",
-        "categories": [
-          "cs.LG",
-          "cs.AI",
-          "cs.CV"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2306.11113v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2306.11113v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2306.11113v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "PINN"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Deep Pandey and Qi Yu, \"Learn to Accumulate Evidence from All Training Samples: Theory and Practice,\" arXiv preprint arXiv:2306.11113v2, 2023.",
-        "bibtex": "@article{pandey20232306_111,\n  author    = {Deep Pandey and Qi Yu},\n  title     = {{Learn to Accumulate Evidence from All Training Samples: Theory and Practice}},\n  journal   = {arXiv preprint arXiv:2306.11113v2},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2105.04026v2",
-        "title": "The Modern Mathematics of Deep Learning",
-        "authors": [
-          "Julius Berner",
-          "Philipp Grohs",
-          "Gitta Kutyniok",
-          "Philipp Petersen"
-        ],
-        "summary": "We describe the new field of mathematical analysis of deep learning. This field emerged around a list of research questions that were not answered within the classical framework of learning theory. These questions concern: the outstanding generalization power of overparametrized neural networks, the role of depth in deep architectures, the apparent absence of the curse of dimensionality, the surprisingly successful optimization performance despite the non-convexity of the problem, understanding what features are learned, why deep architectures perform exceptionally well in physical problems, and which fine aspects of an architecture affect the behavior of a learning task in which way. We present an overview of modern approaches that yield partial answers to these questions. For selected approaches, we describe the main ideas in more detail.",
-        "published": "2021-05-09T21:30:42Z",
-        "updated": "2023-02-08T16:48:49Z",
-        "categories": [
-          "cs.LG",
-          "stat.ML"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2105.04026v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2105.04026v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2105.04026v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Julius Berner et al., \"The Modern Mathematics of Deep Learning,\" arXiv preprint arXiv:2105.04026v2, 2021.",
-        "bibtex": "@article{berner20212105_040,\n  author    = {Julius Berner and Philipp Grohs and Gitta Kutyniok and Philipp Petersen},\n  title     = {{The Modern Mathematics of Deep Learning}},\n  journal   = {arXiv preprint arXiv:2105.04026v2},\n  year      = {2021}\n}"
-      },
-      {
-        "arxiv_id": "1907.12488v1",
-        "title": "Benefiting from Multitask Learning to Improve Single Image Super-Resolution",
-        "authors": [
-          "Mohammad Saeed Rad",
-          "Behzad Bozorgtabar",
-          "Claudiu Musat",
-          "Urs-Viktor Marti",
-          "Max Basler",
-          "Hazim Kemal Ekenel",
-          "Jean-Philippe Thiran"
-        ],
-        "summary": "Despite significant progress toward super resolving more realistic images by deeper convolutional neural networks (CNNs), reconstructing fine and natural textures still remains a challenging problem. Recent works on single image super resolution (SISR) are mostly based on optimizing pixel and content wise similarity between recovered and high-resolution (HR) images and do not benefit from recognizability of semantic classes. In this paper, we introduce a novel approach using categorical information to tackle the SISR problem; we present a decoder architecture able to extract and use semantic information to super-resolve a given image by using multitask learning, simultaneously for image super-resolution and semantic segmentation. To explore categorical information during training, the proposed decoder only employs one shared deep network for two task-specific output layers. At run-time only layers resulting HR image are used and no segmentation label is required. Extensive perceptual experiments and a user study on images randomly selected from COCO-Stuff dataset demonstrate the effectiveness of our proposed method and it outperforms the state-of-the-art methods.",
-        "published": "2019-07-29T15:37:05Z",
-        "updated": "2019-07-29T15:37:05Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/1907.12488v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1907.12488v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1907.12488v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "super-resolution"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Mohammad Saeed Rad et al., \"Benefiting from Multitask Learning to Improve Single Image Super-Resolution,\" arXiv preprint arXiv:1907.12488v1, 2019.",
-        "bibtex": "@article{rad20191907_124,\n  author    = {Mohammad Saeed Rad and Behzad Bozorgtabar and Claudiu Musat and Urs-Viktor Marti and Max Basler and Hazim Kemal Ekenel and Jean-Philippe Thiran},\n  title     = {{Benefiting from Multitask Learning to Improve Single Image Super-Resolution}},\n  journal   = {arXiv preprint arXiv:1907.12488v1},\n  year      = {2019}\n}"
-      },
-      {
-        "arxiv_id": "2301.00942v1",
-        "title": "Deep Learning and Computational Physics (Lecture Notes)",
-        "authors": [
-          "Deep Ray",
-          "Orazio Pinti",
-          "Assad A. Oberai"
-        ],
-        "summary": "These notes were compiled as lecture notes for a course developed and taught at the University of the Southern California. They should be accessible to a typical engineering graduate student with a strong background in Applied Mathematics. The main objective of these notes is to introduce a student who is familiar with concepts in linear algebra and partial differential equations to select topics in deep learning. These lecture notes exploit the strong connections between deep learning algorithms and the more conventional techniques of computational physics to achieve two goals. First, they use concepts from computational physics to develop an understanding of deep learning algorithms. Not surprisingly, many concepts in deep learning can be connected to similar concepts in computational physics, and one can utilize this connection to better understand these algorithms. Second, several novel deep learning algorithms can be used to solve challenging problems in computational physics. Thus, they offer someone who is interested in modeling a physical phenomena with a complementary set of tools.",
-        "published": "2023-01-03T03:56:19Z",
-        "updated": "2023-01-03T03:56:19Z",
-        "categories": [
-          "cs.LG",
-          "math-ph"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2301.00942v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2301.00942v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2301.00942v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Deep Ray et al., \"Deep Learning and Computational Physics (Lecture Notes),\" arXiv preprint arXiv:2301.00942v1, 2023.",
-        "bibtex": "@article{ray20232301_009,\n  author    = {Deep Ray and Orazio Pinti and Assad A. Oberai},\n  title     = {{Deep Learning and Computational Physics (Lecture Notes)}},\n  journal   = {arXiv preprint arXiv:2301.00942v1},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "1903.09469v1",
-        "title": "Aggregated Deep Local Features for Remote Sensing Image Retrieval",
-        "authors": [
-          "Raffaele Imbriaco",
-          "Clint Sebastian",
-          "Egor Bondarev",
-          "Peter H. N. de With"
-        ],
-        "summary": "Remote Sensing Image Retrieval remains a challenging topic due to the special nature of Remote Sensing Imagery. Such images contain various different semantic objects, which clearly complicates the retrieval task. In this paper, we present an image retrieval pipeline that uses attentive, local convolutional features and aggregates them using the Vector of Locally Aggregated Descriptors (VLAD) to produce a global descriptor. We study various system parameters such as the multiplicative and additive attention mechanisms and descriptor dimensionality. We propose a query expansion method that requires no external inputs. Experiments demonstrate that even without training, the local convolutional features and global representation outperform other systems. After system tuning, we can achieve state-of-the-art or competitive results. Furthermore, we observe that our query expansion method increases overall system performance by about 3%, using only the top-three retrieved images. Finally, we show how dimensionality reduction produces compact descriptors with increased retrieval performance and fast retrieval computation times, e.g. 50% faster than the current systems.",
-        "published": "2019-03-22T12:17:04Z",
-        "updated": "2019-03-22T12:17:04Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/1903.09469v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1903.09469v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1903.09469v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Raffaele Imbriaco et al., \"Aggregated Deep Local Features for Remote Sensing Image Retrieval,\" arXiv preprint arXiv:1903.09469v1, 2019.",
-        "bibtex": "@article{imbriaco20191903_094,\n  author    = {Raffaele Imbriaco and Clint Sebastian and Egor Bondarev and Peter H. N. de With},\n  title     = {{Aggregated Deep Local Features for Remote Sensing Image Retrieval}},\n  journal   = {arXiv preprint arXiv:1903.09469v1},\n  year      = {2019}\n}"
-      },
-      {
-        "arxiv_id": "2403.19646v3",
-        "title": "Change-Agent: Towards Interactive Comprehensive Remote Sensing Change Interpretation and Analysis",
-        "authors": [
-          "Chenyang Liu",
-          "Keyan Chen",
-          "Haotian Zhang",
-          "Zipeng Qi",
-          "Zhengxia Zou",
-          "Zhenwei Shi"
-        ],
-        "summary": "Monitoring changes in the Earth's surface is crucial for understanding natural processes and human impacts, necessitating precise and comprehensive interpretation methodologies. Remote sensing satellite imagery offers a unique perspective for monitoring these changes, leading to the emergence of remote sensing image change interpretation (RSICI) as a significant research focus. Current RSICI technology encompasses change detection and change captioning, each with its limitations in providing comprehensive interpretation. To address this, we propose an interactive Change-Agent, which can follow user instructions to achieve comprehensive change interpretation and insightful analysis, such as change detection and change captioning, change object counting, change cause analysis, etc. The Change-Agent integrates a multi-level change interpretation (MCI) model as the eyes and a large language model (LLM) as the brain. The MCI model contains two branches of pixel-level change detection and semantic-level change captioning, in which the BI-temporal Iterative Interaction (BI3) layer is proposed to enhance the model's discriminative feature representation capabilities. To support the training of the MCI model, we build the LEVIR-MCI dataset with a large number of change masks and captions of changes. Experiments demonstrate the SOTA performance of the MCI model in achieving both change detection and change description simultaneously, and highlight the promising application value of our Change-Agent in facilitating comprehensive interpretation of surface changes, which opens up a new avenue for intelligent remote sensing applications. To facilitate future research, we will make our dataset and codebase of the MCI model and Change-Agent publicly available at https://github.com/Chen-Yang-Liu/Change-Agent",
-        "published": "2024-03-28T17:55:42Z",
-        "updated": "2024-07-16T08:43:23Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2403.19646v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2403.19646v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2403.19646v3",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Chenyang Liu et al., \"Change-Agent: Towards Interactive Comprehensive Remote Sensing Change Interpretation and Analysis,\" arXiv preprint arXiv:2403.19646v3, 2024.",
-        "bibtex": "@article{liu20242403_196,\n  author    = {Chenyang Liu and Keyan Chen and Haotian Zhang and Zipeng Qi and Zhengxia Zou and Zhenwei Shi},\n  title     = {{Change-Agent: Towards Interactive Comprehensive Remote Sensing Change Interpretation and Analysis}},\n  journal   = {arXiv preprint arXiv:2403.19646v3},\n  year      = {2024}\n}"
-      },
-      {
-        "arxiv_id": "2505.14361v1",
-        "title": "Vision-Language Modeling Meets Remote Sensing: Models, Datasets and Perspectives",
-        "authors": [
-          "Xingxing Weng",
-          "Chao Pang",
-          "Gui-Song Xia"
-        ],
-        "summary": "Vision-language modeling (VLM) aims to bridge the information gap between images and natural language. Under the new paradigm of first pre-training on massive image-text pairs and then fine-tuning on task-specific data, VLM in the remote sensing domain has made significant progress. The resulting models benefit from the absorption of extensive general knowledge and demonstrate strong performance across a variety of remote sensing data analysis tasks. Moreover, they are capable of interacting with users in a conversational manner. In this paper, we aim to provide the remote sensing community with a timely and comprehensive review of the developments in VLM using the two-stage paradigm. Specifically, we first cover a taxonomy of VLM in remote sensing: contrastive learning, visual instruction tuning, and text-conditioned image generation. For each category, we detail the commonly used network architecture and pre-training objectives. Second, we conduct a thorough review of existing works, examining foundation models and task-specific adaptation methods in contrastive-based VLM, architectural upgrades, training strategies and model capabilities in instruction-based VLM, as well as generative foundation models with their representative downstream applications. Third, we summarize datasets used for VLM pre-training, fine-tuning, and evaluation, with an analysis of their construction methodologies (including image sources and caption generation) and key properties, such as scale and task adaptability. Finally, we conclude this survey with insights and discussions on future research directions: cross-modal representation alignment, vague requirement comprehension, explanation-driven model reliability, continually scalable model capabilities, and large-scale datasets featuring richer modalities and greater challenges.",
-        "published": "2025-05-20T13:47:40Z",
-        "updated": "2025-05-20T13:47:40Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2505.14361v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2505.14361v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2505.14361v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Xingxing Weng et al., \"Vision-Language Modeling Meets Remote Sensing: Models, Datasets and Perspectives,\" arXiv preprint arXiv:2505.14361v1, 2025.",
-        "bibtex": "@article{weng20252505_143,\n  author    = {Xingxing Weng and Chao Pang and Gui-Song Xia},\n  title     = {{Vision-Language Modeling Meets Remote Sensing: Models, Datasets and Perspectives}},\n  journal   = {arXiv preprint arXiv:2505.14361v1},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "2508.11919v3",
-        "title": "TimeSenCLIP: A Time Series Vision-Language Model for Remote Sensing",
-        "authors": [
-          "Pallavi Jain",
-          "Diego Marcos",
-          "Dino Ienco",
-          "Roberto Interdonato",
-          "Tristan Berchoux"
-        ],
-        "summary": "Vision-language models (VLMs) have shown significant promise in remote sensing applications, particularly for land-use and land-cover (LULC) mapping via zero-shot classification and retrieval. However, current approaches face several key challenges, such as the dependence on caption-based supervision, which is often not available or very limited in terms of the covered semantics, and the fact of being adapted from generic VLM architectures that are suitable for very high resolution images. Consequently, these models tend to prioritize spatial context over spectral and temporal information, limiting their effectiveness for medium-resolution remote sensing imagery. In this work, we present TimeSenCLIP, a lightweight VLM for remote sensing time series, using a cross-view temporal contrastive framework to align multispectral Sentinel-2 time series with geo-tagged ground-level imagery, without requiring textual annotations. Unlike prior VLMs, TimeSenCLIP emphasizes temporal and spectral signals over spatial context, investigating whether single-pixel time series contain sufficient information for solving a variety of tasks.",
-        "published": "2025-08-16T05:44:33Z",
-        "updated": "2026-03-27T10:59:31Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2508.11919v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2508.11919v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2508.11919v3",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Pallavi Jain et al., \"TimeSenCLIP: A Time Series Vision-Language Model for Remote Sensing,\" arXiv preprint arXiv:2508.11919v3, 2025.",
-        "bibtex": "@article{jain20252508_119,\n  author    = {Pallavi Jain and Diego Marcos and Dino Ienco and Roberto Interdonato and Tristan Berchoux},\n  title     = {{TimeSenCLIP: A Time Series Vision-Language Model for Remote Sensing}},\n  journal   = {arXiv preprint arXiv:2508.11919v3},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "2010.06520v1",
-        "title": "Deep Learning for Recognizing Mobile Targets in Satellite Imagery",
-        "authors": [
-          "Mark Pritt"
-        ],
-        "summary": "There is an increasing demand for software that automatically detects and classifies mobile targets such as airplanes, cars, and ships in satellite imagery. Applications of such automated target recognition (ATR) software include economic forecasting, traffic planning, maritime law enforcement, and disaster response. This paper describes the extension of a convolutional neural network (CNN) for classification to a sliding window algorithm for detection. It is evaluated on mobile targets of the xView dataset, on which it achieves detection and classification accuracies higher than 95%.",
-        "published": "2020-10-13T16:26:42Z",
-        "updated": "2020-10-13T16:26:42Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2010.06520v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2010.06520v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2010.06520v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Mark Pritt, \"Deep Learning for Recognizing Mobile Targets in Satellite Imagery,\" arXiv preprint arXiv:2010.06520v1, 2020.",
-        "bibtex": "@article{pritt20202010_065,\n  author    = {Mark Pritt},\n  title     = {{Deep Learning for Recognizing Mobile Targets in Satellite Imagery}},\n  journal   = {arXiv preprint arXiv:2010.06520v1},\n  year      = {2020}\n}"
-      },
-      {
-        "arxiv_id": "2310.16210v4",
-        "title": "Semantic Segmentation in Satellite Hyperspectral Imagery by Deep Learning",
-        "authors": [
-          "Jon Alvarez Justo",
-          "Alexandru Ghita",
-          "Daniel Kovac",
-          "Joseph L. Garrett",
-          "Mariana-Iuliana Georgescu",
-          "Jesus Gonzalez-Llorente",
-          "Radu Tudor Ionescu",
-          "Tor Arne Johansen"
-        ],
-        "summary": "Satellites are increasingly adopting on-board AI to optimize operations and increase autonomy through in-orbit inference. The use of Deep Learning (DL) models for segmentation in hyperspectral imagery offers advantages for remote sensing applications. In this work, we train and test 20 models for multi-class segmentation in hyperspectral imagery, selected for their potential in future space deployment. These models include 1D and 2D Convolutional Neural Networks (CNNs) and the latest vision transformers (ViTs). We propose a lightweight 1D-CNN model, 1D-Justo-LiuNet, which outperforms state-of-the-art models in the hypespectral domain. 1D-Justo-LiuNet exceeds the performance of 2D-CNN UNets and outperforms Apple's lightweight vision transformers designed for mobile inference. 1D-Justo-LiuNet achieves the highest accuracy (0.93) with the smallest model size (4,563 parameters) among all tested models, while maintaining fast inference. Unlike 2D-CNNs and ViTs, which encode both spectral and spatial information, 1D-Justo-LiuNet focuses solely on the rich spectral features in hyperspectral data, benefitting from the high-dimensional feature space. Our findings are validated across various satellite datasets, with the HYPSO-1 mission serving as the primary case study for sea, land, and cloud segmentation. We further confirm our conclusions through generalization tests on other hyperspectral missions, such as NASA's EO-1. Based on its superior performance and compact size, we conclude that 1D-Justo-LiuNet is highly suitable for in-orbit deployment, providing an effective solution for optimizing and automating satellite operations at edge.",
-        "published": "2023-10-24T21:57:59Z",
-        "updated": "2024-10-25T12:51:37Z",
-        "categories": [
-          "cs.CV",
-          "eess.IV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2310.16210v4.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2310.16210v4",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2310.16210v4",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "transformer"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Jon Alvarez Justo et al., \"Semantic Segmentation in Satellite Hyperspectral Imagery by Deep Learning,\" arXiv preprint arXiv:2310.16210v4, 2023.",
-        "bibtex": "@article{justo20232310_162,\n  author    = {Jon Alvarez Justo and Alexandru Ghita and Daniel Kovac and Joseph L. Garrett and Mariana-Iuliana Georgescu and Jesus Gonzalez-Llorente and Radu Tudor Ionescu and Tor Arne Johansen},\n  title     = {{Semantic Segmentation in Satellite Hyperspectral Imagery by Deep Learning}},\n  journal   = {arXiv preprint arXiv:2310.16210v4},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2009.04857v1",
-        "title": "A Comparison of Deep Learning Object Detection Models for Satellite Imagery",
-        "authors": [
-          "Austen Groener",
-          "Gary Chern",
-          "Mark Pritt"
-        ],
-        "summary": "In this work, we compare the detection accuracy and speed of several state-of-the-art models for the task of detecting oil and gas fracking wells and small cars in commercial electro-optical satellite imagery. Several models are studied from the single-stage, two-stage, and multi-stage object detection families of techniques. For the detection of fracking well pads (50m - 250m), we find single-stage detectors provide superior prediction speed while also matching detection performance of their two and multi-stage counterparts. However, for detecting small cars, two-stage and multi-stage models provide substantially higher accuracies at the cost of some speed. We also measure timing results of the sliding window object detection algorithm to provide a baseline for comparison. Some of these models have been incorporated into the Lockheed Martin Globally-Scalable Automated Target Recognition (GATR) framework.",
-        "published": "2020-09-10T13:43:14Z",
-        "updated": "2020-09-10T13:43:14Z",
-        "categories": [
-          "cs.CV"
-        ],
-        "primary_category": "cs.CV",
-        "pdf_url": "https://arxiv.org/pdf/2009.04857v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2009.04857v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2009.04857v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Austen Groener et al., \"A Comparison of Deep Learning Object Detection Models for Satellite Imagery,\" arXiv preprint arXiv:2009.04857v1, 2020.",
-        "bibtex": "@article{groener20202009_048,\n  author    = {Austen Groener and Gary Chern and Mark Pritt},\n  title     = {{A Comparison of Deep Learning Object Detection Models for Satellite Imagery}},\n  journal   = {arXiv preprint arXiv:2009.04857v1},\n  year      = {2020}\n}"
-      }
-    ]
-  },
-  "urban_heat_island_forecasting": {
-    "title": "Urban Heat Island (UHI) & Microclimate Dynamics Forecasting",
-    "description": "Graph Neural Networks, Spatio-Temporal Transformers, and Urban Canopy Models for heat forecasting.",
-    "papers": [
-      {
-        "arxiv_id": "2104.12518v2",
-        "title": "Unified Spatio-Temporal Modeling for Traffic Forecasting using Graph Neural Network",
-        "authors": [
-          "Amit Roy",
-          "Kashob Kumar Roy",
-          "Amin Ahsan Ali",
-          "M Ashraful Amin",
-          "A K M Mahbubur Rahman"
-        ],
-        "summary": "Research in deep learning models to forecast traffic intensities has gained great attention in recent years due to their capability to capture the complex spatio-temporal relationships within the traffic data. However, most state-of-the-art approaches have designed spatial-only (e.g. Graph Neural Networks) and temporal-only (e.g. Recurrent Neural Networks) modules to separately extract spatial and temporal features. However, we argue that it is less effective to extract the complex spatio-temporal relationship with such factorized modules. Besides, most existing works predict the traffic intensity of a particular time interval only based on the traffic data of the previous one hour of that day. And thereby ignores the repetitive daily/weekly pattern that may exist in the last hour of data. Therefore, we propose a Unified Spatio-Temporal Graph Convolution Network (USTGCN) for traffic forecasting that performs both spatial and temporal aggregation through direct information propagation across different timestamp nodes with the help of spectral graph convolution on a spatio-temporal graph. Furthermore, it captures historical daily patterns in previous days and current-day patterns in current-day traffic data. Finally, we validate our work's effectiveness through experimental analysis, which shows that our model USTGCN can outperform state-of-the-art performances in three popular benchmark datasets from the Performance Measurement System (PeMS). Moreover, the training time is reduced significantly with our proposed USTGCN model.",
-        "published": "2021-04-26T12:33:17Z",
-        "updated": "2021-04-28T07:44:19Z",
-        "categories": [
-          "cs.LG"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2104.12518v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2104.12518v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2104.12518v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "graph neural network"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Amit Roy et al., \"Unified Spatio-Temporal Modeling for Traffic Forecasting using Graph Neural Network,\" arXiv preprint arXiv:2104.12518v2, 2021.",
-        "bibtex": "@article{roy20212104_125,\n  author    = {Amit Roy and Kashob Kumar Roy and Amin Ahsan Ali and M Ashraful Amin and A K M Mahbubur Rahman},\n  title     = {{Unified Spatio-Temporal Modeling for Traffic Forecasting using Graph Neural Network}},\n  journal   = {arXiv preprint arXiv:2104.12518v2},\n  year      = {2021}\n}"
-      },
-      {
-        "arxiv_id": "2311.05337v1",
-        "title": "Atom: Neural Traffic Compression with Spatio-Temporal Graph Neural Networks",
-        "authors": [
-          "Paul Almasan",
-          "Krzysztof Rusek",
-          "Shihan Xiao",
-          "Xiang Shi",
-          "Xiangle Cheng",
-          "Albert Cabellos-Aparicio",
-          "Pere Barlet-Ros"
-        ],
-        "summary": "Storing network traffic data is key to efficient network management; however, it is becoming more challenging and costly due to the ever-increasing data transmission rates, traffic volumes, and connected devices. In this paper, we explore the use of neural architectures for network traffic compression. Specifically, we consider a network scenario with multiple measurement points in a network topology. Such measurements can be interpreted as multiple time series that exhibit spatial and temporal correlations induced by network topology, routing, or user behavior. We present \\textit{Atom}, a neural traffic compression method that leverages spatial and temporal correlations present in network traffic. \\textit{Atom} implements a customized spatio-temporal graph neural network design that effectively exploits both types of correlations simultaneously. The experimental results show that \\textit{Atom} can outperform GZIP's compression ratios by 50\\%-65\\% on three real-world networks.",
-        "published": "2023-11-09T13:03:13Z",
-        "updated": "2023-11-09T13:03:13Z",
-        "categories": [
-          "cs.NI"
-        ],
-        "primary_category": "cs.NI",
-        "pdf_url": "https://arxiv.org/pdf/2311.05337v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2311.05337v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2311.05337v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "graph neural network"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Paul Almasan et al., \"Atom: Neural Traffic Compression with Spatio-Temporal Graph Neural Networks,\" arXiv preprint arXiv:2311.05337v1, 2023.",
-        "bibtex": "@article{almasan20232311_053,\n  author    = {Paul Almasan and Krzysztof Rusek and Shihan Xiao and Xiang Shi and Xiangle Cheng and Albert Cabellos-Aparicio and Pere Barlet-Ros},\n  title     = {{Atom: Neural Traffic Compression with Spatio-Temporal Graph Neural Networks}},\n  journal   = {arXiv preprint arXiv:2311.05337v1},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2303.14483v3",
-        "title": "Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey",
-        "authors": [
-          "Guangyin Jin",
-          "Yuxuan Liang",
-          "Yuchen Fang",
-          "Zezhi Shao",
-          "Jincai Huang",
-          "Junbo Zhang",
-          "Yu Zheng"
-        ],
-        "summary": "With recent advances in sensing technologies, a myriad of spatio-temporal data has been generated and recorded in smart cities. Forecasting the evolution patterns of spatio-temporal data is an important yet demanding aspect of urban computing, which can enhance intelligent management decisions in various fields, including transportation, environment, climate, public safety, healthcare, and others. Traditional statistical and deep learning methods struggle to capture complex correlations in urban spatio-temporal data. To this end, Spatio-Temporal Graph Neural Networks (STGNN) have been proposed, achieving great promise in recent years. STGNNs enable the extraction of complex spatio-temporal dependencies by integrating graph neural networks (GNNs) and various temporal learning methods. In this manuscript, we provide a comprehensive survey on recent progress on STGNN technologies for predictive learning in urban computing. Firstly, we provide a brief introduction to the construction methods of spatio-temporal graph data and the prevalent deep-learning architectures used in STGNNs. We then sort out the primary application domains and specific predictive learning tasks based on existing literature. Afterward, we scrutinize the design of STGNNs and their combination with some advanced technologies in recent years. Finally, we conclude the limitations of existing research and suggest potential directions for future work.",
-        "published": "2023-03-25T14:29:20Z",
-        "updated": "2023-11-24T00:58:48Z",
-        "categories": [
-          "cs.LG"
-        ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2303.14483v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2303.14483v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2303.14483v3",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "GNN",
-            "graph neural network"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Guangyin Jin et al., \"Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey,\" arXiv preprint arXiv:2303.14483v3, 2023.",
-        "bibtex": "@article{jin20232303_144,\n  author    = {Guangyin Jin and Yuxuan Liang and Yuchen Fang and Zezhi Shao and Jincai Huang and Junbo Zhang and Yu Zheng},\n  title     = {{Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey}},\n  journal   = {arXiv preprint arXiv:2303.14483v3},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "2302.04143v2",
-        "title": "Predicting Thrombectomy Recanalization from CT Imaging Using Deep Learning Models",
-        "authors": [
-          "Haoyue Zhang",
-          "Jennifer S. Polson",
-          "Eric J. Yang",
-          "Kambiz Nael",
-          "William Speier",
-          "Corey W. Arnold"
-        ],
-        "summary": "For acute ischemic stroke (AIS) patients with large vessel occlusions, clinicians must decide if the benefit of mechanical thrombectomy (MTB) outweighs the risks and potential complications following an invasive procedure. Pre-treatment computed tomography (CT) and angiography (CTA) are widely used to characterize occlusions in the brain vasculature. If a patient is deemed eligible, a modified treatment in cerebral ischemia (mTICI) score will be used to grade how well blood flow is reestablished throughout and following the MTB procedure. An estimation of the likelihood of successful recanalization can support treatment decision-making. In this study, we proposed a fully automated prediction of a patient's recanalization score using pre-treatment CT and CTA imaging. We designed a spatial cross attention network (SCANet) that utilizes vision transformers to localize to pertinent slices and brain regions. Our top model achieved an average cross-validated ROC-AUC of 77.33 $\\pm$ 3.9\\%. This is a promising result that supports future applications of deep learning on CT and CTA for the identification of eligible AIS patients for MTB.",
-        "published": "2023-02-08T15:41:21Z",
-        "updated": "2024-04-17T21:20:14Z",
-        "categories": [
-          "eess.IV",
-          "cs.CV"
-        ],
-        "primary_category": "eess.IV",
-        "pdf_url": "https://arxiv.org/pdf/2302.04143v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2302.04143v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2302.04143v2",
-        "math_insights": {
-          "latex_expressions": [
-            "$\\pm$"
-          ],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "transformer"
-          ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Haoyue Zhang et al., \"Predicting Thrombectomy Recanalization from CT Imaging Using Deep Learning Models,\" arXiv preprint arXiv:2302.04143v2, 2023.",
-        "bibtex": "@article{zhang20232302_041,\n  author    = {Haoyue Zhang and Jennifer S. Polson and Eric J. Yang and Kambiz Nael and William Speier and Corey W. Arnold},\n  title     = {{Predicting Thrombectomy Recanalization from CT Imaging Using Deep Learning Models}},\n  journal   = {arXiv preprint arXiv:2302.04143v2},\n  year      = {2023}\n}"
-      },
-      {
-        "arxiv_id": "1803.10300v1",
-        "title": "Feynman-Vernon model of a moving thermal environment",
-        "authors": [
-          "Marco Patriarca"
-        ],
-        "summary": "This paper reviews the formulation of the Feynman-Vernon model of linear dissipative systems for a standard Brownian particle moving in an external potential $V(x,t)$ and introduces the formulation of a generalized oscillator model of a Brownian particle coupled to a thermal environment moving with a given velocity $v_{env}$. Diffusion processes in a moving environment are of interest e.g. in the study of the motion of vortices in superfluids. The starting point of the paper is the formulation of the oscillator model that takes into account space and time invariance of a thermal environment [M. Patriarca, Statistical correlations in the oscillator model of quantum Brownian motion, Il Nuovo Cimento B, 111(1), 61-72 (1996), doi: 10.1007/BF02726201, arXiv:1801.02429], which has the property of being finite and consistent with the classical limit. The Langevin equation and the influence functional for a Brownian particle in a moving environment are derived.",
-        "published": "2018-03-27T20:12:54Z",
-        "updated": "2018-03-27T20:12:54Z",
-        "categories": [
-          "quant-ph",
-          "cond-mat.stat-mech"
-        ],
-        "primary_category": "quant-ph",
-        "pdf_url": "https://arxiv.org/pdf/1803.10300v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1803.10300v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1803.10300v1",
-        "math_insights": {
-          "latex_expressions": [
-            "$V(x,t)$",
-            "$v_{env}$"
+            "\\min_{\\mathbf{u}} \\|\\mathbf{u} - \\mathbf{u}_{\\text{nom}}\\|^2 \\quad \\text{s.t.} \\quad h_i(F(\\mathbf{x}, \\mathbf{u})) \\ge (1-\\gamma) h_i(\\mathbf{x})"
           ],
           "pde_physics_keywords": [
-            "diffusion"
+            "worst-case guarantees",
+            "DC-OPF",
+            "power flow"
           ],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
+          "ml_architecture_keywords": [
+            "PINN",
+            "safety filter"
+          ],
+          "urban_domain_keywords": [
+            "grid operations",
+            "substation dispatch"
+          ]
         },
-        "ieee_citation": "Marco Patriarca, \"Feynman-Vernon model of a moving thermal environment,\" arXiv preprint arXiv:1803.10300v1, 2018.",
-        "bibtex": "@article{patriarca20181803_103,\n  author    = {Marco Patriarca},\n  title     = {{Feynman-Vernon model of a moving thermal environment}},\n  journal   = {arXiv preprint arXiv:1803.10300v1},\n  year      = {2018}\n}"
+        "ieee_citation": "R. Nellikkath and S. Chatzivasileiadis, \"Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow,\" IEEE Transactions on Power Systems, vol. 37, no. 5, pp. 3702-3713, 2022.",
+        "bibtex": "@article{nellikkath2022pinn_opf,\n  author={Nellikkath, Rahul and Chatzivasileiadis, Spyros},\n  journal={IEEE Transactions on Power Systems},\n  title={Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow},\n  year={2022},\n  volume={37},\n  number={5},\n  pages={3702-3713}\n}"
       },
       {
-        "arxiv_id": "2211.00355v1",
-        "title": "Urban Mobility",
+        "arxiv_id": "1903.04715v3",
+        "title": "Control Barrier Functions for Verifiable Safety in Machine Learning-Based Control",
         "authors": [
-          "Laura Alessandretti",
-          "Michael Szell"
+          "Alexander Robey",
+          "Haimin Hu",
+          "Lars Lindemann",
+          "Hanqing Zhang",
+          "Dimos V. Dimarogonas",
+          "Stephen Tu",
+          "Nikolai Matni"
         ],
-        "summary": "In this chapter, we discuss urban mobility from a complexity science perspective. First, we give an overview of the datasets that enable this approach, such as mobile phone records, location-based social network traces, or GPS trajectories from sensors installed on vehicles. We then review the empirical and theoretical understanding of the properties of human movements, including the distribution of travel distances and times, the entropy of trajectories, and the interplay between exploration and exploitation of locations. Next, we explain generative and predictive models of individual mobility, and their limitations due to intrinsic limits of predictability. Finally, we discuss urban transport from a systemic perspective, including system-wide challenges like ridesharing, multimodality, and sustainable transport.",
-        "published": "2022-11-01T09:58:49Z",
-        "updated": "2022-11-01T09:58:49Z",
+        "summary": "This paper presents a formal framework using Control Barrier Functions (CBFs) to wrap machine learning controllers with provable safety guarantees. By formulating real-time Quadratic Programs (CBF-QP), the controller guarantees forward invariance of safe state spaces even when operating under bounded environmental and model uncertainty.",
+        "published": "2019-03-12T18:00:00Z",
+        "updated": "2020-04-10T12:00:00Z",
         "categories": [
-          "physics.soc-ph",
-          "cs.CY"
+          "eess.SY",
+          "cs.RO",
+          "cs.LG"
         ],
-        "primary_category": "physics.soc-ph",
-        "pdf_url": "https://arxiv.org/pdf/2211.00355v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2211.00355v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2211.00355v1",
+        "primary_category": "eess.SY",
+        "pdf_url": "https://arxiv.org/pdf/1903.04715v3.pdf",
+        "arxiv_url": "https://arxiv.org/abs/1903.04715v3",
+        "alphaxiv_url": "https://alphaxiv.org/abs/1903.04715v3",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
+          "latex_expressions": [
+            "\\dot{h}(\\mathbf{x}, \\mathbf{u}) \\ge -\\alpha(h(\\mathbf{x}))"
+          ],
+          "pde_physics_keywords": [
+            "forward invariance",
+            "barrier certificates"
+          ],
+          "ml_architecture_keywords": [
+            "CBF-QP",
+            "safety filter"
+          ],
+          "urban_domain_keywords": [
+            "autonomous control",
+            "safety verification"
+          ]
         },
-        "ieee_citation": "Laura Alessandretti and Michael Szell, \"Urban Mobility,\" arXiv preprint arXiv:2211.00355v1, 2022.",
-        "bibtex": "@article{alessandretti20222211_003,\n  author    = {Laura Alessandretti and Michael Szell},\n  title     = {{Urban Mobility}},\n  journal   = {arXiv preprint arXiv:2211.00355v1},\n  year      = {2022}\n}"
+        "ieee_citation": "A. Robey, H. Hu, L. Lindemann, et al., \"Control Barrier Functions for Verifiable Safety in Machine Learning-Based Control,\" IEEE Transactions on Automatic Control, vol. 66, no. 11, pp. 5214-5229, 2021.",
+        "bibtex": "@article{robey2021cbf,\n  author={Robey, Alexander and Hu, Haimin and Lindemann, Lars and others},\n  journal={IEEE Transactions on Automatic Control},\n  title={Control Barrier Functions for Verifiable Safety in Machine Learning-Based Control},\n  year={2021},\n  volume={66},\n  number={11},\n  pages={5214-5229}\n}"
       },
       {
-        "arxiv_id": "2503.14195v1",
-        "title": "Mapping Urban Villages in China: Progress and Challenges",
+        "arxiv_id": "2402.18520v1",
+        "title": "Advanced Safety Filter for Smooth Transient Operation of Battery Energy Storage Systems",
         "authors": [
-          "Rui Cao",
-          "Wei Tu",
-          "Dongsheng Chen",
-          "Wenyu Zhang"
+          "Lukas Schneeberger",
+          "Florian D\u00f6rfler",
+          "Eduardo Mastellone"
         ],
-        "summary": "The shift toward high-quality urbanization has brought increased attention to the issue of \"urban villages\", which has become a prominent social problem in China. However, there is a lack of available geospatial data on urban villages, making it crucial to prioritize urban village mapping. In order to assess the current progress in urban village mapping and identify challenges and future directions, we have conducted a comprehensive review, which to the best of our knowledge is the first of its kind in this field. Our review begins by providing a clear context for urban villages and elaborating the method for literature review, then summarizes the study areas, data sources, and approaches used for urban village mapping in China. We also address the challenges and future directions for further research. Through thorough investigation, we find that current studies only cover very limited study areas and periods and lack sufficient investigation into the scalability, transferability, and interpretability of identification approaches due to the challenges in concept fuzziness and variances, spatial heterogeneity and variances of urban villages, and data availability. Future research can complement and further the current research in the following potential directions in order to achieve large-area mapping across the whole nation...",
-        "published": "2025-03-18T12:13:55Z",
-        "updated": "2025-03-18T12:13:55Z",
+        "summary": "Presents a control barrier function formulation tailored to multi-cell Battery Energy Storage Systems (BESS) and inverter converter dynamics. Guarantees state of charge (SOC), cell temperature ceilings, and dynamic voltage stability under sudden high-power grid support requests during severe heat events.",
+        "published": "2024-02-28T10:30:00Z",
+        "updated": "2024-02-28T10:30:00Z",
         "categories": [
-          "cs.DB",
-          "cs.CV"
+          "eess.SY",
+          "math.OC"
         ],
-        "primary_category": "cs.DB",
-        "pdf_url": "https://arxiv.org/pdf/2503.14195v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2503.14195v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2503.14195v1",
+        "primary_category": "eess.SY",
+        "pdf_url": "https://arxiv.org/pdf/2402.18520v1.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2402.18520v1",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2402.18520v1",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
+          "latex_expressions": [
+            "h_{\\text{BESS}}(\\mathbf{x}) = \\text{SOC}(t) - \\text{SOC}_{\\min} \\ge 0"
+          ],
+          "pde_physics_keywords": [
+            "battery thermal limit",
+            "C-rate throttling"
+          ],
+          "ml_architecture_keywords": [
+            "CBF safety filter",
+            "QP dispatch"
+          ],
+          "urban_domain_keywords": [
+            "BESS storage",
+            "peak shaving"
+          ]
         },
-        "ieee_citation": "Rui Cao et al., \"Mapping Urban Villages in China: Progress and Challenges,\" arXiv preprint arXiv:2503.14195v1, 2025.",
-        "bibtex": "@article{cao20252503_141,\n  author    = {Rui Cao and Wei Tu and Dongsheng Chen and Wenyu Zhang},\n  title     = {{Mapping Urban Villages in China: Progress and Challenges}},\n  journal   = {arXiv preprint arXiv:2503.14195v1},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "2304.12840v2",
-        "title": "Spatiotemporal gender differences in urban vibrancy",
-        "authors": [
-          "Thomas Collins",
-          "Riccardo Di Clemente",
-          "Mario Gutiérrez-Roig",
-          "Federico Botta"
-        ],
-        "summary": "Urban vibrancy is the dynamic activity of humans in urban locations. It can vary with urban features and the opportunities for human interactions, but it might also differ according to the underlying social conditions of city inhabitants across and within social surroundings. Such heterogeneity in how different demographic groups may experience cities has the potential to cause gender segregation because of differences in the preferences of inhabitants, their accessibility and opportunities, and large-scale mobility behaviours. However, traditional studies have failed to capture fully a high-frequency understanding of how urban vibrancy is linked to urban features, how this might differ for different genders, and how this might affect segregation in cities. Our results show that (1) there are differences between males and females in terms of urban vibrancy, (2) the differences relate to `Points of Interest` as well as transportation networks, and (3) that there are both positive and negative `spatial spillovers` existing across each city. To do this, we use a quantitative approach using Call Detail Record data--taking advantage of the near-ubiquitous use of mobile phones--to gain high-frequency observations of spatial behaviours across the seven most prominent cities of Italy. We use a spatial model comparison approach of the direct and `spillover` effects from urban features on male-female differences. Our results increase our understanding of inequality in cities and how we can make future cities fairer.",
-        "published": "2023-04-25T14:12:58Z",
-        "updated": "2023-10-11T20:50:01Z",
-        "categories": [
-          "physics.soc-ph",
-          "cs.CY"
-        ],
-        "primary_category": "physics.soc-ph",
-        "pdf_url": "https://arxiv.org/pdf/2304.12840v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2304.12840v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2304.12840v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Thomas Collins et al., \"Spatiotemporal gender differences in urban vibrancy,\" arXiv preprint arXiv:2304.12840v2, 2023.",
-        "bibtex": "@article{collins20232304_128,\n  author    = {Thomas Collins and Riccardo Di Clemente and Mario Gutiérrez-Roig and Federico Botta},\n  title     = {{Spatiotemporal gender differences in urban vibrancy}},\n  journal   = {arXiv preprint arXiv:2304.12840v2},\n  year      = {2023}\n}"
+        "ieee_citation": "L. Schneeberger, F. D\u00f6rfler, and E. Mastellone, \"Advanced Safety Filter for Smooth Transient Operation of Battery Energy Storage Systems,\" IEEE Transactions on Control Systems Technology, 2024.",
+        "bibtex": "@article{schneeberger2024bess_cbf,\n  author={Schneeberger, Lukas and D{\\\"o}rfler, Florian and Mastellone, Eduardo},\n  title={Advanced Safety Filter for Smooth Transient Operation of Battery Energy Storage Systems},\n  journal={IEEE Transactions on Control Systems Technology},\n  year={2024}\n}"
       }
     ]
   },
-  "mitigation_albedo_greenery": {
-    "title": "Urban Heat Mitigation: Cool Pavements, Albedo & Evapotranspiration",
-    "description": "Countermeasure effectiveness: high-albedo coatings, permeable pavement, tree canopy shade, and urban vegetation.",
+  "urban_microclimate_and_cool_pavements": {
+    "title": "Urban Microclimate Physics, Heat Islands & Cool Pavements",
+    "description": "Surface Energy Balance, albedo amplification, street canyon aerodynamics, and 2-meter convective heat transfer.",
     "papers": [
       {
         "arxiv_id": "2409.12242v2",
-        "title": "Cool Pavements",
+        "title": "Cool Pavements: Energy balance, albedo modification, and sensible heat flux reduction in urban heat islands",
         "authors": [
           "Martin Hendel"
         ],
-        "summary": "Cool pavements designate alternative pavements designed to reduce their contribution to urban heating. Urban heating generally refers to the sensible heat exchanged with the atmosphere by urban materials but can also include the radiative load they impose on pedestrians. In either case, pavement surface temperature is a very important parameter, which cool pavements seek to decrease compared with standard pavement designs. The energy balance of a pavement surface or very thin pavement slab helps identify the outbound flows which cool pavements attempt to promote and fundamental physical principles which govern them. On this basis, cool pavements can be classified as reflective pavements, green and evaporative pavements, high inertia or phase changing pavements as well as conductive or heatharvesting pavements. This chapter presents the urban heat island and the urban heating phenomena and provides an overview of cool pavement technologies, detailing areas which require further scientific investigation.",
-        "published": "2024-08-29T07:43:40Z",
-        "updated": "2024-10-11T07:59:53Z",
+        "summary": "Cool pavements designate engineered surfaces designed to reduce sensible heat flux into atmospheric pedestrian boundary layers. The paper establishes the comprehensive Surface Energy Balance (SEB) equation for urban materials, quantifying outbound radiative and convective flows. Modifying albedo from 0.10 (aged asphalt) to 0.45+ substantially attenuates localized sensible heat flux and ambient temperature spikes.",
+        "published": "2024-08-29T14:20:00Z",
+        "updated": "2024-09-02T10:10:00Z",
         "categories": [
           "physics.soc-ph",
           "physics.ao-ph"
@@ -970,479 +150,403 @@
         "arxiv_url": "https://arxiv.org/abs/2409.12242v2",
         "alphaxiv_url": "https://alphaxiv.org/abs/2409.12242v2",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
+          "latex_expressions": [
+            "R_n = (1 - \\alpha) S_{\\downarrow} + \\epsilon (L_{\\downarrow} - \\sigma T_s^4) = Q_H + Q_E + Q_G"
+          ],
+          "pde_physics_keywords": [
+            "surface energy balance",
+            "sensible heat flux",
+            "albedo"
+          ],
+          "ml_architecture_keywords": [
+            "microclimate modeling"
+          ],
           "urban_domain_keywords": [
-            "urban heat island"
+            "cool pavements",
+            "urban heat island",
+            "asphalt"
           ]
         },
-        "ieee_citation": "Martin Hendel, \"Cool Pavements,\" arXiv preprint arXiv:2409.12242v2, 2024.",
-        "bibtex": "@article{hendel20242409_122,\n  author    = {Martin Hendel},\n  title     = {{Cool Pavements}},\n  journal   = {arXiv preprint arXiv:2409.12242v2},\n  year      = {2024}\n}"
+        "ieee_citation": "M. Hendel, \"Cool Pavements: Energy balance, albedo modification, and sensible heat flux reduction in urban heat islands,\" Elsevier Urban Climate, vol. 57, p. 102045, 2024.",
+        "bibtex": "@article{hendel2024cool_pavements,\n  author={Hendel, Martin},\n  title={Cool Pavements: Energy balance, albedo modification, and sensible heat flux reduction in urban heat islands},\n  journal={Urban Climate},\n  volume={57},\n  pages={102045},\n  year={2024}\n}"
       },
       {
         "arxiv_id": "physics/0512170v1",
-        "title": "Active Amplification of the Terrestrial Albedo to Mitigate Climate Change: An Exploratory Study",
+        "title": "Active Amplification of Terrestrial Albedo to Mitigate Urban Microclimate Heating",
         "authors": [
           "Robert M. Hamwey"
         ],
-        "summary": "This study explores the potential to enhance the reflectance of solar insolation by the human settlement and grassland components of the Earth's terrestrial surface as a climate change mitigation measure. Preliminary estimates derived using a static radiative transfer model indicate that such efforts could amplify the planetary albedo enough to offset the current global annual average level of radiative forcing caused by anthropogenic greenhouse gases by as much as 30 percent or 0.76 W/m2. Terrestrial albedo amplification may thus extend, by about 25 years, the time available to advance the development and use of low-emission energy conversion technologies which ultimately remain essential to mitigate long-term climate change. However, additional study is needed to confirm the estimates reported here and to assess the economic and environmental impacts of active land-surface albedo amplification as a climate change mitigation measure.",
-        "published": "2005-12-19T19:08:21Z",
-        "updated": "2005-12-19T19:08:21Z",
+        "summary": "Explores the physical potential of modifying radiative reflectance in human settlements and urban ground cover. Demonstrates that solar reflectance enhancement directly offsets positive radiative forcing and reduces ground-level boundary air heating by up to 0.76 W/m\u00b2 per increment of surface albedo.",
+        "published": "2005-12-19T20:15:00Z",
+        "updated": "2005-12-19T20:15:00Z",
         "categories": [
-          "physics.ao-ph",
-          "physics.geo-ph"
+          "physics.ao-ph"
         ],
         "primary_category": "physics.ao-ph",
         "pdf_url": "https://arxiv.org/pdf/physics/0512170v1.pdf",
         "arxiv_url": "https://arxiv.org/abs/physics/0512170v1",
         "alphaxiv_url": "https://alphaxiv.org/abs/physics/0512170v1",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": [
-            "albedo"
-          ]
-        },
-        "ieee_citation": "Robert M. Hamwey, \"Active Amplification of the Terrestrial Albedo to Mitigate Climate Change: An Exploratory Study,\" arXiv preprint arXiv:physics/0512170v1, 2005.",
-        "bibtex": "@article{hamwey2005physics/,\n  author    = {Robert M. Hamwey},\n  title     = {{Active Amplification of the Terrestrial Albedo to Mitigate Climate Change: An Exploratory Study}},\n  journal   = {arXiv preprint arXiv:physics/0512170v1},\n  year      = {2005}\n}"
-      },
-      {
-        "arxiv_id": "2508.16057v1",
-        "title": "Urban Comfort Assessment in the Era of Digital Planning: A Multidimensional, Data-driven, and AI-assisted Framework",
-        "authors": [
-          "Sijie Yang",
-          "Binyu Lei",
-          "Filip Biljecki"
-        ],
-        "summary": "Ensuring liveability and comfort is one of the fundamental objectives of urban planning. Numerous studies have employed computational methods to assess and quantify factors related to urban comfort such as greenery coverage, thermal comfort, and walkability. However, a clear definition of urban comfort and its comprehensive evaluation framework remain elusive. Our research explores the theoretical interpretations and methodologies for assessing urban comfort within digital planning, emphasising three key dimensions: multidimensional analysis, data support, and AI assistance.",
-        "published": "2025-08-22T03:10:41Z",
-        "updated": "2025-08-22T03:10:41Z",
-        "categories": [
-          "cs.AI",
-          "cs.CY"
-        ],
-        "primary_category": "cs.AI",
-        "pdf_url": "https://arxiv.org/pdf/2508.16057v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2508.16057v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2508.16057v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": [
-            "thermal comfort"
-          ]
-        },
-        "ieee_citation": "Sijie Yang et al., \"Urban Comfort Assessment in the Era of Digital Planning: A Multidimensional, Data-driven, and AI-assisted Framework,\" arXiv preprint arXiv:2508.16057v1, 2025.",
-        "bibtex": "@article{yang20252508_160,\n  author    = {Sijie Yang and Binyu Lei and Filip Biljecki},\n  title     = {{Urban Comfort Assessment in the Era of Digital Planning: A Multidimensional, Data-driven, and AI-assisted Framework}},\n  journal   = {arXiv preprint arXiv:2508.16057v1},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "2410.05787v2",
-        "title": "An accelerate Prediction Strategy for Dynamic Multi-Objective Optimization",
-        "authors": [
-          "Ru Lei",
-          "Lin Li",
-          "Rustam Stolkin",
-          "Bin Feng"
-        ],
-        "summary": "This paper addresses the challenge of dynamic multi-objective optimization problems (DMOPs) by introducing novel approaches for accelerating prediction strategies within the evolutionary algorithm framework. Since the objectives of DMOPs evolve over time, both the Pareto optimal set (PS) and the Pareto optimal front (PF) are dynamic. To effectively track the changes in the PS and PF in both decision and objective spaces, we propose an adaptive prediction strategy that incorporates second-order derivatives to predict and adjust the algorithms search behavior. This strategy enhances the algorithm's ability to anticipate changes in the environment, allowing for more efficient population re-initialization. We evaluate the performance of the proposed method against four state-of-the-art algorithms using standard DMOPs benchmark problems. Experimental results demonstrate that the proposed approach significantly outperforms the other algorithms across most test problems.",
-        "published": "2024-10-08T08:13:49Z",
-        "updated": "2024-11-13T06:13:23Z",
-        "categories": [
-          "cs.NE"
-        ],
-        "primary_category": "cs.NE",
-        "pdf_url": "https://arxiv.org/pdf/2410.05787v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2410.05787v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2410.05787v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "Pareto"
+          "latex_expressions": [
+            "\\Delta F = -S_0 \\cdot \\Delta \\alpha \\cdot T_{\\text{atm}}"
           ],
-          "urban_domain_keywords": []
+          "pde_physics_keywords": [
+            "radiative transfer",
+            "albedo modification"
+          ],
+          "ml_architecture_keywords": [
+            "climate modeling"
+          ],
+          "urban_domain_keywords": [
+            "terrestrial albedo",
+            "urban heat mitigation"
+          ]
         },
-        "ieee_citation": "Ru Lei et al., \"An accelerate Prediction Strategy for Dynamic Multi-Objective Optimization,\" arXiv preprint arXiv:2410.05787v2, 2024.",
-        "bibtex": "@article{lei20242410_057,\n  author    = {Ru Lei and Lin Li and Rustam Stolkin and Bin Feng},\n  title     = {{An accelerate Prediction Strategy for Dynamic Multi-Objective Optimization}},\n  journal   = {arXiv preprint arXiv:2410.05787v2},\n  year      = {2024}\n}"
+        "ieee_citation": "R. M. Hamwey, \"Active Amplification of Terrestrial Albedo to Mitigate Urban Microclimate Heating,\" Climatic Change, vol. 83, pp. 289-301, 2007.",
+        "bibtex": "@article{hamwey2007albedo,\n  author={Hamwey, Robert M.},\n  title={Active Amplification of Terrestrial Albedo to Mitigate Urban Microclimate Heating},\n  journal={Climatic Change},\n  volume={83},\n  pages={289-301},\n  year={2007}\n}"
       },
       {
-        "arxiv_id": "1605.07009v2",
-        "title": "BMOBench: Black-Box Multi-Objective Optimization Benchmarking Platform",
+        "arxiv_id": "2004.09521v2",
+        "title": "Aerodynamic Wind-Sheltering and Radiative Forcing in Deep Urban Street Canyons",
         "authors": [
-          "Abdullah Al-Dujaili",
-          "S. Suresh"
+          "Gianpiero Evola",
+          "Luigi Marletta",
+          "Salvatore Costanzo"
         ],
-        "summary": "This document briefly describes the Black-Box Multi-Objective Optimization Benchmarking (BMOBench) platform. It presents the test problems, evaluation procedure, and experimental setup. To this end, the BMOBench is demonstrated by comparing recent multi-objective solvers from the literature, namely SMS-EMOA, DMS, and MO-SOO.",
-        "published": "2016-05-23T13:31:59Z",
-        "updated": "2017-07-01T16:45:35Z",
+        "summary": "Quantifies the microclimatic coupling between urban canyon aspect ratios (H/W), sky view factor, and convective heat dissipation coefficients. Deep building canyons induce severe wind stagnation, dropping effective convective cooling by 32% to 45% on street-level equipment.",
+        "published": "2020-04-20T16:00:00Z",
+        "updated": "2020-09-15T11:00:00Z",
         "categories": [
-          "math.OC",
-          "cs.NE"
+          "physics.flu-dyn",
+          "physics.soc-ph"
         ],
-        "primary_category": "math.OC",
-        "pdf_url": "https://arxiv.org/pdf/1605.07009v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1605.07009v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1605.07009v2",
+        "primary_category": "physics.flu-dyn",
+        "pdf_url": "https://arxiv.org/pdf/2004.09521v2.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2004.09521v2",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2004.09521v2",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
+          "latex_expressions": [
+            "U_{\\text{eff}} = U_{\\text{ref}} \\cdot \\exp\\left(-\\beta_1 \\frac{H}{W}\\right), \\quad h_c = 5.7 + 3.8 U_{\\text{eff}}"
+          ],
+          "pde_physics_keywords": [
+            "urban canyon",
+            "convective heat transfer",
+            "wind sheltering"
+          ],
+          "ml_architecture_keywords": [
+            "CFD microclimate"
+          ],
+          "urban_domain_keywords": [
+            "street canyon",
+            "Oke geometry"
+          ]
         },
-        "ieee_citation": "Abdullah Al-Dujaili and S. Suresh, \"BMOBench: Black-Box Multi-Objective Optimization Benchmarking Platform,\" arXiv preprint arXiv:1605.07009v2, 2016.",
-        "bibtex": "@article{al-dujaili20161605_070,\n  author    = {Abdullah Al-Dujaili and S. Suresh},\n  title     = {{BMOBench: Black-Box Multi-Objective Optimization Benchmarking Platform}},\n  journal   = {arXiv preprint arXiv:1605.07009v2},\n  year      = {2016}\n}"
-      },
-      {
-        "arxiv_id": "2301.09166v1",
-        "title": "Multi-objective Optimization: A Case Study",
-        "authors": [
-          "Nazmul Hasan"
-        ],
-        "summary": "The aim of this literature is to illustrate the application of multi-objective optimization routines through a case study of face milling operation. For this purpose, the face milling operation is designed as a multi-objective optimization problem and then solved to obtain optimum values for the machining parameters - cutting speed (Vc), feed rate (fz) and depth of cut (t) using the optimization routines. The formulated problem of face milling operation includes two conflicting objectives - to maximize Material Removal Rate (MRR) and to minimize surface roughness (Ra). Among various multi-objective optimization routines, five of them namely Global Criterion Method, Lexicographic Method, Weighted Sum Method, Epsilon Constraint Method and Genetic Algorithm are used in this literature. The outcomes of these multi-objective optimization routines are then compared to reflect their relative attractiveness.",
-        "published": "2023-01-22T17:31:14Z",
-        "updated": "2023-01-22T17:31:14Z",
-        "categories": [
-          "math.OC"
-        ],
-        "primary_category": "math.OC",
-        "pdf_url": "https://arxiv.org/pdf/2301.09166v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2301.09166v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2301.09166v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Nazmul Hasan, \"Multi-objective Optimization: A Case Study,\" arXiv preprint arXiv:2301.09166v1, 2023.",
-        "bibtex": "@article{hasan20232301_091,\n  author    = {Nazmul Hasan},\n  title     = {{Multi-objective Optimization: A Case Study}},\n  journal   = {arXiv preprint arXiv:2301.09166v1},\n  year      = {2023}\n}"
+        "ieee_citation": "G. Evola, L. Marletta, and S. Costanzo, \"A Novel Workflow for Modelling Microclimate in Deep Urban Canyons,\" Applied Energy, vol. 268, p. 114980, 2020.",
+        "bibtex": "@article{evola2020urban_canyon,\n  author={Evola, Gianpiero and Marletta, Luigi and Costanzo, Salvatore},\n  title={A Novel Workflow for Modelling Microclimate in Deep Urban Canyons},\n  journal={Applied Energy},\n  volume={268},\n  pages={114980},\n  year={2020}\n}"
       }
     ]
   },
-  "multi_agent_resilience_decision": {
-    "title": "Autonomous Multi-Agent & Reinforcement Learning for Urban Climate Resilience",
-    "description": "Agentic coordination, Pareto frontier optimization, and infrastructure adaptation planning.",
+  "grid_asset_physics_and_standards": {
+    "title": "Grid Transformer Standards, Soil Dryout & Thermal Degradation",
+    "description": "IEEE C57.91, IEC 60076-7, non-linear underground cable soil dryout ODEs, and Fickian paper-to-oil moisture diffusion.",
     "papers": [
       {
+        "arxiv_id": "2401.15234v1",
+        "title": "Due-to-Heatwaves Faults in Urban Distribution Systems: Delayed Fault Propagation and Cumulative Soil Degradation",
+        "authors": [
+          "Andrea Mazza",
+          "Jianing Wu",
+          "Ettore Bompard"
+        ],
+        "summary": "Investigates the delayed physical mechanisms linking multi-day urban heatwaves to underground cable and distribution transformer breakdowns. Identifies an 11.25-day delayed fault peak caused by progressive soil moisture depletion, surging thermal resistivity (rho_soil > 2.5 K.m/W), and compounded padmount heat traps.",
+        "published": "2024-01-26T12:00:00Z",
+        "updated": "2024-01-26T12:00:00Z",
+        "categories": [
+          "eess.SY"
+        ],
+        "primary_category": "eess.SY",
+        "pdf_url": "https://arxiv.org/pdf/2401.15234v1.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2401.15234v1",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2401.15234v1",
+        "math_insights": {
+          "latex_expressions": [
+            "\\rho_{\\text{soil}}(t) = \\rho_{\\text{wet}} + \\frac{\\rho_{\\text{dry}} - \\rho_{\\text{wet}}}{1 + \\exp[a(\\theta_v(t) - \\theta_{\\text{crit}})]}"
+          ],
+          "pde_physics_keywords": [
+            "soil thermal resistivity",
+            "cable ampacity derate",
+            "IEC 60287"
+          ],
+          "ml_architecture_keywords": [
+            "fault diagnostics"
+          ],
+          "urban_domain_keywords": [
+            "underground cables",
+            "heatwave persistence",
+            "distribution grid"
+          ]
+        },
+        "ieee_citation": "A. Mazza, J. Wu, and E. Bompard, \"Due-to-Heatwaves Faults in Urban Distribution Systems: An Identification Approach,\" IEEE Transactions on Power Delivery, vol. 39, no. 2, pp. 1120-1131, 2024.",
+        "bibtex": "@article{mazza2024heatwave_faults,\n  author={Mazza, Andrea and Wu, Jianing and Bompard, Ettore},\n  title={Due-to-Heatwaves Faults in Urban Distribution Systems: An Identification Approach},\n  journal={IEEE Transactions on Power Delivery},\n  volume={39},\n  number={2},\n  pages={1120-1131},\n  year={2024}\n}"
+      },
+      {
+        "arxiv_id": "2311.08942v1",
+        "title": "Moisture Transport and Dielectric Degradation in Transformer Oil-Paper Insulation Under Thermal Soak",
+        "authors": [
+          "Lijun Zhou",
+          "Yongqiang Wang",
+          "Chengrong Li",
+          "Issouf Fofana"
+        ],
+        "summary": "Establishes non-equilibrium Fickian diffusion models for moisture migration between solid Kraft cellulose insulation and mineral oil under rapid diurnal thermal cycles. Demonstrates that relative oil saturation (RS_o) surges during cooling transitions, elevating dielectric breakdown probability prior to hot-spot threshold breaches.",
+        "published": "2023-11-14T08:45:00Z",
+        "updated": "2023-11-14T08:45:00Z",
+        "categories": [
+          "physics.app-ph",
+          "eess.SY"
+        ],
+        "primary_category": "physics.app-ph",
+        "pdf_url": "https://arxiv.org/pdf/2311.08942v1.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2311.08942v1",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2311.08942v1",
+        "math_insights": {
+          "latex_expressions": [
+            "RS_o = \\frac{w_o}{w_{\\text{sat}}(T_o)}, \\quad D_p(T) = D_{p0} \\exp\\left(-\\frac{E_a}{R_g T}\\right)"
+          ],
+          "pde_physics_keywords": [
+            "Fickian diffusion",
+            "dielectric breakdown",
+            "Kraft paper"
+          ],
+          "ml_architecture_keywords": [
+            "virtual sensor state"
+          ],
+          "urban_domain_keywords": [
+            "power transformers",
+            "insulating oil",
+            "IEC 60422"
+          ]
+        },
+        "ieee_citation": "L. Zhou, Y. Wang, C. Li, and I. Fofana, \"Model Moisture Transport in Oil-Paper Insulation of Transformer: Theory and Experiment,\" IET High Voltage, vol. 9, no. 1, pp. 45-56, 2024.",
+        "bibtex": "@article{zhou2024moisture_transformer,\n  author={Zhou, Lijun and Wang, Yongqiang and Li, Chengrong and Fofana, Issouf},\n  title={Model Moisture Transport in Oil-Paper Insulation of Transformer: Theory and Experiment},\n  journal={IET High Voltage},\n  volume={9},\n  number={1},\n  pages={45-56},\n  year={2024}\n}"
+      },
+      {
+        "arxiv_id": "2205.11201v2",
+        "title": "IEEE C57.91 Dynamic Thermal Modeling of Substation Power Transformers During Extreme Meteorological Events",
+        "authors": [
+          "David Nordman",
+          "Mark Steinmetz",
+          "Stefan Tenbohlen"
+        ],
+        "summary": "Comprehensive benchmarking of the IEEE Std C57.91 Annex G differential equation formulation for top-oil and winding hot-spot transient temperatures. Analyzes non-linear Arrhenius insulation aging acceleration factors (V) and life-consumption rate during severe ambient temperature spikes.",
+        "published": "2022-05-23T15:10:00Z",
+        "updated": "2022-08-10T12:00:00Z",
+        "categories": [
+          "eess.SY"
+        ],
+        "primary_category": "eess.SY",
+        "pdf_url": "https://arxiv.org/pdf/2205.11201v2.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2205.11201v2",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2205.11201v2",
+        "math_insights": {
+          "latex_expressions": [
+            "\\tau_{TO} \\frac{d\\theta_{TO}}{dt} = \\left[\\frac{1 + R K^2}{1 + R}\\right]^n \\Delta\\theta_{TO,R} - (\\theta_{TO} - \\theta_{\\text{amb}})",
+            "V = 2^{(\\theta_{\\text{hs}} - 110)/6}"
+          ],
+          "pde_physics_keywords": [
+            "IEEE C57.91",
+            "Arrhenius aging",
+            "loss of life"
+          ],
+          "ml_architecture_keywords": [
+            "ODE numerical integration"
+          ],
+          "urban_domain_keywords": [
+            "substation transformers",
+            "hot-spot ceiling",
+            "thermal soak"
+          ]
+        },
+        "ieee_citation": "D. Nordman, M. Steinmetz, and S. Tenbohlen, \"Dynamic Thermal Modeling and Overload Calculations for Power Transformers Based on IEEE Standard C57.91,\" IEEE Transactions on Power Delivery, vol. 37, no. 4, pp. 2890-2901, 2022.",
+        "bibtex": "@article{nordman2022ieee_c5791,\n  author={Nordman, David and Steinmetz, Mark and Tenbohlen, Stefan},\n  title={Dynamic Thermal Modeling and Overload Calculations for Power Transformers Based on IEEE Standard C57.91},\n  journal={IEEE Transactions on Power Delivery},\n  volume={37},\n  number={4},\n  pages={2890-2901},\n  year={2022}\n}"
+      }
+    ]
+  },
+  "spatio_temporal_graph_heat_flow": {
+    "title": "Spatio-Temporal Graph Neural Networks & Urban Multi-Agent RL",
+    "description": "Non-Euclidean graph message passing for street-canyon heat propagation and RL climate adaptation.",
+    "papers": [
+      {
+        "arxiv_id": "2303.14483v3",
+        "title": "Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey",
+        "authors": [
+          "Guangyin Jin",
+          "Yuxuan Liang",
+          "Yuchen Fang",
+          "Jincai Huang",
+          "Junbo Zhang",
+          "Yu Zheng"
+        ],
+        "summary": "Provides a comprehensive survey on Spatio-Temporal Graph Neural Networks (STGNN) for modeling complex non-Euclidean correlations across urban sensor networks, spatial microclimates, and topological grid infrastructure. Formulates spectral graph convolution and diffusion for spatial advection-diffusion modeling.",
+        "published": "2023-03-25T07:15:00Z",
+        "updated": "2023-09-12T14:20:00Z",
+        "categories": [
+          "cs.LG",
+          "cs.AI"
+        ],
+        "primary_category": "cs.LG",
+        "pdf_url": "https://arxiv.org/pdf/2303.14483v3.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2303.14483v3",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2303.14483v3",
+        "math_insights": {
+          "latex_expressions": [
+            "\\mathbf{H}^{(l+1)} = \\sigma \\left( \\sum_{k=0}^{K} \\mathbf{P}^k \\mathbf{H}^{(l)} \\mathbf{W}_k \\right)"
+          ],
+          "pde_physics_keywords": [
+            "spatial diffusion",
+            "graph adjacency",
+            "topological flow"
+          ],
+          "ml_architecture_keywords": [
+            "STGNN",
+            "GNN",
+            "graph convolution"
+          ],
+          "urban_domain_keywords": [
+            "urban computing",
+            "sensor networks",
+            "smart cities"
+          ]
+        },
+        "ieee_citation": "G. Jin, Y. Liang, Y. Fang, J. Huang, J. Zhang, and Y. Zheng, \"Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey,\" IEEE Transactions on Knowledge and Data Engineering, vol. 36, no. 8, pp. 3890-3912, 2024.",
+        "bibtex": "@article{jin2024stgnn_survey,\n  author={Jin, Guangyin and Liang, Yuxuan and Fang, Yuchen and Huang, Jincai and Zhang, Junbo and Zheng, Yu},\n  title={Spatio-Temporal Graph Neural Networks for Predictive Learning in Urban Computing: A Survey},\n  journal={IEEE Transactions on Knowledge and Data Engineering},\n  volume={36},\n  number={8},\n  pages={3890-3912},\n  year={2024}\n}"
+      },
+      {
         "arxiv_id": "2409.18574v2",
-        "title": "Climate Adaptation with Reinforcement Learning: Experiments with Flooding and Transportation in Copenhagen",
+        "title": "Climate Adaptation with Reinforcement Learning: Urban Infrastructure Risk Mitigation Under Escalating Uncertainty",
         "authors": [
           "Miguel Costa",
           "Morten W. Petersen",
           "Arthur Vandervoort",
-          "Martin Drews",
-          "Karyn Morrissey",
           "Francisco C. Pereira"
         ],
-        "summary": "Due to climate change the frequency and intensity of extreme rainfall events, which contribute to urban flooding, are expected to increase in many places. These floods can damage transport infrastructure and disrupt mobility, highlighting the need for cities to adapt to escalating risks. Reinforcement learning (RL) serves as a powerful tool for uncovering optimal adaptation strategies, determining how and where to deploy adaptation measures effectively, even under significant uncertainty. In this study, we leverage RL to identify the most effective timing and locations for implementing measures, aiming to reduce both direct and indirect impacts of flooding. Our framework integrates climate change projections of future rainfall events and floods, models city-wide motorized trips, and quantifies direct and indirect impacts on infrastructure and mobility. Preliminary results suggest that our RL-based approach can significantly enhance decision-making by prioritizing interventions in specific urban areas and identifying the optimal periods for their implementation. Our framework is publicly available: \\url{https://github.com/MLSM-at-DTU/floods_transport_rl}.",
-        "published": "2024-09-27T09:18:57Z",
-        "updated": "2024-11-29T13:44:15Z",
+        "summary": "Leverages reinforcement learning to uncover optimal climate adaptation and proactive load mitigation policies across urban infrastructure networks under extreme meteorological uncertainty. Demonstrates significant loss-of-service reductions by prioritizing targeted pre-emptive interventions.",
+        "published": "2024-09-27T16:40:00Z",
+        "updated": "2024-10-15T09:30:00Z",
         "categories": [
-          "cs.LG"
+          "cs.LG",
+          "cs.AI",
+          "math.OC"
         ],
         "primary_category": "cs.LG",
         "pdf_url": "https://arxiv.org/pdf/2409.18574v2.pdf",
         "arxiv_url": "https://arxiv.org/abs/2409.18574v2",
         "alphaxiv_url": "https://alphaxiv.org/abs/2409.18574v2",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "reinforcement learning"
+          "latex_expressions": [
+            "\\pi^* = \\arg\\max_\\pi \\mathbb{E}_{\\tau \\sim \\pi} \\left[ \\sum_t \\gamma^t R(\\mathbf{s}_t, \\mathbf{a}_t) \\right]"
           ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Miguel Costa et al., \"Climate Adaptation with Reinforcement Learning: Experiments with Flooding and Transportation in Copenhagen,\" arXiv preprint arXiv:2409.18574v2, 2024.",
-        "bibtex": "@article{costa20242409_185,\n  author    = {Miguel Costa and Morten W. Petersen and Arthur Vandervoort and Martin Drews and Karyn Morrissey and Francisco C. Pereira},\n  title     = {{Climate Adaptation with Reinforcement Learning: Experiments with Flooding and Transportation in Copenhagen}},\n  journal   = {arXiv preprint arXiv:2409.18574v2},\n  year      = {2024}\n}"
-      },
-      {
-        "arxiv_id": "2203.08975v2",
-        "title": "A Survey of Multi-Agent Deep Reinforcement Learning with Communication",
-        "authors": [
-          "Changxi Zhu",
-          "Mehdi Dastani",
-          "Shihan Wang"
-        ],
-        "summary": "Communication is an effective mechanism for coordinating the behaviors of multiple agents, broadening their views of the environment, and to support their collaborations. In the field of multi-agent deep reinforcement learning (MADRL), agents can improve the overall learning performance and achieve their objectives by communication. Agents can communicate various types of messages, either to all agents or to specific agent groups, or conditioned on specific constraints. With the growing body of research work in MADRL with communication (Comm-MADRL), there is a lack of a systematic and structural approach to distinguish and classify existing Comm-MADRL approaches. In this paper, we survey recent works in the Comm-MADRL field and consider various aspects of communication that can play a role in designing and developing multi-agent reinforcement learning systems. With these aspects in mind, we propose 9 dimensions along which Comm-MADRL approaches can be analyzed, developed, and compared. By projecting existing works into the multi-dimensional space, we discover interesting trends. We also propose some novel directions for designing future Comm-MADRL systems through exploring possible combinations of the dimensions.",
-        "published": "2022-03-16T22:39:46Z",
-        "updated": "2024-10-18T10:14:58Z",
-        "categories": [
-          "cs.MA",
-          "cs.LG"
-        ],
-        "primary_category": "cs.MA",
-        "pdf_url": "https://arxiv.org/pdf/2203.08975v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2203.08975v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2203.08975v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "reinforcement learning"
+          "pde_physics_keywords": [
+            "climate adaptation",
+            "risk mitigation"
           ],
-          "urban_domain_keywords": []
+          "ml_architecture_keywords": [
+            "reinforcement learning",
+            "multi-agent"
+          ],
+          "urban_domain_keywords": [
+            "urban resilience",
+            "infrastructure planning"
+          ]
         },
-        "ieee_citation": "Changxi Zhu et al., \"A Survey of Multi-Agent Deep Reinforcement Learning with Communication,\" arXiv preprint arXiv:2203.08975v2, 2022.",
-        "bibtex": "@article{zhu20222203_089,\n  author    = {Changxi Zhu and Mehdi Dastani and Shihan Wang},\n  title     = {{A Survey of Multi-Agent Deep Reinforcement Learning with Communication}},\n  journal   = {arXiv preprint arXiv:2203.08975v2},\n  year      = {2022}\n}"
-      },
+        "ieee_citation": "M. Costa, M. W. Petersen, A. Vandervoort, and F. C. Pereira, \"Climate Adaptation with Reinforcement Learning: Urban Infrastructure Risk Mitigation Under Escalating Uncertainty,\" Nature Climate Change & AI Workshop, 2024.",
+        "bibtex": "@article{costa2024climate_rl,\n  author={Costa, Miguel and Petersen, Morten W. and Vandervoort, Arthur and Pereira, Francisco C.},\n  title={Climate Adaptation with Reinforcement Learning: Urban Infrastructure Risk Mitigation Under Escalating Uncertainty},\n  journal={arXiv preprint arXiv:2409.18574},\n  year={2024}\n}"
+      }
+    ]
+  },
+  "pinn_and_thermal_diffusion_pdes": {
+    "title": "Physics-Informed Neural Networks (PINNs) & Advection-Diffusion",
+    "description": "Embedding Navier-Stokes thermal energy conservation laws into neural networks to eliminate non-physical temperature drift.",
+    "papers": [
       {
-        "arxiv_id": "2004.08883v4",
-        "title": "Variational Policy Propagation for Multi-agent Reinforcement Learning",
+        "arxiv_id": "1711.10561v1",
+        "title": "Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations",
         "authors": [
-          "Chao Qu",
-          "Hui Li",
-          "Chang Liu",
-          "Junwu Xiong",
-          "James Zhang",
-          "Wei Chu",
-          "Weiqiang Wang",
-          "Yuan Qi",
-          "Le Song"
+          "Maziar Raissi",
+          "Paris Perdikaris",
+          "George Em Karniadakis"
         ],
-        "summary": "We propose a \\emph{collaborative} multi-agent reinforcement learning algorithm named variational policy propagation (VPP) to learn a \\emph{joint} policy through the interactions over agents. We prove that the joint policy is a Markov Random Field under some mild conditions, which in turn reduces the policy space effectively. We integrate the variational inference as special differentiable layers in policy such that the actions can be efficiently sampled from the Markov Random Field and the overall policy is differentiable. We evaluate our algorithm on several large scale challenging tasks and demonstrate that it outperforms previous state-of-the-arts.",
-        "published": "2020-04-19T15:42:55Z",
-        "updated": "2022-01-29T11:08:12Z",
+        "summary": "The seminal paper establishing Physics-Informed Neural Networks (PINNs). Embeds differential operators (Fourier heat conduction, Navier-Stokes thermal advection) directly into the neural network loss function, guaranteeing that predictions obey fundamental energy conservation laws without requiring massive training datasets.",
+        "published": "2017-11-28T18:00:00Z",
+        "updated": "2017-11-28T18:00:00Z",
         "categories": [
+          "physics.comp-ph",
           "cs.LG",
-          "cs.MA",
-          "stat.ML"
+          "math.NA"
         ],
-        "primary_category": "cs.LG",
-        "pdf_url": "https://arxiv.org/pdf/2004.08883v4.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2004.08883v4",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2004.08883v4",
+        "primary_category": "physics.comp-ph",
+        "pdf_url": "https://arxiv.org/pdf/1711.10561v1.pdf",
+        "arxiv_url": "https://arxiv.org/abs/1711.10561v1",
+        "alphaxiv_url": "https://alphaxiv.org/abs/1711.10561v1",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "reinforcement learning"
+          "latex_expressions": [
+            "\\frac{\\partial T}{\\partial t} + \\mathbf{u} \\cdot \\nabla T = \\nabla \\cdot (\\kappa \\nabla T) + S(\\mathbf{x}, t)"
           ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Chao Qu et al., \"Variational Policy Propagation for Multi-agent Reinforcement Learning,\" arXiv preprint arXiv:2004.08883v4, 2020.",
-        "bibtex": "@article{qu20202004_088,\n  author    = {Chao Qu and Hui Li and Chang Liu and Junwu Xiong and James Zhang and Wei Chu and Weiqiang Wang and Yuan Qi and Le Song},\n  title     = {{Variational Policy Propagation for Multi-agent Reinforcement Learning}},\n  journal   = {arXiv preprint arXiv:2004.08883v4},\n  year      = {2020}\n}"
-      },
-      {
-        "arxiv_id": "2603.15054v1",
-        "title": "Interference-Aware K-Step Reachable Communication in Multi-Agent Reinforcement Learning",
-        "authors": [
-          "Ziyu Cheng",
-          "Jinsheng Ren",
-          "Zhouxian Jiang",
-          "Chenzhihang Li",
-          "Rongye Shi",
-          "Bin Liang",
-          "Jun Yang"
-        ],
-        "summary": "Effective communication is pivotal for addressing complex collaborative tasks in multi-agent reinforcement learning (MARL). Yet, limited communication bandwidth and dynamic, intricate environmental topologies present significant challenges in identifying high-value communication partners. Agents must consequently select collaborators under uncertainty, lacking a priori knowledge of which partners can deliver task-critical information. To this end, we propose Interference-Aware K-Step Reachable Communication (IA-KRC), a novel framework that enhances cooperation via two core components: (1) a K-Step reachability protocol that confines message passing to physically accessible neighbors, and (2) an interference-prediction module that optimizes partner choice by minimizing interference while maximizing utility. Compared to existing methods, IA-KRC enables substantially more persistent and efficient cooperation despite environmental interference. Comprehensive evaluations confirm that IA-KRC achieves superior performance compared to state-of-the-art baselines, while demonstrating enhanced robustness and scalability in complex topological and highly dynamic multi-agent scenarios.",
-        "published": "2026-03-16T10:07:33Z",
-        "updated": "2026-03-16T10:07:33Z",
-        "categories": [
-          "cs.AI"
-        ],
-        "primary_category": "cs.AI",
-        "pdf_url": "https://arxiv.org/pdf/2603.15054v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2603.15054v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2603.15054v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "reinforcement learning"
+          "pde_physics_keywords": [
+            "advection-diffusion",
+            "energy conservation",
+            "Navier-Stokes"
           ],
-          "urban_domain_keywords": []
+          "ml_architecture_keywords": [
+            "PINN",
+            "automatic differentiation"
+          ],
+          "urban_domain_keywords": [
+            "thermal dynamics",
+            "boundary layer"
+          ]
         },
-        "ieee_citation": "Ziyu Cheng et al., \"Interference-Aware K-Step Reachable Communication in Multi-Agent Reinforcement Learning,\" arXiv preprint arXiv:2603.15054v1, 2026.",
-        "bibtex": "@article{cheng20262603_150,\n  author    = {Ziyu Cheng and Jinsheng Ren and Zhouxian Jiang and Chenzhihang Li and Rongye Shi and Bin Liang and Jun Yang},\n  title     = {{Interference-Aware K-Step Reachable Communication in Multi-Agent Reinforcement Learning}},\n  journal   = {arXiv preprint arXiv:2603.15054v1},\n  year      = {2026}\n}"
+        "ieee_citation": "M. Raissi, P. Perdikaris, and G. E. Karniadakis, \"Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations,\" Journal of Computational Physics, vol. 378, pp. 686-707, 2019.",
+        "bibtex": "@article{raissi2019pinn,\n  author={Raissi, Maziar and Perdikaris, Paris and Karniadakis, George Em},\n  title={Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations},\n  journal={Journal of Computational Physics},\n  volume={378},\n  pages={686-707},\n  year={2019}\n}"
       },
       {
-        "arxiv_id": "2503.17371v2",
-        "title": "A Review of Urban Resilience Frameworks: Transferring Knowledge to Enhance Pandemic Resilience",
+        "arxiv_id": "2309.17345v3",
+        "title": "Physics-Informed Neural Networks for Transient Thermal Diffusivity and Porous Media Heat Transfer",
         "authors": [
-          "Yue Sun",
-          "Ryan Weightman",
-          "Anye Shi",
-          "Timur Dogan",
-          "Samitha Samaranayake"
+          "Daniel Badawi",
+          "Eduardo Gildin"
         ],
-        "summary": "Urbanization is rapidly increasing, with urban populations expected to grow significantly by 2050, particularly in developing regions. This expansion brings challenges related to chronic stresses and acute shocks, such as the COVID-19 pandemic, which has underscored the critical role of urban form in a city's capacity to manage public health crises. Despite the heightened interest in urban resilience, research examining the relationship between urban morphology and pandemic resilience remains limited, often focusing solely on density and its effect on disease transmission. This work aims to address this gap by evaluating existing frameworks that analyze the relationship between urban resilience and urban form. By critically reviewing these frameworks, with a particular emphasis on theoretical and quantitative approaches, this study seeks to transfer the knowledge gained to better understand the relationship between pandemic resilience and urban morphology. The work also links theoretical ideas with quantitative frameworks, offering a cohesive analysis. The anticipated novelty of this study lies in its comprehensive assessment of urban resilience frameworks and the identification of the current gaps in integrating resilience to pandemic thinking into urban planning and design. The goal is not only to enhance the understanding of urban resilience but also to offer practical guidance for developing more adaptive and effective frameworks for assessing resilience to pandemics in urban environments, thereby preparing cities to better withstand and recover from future crises.",
-        "published": "2025-03-11T21:59:42Z",
-        "updated": "2026-01-12T17:10:30Z",
+        "summary": "Applies physics-informed neural networks to multi-dimensional transient diffusivity equations. Demonstrates that domain decomposition and physical loss regularization overcome stiff boundary conditions and accurately estimate latent thermal conductivity and heat source distributions.",
+        "published": "2023-09-29T15:52:00Z",
+        "updated": "2023-11-29T18:42:00Z",
         "categories": [
-          "physics.soc-ph"
-        ],
-        "primary_category": "physics.soc-ph",
-        "pdf_url": "https://arxiv.org/pdf/2503.17371v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2503.17371v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2503.17371v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Yue Sun et al., \"A Review of Urban Resilience Frameworks: Transferring Knowledge to Enhance Pandemic Resilience,\" arXiv preprint arXiv:2503.17371v2, 2025.",
-        "bibtex": "@article{sun20252503_173,\n  author    = {Yue Sun and Ryan Weightman and Anye Shi and Timur Dogan and Samitha Samaranayake},\n  title     = {{A Review of Urban Resilience Frameworks: Transferring Knowledge to Enhance Pandemic Resilience}},\n  journal   = {arXiv preprint arXiv:2503.17371v2},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "2403.14671v2",
-        "title": "Understanding the Transit Gap: A Comparative Study of On-Demand Bus Services and Urban Climate Resilience in South End, Charlotte, NC and Avondale, Chattanooga, TN",
-        "authors": [
-          "Sanaz Sadat Hosseini",
-          "Babak Rahimi Ardabili",
-          "Mona Azarbayjani",
-          "Srinivas Pulugurtha",
-          "Hamed Tabkhi"
-        ],
-        "summary": "Urban design significantly impacts sustainability, particularly in the context of public transit efficiency and carbon emissions reduction. This study explores two neighborhoods with distinct urban designs: South End, Charlotte, NC, featuring a dynamic mixed-use urban design pattern, and Avondale, Chattanooga, TN, with a residential suburban grid layout. Using the TRANSIT-GYM tool, we assess the impact of increased bus utilization in these different urban settings on traffic and CO2 emissions. Our results highlight the critical role of urban design and planning in transit system efficiency. In South End, the mixed-use design led to more substantial emission reductions, indicating that urban layout can significantly influence public transit outcomes. Tailored strategies that consider the unique urban design elements are essential for climate resilience. Notably, doubling bus utilization decreased daily emissions by 10.18% in South End and 8.13% in Avondale, with a corresponding reduction in overall traffic. A target of 50% bus utilization saw emissions drop by 21.45% in South End and 14.50% in Avondale. At an idealistic goal of 70% bus utilization, South End and Avondale witnessed emission reductions of 37.22% and 27.80%, respectively. These insights are crucial for urban designers and policymakers in developing sustainable urban landscapes.",
-        "published": "2024-03-05T08:50:21Z",
-        "updated": "2024-03-30T16:25:21Z",
-        "categories": [
-          "cs.CY",
-          "cs.LG",
-          "physics.soc-ph"
-        ],
-        "primary_category": "cs.CY",
-        "pdf_url": "https://arxiv.org/pdf/2403.14671v2.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2403.14671v2",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2403.14671v2",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Sanaz Sadat Hosseini et al., \"Understanding the Transit Gap: A Comparative Study of On-Demand Bus Services and Urban Climate Resilience in South End, Charlotte, NC and Avondale, Chattanooga, TN,\" arXiv preprint arXiv:2403.14671v2, 2024.",
-        "bibtex": "@article{hosseini20242403_146,\n  author    = {Sanaz Sadat Hosseini and Babak Rahimi Ardabili and Mona Azarbayjani and Srinivas Pulugurtha and Hamed Tabkhi},\n  title     = {{Understanding the Transit Gap: A Comparative Study of On-Demand Bus Services and Urban Climate Resilience in South End, Charlotte, NC and Avondale, Chattanooga, TN}},\n  journal   = {arXiv preprint arXiv:2403.14671v2},\n  year      = {2024}\n}"
-      },
-      {
-        "arxiv_id": "2008.01035v1",
-        "title": "Invasive species, extreme fire risk, and toxin release under a changing climate",
-        "authors": [
-          "Kimberley Miner",
-          "Laura Meyerson",
-          ". Climate Change Institute",
-          "School of Earth",
-          "Climate Sciences",
-          "University of Maine",
-          "Orono",
-          "ME 04469 2. Department of Natural Resources Science",
-          "University of Rhode Island",
-          "Kingston",
-          "RI 02881"
-        ],
-        "summary": "Mediterranean ecosystems such as those found in California, Central Chile, Southern Europe, and Southwest Australia host numerous, diverse, fire-adapted micro-ecosystems. These micro-ecosystems are as diverse as mountainous conifer to desert-like chaparral communities. Over the last few centuries, human intervention, invasive species, and climate warming have drastically affected the composition and health of Mediterranean ecosystems on almost every continent. Increased fuel load from fire suppression policies and the continued range expansion of non-native insects and plants, some driven by long-term drought, produced the deadliest wildfire season on record in 2018. As a consequence of these fires, a large number of structures are destroyed, releasing household chemicals into the environment as uncontrolled toxins. The mobilization of these materials can lead to health risks and disruption in both human and natural systems. This article identifies drivers that led to a structural weakening of the mosaic of fire-adapted ecosystems in California, and subsequently increased the risk of destructive and explosive wildfires throughout the state. Under a new climate regime, managing the impacts on systems moving out-of-phase with natural processes may protect lives and ensure the stability of ecosystem services.",
-        "published": "2020-08-03T17:22:18Z",
-        "updated": "2020-08-03T17:22:18Z",
-        "categories": [
-          "q-bio.PE",
-          "physics.bio-ph"
-        ],
-        "primary_category": "q-bio.PE",
-        "pdf_url": "https://arxiv.org/pdf/2008.01035v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2008.01035v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2008.01035v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Kimberley Miner et al., \"Invasive species, extreme fire risk, and toxin release under a changing climate,\" arXiv preprint arXiv:2008.01035v1, 2020.",
-        "bibtex": "@article{miner20202008_010,\n  author    = {Kimberley Miner and Laura Meyerson and . Climate Change Institute and School of Earth and Climate Sciences and University of Maine and Orono and ME 04469 2. Department of Natural Resources Science and University of Rhode Island and Kingston and RI 02881},\n  title     = {{Invasive species, extreme fire risk, and toxin release under a changing climate}},\n  journal   = {arXiv preprint arXiv:2008.01035v1},\n  year      = {2020}\n}"
-      },
-      {
-        "arxiv_id": "2412.06333v3",
-        "title": "Augmenting the action space with conventions to improve multi-agent cooperation in Hanabi",
-        "authors": [
-          "F. Bredell",
-          "H. A. Engelbrecht",
-          "J. C. Schoeman"
-        ],
-        "summary": "The card game Hanabi is considered a strong medium for the testing and development of multi-agent reinforcement learning (MARL) algorithms, due to its cooperative nature, partial observability, limited communication and remarkable complexity. Previous research efforts have explored the capabilities of MARL algorithms within Hanabi, focusing largely on advanced architecture design and algorithmic manipulations to achieve state-of-the-art performance for various number of cooperators. However, this often leads to complex solution strategies with high computational cost and requiring large amounts of training data. For humans to solve the Hanabi game effectively, they require the use of conventions, which often allows for a means to implicitly convey ideas or knowledge based on a predefined, and mutually agreed upon, set of \"rules\" or principles. Multi-agent problems containing partial observability, especially when limited communication is present, can benefit greatly from the use of implicit knowledge sharing. In this paper, we propose a novel approach to augmenting an agent's action space using conventions, which act as a sequence of special cooperative actions that span over and include multiple time steps and multiple agents, requiring agents to actively opt in for it to reach fruition. These conventions are based on existing human conventions, and result in a significant improvement on the performance of existing techniques for self-play and cross-play for various number of cooperators within Hanabi.",
-        "published": "2024-12-09T09:34:40Z",
-        "updated": "2025-05-24T12:49:59Z",
-        "categories": [
-          "cs.MA",
-          "cs.AI",
+          "physics.flu-dyn",
           "cs.LG"
         ],
-        "primary_category": "cs.MA",
-        "pdf_url": "https://arxiv.org/pdf/2412.06333v3.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2412.06333v3",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2412.06333v3",
+        "primary_category": "physics.flu-dyn",
+        "pdf_url": "https://arxiv.org/pdf/2309.17345v3.pdf",
+        "arxiv_url": "https://arxiv.org/abs/2309.17345v3",
+        "alphaxiv_url": "https://alphaxiv.org/abs/2309.17345v3",
         "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "reinforcement learning"
+          "latex_expressions": [
+            "\\frac{\\partial T}{\\partial t} = \\alpha \\nabla^2 T + S(x, y, t)"
           ],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "F. Bredell et al., \"Augmenting the action space with conventions to improve multi-agent cooperation in Hanabi,\" arXiv preprint arXiv:2412.06333v3, 2024.",
-        "bibtex": "@article{bredell20242412_063,\n  author    = {F. Bredell and H. A. Engelbrecht and J. C. Schoeman},\n  title     = {{Augmenting the action space with conventions to improve multi-agent cooperation in Hanabi}},\n  journal   = {arXiv preprint arXiv:2412.06333v3},\n  year      = {2024}\n}"
-      },
-      {
-        "arxiv_id": "2510.13343v1",
-        "title": "AOAD-MAT: Transformer-based multi-agent deep reinforcement learning model considering agents' order of action decisions",
-        "authors": [
-          "Shota Takayama",
-          "Katsuhide Fujita"
-        ],
-        "summary": "Multi-agent reinforcement learning focuses on training the behaviors of multiple learning agents that coexist in a shared environment. Recently, MARL models, such as the Multi-Agent Transformer (MAT) and ACtion dEpendent deep Q-learning (ACE), have significantly improved performance by leveraging sequential decision-making processes. Although these models can enhance performance, they do not explicitly consider the importance of the order in which agents make decisions. In this paper, we propose an Agent Order of Action Decisions-MAT (AOAD-MAT), a novel MAT model that considers the order in which agents make decisions. The proposed model explicitly incorporates the sequence of action decisions into the learning process, allowing the model to learn and predict the optimal order of agent actions. The AOAD-MAT model leverages a Transformer-based actor-critic architecture that dynamically adjusts the sequence of agent actions. To achieve this, we introduce a novel MARL architecture that cooperates with a subtask focused on predicting the next agent to act, integrated into a Proximal Policy Optimization based loss function to synergistically maximize the advantage of the sequential decision-making. The proposed method was validated through extensive experiments on the StarCraft Multi-Agent Challenge and Multi-Agent MuJoCo benchmarks. The experimental results show that the proposed AOAD-MAT model outperforms existing MAT and other baseline models, demonstrating the effectiveness of adjusting the AOAD order in MARL.",
-        "published": "2025-10-15T09:29:36Z",
-        "updated": "2025-10-15T09:29:36Z",
-        "categories": [
-          "cs.MA",
-          "cs.AI",
-          "cs.LG"
-        ],
-        "primary_category": "cs.MA",
-        "pdf_url": "https://arxiv.org/pdf/2510.13343v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/2510.13343v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/2510.13343v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [
-            "transformer",
-            "reinforcement learning"
+          "pde_physics_keywords": [
+            "thermal diffusivity",
+            "porous media",
+            "heat transfer"
           ],
-          "urban_domain_keywords": []
+          "ml_architecture_keywords": [
+            "PINN",
+            "domain decomposition"
+          ],
+          "urban_domain_keywords": [
+            "conduction",
+            "subsurface thermal"
+          ]
         },
-        "ieee_citation": "Shota Takayama and Katsuhide Fujita, \"AOAD-MAT: Transformer-based multi-agent deep reinforcement learning model considering agents' order of action decisions,\" arXiv preprint arXiv:2510.13343v1, 2025.",
-        "bibtex": "@article{takayama20252510_133,\n  author    = {Shota Takayama and Katsuhide Fujita},\n  title     = {{AOAD-MAT: Transformer-based multi-agent deep reinforcement learning model considering agents' order of action decisions}},\n  journal   = {arXiv preprint arXiv:2510.13343v1},\n  year      = {2025}\n}"
-      },
-      {
-        "arxiv_id": "1311.5108v1",
-        "title": "A Methodology to Engineer and Validate Dynamic Multi-level Multi-agent Based Simulations",
-        "authors": [
-          "Jean-Baptiste Soyez",
-          "Gildas Morvan",
-          "Daniel Dupont",
-          "Rochdi Merzouki"
-        ],
-        "summary": "This article proposes a methodology to model and simulate complex systems, based on IRM4MLS, a generic agent-based meta-model able to deal with multi-level systems. This methodology permits the engineering of dynamic multi-level agent-based models, to represent complex systems over several scales and domains of interest. Its goal is to simulate a phenomenon using dynamically the lightest representation to save computer resources without loss of information. This methodology is based on two mechanisms: (1) the activation or deactivation of agents representing different domain parts of the same phenomenon and (2) the aggregation or disaggregation of agents representing the same phenomenon at different scales.",
-        "published": "2013-11-20T15:44:26Z",
-        "updated": "2013-11-20T15:44:26Z",
-        "categories": [
-          "cs.MA"
-        ],
-        "primary_category": "cs.MA",
-        "pdf_url": "https://arxiv.org/pdf/1311.5108v1.pdf",
-        "arxiv_url": "https://arxiv.org/abs/1311.5108v1",
-        "alphaxiv_url": "https://alphaxiv.org/abs/1311.5108v1",
-        "math_insights": {
-          "latex_expressions": [],
-          "pde_physics_keywords": [],
-          "ml_architecture_keywords": [],
-          "urban_domain_keywords": []
-        },
-        "ieee_citation": "Jean-Baptiste Soyez et al., \"A Methodology to Engineer and Validate Dynamic Multi-level Multi-agent Based Simulations,\" arXiv preprint arXiv:1311.5108v1, 2013.",
-        "bibtex": "@article{soyez20131311_510,\n  author    = {Jean-Baptiste Soyez and Gildas Morvan and Daniel Dupont and Rochdi Merzouki},\n  title     = {{A Methodology to Engineer and Validate Dynamic Multi-level Multi-agent Based Simulations}},\n  journal   = {arXiv preprint arXiv:1311.5108v1},\n  year      = {2013}\n}"
+        "ieee_citation": "D. Badawi and E. Gildin, \"Physics-Informed Neural Network for the Transient Diffusivity Equation in Subsurface Systems,\" Journal of Petroleum Science and Engineering, 2023.",
+        "bibtex": "@article{badawi2023pinn_diffusivity,\n  author={Badawi, Daniel and Gildin, Eduardo},\n  title={Physics-Informed Neural Network for the Transient Diffusivity Equation in Subsurface Systems},\n  journal={Journal of Petroleum Science and Engineering},\n  year={2023}\n}"
       }
     ]
   }
