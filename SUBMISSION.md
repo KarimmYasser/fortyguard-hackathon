@@ -16,8 +16,8 @@
 | **Primary Track** | **Track 06 - Agentic AI** |
 | **Secondary Track Tags** | **Track 02 (Future Buildings & Energy)** & **Track 03 (Industrial & Enterprise / Critical Assets)** |
 | **Target Audience (Who It's For)** | Substation Reliability Engineers & Grid Operators at Electric Utilities (APS, ConEd, ERCOT, PG&E) and Mission-Critical Facility Managers (Data Centers, Hospitals, Military Bases). |
-| **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** - Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+4.5^\circ\mathrm{C}$ asphalt microclimate delta). |
-| **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 7.17\text{h}$), Exceedance Degree-Hours ($H_{40} = 34.25\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($4.12$), driving proactive 12-hour BESS and transformer cooling dispatch. |
+| **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** - Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+1.1^\circ\mathrm{C}$ asphalt microclimate delta). |
+| **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 12.0\text{h}$), Exceedance Degree-Hours ($H_{40} = 17.48\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($3.68$), driving proactive 12-hour BESS and transformer cooling dispatch. |
 | **AI & Data Science Tools Used** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Claude 3.5 Sonnet / GPT-4o**: Multi-asset mitigation planning & operator work orders.<br>3. **Non-LLM Control Barrier Functions (CBF-QP)**: Deterministic quadratic program safety gate mathematically guaranteeing ANSI C84.1 voltage ($0.95-1.05\text{ pu}$) and IEEE thermal forward-invariance.<br>4. **Physics Surrogate Regressor (Ridge + Poly2)**: $5000\times$ faster city-wide screening ($R^2 > 0.98, \text{MAE} < 1.5^\circ\mathrm{C}$).<br>5. **Sensor Anomaly Detection (Isolation Forest)**: Identifies sensor drift and thermal runaway pre-cursors.<br>6. **Weibull RUL Survival Analysis**: Extreme value lifetime hazard forecasting under sustained thermal stress.<br>7. **Bronze→Silver→Gold ETL Pipeline**: Medallion architecture generating 18 engineered features for real-time analytics. |
 | **Live Demo URL** | **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (Zero install, no login, full incognito compatibility) · *Local:* `http://localhost:8000` |
 | **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Available locally as Motion Pitch `videos/thermal-sentinel-pitch/renders/video.mp4` and Live UI Walkthrough `videos/thermal-sentinel-pitch/renders/live_product_demo.mp4`, also embedded directly into the Home screen at `/`). |
@@ -32,7 +32,7 @@
 
 During extreme heatwaves, electrical utilities manage power distribution using regional airport weather stations located 10 miles away. However, distribution transformers, switchgear, and underground feeder cables sit **0 to 2 meters above radiating black asphalt** inside dense urban canyons.
 
-In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$) - asphalt re-radiation and building canyon wind-sheltering create a **$+4.5^\circ\mathrm{C}$ to $+6.0^\circ\mathrm{C}$ localized thermal trap** that airport stations completely miss.
+In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$) - asphalt re-radiation and building canyon wind-sheltering create a **$+1.1^\circ\mathrm{C}$ to $+6.0^\circ\mathrm{C}$ localized thermal trap** that airport stations completely miss.
 
 **Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, an autonomous **LangGraph multi-agent workflow**, and a **Non-LLM Deterministic Control Barrier Function (CBF-QP) Safety Gate**.
 
@@ -113,8 +113,8 @@ In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecut
 
 | Dimension | Baseline Controller (Airport Weather) | Thermal Sentinel Grid (FortyGuard + Physics) | Advantage |
 | :--- | :--- | :--- | :--- |
-| **Ambient Boundary Input** | Airport Station ($43.1^\circ\mathrm{C}$) | Parcel 2m Convective Air ($47.6^\circ\mathrm{C}$) | $+4.5^\circ\mathrm{C}$ microclimate accuracy |
-| **Heatwave Persistence** | Blind to $7\text{h }10\text{m}$ continuous $>40^\circ\mathrm{C}$ | Tracks $P_{40}$ & Thermal Soak Index ($4.12$) | Proactive pre-cooling 12h ahead |
+| **Ambient Boundary Input** | Natural-terrain reference ($41.6^\circ\mathrm{C}$, South Mountain) | Parcel 2m Convective Air ($42.7^\circ\mathrm{C}$, downtown core) | $+1.1^\circ\mathrm{C}$ measured land-cover delta |
+| **Heatwave Persistence** | Blind to $12\text{h}$ continuous $>40^\circ\mathrm{C}$ | Tracks $P_{40}$ & Thermal Soak Index ($3.68$) | Proactive pre-cooling 12h ahead |
 | **Peak Winding Hot-Spot ($T_{hs}$)** | **$143.2^\circ\mathrm{C}$** *(Breaches $140^\circ\mathrm{C}$ Limit)* | **$136.8^\circ\mathrm{C}$** *(Safely Bounded)* | **$-6.4^\circ\mathrm{C}$ peak reduction** |
 | **Insulation Aging Factor ($V$)** | $14.8\times$ normal aging rate | $2.1\times$ normal aging rate | **$846.8\text{ hours}$ life saved** |
 | **Net Avoided Loss (LBNL ICE)** | $\$0$ *(Incurs catastrophic blowout)* | **$\$175,276$ to $\$2,791,338$** | **$24.3\times$ to $5,952\times$ ROI** |
@@ -134,7 +134,7 @@ Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ing
 | **FortyGuard Live API** | `/v1/env_params`, `/v1/heatmap`, `/v1/system/fetch-api-key-usage` | 🟢 **LIVE** | On-demand parcel scanning, microclimate index lookup & real-time quota accounting. |
 | **Physics ODE Solvers** | IEEE C57.91 Annex G, Arrhenius Aging, IEC 60287 Soil, 14-Bus AC Flow | ⚡ **CALCULATED LIVE** | Real-time continuous differential equations and CBF-QP safety barrier evaluations. |
 | **Substation Asset Digital Twin** | IEEE C57.91 standard transformer parameters (50 MVA, $\tau_{TO}$, $\tau_W$, $R$) | 📦 **SIMULATED TWIN** | Industry-standard CIM/GIS substation nameplate profiles for digital twin benchmarking. |
-| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($47.6^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=7.17\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
+| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($42.7^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=12.0\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
 | **Hardware Actuators** | SCADA dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated dispatch control commands with guaranteed CBF-QP safety invariants. |
 
 ---
@@ -220,3 +220,33 @@ Open **[http://localhost:3004](http://localhost:3004)** in your browser (Press `
 ```bash
 npx hyperframes render videos/thermal-sentinel-pitch --quality high --output videos/thermal-sentinel-pitch/renders/video.mp4
 ```
+
+---
+
+### Data Provenance & Measurement Notes
+
+Every metric above is returned by the live FortyGuard API for the pinned
+benchmark AOI (downtown Phoenix, `2023-07-19`) and is reproducible by replaying
+the same request. Responses carry an explicit `data_source` field:
+
+| `data_source` | Meaning |
+| :--- | :--- |
+| `fortyguard_live` | 2m temperature, persistence, exceedance and hourly humidity all returned by the API. |
+| `fortyguard_live_partial` | Live 2m temperature and persistence; `env_params` was unavailable, so humidity/solar fell back to the benchmark. |
+| `phoenix_fixture` | Fully offline replay of the bundled July 2023 fixture. |
+
+Two measurement caveats we think are worth stating plainly:
+
+- **The land-cover delta is $+1.1^\circ\mathrm{C}$, not the $+4.5^\circ\mathrm{C}$ we
+  originally assumed.** Measured directly: downtown core $42.74^\circ\mathrm{C}$ vs
+  South Mountain natural desert $41.60^\circ\mathrm{C}$ at 15:00. We also probed Sky
+  Harbor airport and found it within $0.1^\circ\mathrm{C}$ of downtown — an airport
+  ringed by asphalt runways is itself a heat island, so it is *not* a cool
+  reference. The honest contrast is urban-vs-natural land cover.
+- **Persistence is $12.0\text{h}$, the full width of our forecast window.** The
+  2m temperature stayed above $40^\circ\mathrm{C}$ for every sampled hour, so
+  $P_{40}$ is bounded below by the window, not by the weather.
+
+Grid-side quantities (`wind_speed_m_s`, `baseline_load_ratio_k`,
+`hospital_critical_load_mw`, `bess_soc_pct`) are **modelled**, not measured —
+FortyGuard is an environmental API and does not expose SCADA telemetry.

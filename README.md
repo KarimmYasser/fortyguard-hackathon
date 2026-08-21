@@ -78,7 +78,7 @@ flowchart LR
 | **Microclimate Context** | Blind to asphalt, street canyons, and building shade | **Incorporates land-cover morphology & solar irradiance ($S(t)$)** |
 | **Duration Intelligence** | Instantaneous snapshot only | **Continuous Persistence ($P_\theta$) & Degree-Hour Exceedance ($H_\theta$)** |
 | **Predictive Horizon** | Macroscopic synoptic forecast | **12-Hour Hyperlocal Forward Forecast** for proactive intervention |
-| **Actionability** | *"Airport says 39°C - status normal"* ❌ | *"Asset ambient 47.6°C with 7h persistence"* ⚠️ (Proactive cooling dispatch) |
+| **Actionability** | *"Airport says 39°C - status normal"* ❌ | *"Asset ambient 42.7°C with 12h persistence"* ⚠️ (Proactive cooling dispatch) |
 
 ---
 
@@ -95,7 +95,7 @@ Thermal Sentinel Grid is built with a dual-mode ingestion pattern:
 | **FortyGuard Live API** | `/v1/env_params`, `/v1/heatmap`, `/v1/system/fetch-api-key-usage` | 🟢 **LIVE** | On-demand parcel scanning, microclimate index lookup & real-time quota accounting. |
 | **Physics ODE Solvers** | IEEE C57.91 Annex G, Arrhenius Aging, IEC 60287 Soil, 14-Bus AC Flow | ⚡ **CALCULATED LIVE** | Real-time continuous differential equations and CBF-QP safety barrier evaluations. |
 | **Substation Asset Digital Twin** | IEEE C57.91 standard transformer parameters (50 MVA, $\tau_{TO}$, $\tau_W$, $R$) | 📦 **SIMULATED TWIN** | Industry-standard CIM/GIS substation nameplate profiles for digital twin benchmarking. |
-| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($47.6^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=7.17\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
+| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($42.7^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=12.0\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
 | **Hardware Actuators** | SCADA dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated dispatch control commands with guaranteed CBF-QP safety invariants. |
 
 ---
@@ -108,8 +108,8 @@ To validate real-world performance, Thermal Sentinel Grid is benchmarked against
 ┌───────────────────────────────────────────────┬───────────────────────────────────────────────┐
 │ BASELINE CONTROLLER (Airport Weather + Static)│ THERMAL SENTINEL GRID (FortyGuard + Physical) │
 ├───────────────────────────────────────────────┼───────────────────────────────────────────────┤
-│ • Relies on distant airport weather (43.1°C)  │ • Detects parcel 2m ambient (47.6°C, +4.5°C)  │
-│ • Blind to 7h 10m continuous persistence      │ • 12h forward warning triggers proactive pre-cool│
+│ • Uses natural-terrain reference (41.6°C)     │ • Detects parcel 2m ambient (42.7°C, +1.1°C)  │
+│ • Blind to 12h continuous persistence         │ • 12h forward warning triggers proactive pre-cool│
 │ • Hot-spot breaches 140°C emergency ceiling   │ • Projected hot-spot safely capped at 136.8°C  │
 │ • Accelerated insulation aging (V = 14.8x)    │ • 73.4 avoided equivalent aging hours (L_eq)  │
 │ • Unplanned emergency load shedding           │ • Zero voltage (0.95-1.05pu) & N-1 violations │
@@ -313,12 +313,12 @@ Thermal Sentinel Grid interacts programmatically with FortyGuard's async submit-
     "activity_id": "act_phx_sub04_20230724_tcm_60m",
     "execution_time_ms": 1420,
     "result": {
-      "mean_temperature_2m_c": 47.6,
+      "mean_temperature_2m_c": 42.7,
       "max_temperature_2m_c": 51.2,
       "min_temperature_2m_c": 44.8,
-      "persistence_hours_p40": 7.17,
-      "exceedance_degree_hours_h40": 34.25,
-      "thermal_soak_index": 4.12,
+      "persistence_hours_p40": 12.0,
+      "exceedance_degree_hours_h40": 17.48,
+      "thermal_soak_index": 3.68,
       "urban_canyon": {
         "aspect_ratio_hw": 1.85,
         "wind_shelter_kappa": 0.58,
