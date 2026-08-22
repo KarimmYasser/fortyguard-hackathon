@@ -75,7 +75,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   };
 
   const chapters: ChapterMarker[] = [
-    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.7M Risk)', icon: Flame },
+    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.58M Risk)', icon: Flame },
     { time: 30, label: '0:30 4 Scientific Moats', desc: 'Soil Dryout & IEEE Physics ODEs', icon: Layers },
     { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + CBF-QP Safety Barrier', icon: Cpu },
     { time: 90, label: '1:30 Live Mission Control', desc: '12h Proactive Dispatch & What-If Studio', icon: Sliders },

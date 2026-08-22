@@ -81,7 +81,7 @@ numbers are auditable rather than asserted. We quantify avoided outage risk,
 capital life extension, and the exact energy cost of mitigating.
 
 For a single heatwave event: **2.58 million dollars** in net avoided loss, an ROI
-of roughly **5,800 to one**, and **605 equivalent aging hours** returned to the
+of roughly **5,500 to one**, and **374 equivalent aging hours** returned to the
 asset — while keeping critical medical feeders energised.
 
 Failure probability drops from ninety-six percent to under one.
