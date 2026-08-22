@@ -328,10 +328,10 @@
         },
         "properties": {
           "tile_id": "tile_phx_sub_04",
-          "ambient_temp_c": 47.6,
-          "ambient_temp_f": 117.68,
-          "persistence_hours_p40": 7.17,
-          "exceedance_degree_hours": 34.25,
+          "ambient_temp_c": 42.77,
+          "ambient_temp_f": 108.99,
+          "persistence_hours_p40": 12.0,
+          "exceedance_degree_hours": 17.48,
           "land_cover": "asphalt_impervious",
           "albedo": 0.18,
           "asset_present": "SUB-PHX-DOWNTOWN-04"
@@ -368,10 +368,10 @@
         },
         "properties": {
           "tile_id": "tile_phx_canyon_01",
-          "ambient_temp_c": 46.8,
-          "ambient_temp_f": 116.24,
-          "persistence_hours_p40": 6.8,
-          "exceedance_degree_hours": 31.5,
+          "ambient_temp_c": 42.73,
+          "ambient_temp_f": 108.91,
+          "persistence_hours_p40": 11.83,
+          "exceedance_degree_hours": 17.23,
           "land_cover": "commercial_canyon",
           "albedo": 0.22,
           "asset_present": "FEEDER-WEST-01"
@@ -408,10 +408,10 @@
         },
         "properties": {
           "tile_id": "tile_phx_med_center",
-          "ambient_temp_c": 45.4,
-          "ambient_temp_f": 113.72,
-          "persistence_hours_p40": 5.9,
-          "exceedance_degree_hours": 26.8,
+          "ambient_temp_c": 42.7,
+          "ambient_temp_f": 108.86,
+          "persistence_hours_p40": 11.7,
+          "exceedance_degree_hours": 17.04,
           "land_cover": "hospital_campus",
           "albedo": 0.28,
           "asset_present": "FEEDER-HOSPITAL-PRIORITY"

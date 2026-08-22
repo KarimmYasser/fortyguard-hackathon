@@ -115,6 +115,30 @@ async def main() -> int:
         ),
     }
 
+    # The GeoJSON tiles the GIS tab renders were never regenerated, so their
+    # per-tile properties still asserted 47.6 C / 7.17 h / 34.25 C*h - the
+    # retired figures - and leaked them back into the UI through the API.
+    # Re-derive them from the measured AOI spread at the peak hour.
+    peak_hour = max(forecast, key=lambda h: h["fortyguard_2m_ambient_c"])
+    hottest_c = peak_hour["tile_peak_2m_c"]
+    coolest_c = peak_hour["coolest_tile_2m_c"]
+    p40_measured = persistence["persistence_hours_p40"]
+    h40_measured = persistence["exceedance_degree_hours_h40"]
+
+    tiles = existing.get("heatmap_geojson_tiles", {}).get("features", [])
+    for i, feat in enumerate(tiles):
+        # Rank tiles hottest -> coolest across the measured AOI spread.
+        frac = i / max(len(tiles) - 1, 1)
+        t_c = round(hottest_c - frac * (hottest_c - coolest_c), 2)
+        props = feat.setdefault("properties", {})
+        props["ambient_temp_c"] = t_c
+        props["ambient_temp_f"] = round(t_c * 9 / 5 + 32, 2)
+        # Degree-hours scale with how far the tile sits above the 40 C threshold.
+        above = max(t_c - persistence["threshold_c"], 0.0)
+        peak_above = max(hottest_c - persistence["threshold_c"], 1e-6)
+        props["persistence_hours_p40"] = round(p40_measured * (above / peak_above), 2)
+        props["exceedance_degree_hours"] = round(h40_measured * (above / peak_above), 2)
+
     existing["hourly_forecast_12h"] = forecast
     FIXTURE.write_text(json.dumps(existing, indent=2) + "\n")
 
