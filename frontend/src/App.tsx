@@ -97,8 +97,22 @@ export const App: React.FC = () => {
       setActiveBinding(simResult.scan_binding);
     }
     if (data && simResult.timeline_steps) {
+      const patch = simResult?.scan_binding?.scenario_metadata_patch;
+      // Merge rather than replace: the patch only carries what the scan can
+      // actually speak to, so canyon/soil metrics keep their existing values.
+      const mergedMetadata = patch
+        ? {
+            ...data.scenario_metadata,
+            name: `${patch.location?.city ?? 'Live scan'} — live FortyGuard capture`,
+            location: { ...data.scenario_metadata.location, ...patch.location },
+            date_range: { ...data.scenario_metadata.date_range, ...patch.date_range },
+            persistence_metrics:
+              patch.persistence_metrics ?? data.scenario_metadata.persistence_metrics,
+          }
+        : data.scenario_metadata;
       setData({
         ...data,
+        scenario_metadata: mergedMetadata,
         timeline_steps: simResult.timeline_steps,
         baseline_summary: simResult.baseline_summary,
         mitigated_summary: simResult.mitigated_summary,

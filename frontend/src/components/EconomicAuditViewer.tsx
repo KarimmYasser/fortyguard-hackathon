@@ -38,12 +38,14 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
     v === null || v === undefined || Number.isNaN(v)
       ? '—'
       : `$${Math.round(v).toLocaleString()}`;
-  const peak2mC = steps?.length
-    ? Math.max(...steps.map((s) => s.fortyguard_2m_ambient_c))
+  // Spread is a within-hour, across-space quantity. Taking the day's max 2m
+  // against the day's min coolest-tile mixes two different hours and inflates
+  // it into a diurnal swing - it read +6.51 C next to a banner saying 0.62 C.
+  const peakStep = steps?.length
+    ? steps.reduce((a, s) => (s.fortyguard_2m_ambient_c > a.fortyguard_2m_ambient_c ? s : a), steps[0])
     : null;
-  const coolestTileC = steps?.length
-    ? Math.min(...steps.map((s) => s.coolest_tile_2m_c))
-    : null;
+  const peak2mC = peakStep?.fortyguard_2m_ambient_c ?? null;
+  const coolestTileC = peakStep?.coolest_tile_2m_c ?? null;
   const spreadC = peak2mC != null && coolestTileC != null ? peak2mC - coolestTileC : null;
   const pm = metadata?.persistence_metrics;
 
@@ -159,7 +161,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
             <tbody className="divide-y divide-slate-800/60 text-slate-300">
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">1. Ambient Boundary Input</td>
-                <td className="py-3 px-4 text-rose-300">Coolest tile in AOI ({n(coolestTileC)}°C)</td>
+                <td className="py-3 px-4 text-rose-300">Coolest tile in AOI at peak hour ({n(coolestTileC)}°C)</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">Peak parcel 2m convective air ({n(peak2mC)}°C)</td>
                 <td className="py-3 pl-4 text-amber-300">+{n(spreadC, 2)}°C measured intra-AOI spread</td>
               </tr>

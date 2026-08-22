@@ -98,6 +98,20 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         spread_c = peak.get("intra_aoi_spread_c")
         if spread_c is None:
             spread_c = round(peak["fortyguard_2m_ambient_c"] - peak.get("coolest_tile_2m_c", peak["fortyguard_2m_ambient_c"]), 3)
+        # Persistence for the scanned location. Without this the dashboard kept
+        # showing the Phoenix P40 / TSI beside the scanned city's ambient curve.
+        live_persistence: Dict[str, Any] = {}
+        try:
+            live_persistence = await client.get_persistence_and_exceedance(
+                latitude=req.latitude,
+                longitude=req.longitude,
+                threshold_c=40.0,
+                start_date=req.analysis_date,
+                hourly_forecast=usable,
+            )
+        except Exception as exc:
+            logger.warning("Live persistence unavailable for scan binding: %s", exc, exc_info=True)
+
         scan_binding = {
             "mode": "live_scan",
             "city": req.city or f"{req.latitude:.4f}, {req.longitude:.4f}",
@@ -108,6 +122,13 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
             "peak_2m_ambient_c": round(peak["fortyguard_2m_ambient_c"], 2),
             "measured_intra_aoi_spread_c": spread_c,
             "data_source": usable[0].get("data_source"),
+        }
+        # Patched onto the dashboard's scenario metadata so the header, date and
+        # persistence row track the scan instead of the benchmark.
+        scan_binding["scenario_metadata_patch"] = {
+            "location": {"city": req.city or f"{req.latitude:.4f}, {req.longitude:.4f}"},
+            "date_range": {"start_date": req.analysis_date},
+            "persistence_metrics": live_persistence or None,
         }
 
     # 1. Physical parameters scaled to user MVA

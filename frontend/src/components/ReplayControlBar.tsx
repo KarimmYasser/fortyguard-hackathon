@@ -37,6 +37,15 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
   speed,
   onChangeSpeed,
 }) => {
+  // Derived from the active dataset. These were fixed strings, so a rebase onto
+  // a scanned city still announced Phoenix and a 42.7 C peak over its data.
+  const peakStep = steps?.length
+    ? steps.reduce((a, s) => (s.fortyguard_2m_ambient_c > a.fortyguard_2m_ambient_c ? s : a), steps[0])
+    : null;
+  const peakC = peakStep?.fortyguard_2m_ambient_c ?? null;
+  const peakF = peakC != null ? peakC * 9 / 5 + 32 : null;
+  const scenarioDate = metadata?.date_range?.start_date ?? null;
+  const scenarioPlace = metadata?.location?.city ?? null;
   const currentStep = steps[currentHourIndex] || steps[0];
 
   const handlePrev = () => {
@@ -65,10 +74,11 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
                 {metadata.name}
               </h2>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-rose-950/80 text-rose-300 border border-rose-800/60 flex items-center gap-1">
-                <Flame className="h-3 w-3 text-rose-400" /> 108.9°F / 42.7°C MEASURED PEAK
+                <Flame className="h-3 w-3 text-rose-400" />{' '}
+                {peakF != null ? `${peakF.toFixed(1)}°F / ${peakC!.toFixed(1)}°C` : '—'} MEASURED PEAK
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-900 text-slate-400 border border-slate-800">
-                July 19, 2023 · Phoenix AZ
+                {[scenarioDate, scenarioPlace].filter(Boolean).join(' · ') || '—'}
               </span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
@@ -158,7 +168,8 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
             <Sun className="h-3.5 w-3.5 text-amber-400" /> 06:00 AM (Sunrise · 34.2°C)
           </span>
           <span className="text-rose-400 font-bold flex items-center gap-1 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-800/40 animate-pulse">
-            <Flame className="h-3.5 w-3.5" /> 01:00 PM Peak Forcing (42.7°C / 108.9°F)
+            <Flame className="h-3.5 w-3.5" /> {peakStep?.time_label ?? '—'} Peak Forcing{' '}
+            ({peakC != null ? `${peakC.toFixed(1)}°C / ${peakF!.toFixed(1)}°F` : '—'})
           </span>
           <span className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5 text-slate-500" /> 05:00 PM (Evening · 44.1°C)
