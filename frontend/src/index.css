@@ -21,6 +21,14 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Keep navbar previews translucent while strongly diffusing the content behind
+   them. This preserves the glass treatment without letting background text
+   compete with the preview copy. */
+.navbar-tab-preview {
+  backdrop-filter: blur(32px) saturate(115%);
+  -webkit-backdrop-filter: blur(32px) saturate(115%);
+}
+
 .glass-panel-glow {
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(20px);

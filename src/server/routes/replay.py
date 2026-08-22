@@ -5,16 +5,11 @@ Serves the Phoenix July 2023 heatwave benchmark replay dataset for baseline vs. 
 
 from __future__ import annotations
 
-import logging
-
 from typing import Any, Dict
+
 from fastapi import APIRouter, Response
+
 from src.replay.phoenix_heatwave_replay import PhoenixHeatwaveReplayEngine
-
-from src.db.database import db_manager
-from src.db.models import SubstationTelemetryRecord, MultiDayHeatwaveRecord
-
-logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/replay", tags=["Historical Replay"])
 
@@ -25,7 +20,11 @@ _REPLAY_ENGINE = PhoenixHeatwaveReplayEngine()
 async def get_phoenix_2023_replay(response: Response) -> Dict[str, Any]:
     """
     Returns complete 12-hour synchronized replay telemetry comparing
-    Baseline Controller vs. Thermal Sentinel Grid during Phoenix July 2023, logging to database.
+    Baseline Controller vs. Thermal Sentinel Grid during Phoenix July 2023.
+
+    This GET is deliberately read-only. The replay is a checked-in deterministic
+    fixture, so persisting the same 12 telemetry rows and a new safety certificate
+    for every page load only creates duplicates and unnecessary database traffic.
     """
     # The replay is a deterministic recomputation of a fixed historical
     # scenario, so every visitor was paying a multi-second cold start for an
@@ -36,29 +35,8 @@ async def get_phoenix_2023_replay(response: Response) -> Dict[str, Any]:
     )
 
     data = _REPLAY_ENGINE.generate_replay_dataset()
-    # The engine is synchronous, so it buffers CBF certificates rather than
-    # scheduling background writes that a frozen lambda would cancel.
-    await _REPLAY_ENGINE.safety_gate.persist_pending_certificates()
-
-    try:
-        steps = data.get("timeline_steps", [])
-        for s in steps:
-            rec = SubstationTelemetryRecord(
-                asset_id="SUB-PHX-DOWNTOWN-04",
-                # A missing replay field is a schema defect, not permission to
-                # persist a plausible-looking temperature or loading constant.
-                hour_step=s["hour_index"],
-                ambient_c=s["fortyguard_2m_ambient_c"],
-                top_oil_c=s["mitigated_top_oil_c"],
-                hot_spot_c=s["mitigated_hot_spot_c"],
-                aging_factor=s["mitigated_aging_factor_v"],
-                load_ratio=s["mitigated_load_k"],
-                bess_dispatch_mw=4.5,
-                is_mitigated=True,
-            )
-            await db_manager.log_substation_telemetry(rec)
-    except Exception as exc:
-        logger.warning("Failed to persist substation telemetry: %s", exc, exc_info=True)
-
+    # Evaluation buffers a certificate for mutation-oriented callers. A replay
+    # read must neither write it nor leave it queued on the singleton engine.
+    _REPLAY_ENGINE.safety_gate.pending_certificates.clear()
     return data
 

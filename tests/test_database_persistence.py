@@ -6,6 +6,7 @@ Covers all 16 enterprise data tables guaranteeing 100% zero data loss.
 import pytest
 import tempfile
 import os
+from unittest.mock import AsyncMock
 from fastapi.testclient import TestClient
 
 from src.db.database import HybridDatabaseManager
@@ -352,6 +353,34 @@ async def test_grid_asset_registry_crud(temp_db):
     found = next((a for a in assets if a["asset_id"] == "SUB-PHX-TEMPE-01"), None)
     assert found is not None
     assert found["rated_mva"] == 35.0
+
+
+@pytest.mark.asyncio
+async def test_supabase_cache_lookup_projects_only_the_payload(temp_db, monkeypatch):
+    temp_db.is_supabase_enabled = True
+    select = AsyncMock(return_value=[{"response_payload": {"cached": True}}])
+    monkeypatch.setattr(temp_db, "_supabase_select", select)
+
+    assert await temp_db.get_cached_api_call("abc123") == {"cached": True}
+    assert select.await_args.kwargs["columns"] == "response_payload"
+
+
+@pytest.mark.asyncio
+async def test_supabase_count_uses_narrow_primary_key_projection(temp_db, monkeypatch):
+    temp_db.is_supabase_enabled = True
+    requested = []
+
+    async def fake_count(table, count_column):
+        requested.append((table, count_column))
+        return 7
+
+    monkeypatch.setattr(temp_db, "_supabase_count", fake_count)
+    status = await temp_db.get_database_status()
+
+    assert status["counts"]["api_call_cache"] == 7
+    assert ("api_call_cache", "query_hash") in requested
+    assert ("substation_telemetry_logs", "id") in requested
+    assert len(requested) == 16
 
 
 def test_database_fastapi_endpoints():

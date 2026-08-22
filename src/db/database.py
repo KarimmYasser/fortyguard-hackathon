@@ -410,6 +410,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             rows = await self._supabase_select(
                 "api_call_cache",
+                columns="response_payload",
                 filters={"query_hash": f"eq.{query_hash}"},
                 limit=1,
             )
@@ -1320,6 +1321,7 @@ class HybridDatabaseManager:
         filters: Optional[Dict[str, str]] = None,
         search: Optional[str] = None,
         search_columns: Optional[List[str]] = None,
+        columns: str = "*",
         limit: int = 100,
         order: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
@@ -1337,7 +1339,7 @@ class HybridDatabaseManager:
             "apikey": self.supabase_key,
             "Authorization": f"Bearer {self.supabase_key}",
         }
-        params: Dict[str, str] = {"select": "*", "limit": str(limit)}
+        params: Dict[str, str] = {"select": columns, "limit": str(limit)}
         if order:
             params["order"] = order
         for col, frag in (filters or {}).items():
@@ -1357,8 +1359,8 @@ class HybridDatabaseManager:
             logger.warning(f"Supabase read non-fatal error for table {table}: {e}")
             return []
 
-    async def _supabase_count(self, table: str) -> Optional[int]:
-        """Exact row count for a Supabase table via PostgREST count header. None on failure."""
+    async def _supabase_count(self, table: str, count_column: str) -> Optional[int]:
+        """Exact row count using a narrow indexed identifier projection."""
         if not self.is_supabase_enabled:
             return None
         url = f"{self.supabase_url}/rest/v1/{table}"
@@ -1369,7 +1371,14 @@ class HybridDatabaseManager:
         }
         try:
             async with httpx.AsyncClient(timeout=6.0) as client:
-                resp = await client.head(url, headers=headers, params={"select": "*"})
+                # Avoid `select=*`: several tables contain large JSON payloads.
+                # HEAD discards the body, and the one-row range supplies the
+                # exact total via Content-Range without materializing records.
+                resp = await client.head(
+                    url,
+                    headers=headers,
+                    params={"select": count_column, "limit": "1"},
+                )
                 content_range = resp.headers.get("content-range", "")
                 if "/" in content_range:
                     total = content_range.split("/")[-1]
@@ -1406,24 +1415,25 @@ class HybridDatabaseManager:
         When Supabase is enabled, its counts are authoritative (durable across cold
         starts); local SQLite counts are also reported since that store is ephemeral
         per-invocation on serverless deployments."""
-        tables = [
-            "api_call_cache",
-            "dispatch_work_orders",
-            "credit_accounting_ledger",
-            "academic_research_papers",
-            "substation_telemetry_logs",
-            "simulation_runs",
-            "multi_day_heatwave_logs",
-            "dlr_catenary_telemetry",
-            "agent_execution_traces",
-            "financial_audit_snapshots",
-            "microclimate_parcel_store",
-            "bess_degradation_logs",
-            "cascading_risk_snapshots",
-            "chance_constrained_opf_logs",
-            "cbf_safety_certificates",
-            "grid_assets_registry",
-        ]
+        table_primary_keys = {
+            "api_call_cache": "query_hash",
+            "dispatch_work_orders": "work_order_id",
+            "credit_accounting_ledger": "transaction_id",
+            "academic_research_papers": "paper_id",
+            "substation_telemetry_logs": "id",
+            "simulation_runs": "simulation_id",
+            "multi_day_heatwave_logs": "id",
+            "dlr_catenary_telemetry": "id",
+            "agent_execution_traces": "trace_id",
+            "financial_audit_snapshots": "audit_id",
+            "microclimate_parcel_store": "parcel_id",
+            "bess_degradation_logs": "id",
+            "cascading_risk_snapshots": "snapshot_id",
+            "chance_constrained_opf_logs": "solve_id",
+            "cbf_safety_certificates": "certificate_id",
+            "grid_assets_registry": "asset_id",
+        }
+        tables = list(table_primary_keys)
         sqlite_counts: Dict[str, int] = {}
         with self._get_connection() as conn:
             cursor = conn.cursor()
@@ -1438,7 +1448,9 @@ class HybridDatabaseManager:
         supabase_counts: Dict[str, int] = {}
         if self.is_supabase_enabled:
             import asyncio as _asyncio
-            results = await _asyncio.gather(*[self._supabase_count(t) for t in tables])
+            results = await _asyncio.gather(
+                *[self._supabase_count(t, table_primary_keys[t]) for t in tables]
+            )
             for t, c in zip(tables, results):
                 if c is not None:
                     supabase_counts[t] = c

@@ -358,7 +358,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <div
                     className={`absolute top-full pt-2 z-50 w-72 sm:w-80 pointer-events-none transition-all duration-200 animate-in fade-in zoom-in-95 ${alignClass}`}
                   >
-                    <div className="glass-panel p-4 rounded-2xl border border-slate-700/80 bg-slate-950/95 backdrop-blur-2xl shadow-2xl shadow-black/80 space-y-2.5">
+                    <div className="glass-panel navbar-tab-preview p-4 rounded-2xl border border-slate-700/80 bg-slate-950/95 shadow-2xl shadow-black/80 space-y-2.5">
                       <div className="flex items-center justify-between gap-2">
                         <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${preview.badgeColor}`}>
                           {preview.badge}

@@ -116,3 +116,23 @@ async def test_replay_emits_no_persistence_warnings(caplog):
 
     failures = [r.getMessage() for r in caplog.records if "Failed to persist" in r.getMessage()]
     assert not failures, "Persistence failures during replay:\n  " + "\n  ".join(failures)
+
+
+def test_replay_get_route_is_read_only():
+    """Refreshing a deterministic replay must not append duplicate DB rows."""
+    route = ast.parse((ROOT / "src" / "server" / "routes" / "replay.py").read_text())
+    mutations = []
+    for node in ast.walk(route):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)):
+            continue
+        owner = node.func.value
+        if (
+            isinstance(owner, ast.Name)
+            and owner.id == "db_manager"
+            or isinstance(owner, ast.Attribute)
+            and owner.attr == "safety_gate"
+        ):
+            if node.func.attr.startswith(("save_", "log_", "persist_")):
+                mutations.append((node.lineno, node.func.attr))
+
+    assert not mutations, f"GET replay still performs database mutations: {mutations}"
