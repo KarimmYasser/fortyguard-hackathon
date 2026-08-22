@@ -54,6 +54,7 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 * **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md):** Comprehensive synthesized distillation of keynotes (*Google, Autodesk, FortyGuard*), idea selection philosophy, 6 demonstrated industry blueprints, and winning hackathon strategies.
 * **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md):** Architecture Decision Record (ADR) justifying Dual-Mode Ingestion (Live Cloud Ingestion vs. Deterministic Phoenix Benchmark Replay), sub-15ms operator latency, and IEEE ground truth reproducibility.
 * **[Physical-AI Research & Standards Synthesis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md):** Academic literature foundation, IEEE/IEC/UL standards equations, multi-agent control architecture, and comparative concept benchmarks.
+* **[SCADA, LLM Safety & LangGraph Architecture Guide](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/SCADA_LLM_AND_LANGGRAPH_EXPLAINER.md):** Architecture Decision Record (ADR) detailing SCADA telemetry, why LLMs are strictly forbidden from direct grid control loops, and when LangGraph is vs. is not overengineering.
 
 
 ---
