@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 
 class CC_OPF_Request(BaseModel):
     """Input parameters for Chance-Constrained Optimal Power Flow."""
-    base_ambient_temp_c: float = Field(default=47.6, description="FortyGuard 2m mean forecast (°C)")
+    base_ambient_temp_c: float = Field(default=42.74, description="FortyGuard 2m mean forecast (°C)")
     forecast_std_dev_c: float = Field(default=1.85, description="Forecast temperature uncertainty standard deviation (°C)")
     confidence_level_pct: float = Field(default=95.0, description="Required chance constraint satisfaction (90%, 95%, 99%)")
     total_grid_load_mw: float = Field(default=22.8, description="Peak customer active power demand (MW)")

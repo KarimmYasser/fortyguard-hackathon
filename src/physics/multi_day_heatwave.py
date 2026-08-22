@@ -65,7 +65,7 @@ class MultiDayHeatwaveEngine:
     def generate_72h_boundary_forcing(self) -> List[Dict[str, Any]]:
         """
         Generates 72 hours of realistic Phoenix July 24-26, 2023 hourly microclimate data.
-        Day 1: July 24 (Peak 47.6°C / Airport 43.1°C)
+        Day 1: July 19 (Peak 2m 42.74°C / coolest AOI tile 42.26°C)
         Day 2: July 25 (Peak 48.1°C / Airport 43.5°C)
         Day 3: July 26 (Peak 48.3°C / Airport 43.8°C - 119°F Historic High)
         """

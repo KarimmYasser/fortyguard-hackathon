@@ -226,8 +226,10 @@ class TransformerThermalEngine:
 
         # Previously hardcoded to the Phoenix benchmark, which meant the soak
         # index ignored the live persistence layer entirely.
-        p_40 = 7.17 if persistence_hours_p40 is None else float(persistence_hours_p40)
-        h_40 = 34.25 if exceedance_degree_hours_h40 is None else float(exceedance_degree_hours_h40)
+        # Defaults mirror the 2023-07-19 capture. They are a last resort:
+        # every caller now forwards the measured values explicitly.
+        p_40 = 12.0 if persistence_hours_p40 is None else float(persistence_hours_p40)
+        h_40 = 17.48 if exceedance_degree_hours_h40 is None else float(exceedance_degree_hours_h40)
         tsi = self.compute_thermal_soak_index(p_40, h_40)
         rho_o = 1.0 - math.exp(-p_40 / p.tau_o)
         rho_w = 1.0 - math.exp(-p_40 / p.tau_w)

@@ -30,7 +30,7 @@ _analytics_engine = ThermalAnalyticsEngine()
 
 class SurrogatePredictionRequest(BaseModel):
     """Input features for Physics Surrogate hot-spot prediction."""
-    ambient_2m_c: float = Field(default=47.6, description="FortyGuard 2m ambient temperature (°C)")
+    ambient_2m_c: float = Field(default=42.74, description="FortyGuard 2m ambient temperature (°C)")
     solar_irradiance: float = Field(default=960.0, description="Solar irradiance (W/m²)")
     load_ratio_k: float = Field(default=1.0, description="Per-unit load ratio K")
     cooling_derate_eta: float = Field(default=0.68, description="Canyon cooling derate factor")

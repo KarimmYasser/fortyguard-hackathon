@@ -40,9 +40,19 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     }
 
     # 2. Live LLM Synthesis for Citizen Advisory
+    # Report the peak this run actually saw. This used to state a fixed 47.6 C
+    # in both the fallback copy and the LLM prompt, so the public advisory and
+    # the model's input disagreed with the dashboard on every run.
+    peak_2m_c = max(
+        (h.get("fortyguard_2m_ambient_c", 0.0) for h in state.get("fortyguard_forecast", [])),
+        default=0.0,
+    )
+    peak_2m_label = f"{peak_2m_c:.1f}" if peak_2m_c else "extreme"
+    net_loss = eco.get("net_avoided_loss_usd") or 0
+
     default_guidance = (
         f"Hyperlocal air temperatures surrounding street-level electrical infrastructure "
-        f"are projected to hit 47.6°C between 11:00 AM and 05:00 PM. Automated grid cooling "
+        f"are projected to hit {peak_2m_label}°C between 11:00 AM and 05:00 PM. Automated grid cooling "
         f"and battery peak shaving are actively engaged to prevent power interruptions. "
         f"Residents are advised to schedule EV charging after 07:00 PM."
     )
@@ -60,7 +70,7 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
             },
             {
                 "role": "user",
-                "content": f"Location: {city}, Substation: {asset_name}, Projected 2m Heat: 47.6°C, Avoided Loss: ${eco.get('net_avoided_loss_usd', 2791337):,}.",
+                "content": f"Location: {city}, Substation: {asset_name}, Projected 2m Heat: {peak_2m_label}°C, Avoided Loss: ${net_loss:,.0f}.",
             },
         ],
         max_completion_tokens=150,

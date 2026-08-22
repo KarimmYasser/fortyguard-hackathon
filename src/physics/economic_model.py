@@ -104,8 +104,8 @@ class EconomicEngine:
         mitigated_peak_hot_spot_c: float = 136.8,
         baseline_loss_of_life_hours: float = 88.6,
         mitigated_loss_of_life_hours: float = 15.2,
-        persistence_hours: float = 7.17,
-        thermal_soak_index: float = 4.12,
+        persistence_hours: float = 12.0,
+        thermal_soak_index: float = 3.68,
         bess_discharged_mwh: float = 12.5,
         cooling_runtime_hours: float = 8.0,
     ) -> Dict[str, Any]:

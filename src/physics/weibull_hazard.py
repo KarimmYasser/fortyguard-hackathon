@@ -152,7 +152,7 @@ class ArrheniusWeibullHazardEngine:
         cable_temp_trajectory: List[float],
         line_temp_trajectory: List[float],
         is_mitigated: bool = False,
-        ambient_peak_c: float = 47.6,
+        ambient_peak_c: float = 42.74,
     ) -> CascadingOutageRiskReport:
         """
         Evaluates full grid cascading blackout risk across all assets.

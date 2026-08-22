@@ -69,8 +69,8 @@ async def safety_gate_node(state: ThermalSentinelState) -> Dict[str, Any]:
         mitigated_peak_hot_spot_c=mitigated_traj.peak_hot_spot_c,
         baseline_loss_of_life_hours=baseline.get("total_loss_of_life_hours", 88.6),
         mitigated_loss_of_life_hours=mitigated_traj.total_loss_of_life_hours,
-        persistence_hours=persist.get("persistence_hours_p40", 7.17),
-        thermal_soak_index=persist.get("thermal_soak_index_tsi", 4.12),
+        persistence_hours=persist.get("persistence_hours_p40", 12.0),
+        thermal_soak_index=persist.get("thermal_soak_index_tsi", 3.68),
         bess_discharged_mwh=10.0,
         cooling_runtime_hours=7.0,
     )

@@ -181,8 +181,8 @@ class PhoenixHeatwaveReplayEngine:
             mitigated_peak_hot_spot_c=mitigated_traj.peak_hot_spot_c,
             baseline_loss_of_life_hours=baseline_traj.total_loss_of_life_hours,
             mitigated_loss_of_life_hours=mitigated_traj.total_loss_of_life_hours,
-            persistence_hours=meta.get("persistence_metrics", {}).get("persistence_hours_p40", 7.17),
-            thermal_soak_index=meta.get("persistence_metrics", {}).get("thermal_soak_index_tsi", 4.12),
+            persistence_hours=meta.get("persistence_metrics", {}).get("persistence_hours_p40", 12.0),
+            thermal_soak_index=meta.get("persistence_metrics", {}).get("thermal_soak_index_tsi", 3.68),
             bess_discharged_mwh=10.0,
             cooling_runtime_hours=7.0,
         )

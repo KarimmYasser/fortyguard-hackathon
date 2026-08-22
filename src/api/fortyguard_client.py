@@ -525,14 +525,21 @@ class AsyncFortyGuardClient:
         return payload
 
     def _fixture_persistence(self, threshold_c: float) -> Dict[str, Any]:
-        """Phoenix July 2023 benchmark persistence layer (offline replay)."""
+        """Phoenix July 2023 benchmark persistence layer (offline replay).
+
+        Reads the captured fixture rather than restating it. These were once
+        inline literals (7.17 h / 34.25 C*h / TSI 4.12) that survived the
+        regeneration of the fixture and silently contradicted it - the capture
+        says 12.0 h / 17.48 C*h / TSI 3.68.
+        """
+        meta = self._fixture_data.get("scenario_metadata", {}).get("persistence_metrics", {})
         return {
             "threshold_c": threshold_c,
-            "persistence_hours_p40": 7.17,
-            "exceedance_hours_e40": 9.0,
-            "exceedance_degree_hours_h40": 34.25,
-            "thermal_soak_index_tsi": 4.12,
-            "consecutive_heatwave_days": 24,
+            "persistence_hours_p40": meta.get("persistence_hours_p40", 12.0),
+            "exceedance_hours_e40": meta.get("exceedance_hours_e40", 12.0),
+            "exceedance_degree_hours_h40": meta.get("exceedance_degree_hours_h40", 17.48),
+            "thermal_soak_index_tsi": meta.get("thermal_soak_index_tsi", 3.68),
+            "consecutive_heatwave_days": meta.get("consecutive_heatwave_days", 24),
             "data_source": "phoenix_fixture",
         }
 

@@ -116,8 +116,8 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
                     "coordinates": [req.longitude, req.latitude],
                 },
                 surface_temp_c=58.2,
-                convective_temp_2m_c=47.6,
-                asphalt_heat_trap_delta=4.5,
+                convective_temp_2m_c=42.74,
+                asphalt_heat_trap_delta=1.1,
             )
             await db_manager.save_microclimate_parcel(parcel_rec)
         except Exception:

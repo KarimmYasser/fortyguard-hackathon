@@ -26,7 +26,7 @@ router = APIRouter(prefix="/sandbox", tags=["What-If Stress Studio"])
 
 class SandboxSimulationRequest(BaseModel):
     """Dynamic inputs for the what-if sandbox simulation."""
-    intra_aoi_spread_c: float = Field(default=4.5, ge=0.0, le=8.0, description="FortyGuard 2m delta above airport (°C)")
+    intra_aoi_spread_c: float = Field(default=1.1, ge=0.0, le=8.0, description="Measured 2m spread across the AOI, hottest tile minus coolest (°C)")
     heatwave_day: int = Field(default=24, ge=1, le=31, description="Compounding heatwave day (soil dryout progression)")
     transformer_mva: float = Field(default=25.0, ge=10.0, le=100.0, description="Transformer nameplate rating (MVA)")
     bess_capacity_mwh: float = Field(default=25.0, ge=0.0, le=100.0, description="Available utility BESS capacity (MWh)")
@@ -39,8 +39,15 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     """
     Executes live multi-physics simulation and CBF-QP safety gate under customized parameters.
     """
-    airport_temps = [34.2, 35.8, 38.1, 40.5, 42.0, 43.1, 42.8, 41.5, 40.2, 38.9, 37.4, 35.9]
-    solar_fluxes = [280.0, 520.0, 750.0, 910.0, 980.0, 940.0, 810.0, 620.0, 410.0, 190.0, 50.0, 0.0]
+    # Coolest-tile and solar series from the 2023-07-19 capture. These were
+    # invented curves peaking at 43.1 C / 980 W/m^2, which no longer matched
+    # anything the API returns.
+    coolest_tile_temps = [
+        35.91, 37.05, 38.29, 39.13, 40.18, 41.09, 41.68, 41.98, 42.24, 42.26, 42.21, 42.13
+    ]
+    solar_fluxes = [
+        110.5, 325.0, 520.6, 686.0, 811.5, 889.8, 882.1, 823.1, 665.4, 577.9, 477.7, 320.1
+    ]
     time_labels = [
         "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM",
         "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM",
@@ -64,24 +71,35 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
 
     # 2. Canyon Aerodynamics
     canyon_res = canyon_engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=43.1 + req.intra_aoi_spread_c,
-        solar_irradiance_w_m2=980.0,
+        fortyguard_2m_ambient_c=max(coolest_tile_temps) + req.intra_aoi_spread_c,
+        solar_irradiance_w_m2=max(solar_fluxes),
     )
     eta_cool = canyon_res["cooling_derate_eta_cool"]
 
     # 3. Build Forecast Stream with user's microclimate delta
     forecast_dicts: List[Dict[str, Any]] = []
-    for h, time_lbl, t_air, s_w in zip(range(6, 18), time_labels, airport_temps, solar_fluxes):
+    for h, time_lbl, t_air, s_w in zip(range(6, 18), time_labels, coolest_tile_temps, solar_fluxes):
         t_2m = t_air + req.intra_aoi_spread_c
         forecast_dicts.append(
             {
                 "hour_index": h,
                 "time_label": time_lbl,
-                "timestamp": f"2023-07-24T{h:02d}:00:00Z",
+                "timestamp": f"2023-07-19T{h:02d}:00:00Z",
                 "fortyguard_2m_ambient_c": t_2m,
                 "solar_irradiance_w_m2": s_w,
             }
         )
+
+    # 3b. Persistence / exceedance measured off the constructed curve.
+    threshold_c = 40.0
+    hours_above = [
+        f["fortyguard_2m_ambient_c"] for f in forecast_dicts
+        if f["fortyguard_2m_ambient_c"] > threshold_c
+    ]
+    sandbox_p40 = float(len(hours_above))
+    sandbox_h40 = round(sum(v - threshold_c for v in hours_above), 2)
+    # Same TSI definition the thermal engine and the API client use.
+    sandbox_tsi = round((sandbox_p40 / 3.5) + 0.5 * (sandbox_h40 / (3.5 * 10.0)), 2)
 
     # 4. Baseline Simulation (nominal load 1.18 pu peak)
     base_loads = [0.85, 0.92, 1.02, 1.12, 1.18, 1.16, 1.10, 1.05, 0.98, 0.90, 0.82, 0.75]
@@ -91,6 +109,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         load_k_series=base_loads,
         cooling_derate=eta_cool,
         forced_cooling_active=False,
+        persistence_hours_p40=sandbox_p40,
+        exceedance_degree_hours_h40=sandbox_h40,
     )
 
     # 5. Mitigated Actions & Load Profile
@@ -130,6 +150,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         load_k_series=mit_loads,
         cooling_derate=eta_cool,
         forced_cooling_active=req.forced_cooling_enabled,
+        persistence_hours_p40=sandbox_p40,
+        exceedance_degree_hours_h40=sandbox_h40,
     )
 
     # 6. Safety Gate Preflight
@@ -166,8 +188,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         mitigated_peak_hot_spot_c=mitigated_traj.peak_hot_spot_c,
         baseline_loss_of_life_hours=baseline_traj.total_loss_of_life_hours,
         mitigated_loss_of_life_hours=mitigated_traj.total_loss_of_life_hours,
-        persistence_hours=min(7.17 * (req.intra_aoi_spread_c / 4.5), 11.0),
-        thermal_soak_index=min(4.12 * (req.intra_aoi_spread_c / 4.5), 8.0),
+        persistence_hours=sandbox_p40,
+        thermal_soak_index=sandbox_tsi,
         bess_discharged_mwh=bess_discharged_mwh,
         cooling_runtime_hours=7.0 if req.forced_cooling_enabled else 0.0,
     )
@@ -186,9 +208,9 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
                 "hour_index": idx,
                 "timestamp": f_dict["timestamp"],
                 "time_label": f_dict["time_label"],
-                "coolest_tile_2m_c": airport_temps[idx],
+                "coolest_tile_2m_c": coolest_tile_temps[idx],
                 "fortyguard_2m_ambient_c": f_dict["fortyguard_2m_ambient_c"],
-                "intra_aoi_spread_c": round(f_dict["fortyguard_2m_ambient_c"] - airport_temps[idx], 1),
+                "intra_aoi_spread_c": round(f_dict["fortyguard_2m_ambient_c"] - coolest_tile_temps[idx], 1),
                 "solar_irradiance_w_m2": f_dict["solar_irradiance_w_m2"],
                 "baseline_top_oil_c": b_step.t_top_oil_c,
                 "baseline_hot_spot_c": b_step.t_hot_spot_c,
