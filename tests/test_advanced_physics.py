@@ -82,7 +82,7 @@ def test_chance_constrained_opf_solution():
     """Verifies Second-Order Cone chance-constrained power flow feasibility."""
     engine = ChanceConstrainedOPFEngine()
     req = CC_OPF_Request(
-        base_ambient_temp_c=47.6,
+        base_ambient_temp_c=42.74,
         forecast_std_dev_c=1.85,
         confidence_level_pct=95.0,
         total_grid_load_mw=22.8,
@@ -92,7 +92,7 @@ def test_chance_constrained_opf_solution():
     sol = engine.solve_cc_opf(req)
     assert sol.converged is True
     assert sol.quantile_z_score == 1.645
-    assert sol.worst_case_ambient_temp_c > 47.6
+    assert sol.worst_case_ambient_temp_c > 42.74
     assert sol.optimal_bess_active_mw > 0.0
     assert len(sol.buses) == 4
     assert len(sol.branches) == 3

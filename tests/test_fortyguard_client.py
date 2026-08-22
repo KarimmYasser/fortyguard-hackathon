@@ -13,7 +13,7 @@ async def test_async_fortyguard_client_mock():
     # Test heatmap creation
     res = await client.create_heatmap(
         polygon_aoi={"type": "Polygon", "coordinates": []},
-        start_date="2023-07-24",
+        start_date="2023-07-19",
         analytic_type="tcm",
     )
     assert isinstance(res, dict)

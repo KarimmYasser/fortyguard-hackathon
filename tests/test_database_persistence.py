@@ -60,14 +60,14 @@ async def test_sqlite_database_init(temp_db):
 async def test_api_call_caching_and_hits(temp_db):
     """Test saving and retrieving cached FortyGuard API responses."""
     endpoint = "/v1/heatmap"
-    params = {"polygon_aoi": {"type": "Polygon"}, "start_date": "2023-07-24"}
+    params = {"polygon_aoi": {"type": "Polygon"}, "start_date": "2023-07-19"}
     q_hash = temp_db.generate_query_hash(endpoint, params)
 
     record = ApiCallCacheRecord(
         query_hash=q_hash,
         endpoint=endpoint,
         request_params=params,
-        response_payload={"temperature_raster": [42.5, 45.1, 47.6]},
+        response_payload={"temperature_raster": [40.1, 41.8, 42.74]},
         credits_spent=1.5,
     )
 
@@ -81,7 +81,7 @@ async def test_api_call_caching_and_hits(temp_db):
     # Cache hit
     cached_payload = await temp_db.get_cached_api_call(q_hash)
     assert cached_payload is not None
-    assert cached_payload["temperature_raster"] == [42.5, 45.1, 47.6]
+    assert cached_payload["temperature_raster"] == [40.1, 41.8, 42.74]
 
     # Verify hit count increment
     status = await temp_db.get_database_status()
@@ -139,7 +139,7 @@ async def test_substation_telemetry_logging(temp_db):
     record = SubstationTelemetryRecord(
         asset_id="TX-SUB-PHX-01",
         hour_step=14,
-        ambient_c=47.6,
+        ambient_c=42.74,
         top_oil_c=104.2,
         hot_spot_c=136.8,
         aging_factor=2.1,
@@ -168,7 +168,7 @@ async def test_simulation_run_persistence(temp_db):
         cooling_fans_stage=2,
         peak_hot_spot_c=138.4,
         hours_above_140c=0.0,
-        net_avoided_loss=2791338.0,
+        net_avoided_loss=2576849.1,
     )
     await temp_db.save_simulation_run(sim)
     runs = await temp_db.get_simulation_runs()
@@ -197,7 +197,7 @@ async def test_dlr_catenary_telemetry_logging(temp_db):
     """Test IEEE 738 Dynamic Line Rating & Catenary Sag telemetry persistence."""
     dlr = DLRCatenaryRecord(
         line_id="FEEDER-LINE-01",
-        ambient_c=47.6,
+        ambient_c=42.74,
         wind_speed_ms=1.2,
         conductor_temp_c=88.4,
         dynamic_ampacity_a=985.0,
@@ -236,8 +236,8 @@ async def test_financial_audit_snapshot_persistence(temp_db):
         avoided_equipment_loss=1250000.0,
         avoided_customer_outage_loss=1541338.0,
         avoided_aging_deferral=18450.0,
-        net_avoided_loss=2791338.0,
-        economic_roi_multiplier=5952.7,
+        net_avoided_loss=2576849.1,
+        economic_roi_multiplier=5495.3,
     )
     await temp_db.save_financial_audit(audit)
     status = await temp_db.get_database_status()
@@ -251,7 +251,7 @@ async def test_microclimate_parcel_store(temp_db):
         parcel_id="PARCEL-PHX-SUB-01",
         polygon_geojson={"type": "Polygon", "coordinates": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]},
         surface_temp_c=58.2,
-        convective_temp_2m_c=47.6,
+        convective_temp_2m_c=42.74,
         asphalt_heat_trap_delta=4.5,
     )
     await temp_db.save_microclimate_parcel(parcel)
@@ -265,7 +265,7 @@ async def test_bess_degradation_logging(temp_db):
     b_rec = BESSDegradationRecord(
         bess_id="BESS-PHX-CENTRAL-01",
         hour_step=14,
-        ambient_c=47.6,
+        ambient_c=42.74,
         dispatch_power_mw=7.5,
         core_temp_c=46.2,
         surface_temp_c=41.8,
@@ -285,7 +285,7 @@ async def test_cascading_risk_snapshot_persistence(temp_db):
     """Test logging Arrhenius-Weibull cascading failure hazard snapshot."""
     c_rec = CascadingRiskRecord(
         snapshot_id="RISK-TEST-001",
-        heatwave_severity="Extreme UHI (47.6C)",
+        heatwave_severity="Extreme UHI (42.7C)",
         n1_reserve_margin_mw=12.5,
         n1_compliant=True,
         cascade_outage_probability=0.0345,

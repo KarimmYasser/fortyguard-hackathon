@@ -78,7 +78,7 @@ flowchart LR
 | **Microclimate Context** | Blind to asphalt, street canyons, and building shade | **Incorporates land-cover morphology & solar irradiance ($S(t)$)** |
 | **Duration Intelligence** | Instantaneous snapshot only | **Continuous Persistence ($P_\theta$) & Degree-Hour Exceedance ($H_\theta$)** |
 | **Predictive Horizon** | Macroscopic synoptic forecast | **12-Hour Hyperlocal Forward Forecast** for proactive intervention |
-| **Actionability** | *"Airport says 39°C - status normal"* ❌ | *"Asset ambient 42.7°C with 12h persistence"* ⚠️ (Proactive cooling dispatch) |
+| **Actionability** | *"Regional forecast 42°C, static rating - status normal"* ❌ | *"Asset ambient 42.7°C sustained 12h above 40°C"* ⚠️ (Proactive cooling dispatch) |
 
 ---
 

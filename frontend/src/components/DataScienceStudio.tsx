@@ -16,6 +16,7 @@ interface FeatureStat {
 
 interface CorrelationPair {
   feature_a: string; feature_b: string; pearson_r: number; spearman_rho: number;
+  kind?: 'empirical' | 'derived' | 'structural'; p_value?: number | null;
 }
 
 interface RiskTier { tier: string; count: number; percentage: number; }
@@ -184,7 +185,18 @@ export const DataScienceStudio: React.FC = () => {
       {/* ── SECTION 2: CORRELATION ── */}
       {activeSection === 'correlation' && corrData && !isLoading && (
         <div>
-          <h3 style={{ color: '#f1f5f9', fontSize: 16, marginBottom: 16 }}>🔗 Top 10 Strongest Feature Correlations</h3>
+          <h3 style={{ color: '#f1f5f9', fontSize: 16, marginBottom: 4 }}>🔗 Top 10 Strongest Feature Correlations</h3>
+          <p style={{ color: '#64748b', fontSize: 11, marginTop: 0, marginBottom: 12 }}>
+            Empirical pairs only — features that are closed-form functions of each other are listed separately below.
+            {corrData.n_observations ? ` n = ${corrData.n_observations}.` : ''}
+          </p>
+          {(corrData.warnings || []).length > 0 && (
+            <div style={{ background: '#1c1917', border: '1px solid #78350f', borderRadius: 10, padding: '10px 14px', marginBottom: 14 }}>
+              {(corrData.warnings || []).map((w: string, i: number) => (
+                <div key={i} style={{ color: '#fbbf24', fontSize: 11.5, lineHeight: 1.6 }}>⚠ {w}</div>
+              ))}
+            </div>
+          )}
           <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
             {(corrData.top_10_strongest_pairs || []).map((p: CorrelationPair, i: number) => (
               <div key={i} style={{ background: '#0f172a', borderRadius: 10, padding: 14, border: '1px solid #1e293b', display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -201,6 +213,11 @@ export const DataScienceStudio: React.FC = () => {
                   <span style={{ fontSize: 11, color: '#64748b' }}>
                     ρ = {p.spearman_rho > 0 ? '+' : ''}{p.spearman_rho}
                   </span>
+                  {p.p_value != null && (
+                    <span style={{ fontSize: 11, color: p.p_value < 0.05 ? '#64748b' : '#f97316' }}>
+                      p = {p.p_value < 0.001 ? p.p_value.toExponential(1) : p.p_value.toFixed(3)}
+                    </span>
+                  )}
                 </div>
                 {/* Visual bar */}
                 <div style={{ width: 100, height: 8, background: '#1e293b', borderRadius: 4, overflow: 'hidden' }}>
@@ -209,6 +226,36 @@ export const DataScienceStudio: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* Pairs that are true by construction — shown for transparency, never ranked as findings */}
+          {(corrData.tautological_pairs || []).length > 0 && (
+            <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px dashed #334155', marginBottom: 20 }}>
+              <h4 style={{ color: '#94a3b8', fontSize: 13, marginTop: 0, marginBottom: 4 }}>
+                Excluded: true by construction
+              </h4>
+              <p style={{ color: '#64748b', fontSize: 11, marginTop: 0, marginBottom: 10 }}>
+                <code style={{ color: '#94a3b8' }}>derived</code> = one feature is computed from the other (or both share a parent);{' '}
+                <code style={{ color: '#94a3b8' }}>structural</code> = both come from the same authored scenario curve.
+                These report |r| ≈ 1 on any dataset and are not findings.
+              </p>
+              {(corrData.tautological_pairs || []).map((p: CorrelationPair, i: number) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '4px 0', fontSize: 11 }}>
+                  <span style={{
+                    fontFamily: 'monospace', fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5,
+                    color: p.kind === 'derived' ? '#f472b6' : '#fbbf24',
+                    border: `1px solid ${p.kind === 'derived' ? '#831843' : '#78350f'}`,
+                    borderRadius: 4, padding: '1px 5px', width: 66, textAlign: 'center',
+                  }}>{p.kind}</span>
+                  <span style={{ color: '#64748b', fontFamily: 'monospace', flex: 1 }}>
+                    {p.feature_a} ↔ {p.feature_b}
+                  </span>
+                  <span style={{ color: '#475569', fontFamily: 'monospace' }}>
+                    r = {p.pearson_r > 0 ? '+' : ''}{p.pearson_r}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Correlation matrix heatmap (simplified text-based) */}
           <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px solid #1e293b' }}>

@@ -37,10 +37,10 @@ Implemented in [`src/data_science/etl_pipeline.py`](file:///Users/karim/Developm
 ### 🥈 Silver Layer: Cleaning & Type Alignment
 - Eliminates sensor gaps and null values via robust median imputation.
 - Performs timezone and timestamp parsing, ensuring sequential time-series ordering.
-- Aligns regional airport reference temps ($T_{\text{airport}}$) against hyperlocal FortyGuard 2-meter air temperature ($T_{2\text{m}}$).
+- Aligns the AOI's coolest measured 2m tile ($T_{2\text{m,coolest}}$) against its hottest ($T_{2\text{m}}$). Both come from FortyGuard `tcm` heatmap tiles; neither is an airport station.
 
 ### 🥇 Gold Layer: Domain Feature Store (18 Features)
-1. `delta_microclimate_c`: $T_{2\text{m}} - T_{\text{airport}}$ (°C).
+1. `delta_microclimate_c` (alias `intra_aoi_spread_c`): $T_{2\text{m}} - T_{2\text{m,coolest}}$ (°C).
 2. `rolling_3h_avg_ambient`: 3-hour backward moving average of ambient exposure.
 3. `cumulative_degree_hours_above_40`: Continuous thermal exceedance integral ($H_{40} = \int \max(0, T_{2\text{m}} - 40)\,dt$).
 4. `thermal_soak_index_derived`: Persistence-to-duration ratio quantifying heat penetration.
@@ -85,10 +85,16 @@ Implemented in [`src/data_science/ml_models.py`](file:///Users/karim/Development
 - **Formulation:** Extreme value Weibull distribution fit on cumulative Arrhenius aging hours:
   $$S(t) = \exp\left( -\left(\frac{t}{\lambda}\right)^k \right)$$
 - **Results:**
-  - **Weibull Shape ($k$):** $12.74$
-  - **Weibull Scale ($\lambda$):** $160,412\text{ hours}$
+  - **Weibull Shape ($k$):** $16.7582$
+  - **Weibull Scale ($\lambda$):** $166,358.3\text{ hours}$
   - **Baseline Normal Life:** $20.5\text{ years}$ ($180,000\text{ hours}$)
-  - **Stress Adjusted RUL:** **$17.42\text{ years}$** (Quantifies the $3.08\text{ years}$ of lifetime consumed by 31 days of extreme thermal soak).
+  - **Median RUL:** $18.58\text{ years}$ ($162,759.4\text{ hours}$)
+  - **Stress Adjusted RUL:** **$18.31\text{ years}$** (the $2.19\text{ years}$ of lifetime consumed by 31 days of extreme thermal soak).
+
+> These figures moved after the replay and live agent were reconciled onto the
+> same derate inputs. The earlier $k=12.74$, $\lambda=160{,}412$ and $17.42$-year
+> RUL were fitted on the superseded $47.6^\circ\mathrm{C}$ ambient and overstated
+> the damage. Reproduce with `GET /api/v1/analytics/ml-overview`.
 
 ---
 
@@ -96,13 +102,22 @@ Implemented in [`src/data_science/ml_models.py`](file:///Users/karim/Development
 
 Implemented in [`src/data_science/analytics_engine.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/data_science/analytics_engine.py):
 
-### Microclimate Divergence Paired $t$-Test
-- **Null Hypothesis ($H_0$):** Mean difference $\mu_\Delta = T_{2\text{m}} - T_{\text{airport}} = 0$.
-- **Alternative Hypothesis ($H_1$):** Street-level temperature is significantly higher ($\mu_\Delta > 0$).
+### Intra-AOI Thermal Divergence Paired $t$-Test
+- **Comparison:** hottest versus coolest measured 2m tile inside the same AOI. The
+  reference is the coolest *tile*, not an airport station - we probed Sky Harbor
+  and it reads **warmer** than downtown, an airport ringed by runways being a
+  heat island in its own right.
+- **Null Hypothesis ($H_0$):** Mean difference $\mu_\Delta = T_{2\text{m,hottest}} - T_{2\text{m,coolest}} = 0$.
 - **Statistical Results:**
-  - Mean Street-Level 2m Temp: **$42.63^\circ\mathrm{C}$**
-  - Mean Regional Airport Temp: **$39.12^\circ\mathrm{C}$**
-  - Mean Microclimate Delta: **$+3.51^\circ\mathrm{C}$** (Max: **$+5.20^\circ\mathrm{C}$**)
-  - $t$-Statistic: **$13.59$**, $p$-Value: **$2.11 \times 10^{-7} \ll 0.05$**
-  - Cohen's $d$ Effect Size: **$0.87$ (LARGE)**
-- **Conclusion:** Rejection of $H_0$ with $>99.999\%$ statistical confidence. Legacy utility SCADA systems relying on airport sensors operate under systematic, dangerous measurement bias.
+  - Mean Hottest-Tile 2m Temp: **$40.75^\circ\mathrm{C}$**
+  - Mean Coolest-Tile 2m Temp: **$40.70^\circ\mathrm{C}$**
+  - Mean Delta: **$+0.06^\circ\mathrm{C}$** (Max: **$+0.19^\circ\mathrm{C}$**)
+  - $t$-Statistic: **$4.2964$**, $p$-Value: **$1.74 \times 10^{-5} \ll 0.05$**
+  - Cohen's $d$ Effect Size: **$0.0238$ (NEGLIGIBLE)**
+- **Conclusion:** $H_0$ is rejected - the sign of the difference is reliable - but
+  the **effect size is negligible**, so intra-AOI spread is *not* what drives the
+  damage in this scenario. The mechanism is the **12-hour soak above $40^\circ\mathrm{C}$**,
+  not a large spatial gradient. Reporting the $p$-value without the effect size
+  would be the textbook significance-versus-magnitude error, and an earlier
+  revision of this document did exactly that with a fabricated $d=0.87$ (LARGE)
+  drawn from the superseded airport-reference framing.

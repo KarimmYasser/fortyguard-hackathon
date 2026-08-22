@@ -12,12 +12,12 @@ def test_transformer_thermal_odes_and_aging():
     engine = TransformerThermalEngine()
 
     # Solar increment test
-    solar_inc = engine.calculate_solar_increment(980.0)
+    solar_inc = engine.calculate_solar_increment(889.8)
     assert 1.5 <= solar_inc <= 4.0
 
     # Effective ambient
-    t_eff = engine.effective_ambient(47.6, 980.0)
-    assert t_eff > 47.6
+    t_eff = engine.effective_ambient(42.74, 889.8)
+    assert t_eff > 42.74
 
     # Arrhenius factor: V = 1.0 at 110 °C
     v_110 = engine.arrhenius_aging_factor(110.0)
@@ -84,7 +84,7 @@ def test_urban_canyon_aerodynamics():
     assert 0.40 <= kappa <= 0.80
 
     res = engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=47.6,
+        fortyguard_2m_ambient_c=42.74,
         reference_wind_speed_m_s=3.0,
     )
     assert "cooling_derate_eta_cool" in res
