@@ -5,6 +5,8 @@ Handles geospatial microclimate bounding box and parcel scanning via FortyGuard 
 
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
 
 from typing import Any, Dict, Optional
@@ -26,6 +28,29 @@ class ScanRequest(BaseModel):
     start_date: str = Field(default="2023-07-19")
     analytic_type: str = Field(default="tcm", description="tcm | exceedance | persistence")
     threshold_c: Optional[float] = Field(default=40.0)
+
+
+def _parcel_id_for_scan(req: ScanRequest, analysis_date: str) -> str:
+    """Stable identity for one logical scan request.
+
+    FortyGuard's component responses are cached separately in api_call_cache.
+    The parcel store is an index of logical scans, so replaying identical inputs
+    must upsert the same parcel rather than append a random duplicate row.
+    """
+    identity = {
+        "city": req.city.strip(),
+        "latitude": req.latitude,
+        "longitude": req.longitude,
+        "polygon_aoi": req.polygon_aoi,
+        "analysis_date": analysis_date,
+        "analytic_type": req.analytic_type,
+        "threshold_c": req.threshold_c,
+    }
+    digest = hashlib.sha256(
+        json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()[:12].upper()
+    city_prefix = "".join(ch for ch in req.city.upper() if ch.isalnum())[:3] or "AOI"
+    return f"PARCEL-{city_prefix}-{digest}"
 
 
 @router.get("/usage")
@@ -160,13 +185,12 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
 
         parcel_id = None
         try:
-            import uuid
             # Persist what was actually measured. This used to write
             # surface_temp_c=58.2 / convective_temp_2m_c=42.74 /
             # asphalt_heat_trap_delta=1.1 for every scan regardless of city,
             # so a Houston scan was stored as Phoenix constants.
             if metrics["peak_2m_ambient_c"] is not None:
-                parcel_id = f"PARCEL-{req.city[:3].upper()}-{uuid.uuid4().hex[:6].upper()}"
+                parcel_id = _parcel_id_for_scan(req, metrics["analysis_date"])
                 # City and analysis date ride inside the GeoJSON properties.
                 # They are needed to re-run a stored scan, and the parcel table
                 # has no column for either - properties is a first-class GeoJSON

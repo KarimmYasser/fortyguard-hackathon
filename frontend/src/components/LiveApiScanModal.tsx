@@ -387,7 +387,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                   {scanResult?.metrics?.analysis_date ?? '—'} · source{' '}
                   <span className="text-slate-300">{scanResult?.metrics?.data_source ?? '—'}</span>
                   {scanResult?.parcel_id && (
-                    <> · stored as <span className="text-emerald-300">{scanResult.parcel_id}</span> in <span className="text-emerald-300">microclimate_parcel_store</span></>
+                    <> · saved/upserted as <span className="text-emerald-300">{scanResult.parcel_id}</span> in <span className="text-emerald-300">microclimate_parcel_store</span></>
                   )}
                 </div>
 

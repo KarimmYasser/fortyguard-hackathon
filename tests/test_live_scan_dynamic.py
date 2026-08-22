@@ -13,12 +13,38 @@ from pathlib import Path
 import pytest
 
 from src.server.routes.sandbox import SandboxSimulationRequest, run_sandbox_simulation
-from src.server.routes.scan import ScanRequest, execute_spatial_scan
+from src.server.routes.scan import ScanRequest, _parcel_id_for_scan, execute_spatial_scan
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class TestScanPersistenceIsMeasured:
+    def test_identical_scan_inputs_reuse_the_same_parcel_identity(self):
+        request = ScanRequest(
+            city="Phoenix, AZ",
+            latitude=33.4484,
+            longitude=-112.074,
+            start_date="2023-07-19",
+            analytic_type="tcm",
+            threshold_c=40.0,
+        )
+        first = _parcel_id_for_scan(request, "2023-07-19")
+        second = _parcel_id_for_scan(request.model_copy(), "2023-07-19")
+
+        assert first == second
+        assert first.startswith("PARCEL-PHO-")
+
+    def test_materially_different_scan_inputs_get_different_parcel_identities(self):
+        phoenix = ScanRequest(city="Phoenix, AZ", latitude=33.4484, longitude=-112.074)
+        houston = ScanRequest(city="Houston, TX", latitude=29.7604, longitude=-95.3698)
+
+        assert _parcel_id_for_scan(phoenix, "2023-07-19") != _parcel_id_for_scan(
+            houston, "2023-07-19"
+        )
+        assert _parcel_id_for_scan(phoenix, "2023-07-19") != _parcel_id_for_scan(
+            phoenix, "2024-07-15"
+        )
+
     def test_parcel_record_is_not_built_from_hardcoded_constants(self):
         """
         The scan route used to persist surface_temp_c=58.2 /

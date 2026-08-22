@@ -339,9 +339,9 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
               <span>FortyGuard API Cache</span>
             </div>
             <div className="font-bold text-amber-400 text-sm">
-              {dbStatus?.counts?.api_call_cache || 0} Endpoints Cached
+              {dbStatus?.counts?.api_call_cache ?? 0} Request Results Cached
             </div>
-            <div className="text-[10px] text-amber-500/80 mt-0.5">100% Duplicate Call Protection</div>
+            <div className="text-[10px] text-amber-500/80 mt-0.5">Identical vendor payloads are reused by request hash</div>
           </div>
         </div>
 
@@ -551,7 +551,8 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
                 <span>
                   Stored 2m scans from <span className="text-emerald-300">microclimate_parcel_store</span>.
                   Re-solving reads the cached FortyGuard hours, so it costs no credits and
-                  needs no new ingest.
+                  needs no new ingest. Repeating identical live-scan inputs now upserts one
+                  deterministic parcel; older random-ID rows may remain as historical duplicates.
                 </span>
               </div>
 
