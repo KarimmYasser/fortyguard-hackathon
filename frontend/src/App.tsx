@@ -1,30 +1,58 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar, ActiveTab } from './components/Navbar';
-import { ReplayControlBar } from './components/ReplayControlBar';
-import { HeroKpiGrid } from './components/HeroKpiGrid';
 import { TabErrorBoundary } from './components/TabErrorBoundary';
 import { DataProvenanceBadge } from './components/DataProvenanceBadge';
-import { EChartsPhysicsTelemetry } from './components/EChartsPhysicsTelemetry';
-import { GeospatialMicroclimateViewer } from './components/GeospatialMicroclimateViewer';
-import { ScientificMoatsViewer } from './components/ScientificMoatsViewer';
-import { AgentGraphViewer } from './components/AgentGraphViewer';
-import { EconomicAuditViewer } from './components/EconomicAuditViewer';
-import { WhatIfSandboxPanel } from './components/WhatIfSandboxPanel';
-import { MultiDay72hHeatwaveViewer } from './components/MultiDay72hHeatwaveViewer';
-import { ACPowerFlowSingleLineViewer } from './components/ACPowerFlowSingleLineViewer';
-import { IEEEAnnexGBenchmarkViewer } from './components/IEEEAnnexGBenchmarkViewer';
-import { AcademicProvenanceViewer } from './components/AcademicProvenanceViewer';
-import { SafetyGateCard } from './components/SafetyGateCard';
-import { AuditLedger } from './components/AuditLedger';
-import { LiveApiScanModal } from './components/LiveApiScanModal';
-import { DatabaseAuditModal } from './components/DatabaseAuditModal';
 import { HomePitchViewer } from './components/HomePitchViewer';
-import { DataScienceStudio } from './components/DataScienceStudio';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
 import { API_BASE } from './utils/api';
+
+/**
+ * Everything below the default (home) tab is code-split.
+ *
+ * ECharts (~1.1 MB) and KaTeX (~256 KB) dominated the entry bundle even though
+ * the landing tab renders neither, so the browser had to download, parse, and
+ * execute them before the largest element could paint. Lazy boundaries keep
+ * them off the LCP critical path and load them on first tab activation.
+ */
+const named = <K extends string>(key: K) =>
+  (mod: Record<K, React.ComponentType<any>>) => ({ default: mod[key] });
+
+const ReplayControlBar = lazy(() => import('./components/ReplayControlBar').then(named('ReplayControlBar')));
+const HeroKpiGrid = lazy(() => import('./components/HeroKpiGrid').then(named('HeroKpiGrid')));
+const EChartsPhysicsTelemetry = lazy(() => import('./components/EChartsPhysicsTelemetry').then(named('EChartsPhysicsTelemetry')));
+const GeospatialMicroclimateViewer = lazy(() => import('./components/GeospatialMicroclimateViewer').then(named('GeospatialMicroclimateViewer')));
+const ScientificMoatsViewer = lazy(() => import('./components/ScientificMoatsViewer').then(named('ScientificMoatsViewer')));
+const AgentGraphViewer = lazy(() => import('./components/AgentGraphViewer').then(named('AgentGraphViewer')));
+const EconomicAuditViewer = lazy(() => import('./components/EconomicAuditViewer').then(named('EconomicAuditViewer')));
+const WhatIfSandboxPanel = lazy(() => import('./components/WhatIfSandboxPanel').then(named('WhatIfSandboxPanel')));
+const MultiDay72hHeatwaveViewer = lazy(() => import('./components/MultiDay72hHeatwaveViewer').then(named('MultiDay72hHeatwaveViewer')));
+const ACPowerFlowSingleLineViewer = lazy(() => import('./components/ACPowerFlowSingleLineViewer').then(named('ACPowerFlowSingleLineViewer')));
+const IEEEAnnexGBenchmarkViewer = lazy(() => import('./components/IEEEAnnexGBenchmarkViewer').then(named('IEEEAnnexGBenchmarkViewer')));
+const AcademicProvenanceViewer = lazy(() => import('./components/AcademicProvenanceViewer').then(named('AcademicProvenanceViewer')));
+const SafetyGateCard = lazy(() => import('./components/SafetyGateCard').then(named('SafetyGateCard')));
+const AuditLedger = lazy(() => import('./components/AuditLedger').then(named('AuditLedger')));
+const LiveApiScanModal = lazy(() => import('./components/LiveApiScanModal').then(named('LiveApiScanModal')));
+const DatabaseAuditModal = lazy(() => import('./components/DatabaseAuditModal').then(named('DatabaseAuditModal')));
+const DataScienceStudio = lazy(() => import('./components/DataScienceStudio').then(named('DataScienceStudio')));
+
+const PanelFallback: React.FC<{ label?: string }> = ({ label = 'Loading module' }) => (
+  <div className="rounded-2xl border border-slate-800 bg-slate-900/40 px-6 py-10 flex items-center justify-center gap-3">
+    <div className="h-4 w-4 rounded-full border-2 border-amber-500/20 border-t-amber-500 animate-spin" />
+    <span className="text-xs font-mono text-slate-400">{label}...</span>
+  </div>
+);
+
+/** Data-backed tabs cannot render until the replay dataset arrives. */
+const DataPending: React.FC = () => (
+  <div className="rounded-2xl border border-slate-800 bg-slate-900/40 px-6 py-16 flex flex-col items-center justify-center gap-3">
+    <div className="h-10 w-10 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin" />
+    <h2 className="text-sm font-bold font-heading tracking-wide">Ingesting replay dataset...</h2>
+    <p className="text-xs text-slate-400 font-mono">IEEE C57.91 &amp; FortyGuard 2m Boundary Engine</p>
+  </div>
+);
 
 
 export const App: React.FC = () => {

@@ -927,7 +927,7 @@ class HybridDatabaseManager:
         try:
             with self._get_connection() as conn:
                 cur = conn.execute(
-                    "SELECT * FROM microclimate_parcel_store ORDER BY rowid DESC LIMIT ?",
+                    "SELECT * FROM microclimate_parcel_store ORDER BY scanned_at DESC LIMIT ?",
                     (limit,),
                 )
                 sqlite_rows = [dict(r) for r in cur.fetchall()]
@@ -937,9 +937,15 @@ class HybridDatabaseManager:
         if not self.is_supabase_enabled:
             return sqlite_rows
 
-        supabase_rows = await self._supabase_select("microclimate_parcel_store", limit=limit)
+        supabase_rows = await self._supabase_select(
+            "microclimate_parcel_store", limit=limit, order="scanned_at.desc"
+        )
         return self._merge_by_key(
-            supabase_rows, sqlite_rows, lambda x: x.get("parcel_id", ""), limit=limit
+            supabase_rows,
+            sqlite_rows,
+            lambda x: x.get("parcel_id", ""),
+            sort_key=lambda x: x.get("scanned_at") or "",
+            limit=limit,
         )
 
     async def save_microclimate_parcel(self, record: MicroclimateParcelRecord) -> None:
