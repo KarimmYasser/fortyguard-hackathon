@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from typing import Dict, Any, List, Optional
 from fastapi import APIRouter, Query, HTTPException
 
@@ -81,6 +82,32 @@ async def get_db_papers_flat(
 
 
 
+def _search_persisted_corpus(
+    stored: List[Dict[str, Any]], query: str, limit: int
+) -> List[Dict[str, Any]]:
+    """
+    Rank previously persisted papers against a query by term overlap.
+
+    Deliberately simple: this is a degraded path used when arXiv is unreachable
+    or throttling, not a general search engine. Scores title matches above
+    abstract matches so an exact-topic paper outranks a passing mention.
+    """
+    terms = [w for w in re.findall(r"[a-z0-9]+", query.lower()) if len(w) > 2]
+    if not terms:
+        return stored[:limit]
+
+    scored = []
+    for paper in stored:
+        title = str(paper.get("title", "")).lower()
+        abstract = str(paper.get("abstract", "")).lower()
+        score = sum(3 for w in terms if w in title) + sum(1 for w in terms if w in abstract)
+        if score:
+            scored.append((score, paper))
+
+    scored.sort(key=lambda pair: pair[0], reverse=True)
+    return [paper for _, paper in scored[:limit]]
+
+
 @router.get("/search")
 async def search_academic_papers(
     query: str = Query(..., description="Academic search query, e.g. 'cool pavement urban heat island'"),
@@ -119,9 +146,21 @@ async def search_academic_papers(
             except Exception:
                 pass
 
+        source = "arxiv_live"
+
+        # arXiv rate-limits aggressively (HTTP 429) and the client swallows the
+        # failure into an empty list, so a throttled request previously rendered
+        # the Academic Provenance tab blank. Every paper we have ever resolved is
+        # already persisted, so fall back to that corpus instead of showing
+        # nothing - and say which source answered.
+        if not papers:
+            papers = _search_persisted_corpus(await db_manager.get_academic_papers(limit=200), query, limit)
+            source = "local_corpus" if papers else "unavailable"
+
         return {
             "query": query,
             "count": len(papers),
+            "source": source,
             "papers": papers,
         }
     except Exception as e:
