@@ -255,7 +255,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-[#0b101b] border border-slate-700/80 rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl shadow-cyan-950/30 overflow-hidden text-slate-200">
+      <div id="tour-db-modal" className="bg-[#0b101b] border border-slate-700/80 rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl shadow-cyan-950/30 overflow-hidden text-slate-200">
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-800 bg-gradient-to-r from-cyan-950/40 via-slate-900/60 to-slate-900 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -298,7 +298,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
         </div>
 
         {/* Top Summary Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 bg-slate-950/60 border-b border-slate-800/80 text-xs font-mono">
+        <div id="tour-db-summary" className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 bg-slate-950/60 border-b border-slate-800/80 text-xs font-mono">
           <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
             <div className="text-slate-400 flex items-center gap-1.5 mb-1">
               <HardDrive className="h-3.5 w-3.5 text-cyan-400" />
@@ -345,8 +345,9 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex border-b border-slate-800 bg-slate-900/40 px-6 gap-2 pt-2">
+        <div id="tour-db-tabs" className="flex border-b border-slate-800 bg-slate-900/40 px-6 gap-2 pt-2">
           <button
+            id="tour-db-tab-tables"
             onClick={() => setActiveSubTab('tables')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'tables'
@@ -358,6 +359,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
             16 Enterprise Tables
           </button>
           <button
+            id="tour-db-tab-scans"
             onClick={() => setActiveSubTab('scans')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'scans'
@@ -369,6 +371,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
             Saved Scans ({parcels.length})
           </button>
           <button
+            id="tour-db-tab-ledger"
             onClick={() => setActiveSubTab('ledger')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'ledger'
@@ -380,6 +383,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
             Credit Accounting Ledger ({ledger.length})
           </button>
           <button
+            id="tour-db-tab-dispatch"
             onClick={() => setActiveSubTab('dispatch')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'dispatch'
@@ -391,6 +395,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
             Dispatch Work Orders ({dispatchHistory.length})
           </button>
           <button
+            id="tour-db-tab-architecture"
             onClick={() => setActiveSubTab('architecture')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'architecture'
@@ -407,7 +412,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {/* TAB 1: 16 Tables Grid */}
           {activeSubTab === 'tables' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div id="tour-db-tables" className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {Object.entries(tableMetadata).map(([key, info]) => {
                 const count = dbStatus?.counts?.[key] ?? 0;
                 return (
@@ -446,7 +451,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
 
           {/* TAB 2: Credit Accounting Ledger */}
           {activeSubTab === 'ledger' && (
-            <div className="space-y-3">
+            <div id="tour-db-ledger" className="space-y-3">
               <div className="text-xs text-slate-400 font-mono flex items-center justify-between">
                 <span>Real-Time FortyGuard Credit Spend Ledger (Prevents Unnecessary API Charges)</span>
                 <span className="text-amber-400">Total Deductions: {ledger.length} txns</span>
@@ -487,7 +492,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
 
           {/* TAB 3: Dispatch Work Orders */}
           {activeSubTab === 'dispatch' && (
-            <div className="space-y-3">
+            <div id="tour-db-dispatch" className="space-y-3">
               <div className="text-xs text-slate-400 font-mono flex items-center justify-between">
                 <span>Historical SCADA Autonomous Mitigation Work Orders</span>
                 <span className="text-emerald-400">Total Orders: {dispatchHistory.length}</span>
@@ -540,7 +545,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
 
           {/* TAB 4: Architecture */}
           {activeSubTab === 'scans' && (
-            <div className="space-y-3">
+            <div id="tour-db-scans" className="space-y-3">
               <div className="flex items-start gap-2 text-[11px] text-slate-400 font-mono">
                 <span>
                   Stored 2m scans from <span className="text-emerald-300">microclimate_parcel_store</span>.
@@ -616,7 +621,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
           )}
 
           {activeSubTab === 'architecture' && (
-            <div className="space-y-4 text-xs">
+            <div id="tour-db-architecture" className="space-y-4 text-xs">
               <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3">
                 <h3 className="font-bold text-white font-heading text-sm flex items-center gap-2">
                   <Server className="h-4 w-4 text-cyan-400" />

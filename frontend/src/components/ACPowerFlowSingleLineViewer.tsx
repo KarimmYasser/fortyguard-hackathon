@@ -112,8 +112,9 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-2 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
+        <div id="tour-powerflow-subviews" className="flex items-center gap-2 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
           <button
+            id="tour-powerflow-tab-topology"
             onClick={() => setActiveSubView('topology')}
             className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
               activeSubView === 'topology'
@@ -124,6 +125,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
             <Layers className="h-3.5 w-3.5" /> 4-Bus Feeder
           </button>
           <button
+            id="tour-powerflow-tab-dlr"
             onClick={() => setActiveSubView('dlr')}
             className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
               activeSubView === 'dlr'
@@ -134,6 +136,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
             <Wind className="h-3.5 w-3.5" /> IEEE 738 DLR
           </button>
           <button
+            id="tour-powerflow-tab-hazard"
             onClick={() => setActiveSubView('hazard')}
             className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
               activeSubView === 'hazard'

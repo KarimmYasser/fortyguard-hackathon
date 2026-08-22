@@ -29,6 +29,7 @@ import { startTourGuide } from '../utils/tourGuide';
 interface HomePitchViewerProps {
   onNavigateTab: (tab: ActiveTab) => void;
   onOpenLiveScan?: () => void;
+  onOpenDatabaseModal?: () => void;
 }
 
 interface ChapterMarker {
@@ -41,6 +42,7 @@ interface ChapterMarker {
 export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   onNavigateTab,
   onOpenLiveScan,
+  onOpenDatabaseModal,
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -52,6 +54,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
       activeTab: 'home',
       onNavigateTab,
       onOpenLiveScan,
+      onOpenDatabaseModal,
     });
   };
 
@@ -59,7 +62,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
     pitch: {
       bundled: true,
       url: '/videos/video.mp4',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Can be updated with real YouTube video ID
+      youtubeUrl: undefined,
       title: '🎬 3-Minute Motion Illustration Pitch',
       badge: 'Official Pitch Video',
       description: 'Programmatic motion-graphics pitch breaking down the market blindspot, 4 scientific moats, and hybrid Physical-AI architecture.',
@@ -67,7 +70,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
     live_demo: {
       bundled: true,
       url: '/videos/live_product_demo.mp4',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      youtubeUrl: undefined,
       title: '💻 Live UI Product Demo Walkthrough',
       badge: 'Interactive Product Demo',
       description: 'Unedited 1080p capture of the deployed platform: live FortyGuard scan, 12-hour scrub, What-If Studio, AC power flow, and a real LangGraph dispatch run. Figures shift as the sandbox sliders move — that is the simulation responding, not a different dataset.',

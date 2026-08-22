@@ -169,7 +169,7 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       </div>
 
       {executionStatus && (
-        <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-800/80 text-xs font-mono text-emerald-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+        <div id={!isTriggering ? 'tour-agent-execution-status' : undefined} className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-800/80 text-xs font-mono text-emerald-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
           <div className="flex items-center gap-2.5">
             <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
             <span className="font-bold">{executionStatus}</span>

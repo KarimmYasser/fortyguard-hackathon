@@ -193,9 +193,9 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl glass-panel rounded-3xl border border-slate-700/80 bg-[#0B0F19] p-6 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+      <div id="tour-live-scan-modal" className="relative w-full max-w-3xl glass-panel rounded-3xl border border-slate-700/80 bg-[#0B0F19] p-6 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div id="tour-live-scan-header" className="flex items-center justify-between border-b border-slate-800 pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-amber-500/15 text-amber-400 border border-amber-500/30">
               <Radio className="h-6 w-6 animate-pulse" />
@@ -217,6 +217,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
           </div>
 
           <button
+            id="tour-live-scan-close"
             onClick={onClose}
             className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
           >
@@ -227,7 +228,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto py-4 space-y-5 pr-1 font-mono text-xs">
           {/* Real-Time Credit Balance Card */}
-          <div className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div id="tour-live-scan-usage" className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="text-slate-400">Subscription Plan:</span>
@@ -260,7 +261,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
           </div>
 
           {/* Quick Presets */}
-          <div>
+          <div id="tour-live-scan-presets">
             <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
               Select Preset Target Corridor:
             </label>
@@ -289,7 +290,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
           </div>
 
           {/* Custom Coordinates & Date Form */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80">
+          <div id="tour-live-scan-coordinates" className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80">
             <div>
               <label className="text-[11px] text-slate-400 block mb-1">Latitude (°N)</label>
               <input
@@ -322,7 +323,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
           </div>
 
           {/* Scan Layer & Threshold */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div id="tour-live-scan-analytic" className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="text-[11px] text-slate-400 block mb-1">Analytic Heat Layer</label>
               <select
@@ -348,7 +349,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
 
           {/* Results Box */}
           {scanResult && (
-            <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 text-xs font-mono space-y-2 animate-in fade-in">
+            <div id="tour-live-scan-result" className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 text-xs font-mono space-y-2 animate-in fade-in">
               <div className="flex items-center gap-2 text-emerald-400 font-bold">
                 <CheckCircle2 className="h-4 w-4" />
                 Live FortyGuard Cloud Ingestion Succeeded!
@@ -474,6 +475,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
             </button>
 
             <button
+              id="tour-live-scan-execute"
               onClick={handleExecuteScan}
               disabled={isScanning}
               className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/25 flex items-center gap-2 transition-all disabled:opacity-50"

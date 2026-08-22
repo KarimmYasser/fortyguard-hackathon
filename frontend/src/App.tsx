@@ -170,6 +170,7 @@ export const App: React.FC = () => {
             activeTab,
             onNavigateTab: setActiveTab,
             onOpenLiveScan: () => setIsLiveScanOpen(true),
+            onOpenDatabaseModal: () => setIsDbModalOpen(true),
           })
         }
         isLoading={isLoading}
@@ -212,6 +213,7 @@ export const App: React.FC = () => {
             <HomePitchViewer
               onNavigateTab={setActiveTab}
               onOpenLiveScan={() => setIsLiveScanOpen(true)}
+              onOpenDatabaseModal={() => setIsDbModalOpen(true)}
             />
           )}
 

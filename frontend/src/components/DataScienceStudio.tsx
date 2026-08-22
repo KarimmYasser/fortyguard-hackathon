@@ -73,7 +73,7 @@ export const DataScienceStudio: React.FC = () => {
   return (
     <div style={{ padding: '24px', maxWidth: 1400, margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div id="tour-data-science-header" style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <FlaskConical size={24} color="white" />
         </div>
@@ -98,9 +98,12 @@ export const DataScienceStudio: React.FC = () => {
       </div>
 
       {/* Sub-section tabs */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 20, borderBottom: '1px solid #334155', paddingBottom: 8, flexWrap: 'wrap' }}>
+      <div id="tour-data-science-tabs" style={{ display: 'flex', gap: 4, marginBottom: 20, borderBottom: '1px solid #334155', paddingBottom: 8, flexWrap: 'wrap' }}>
         {sections.map(s => (
-          <button key={s.id} onClick={() => setActiveSection(s.id)} style={{
+          <button
+            id={`tour-data-science-tab-${s.id}`}
+            key={s.id}
+            onClick={() => setActiveSection(s.id)} style={{
             padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600,
             display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.2s',
             background: activeSection === s.id ? 'linear-gradient(135deg, #8b5cf6, #6366f1)' : '#1e293b',
@@ -120,7 +123,7 @@ export const DataScienceStudio: React.FC = () => {
 
       {/* ── SECTION 1: EDA ── */}
       {activeSection === 'eda' && edaData && !isLoading && (
-        <div>
+        <div id="tour-data-science-eda">
           {/* Pipeline summary cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
             {[
@@ -184,7 +187,7 @@ export const DataScienceStudio: React.FC = () => {
 
       {/* ── SECTION 2: CORRELATION ── */}
       {activeSection === 'correlation' && corrData && !isLoading && (
-        <div>
+        <div id="tour-data-science-correlation">
           <h3 style={{ color: '#f1f5f9', fontSize: 16, marginBottom: 4 }}>🔗 Top 10 Strongest Feature Correlations</h3>
           <p style={{ color: '#64748b', fontSize: 11, marginTop: 0, marginBottom: 12 }}>
             Empirical pairs only — features that are closed-form functions of each other are listed separately below.
@@ -299,7 +302,7 @@ export const DataScienceStudio: React.FC = () => {
 
       {/* ── SECTION 3: RISK DISTRIBUTION ── */}
       {activeSection === 'risk' && riskData && !isLoading && (
-        <div>
+        <div id="tour-data-science-risk">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             {/* Risk tiers */}
             <div style={{ background: '#0f172a', borderRadius: 12, padding: 20, border: '1px solid #1e293b' }}>
@@ -355,7 +358,7 @@ export const DataScienceStudio: React.FC = () => {
 
       {/* ── SECTION 4: ML MODELS ── */}
       {activeSection === 'ml' && mlData && !isLoading && (
-        <div>
+        <div id="tour-data-science-ml">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 16 }}>
             {/* Physics Surrogate */}
             <div style={{ background: '#0f172a', borderRadius: 12, padding: 20, border: '1px solid #1e293b' }}>
@@ -473,7 +476,7 @@ export const DataScienceStudio: React.FC = () => {
 
       {/* ── SECTION 5: TEMPORAL PATTERNS ── */}
       {activeSection === 'temporal' && riskData?.temporal_patterns && !isLoading && (
-        <div>
+        <div id="tour-data-science-temporal">
           <h3 style={{ color: '#f1f5f9', fontSize: 16, marginBottom: 16 }}>📈 Hourly Temporal Pattern Analysis</h3>
           {riskData.temporal_patterns.peak_risk_window && (
             <div style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.1), rgba(249,115,22,0.1))', borderRadius: 12, padding: 16, border: '1px solid rgba(239,68,68,0.3)', marginBottom: 20, display: 'flex', gap: 20, alignItems: 'center' }}>

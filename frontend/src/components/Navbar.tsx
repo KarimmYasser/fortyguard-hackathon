@@ -341,6 +341,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onMouseLeave={() => setHoveredTab(null)}
               >
                 <button
+                  id={`tour-navbar-tab-${tab.id}`}
                   onClick={() => onSelectTab(tab.id as ActiveTab)}
                   className={`w-full px-2.5 sm:px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 whitespace-nowrap ${
                     isActive
