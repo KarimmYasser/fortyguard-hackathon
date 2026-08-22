@@ -65,6 +65,8 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [isLiveScanOpen, setIsLiveScanOpen] = useState<boolean>(false);
   const [isDbModalOpen, setIsDbModalOpen] = useState<boolean>(false);
+  // Which dataset the dashboard is currently showing. Null = Phoenix benchmark.
+  const [activeBinding, setActiveBinding] = useState<any>(null);
 
 
   // Fetch replay dataset from backend
@@ -91,6 +93,9 @@ export const App: React.FC = () => {
 
   // Handle dynamic sandbox results
   const handleSandboxSimulateResult = (simResult: any) => {
+    if (simResult?.scan_binding?.mode === 'live_scan') {
+      setActiveBinding(simResult.scan_binding);
+    }
     if (data && simResult.timeline_steps) {
       setData({
         ...data,
@@ -159,6 +164,26 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 md:px-8 py-6 space-y-6">
+        {/* Every tab's copy is written around the Phoenix benchmark, so say
+            plainly when the numbers on screen came from somewhere else. */}
+        {activeBinding && (
+          <div className="flex flex-wrap items-center gap-3 px-4 py-3 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-[11px] font-mono">
+            <span className="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 font-bold">LIVE SCAN</span>
+            <span className="text-slate-300">
+              Showing <strong className="text-amber-300">{activeBinding.city}</strong>
+              {activeBinding.analysis_date ? ` · ${activeBinding.analysis_date}` : ''}
+              {' '}· peak 2m {activeBinding.peak_2m_ambient_c}°C · measured spread{' '}
+              {activeBinding.measured_intra_aoi_spread_c}°C · {activeBinding.n_hours}h solved
+            </span>
+            <span className="text-slate-500">Not the Phoenix 2023 benchmark.</span>
+            <button
+              onClick={() => { setActiveBinding(null); fetchReplayData(); }}
+              className="ml-auto px-3 py-1 rounded-lg bg-slate-800 border border-slate-600 text-slate-300 hover:bg-slate-700 transition"
+            >
+              Reset to Phoenix benchmark
+            </button>
+          </div>
+        )}
         <TabErrorBoundary name={activeTab}>
           {/* TAB 0: Executive Home & Video Pitch Showcase - renders instantly */}
           {activeTab === 'home' && (
@@ -333,6 +358,7 @@ export const App: React.FC = () => {
           <LiveApiScanModal
             isOpen={isLiveScanOpen}
             onClose={() => setIsLiveScanOpen(false)}
+            onSimulationResult={handleSandboxSimulateResult}
           />
         </Suspense>
       )}

@@ -20,6 +20,8 @@ import { API_BASE } from '../utils/api';
 interface LiveApiScanModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Rebases the whole dashboard onto the scanned location's physics. */
+  onSimulationResult?: (result: any) => void;
 }
 
 interface ApiUsageData {
@@ -46,7 +48,7 @@ const PRESET_LOCATIONS = [
   { name: 'Houston, TX (Energy Corridor)', lat: 29.7604, lon: -95.3698, date: '2024-07-15' },
 ];
 
-export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onClose }) => {
+export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onClose, onSimulationResult }) => {
   const [usage, setUsage] = useState<ApiUsageData | null>(null);
   const [isFetchingUsage, setIsFetchingUsage] = useState<boolean>(false);
 
@@ -65,6 +67,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [analysis, setAnalysis] = useState<any>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const resultsRef = React.useRef<HTMLDivElement | null>(null);
 
   // Fetch usage on open
   const fetchUsage = async () => {
@@ -122,7 +125,14 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
         const errJson = await resp.json().catch(() => ({}));
         throw new Error(errJson.detail || `Analysis failed with HTTP ${resp.status}`);
       }
-      setAnalysis(await resp.json());
+      const json = await resp.json();
+      setAnalysis(json);
+      // Hand the solved trajectory to the dashboard so every tab reflects the
+      // scanned location rather than the frozen Phoenix benchmark.
+      onSimulationResult?.(json);
+      // The panel grows past the modal's fold, so bring it into view instead of
+      // leaving the numbers clipped below the visible area.
+      setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }), 120);
     } catch (err: any) {
       setAnalysisError(err.message || 'Analysis failed');
     } finally {
@@ -393,7 +403,7 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                 )}
 
                 {analysis && (
-                  <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div ref={resultsRef} className="grid grid-cols-2 gap-2 text-[11px]">
                     <div className="p-2 rounded-xl bg-slate-950/80">
                       <div className="text-slate-500">Baseline hot-spot:</div>
                       <div className="text-sm font-bold text-rose-400">
@@ -425,6 +435,12 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                       measured spread {fmt(analysis?.scan_binding?.measured_intra_aoi_spread_c, '°C')} ·
                       {' '}{analysis?.scan_binding?.n_hours ?? '—'}h solved
                     </div>
+                    <button
+                      onClick={onClose}
+                      className="col-span-2 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 font-bold text-[11px] hover:bg-emerald-500/30 transition"
+                    >
+                      Close and view across every dashboard tab →
+                    </button>
                   </div>
                 )}
               </div>
