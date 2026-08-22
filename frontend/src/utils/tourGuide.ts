@@ -161,7 +161,7 @@ export const startTourGuide = ({
             popover: {
               title: '🤖 Tab 10: LangGraph Multi-Agent Stack',
               description:
-                'Inspect the 5-node cognitive pipeline with live GPT-5.4 work order synthesis and tamper-evident audit trails.',
+                'Inspect the 5-node cognitive pipeline with live LLM work order synthesis and tamper-evident audit trails.',
               side: 'top',
               align: 'start',
             },
@@ -497,7 +497,7 @@ export const startTourGuide = ({
             popover: {
               title: '🤖 LangGraph Multi-Agent Architecture',
               description:
-                'Official compiled StateGraph coordinating 5 nodes: forecast ingestion, physical projection, mitigation planning, safety barrier gating, and live GPT-5.4 narrative synthesis.',
+                'Official compiled StateGraph coordinating 5 nodes: forecast ingestion, physical projection, mitigation planning, safety barrier gating, and live LLM narrative synthesis.',
               side: 'bottom',
               align: 'center',
             },
@@ -507,7 +507,7 @@ export const startTourGuide = ({
             popover: {
               title: '⚡ Trigger Live Agentic Scan & Mitigation',
               description:
-                'Click here to trigger the compiled StateGraph in real time. It solves IEEE non-linear differential equations and generates live B2B work orders & B2C citizen advisories via GPT-5.4 (~2.5s).',
+                'Click here to trigger the compiled StateGraph in real time. It solves IEEE non-linear differential equations and generates live B2B work orders & B2C citizen advisories via the configured gateway model (~2.5s).',
               side: 'bottom',
               align: 'end',
             },
@@ -537,7 +537,7 @@ export const startTourGuide = ({
             popover: {
               title: '📋 Dispatched B2B Work Order & B2C Citizen Advisory',
               description:
-                'Displays the authorized B2B Utility Work Order (WO-TSG-04) with physical SCADA controls, plus the public B2C Citizen Advisory dynamically synthesized by GPT-5.4.',
+                'Displays the authorized B2B Utility Work Order (WO-TSG-04) with physical SCADA controls, plus the public B2C Citizen Advisory dynamically synthesized by the gateway LLM.',
               side: 'top',
               align: 'center',
             },

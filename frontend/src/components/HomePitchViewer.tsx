@@ -579,7 +579,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 LangGraph Multi-Agent Stack
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Autonomous 5-node cognitive pipeline synthesizing multi-asset dispatch schedules with live GPT-5.4 work orders.
+                Autonomous 5-node cognitive pipeline synthesizing multi-asset dispatch schedules with live LLM-synthesized work orders.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-bold pt-4">

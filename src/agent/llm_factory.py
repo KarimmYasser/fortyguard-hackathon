@@ -13,6 +13,18 @@ from openai import AsyncOpenAI, OpenAI
 logger = logging.getLogger("thermal_sentinel.llm_factory")
 
 
+def resolve_model_name(model: Optional[str] = None) -> str:
+    """Resolve the effective gateway model id.
+
+    The gateway expects dotted minor versions (gpt-5.5) but env values are
+    commonly written with a hyphen (gpt-5-5), which 404s as MODEL_NOT_FOUND.
+    """
+    resolved = model or os.getenv("DEFAULT_LLM_MODEL", "gpt-5.4")
+    if re.fullmatch(r"gpt-5-\d+", resolved):
+        resolved = resolved.replace("gpt-5-", "gpt-5.")
+    return resolved
+
+
 def get_openai_client(async_mode: bool = True):
     """
     Returns an initialized AsyncOpenAI or OpenAI client pointing to Siemens SDC Gateway with 4.0s timeout.
@@ -48,13 +60,7 @@ async def generate_chat_completion(
         logger.warning("No SDC_LLM_API_KEY found. Falling back to deterministic heuristics.")
         return None
 
-    resolved_model = model or os.getenv("DEFAULT_LLM_MODEL", "gpt-5.4")
-    # The gateway expects dotted minor versions (gpt-5.5), but env/config values
-    # are frequently written with a hyphen (gpt-5-5), which 404s as MODEL_NOT_FOUND
-    # and silently degrades every narrative to the deterministic fallback.
-    # Normalize the whole gpt-5-N family rather than a single hardcoded case.
-    if re.fullmatch(r"gpt-5-\d+", resolved_model):
-        resolved_model = resolved_model.replace("gpt-5-", "gpt-5.")
+    resolved_model = resolve_model_name(model)
 
     import asyncio
     client = get_openai_client(async_mode=True)

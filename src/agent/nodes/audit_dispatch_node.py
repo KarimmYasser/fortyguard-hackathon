@@ -9,13 +9,13 @@ from __future__ import annotations
 import time
 from typing import Any, Dict
 from src.agent.state import ThermalSentinelState
-from src.agent.llm_factory import generate_chat_completion
+from src.agent.llm_factory import generate_chat_completion, resolve_model_name
 
 
 async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     """
     Compiles downstream dispatch orders and finalizes audit log.
-    Uses GPT-5.4 via Siemens SDC LLM Gateway for live advisory synthesis when available.
+    Uses the configured gateway model (DEFAULT_LLM_MODEL) for live advisory synthesis when available.
     """
     asset_id = state.get("asset_id", "SUB-PHX-DOWNTOWN-04")
     asset_name = state.get("asset_name", "Phoenix Central Substation TX-04")
@@ -84,7 +84,10 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
         "headline": f"Extreme 2-Meter Heat Corridor Active in {city}",
         "guidance": llm_guidance or default_guidance,
         "expected_peak_hour": "01:00 PM - 03:00 PM",
-        "ai_synthesizer": "GPT-5.4 via Siemens SDC Gateway" if llm_guidance else "Deterministic Template",
+        "ai_synthesizer": (
+            f"{resolve_model_name().upper()} via Siemens SDC Gateway"
+            if llm_guidance else "Deterministic Template"
+        ),
     }
 
     audit_entry = {
