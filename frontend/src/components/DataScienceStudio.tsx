@@ -320,26 +320,32 @@ export const DataScienceStudio: React.FC = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                 <div style={{ background: '#1e293b', borderRadius: 8, padding: 12, textAlign: 'center' }}>
                   <p style={{ margin: 0, fontSize: 10, color: '#64748b' }}>R² Score</p>
-                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: (mlData.physics_surrogate?.r2_score || 0) > 0.95 ? '#22c55e' : '#eab308' }}>
-                    {mlData.physics_surrogate?.r2_score}
+                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: mlData.physics_surrogate?.r2_score == null ? '#64748b' : (mlData.physics_surrogate.r2_score > 0.95 ? '#22c55e' : '#eab308') }}>
+                    {mlData.physics_surrogate?.r2_score ?? '—'}
                   </p>
                 </div>
                 <div style={{ background: '#1e293b', borderRadius: 8, padding: 12, textAlign: 'center' }}>
                   <p style={{ margin: 0, fontSize: 10, color: '#64748b' }}>MAE</p>
-                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: '#06b6d4' }}>
-                    {mlData.physics_surrogate?.mae_celsius}°C
+                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: mlData.physics_surrogate?.mae_celsius == null ? '#64748b' : '#06b6d4' }}>
+                    {mlData.physics_surrogate?.mae_celsius == null ? '—' : `${mlData.physics_surrogate.mae_celsius}°C`}
                   </p>
                 </div>
                 <div style={{ background: '#1e293b', borderRadius: 8, padding: 12, textAlign: 'center' }}>
                   <p style={{ margin: 0, fontSize: 10, color: '#64748b' }}>Max Error</p>
-                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: '#f97316' }}>
-                    {mlData.physics_surrogate?.max_error_celsius}°C
+                  <p style={{ margin: 0, fontSize: 24, fontWeight: 800, color: mlData.physics_surrogate?.max_error_celsius == null ? '#64748b' : '#f97316' }}>
+                    {mlData.physics_surrogate?.max_error_celsius == null ? '—' : `${mlData.physics_surrogate.max_error_celsius}°C`}
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: 11, color: '#22c55e', marginTop: 8, textAlign: 'center' }}>
-                ⚡ {mlData.physics_surrogate?.speedup_factor}
-              </p>
+              {mlData.physics_surrogate?.status_note ? (
+                <p style={{ fontSize: 11, color: '#eab308', marginTop: 8, textAlign: 'center', lineHeight: 1.5 }}>
+                  ⚠ {mlData.physics_surrogate.status_note}
+                </p>
+              ) : (
+                <p style={{ fontSize: 11, color: '#22c55e', marginTop: 8, textAlign: 'center' }}>
+                  ⚡ {mlData.physics_surrogate?.speedup_factor}
+                </p>
+              )}
             </div>
 
             {/* Anomaly Detection */}
@@ -348,7 +354,11 @@ export const DataScienceStudio: React.FC = () => {
                 <AlertTriangle size={18} color="#ef4444" />
                 <h3 style={{ margin: 0, fontSize: 15, color: '#f1f5f9' }}>Sensor Anomaly Detector</h3>
               </div>
-              <p style={{ fontSize: 12, color: '#64748b', marginBottom: 12 }}>Isolation Forest with {mlData.anomaly_detection?.contamination_threshold} contamination threshold</p>
+              <p style={{ fontSize: 12, color: '#64748b', marginBottom: 12 }}>
+                {mlData.anomaly_detection?.backend === 'numpy-zscore'
+                  ? 'z-score percentile fallback'
+                  : 'Isolation Forest'} with {mlData.anomaly_detection?.contamination_threshold} contamination threshold
+              </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
                 <div style={{ background: '#1e293b', borderRadius: 8, padding: 12 }}>
                   <p style={{ margin: 0, fontSize: 10, color: '#64748b' }}>Anomalies</p>
