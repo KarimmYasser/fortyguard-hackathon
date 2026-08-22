@@ -98,7 +98,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
             2M MICROCLIMATE AIR
           </span>
           <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30">
-            AIRPORT GAP
+            AOI SPREAD
           </span>
         </div>
 
