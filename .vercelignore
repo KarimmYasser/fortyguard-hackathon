@@ -6,20 +6,21 @@ __pycache__
 *.pyc
 node_modules
 frontend/node_modules
-scratch
-decks
-docs
-temperature-api-quickstart
-videos
-notebooks
-data
+/scratch
+/decks
+/docs
+/temperature-api-quickstart
+/videos
+/notebooks
+/data
 *.db
 *.sqlite
 .git
 .github
 .agents
-tests
+/tests
 .claude
 
 # The pitch render is served from frontend/public/videos and must ship.
-# 'videos' above still excludes the composition sources and their assets.
+# '/videos' above is anchored to the repo root so it excludes only the
+# composition sources, not frontend/public/videos.
