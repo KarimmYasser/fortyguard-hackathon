@@ -18,8 +18,8 @@ To bridge the gap between microscopic physical differential equations and macros
 │   • 16 SQLite/Supabase DB • Gold Layer: 18 Features   • Reliability: Weibull Survival (RUL) │
 │                                                                                             │
 │  [4. HYPOTHESIS TESTING] [5. REST ANALYTICS API]     [6. INTERACTIVE BI & JUPYTER]          │
-│   • Paired t-Test (p<1e-6)• GET /analytics/eda        • React Data Science Studio Tab       │
-│   • Cohen's d = 3.92      • GET /analytics/correlation• notebooks/Thermal_Sentinel_DS.ipynb│
+│   • t-Test: p = 1.7e-5    • GET /analytics/eda        • React Data Science Studio Tab       │
+│   • Cohen's d = 0.024 NEG • GET /analytics/correlation• notebooks/Thermal_Sentinel_DS.ipynb │
 │   • Pearson/Spearman Heat • POST /analytics/surrogate • Automated Model Metrics Cards       │
 └─────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -101,6 +101,41 @@ Implemented in [`src/data_science/ml_models.py`](file:///Users/karim/Development
 ## 🧪 4. Statistical Hypothesis Testing & EDA
 
 Implemented in [`src/data_science/analytics_engine.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/data_science/analytics_engine.py):
+
+### Correlation Ranking: Tautology Filtering & Small-Sample Disclosure
+
+A naive "Top 10 Strongest Correlations" over an engineered feature store ranks
+its own formulas. `estimated_winding_gradient_c` is defined as $23 K^{0.8}$, so
+its correlation with $K$ is $r \approx 1.0$ on *any* dataset - it is arithmetic,
+not a finding, and it crowds the genuine signal out of the list.
+
+`compute_correlation_analysis` therefore classifies every pair through
+`_pair_kind(a, b)` before ranking:
+
+| `kind` | Meaning | Example |
+| :--- | :--- | :--- |
+| `derived` | One feature is computed from the other | `baseline_load_ratio_k` ~ `estimated_hot_spot_c` ($r=0.9995$) |
+| `structural` | Both are scaled off the same authored series | `fortyguard_2m_ambient_c` ~ `coolest_tile_2m_c` ($r=0.9999$) |
+| `empirical` | Could have come out otherwise | `relative_humidity_pct` ~ `rolling_3h_avg_ambient` ($r=-0.9949$) |
+
+Only `empirical` pairs enter `top_10_strongest_pairs`. Formula-linked pairs are
+still returned, in a separate `tautological_pairs` list, so the filtering is
+auditable rather than hidden. On the Phoenix gold set that boxes off **10 pairs**.
+
+Alias propagation matters here: `hospital_critical_load_mw` tracks $K$ at
+$r > 0.999$, so without treating it as a proxy the excluded `K ~ hot_spot`
+relationship re-enters the headline list one hop removed.
+
+**Small-sample disclosure.** The gold set is $n = 12$ hourly observations, far
+below the $n \ge 30$ where a Pearson $r$ is stable. The payload therefore carries
+`n_observations` and a `warnings` array stating that $|r|$ is directional only,
+and every ranked pair reports its `p_value`. The dashboard renders both.
+
+> **Leading empirical result:** `relative_humidity_pct` ~ `rolling_3h_avg_ambient`,
+> $r = -0.9949$ ($p = 2.6 \times 10^{-11}$) - the expected inverse humidity/temperature
+> coupling, recovered from measurement rather than asserted by a formula.
+
+---
 
 ### Intra-AOI Thermal Divergence Paired $t$-Test
 - **Comparison:** hottest versus coolest measured 2m tile inside the same AOI. The

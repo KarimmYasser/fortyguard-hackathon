@@ -207,22 +207,34 @@ caching is not optional.
 
 ### C. Field provenance
 
+Scope: this is the **ingestion schema** — the per-hour record assembled from the
+API and frozen into `src/api/fixtures/phoenix_heatwave_2023.json`. The replay
+response projects a subset of it into `timeline_steps`; fields such as
+`relative_humidity_pct`, `wet_bulb_temp_c`, `heat_index_c`, `cloud_cover_pct`
+and `tile_peak_2m_c` live in the fixture and the gold dataset rather than in
+that projection.
+
 | Field | Source | Kind |
 | :--- | :--- | :--- |
 | `fortyguard_2m_ambient_c` | `tcm` `temperature_stats.mean` | 🟢 Measured |
 | `tile_peak_2m_c` | `tcm` `temperature_stats.maximum` | 🟢 Measured |
-| `airport_reference_temp_c` | `tcm` `temperature_stats.minimum` | 🟡 Coolest-tile proxy — see caveat below |
-| `microclimate_delta_c` | `mean − min` within AOI | 🟡 Derived (small; see §7) |
+| `coolest_tile_2m_c` | `tcm` `temperature_stats.minimum` | 🟢 Measured — coolest tile in the AOI |
+| `intra_aoi_spread_c` | `mean − min` within AOI | 🟡 Derived (small; see §7) |
 | `relative_humidity_pct`, `wet_bulb_temp_c`, `heat_index_c`, `cloud_cover_pct` | `env_params` hourly arrays | 🟢 Measured |
 | `solar_irradiance_w_m2` | daily GHI × solar-geometry shape × cloud attenuation | 🟡 Modelled magnitude, measured attenuation |
 | `persistence_hours_p40` | `persistence` analytic | 🟢 Measured |
 | `exceedance_degree_hours_h40` | integrated from measured 2m curve | 🟢 Derived from measured |
 | `wind_speed_m_s`, `baseline_load_ratio_k`, `hospital_critical_load_mw`, `bess_soc_pct` | diurnal load model | 🔴 Modelled |
 
-> **Caveat on `airport_reference_temp_c`:** the name is historical. It is the
-> AOI's coolest tile, **not** an airport station reading. We measured Sky Harbor
-> directly and it came back *warmer* than downtown (42.78 vs 42.74 °C) — an
-> airport ringed by runways is itself a heat island.
+> **Why `coolest_tile_2m_c` and not an airport reference:** these fields were
+> once named `airport_reference_temp_c` and `microclimate_delta_c`, which
+> implied a comparison we never actually made. The series is the AOI's coolest
+> **tile**. We measured Sky Harbor directly and it came back *warmer* than
+> downtown (42.78 vs 42.74 °C) — an airport ringed by runways is itself a heat
+> island. The fields were renamed to describe what is measured, and the spread
+> they express is small: **+0.06 °C mean, +0.19 °C max**, a *negligible* effect
+> size (Cohen's d = 0.024). The damage in this scenario comes from **duration**,
+> not spatial gradient.
 
 ### D. Provenance contract
 

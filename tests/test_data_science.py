@@ -195,6 +195,60 @@ class TestAnalyticsEngine:
         for pair in result["top_10_strongest_pairs"]:
             assert -1.0 <= pair["pearson_r"] <= 1.0
 
+    def test_headline_correlations_are_not_tautologies(self):
+        """The ranked list must not be padded with restated formulas.
+
+        estimated_winding_gradient_c = 23 * K**0.8 is monotone in K, so that pair
+        reports r ~ +1 on *any* dataset. Ranking it as the #2 discovery tells a
+        judge nothing about the grid, and it crowds out the real signal.
+        """
+        from src.data_science.etl_pipeline import ThermalDataPipeline
+        from src.data_science.analytics_engine import ThermalAnalyticsEngine
+        gold = ThermalDataPipeline().run_full_pipeline()
+        result = ThermalAnalyticsEngine().compute_correlation_analysis(gold)
+
+        for pair in result["top_10_strongest_pairs"]:
+            assert pair["kind"] == "empirical", (
+                f"{pair['feature_a']} ~ {pair['feature_b']} is {pair['kind']} "
+                "by construction and must not be ranked as a finding"
+            )
+
+        boxed = {
+            frozenset({p["feature_a"], p["feature_b"]})
+            for p in result["tautological_pairs"]
+        }
+        # physics features vs their own input
+        assert frozenset({"baseline_load_ratio_k", "estimated_winding_gradient_c"}) in boxed
+        assert frozenset({"baseline_load_ratio_k", "estimated_hot_spot_c"}) in boxed
+        # two scenario columns scaled off the same authored ramp
+        assert frozenset({"baseline_load_ratio_k", "hospital_critical_load_mw"}) in boxed
+
+    def test_hospital_load_does_not_launder_load_tautologies(self):
+        """hospital_critical_load_mw tracks K at r > 0.999, so it is a proxy for K.
+
+        Without alias propagation, `hospital ~ estimated_hot_spot_c` sneaks the
+        excluded `K ~ estimated_hot_spot_c` pair back into the headline list one
+        hop removed.
+        """
+        from src.data_science.analytics_engine import _pair_kind
+        assert _pair_kind("hospital_critical_load_mw", "estimated_hot_spot_c") == "derived"
+        assert _pair_kind("hospital_critical_load_mw", "estimated_winding_gradient_c") == "derived"
+        assert _pair_kind("coolest_tile_2m_c", "rolling_3h_avg_ambient") == "derived"
+        # genuinely independent measurements stay empirical
+        assert _pair_kind("relative_humidity_pct", "wind_speed_m_s") == "empirical"
+        assert _pair_kind("solar_irradiance_w_m2", "baseline_load_ratio_k") == "empirical"
+
+    def test_small_sample_is_disclosed(self):
+        """12 hourly rows cannot support a confident |r|; say so in the payload."""
+        from src.data_science.etl_pipeline import ThermalDataPipeline
+        from src.data_science.analytics_engine import ThermalAnalyticsEngine
+        gold = ThermalDataPipeline().run_full_pipeline()
+        result = ThermalAnalyticsEngine().compute_correlation_analysis(gold)
+        assert result["n_observations"] == len(gold)
+        assert any("n = " in w for w in result["warnings"])
+        for pair in result["top_10_strongest_pairs"]:
+            assert pair["p_value"] is not None
+
 
 class TestReportingHonesty:
     """The analytics output is judge-facing; these lock its claims to the data."""
