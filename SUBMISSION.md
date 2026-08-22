@@ -34,7 +34,7 @@ During extreme heatwaves, electrical utilities manage power distribution using r
 
 During the historic Phoenix July 2023 heatwave, the regional record reached $119^\circ\mathrm{F}$, while the pinned FortyGuard parcel capture measured $42.74^\circ\mathrm{C}$ and remained above $40^\circ\mathrm{C}$ for all 12 sampled hours. Direct probing showed Sky Harbor slightly *warmer* than downtown, so the product does not claim an airport-to-asset delta; it leads on measured duration and parcel conditions.
 
-**Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, an autonomous **LangGraph multi-agent workflow**, and a **non-LLM deterministic, CBF-inspired safety-envelope filter**.
+**Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, an autonomous **LangGraph multi-agent workflow**, and a **non-LLM deterministic, CBF-inspired safety-envelope filter**. Its Portfolio Ops module ranks registered assets, screens candidate crew-intervention windows, and exposes content-addressed evidence through both the dashboard and an MCP-compatible tool interface. See the [as-built operations and MCP specification](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md).
 
 ---
 
@@ -126,7 +126,7 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 
 Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ingestion** pattern:
 1. **Mode A: Live Cloud Ingestion (`POST /api/v1/scan`):** Uses [`AsyncFortyGuardClient`](src/api/fortyguard_client.py) with full submit-and-poll async lifecycle against live FortyGuard cloud endpoints (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{id}`) for ad-hoc parcel scanning with real credit billing.
-2. **Mode B: Deterministic Benchmark Replay (`POST /api/v1/replay/phoenix-2023`):** Uses the pre-ingested Phoenix July 2023 heatwave dataset ([`phoenix_heatwave_2023.json`](src/api/fixtures/phoenix_heatwave_2023.json)) for **$<15\text{ms}$ benchmark physics evaluation**, smooth scrubber telemetry, deterministic IEEE Annex G validation, and independence from live vendor calls during judging presentations.
+2. **Mode B: Deterministic Benchmark Replay (`GET /api/v1/replay/phoenix-2023`):** Uses the pre-ingested Phoenix July 2023 heatwave dataset ([`phoenix_heatwave_2023.json`](src/api/fixtures/phoenix_heatwave_2023.json)) for **$<15\text{ms}$ benchmark physics evaluation**, smooth scrubber telemetry, deterministic IEEE Annex G validation, and independence from live vendor calls during judging presentations.
 
 ### 🏛️ System Boundary & Simulation Taxonomy
 | Layer | Implementation | Status | Purpose |
@@ -142,7 +142,7 @@ Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ing
 ## 💻 Tech Stack
 
 * **Backend & Physics:** Python 3.13, FastAPI, NumPy, pandas, Pydantic v2, Uvicorn (scikit-learn optional, lazily imported for the ML surrogates)
-* **Agentic Architecture:** LangGraph, LangChain, StateGraph, Siemens SDC Gateway (`gpt-5.4` default, environment-configurable)
+* **Agentic Architecture:** LangGraph, LangChain, StateGraph, Siemens SDC Gateway (`gpt-5.4` default, environment-configurable), plus read-only MCP-compatible deterministic operations tools
 * **Enterprise Persistence:** Supabase PostgreSQL is the durable source of truth; SQLite is the local/offline fallback. PostgREST spans 16 application tables, with stored scans and full deterministic solves replayable across serverless cold starts.
 * **Standards & Formulations:** IEEE Std C57.91-2011, IEEE Std 738-2012, IEC 60076-7, IEC 60287-1-1, ANSI C84.1, LBNL ICE Calculator
 * **Frontend Dashboard:** React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Lucide Icons
@@ -179,7 +179,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (86 Tests Passing)
+### 2. Run Automated Pytest Suite (96 Tests Passing)
 ```bash
 pytest tests/ -v
 ```
@@ -190,19 +190,20 @@ pytest tests/ -v
 python3 -m uvicorn src.server.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 12 dashboard tabs:
-1. **Home:** Interactive pitch, live demo video player, and 12-module operational launchpad.
+Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 13 dashboard tabs:
+1. **Home:** Interactive pitch, live demo video player, and operational launchpad.
 2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
-3. **What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
-4. **72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
-5. **AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
-6. **IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-7. **Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
-8. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
-9. **4 Scientific Moats:** Deep-dive physical formulations.
-10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and optional `gpt-5.4` narrative synthesis plus deterministic fallback.
-11. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
-12. **Data Science Studio:** ETL diagnostics, empirical correlation analysis, surrogate metrics, anomaly detection, and Weibull RUL.
+3. **Portfolio Ops:** Deterministic fleet ranking, configurable candidate crew windows, SHA-256 evidence export, and MCP call generation. The current view applies one common Phoenix boundary to the registry and does not claim per-asset scans or occupational-safety certification.
+4. **What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
+5. **72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
+6. **AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
+7. **IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
+8. **Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
+9. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+10. **4 Scientific Moats:** Deep-dive physical formulations.
+11. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and optional `gpt-5.4` narrative synthesis plus deterministic fallback.
+12. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+13. **Data Science Studio:** ETL diagnostics, empirical correlation analysis, surrogate metrics, anomaly detection, and Weibull RUL.
 
 
 ### 4. Launch 3-Minute Video Pitch (HyperFrames Studio Timeline)

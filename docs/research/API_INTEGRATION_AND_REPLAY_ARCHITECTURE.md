@@ -41,7 +41,7 @@ Thermal Sentinel Grid implements an industry-standard, production-grade **Dual-M
 │   │       MODE A: LIVE CLOUD API INGESTION       │    │   MODE B: DETERMINISTIC BENCHMARK REPLAY   │   │
 │   │       (Async submit-and-poll lifecycle)      │    │   (Zero-latency IEEE standards validation) │   │
 │   ├──────────────────────────────────────────────┤    ├────────────────────────────────────────────┤   │
-│   │ • Route: POST /api/v1/scan                   │    │ • Route: POST /api/v1/replay/phoenix-2023  │   │
+│   │ • Route: POST /api/v1/scan                   │    │ • Route: GET /api/v1/replay/phoenix-2023   │   │
 │   │ • Target: api.fortyguard.com/v1/*            │    │ • Source: phoenix_heatwave_2023.json       │   │
 │   │ • Purpose: Hyperlocal ad-hoc parcel scanning │    │ • Purpose: Interactive Mission Control     │   │
 │   │ • Latency: 3-15 seconds (Cloud Task Worker)  │    │ • Latency: < 10 ms (Sub-second physics ODE)│   │
@@ -92,6 +92,21 @@ These are **not static mocks or hardcoded tables**. Every value is computed in r
 | **Utility Substation Assets** | [`src/server/routes/assets.py`](../../src/server/routes/assets.py) | **Synthetic Asset Registry** | 3 representative transformer nameplate profiles (Phoenix TX-04 50 MVA, San Jose Diridon 35 MVA, Las Vegas Strip 60 MVA) parameterized per IEEE standards. |
 | **Baseline Grid Load Curve** | [`src/physics/transformer_thermal.py`](../../src/physics/transformer_thermal.py) | **Simulated Profile** | Diurnal load curve ($0.75\,\text{pu}$ morning ramp to $1.18\,\text{pu}$ afternoon peak) modeling desert urban summer air conditioning demand. |
 | **Hardware Actuator Signals** | [`src/models/safety.py`](../../src/models/safety.py) | **Simulated Actuation** | Generates schema-validated dispatch commands (`COOLING_STAGE_2`, `BESS_PEAK_SHAVING`, `EV_SMART_CURTAIL`, `FEEDER_TRANSFER`) for software state machines rather than physical substation SCADA RTUs. |
+
+---
+
+### 🧭 Layer 4: Deterministic Portfolio Operations
+
+The Portfolio Ops module consumes the frozen Phoenix environmental profile and the durable grid asset registry to produce a transparent fleet-triage view. It adds no new vendor calls and performs no writes when viewed or recalculated.
+
+| Capability | Route | Contract |
+| :--- | :--- | :--- |
+| Portfolio ranking | `GET/POST /api/v1/operations/portfolio` | Deterministic 0–100 triage score normalized over available asset evidence; not a failure probability. |
+| Worker intervention screen | Included in portfolio response | Explicit wet-bulb, 2m air-temperature, and consecutive-hour thresholds; not OSHA/WBGT certification. |
+| Mitigation evidence | Included in portfolio response | SHA-256 content identity over rankings, thresholds, provenance, and limitations. |
+| MCP-compatible tools | `GET/POST /api/v1/mcp` | JSON-RPC `initialize`, `tools/list`, and `tools/call` for three read-only deterministic tools. |
+
+The present version uses one common Phoenix scenario boundary across all registry assets. It does not imply that each asset received its own location-specific scan. See [Portfolio Operations, Worker Intervention Screening & MCP](PORTFOLIO_OPERATIONS_AND_MCP.md) for formulas, examples, and verification.
 
 ---
 

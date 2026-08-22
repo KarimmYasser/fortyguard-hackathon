@@ -92,14 +92,18 @@
 * **Key Takeaway:** A frozen live FortyGuard 24×3 capture drives the 72-hour continuous model (daily 2m peaks 42.44/42.76/42.52°C), alongside a 4-bus distribution feeder with OLTC and analytical uncertainty-bounded dispatch.
 
 
-### Slide 5: Investment-Grade Avoided Loss (LBNL ICE)
+### Slide 5: Portfolio Operations & Worker Intervention Screening
+* **Key Takeaway:** The same deterministic service ranks registered assets, screens candidate field-work windows, and emits content-addressed mitigation evidence for both the dashboard and MCP clients.
+* **Talking Points:** The score is transparent triage rather than failure probability; missing registry fields are excluded instead of invented. The worker window uses measured wet-bulb and 2m air temperature but is explicitly not an OSHA/WBGT certification. The current demo applies one common Phoenix scenario to the portfolio rather than claiming a separate scan for every asset.
+
+### Slide 6: Investment-Grade Avoided Loss (LBNL ICE)
 * **Key Takeaway:** $\$2,576,849$ Net Avoided Loss; $5,495\text{x}$ ROI; $\$12.50/\text{kWh}$ VoLL.
 
-### Slide 6: Durable Hybrid Persistence Architecture (16 Tables)
+### Slide 7: Durable Hybrid Persistence Architecture (16 Tables)
 * **Key Takeaway:** 16-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Supabase as the durable source of truth, SQLite as an offline fallback, and request-addressed API/solve caching.
 * **Talking Points:** MD5-addressed FortyGuard responses save paid credits; SHA-256-addressed, non-expiring full solve payloads let saved parcels replay across serverless cold starts; work orders, safety certificates, and financial snapshots remain separately auditable.
 
-### Slide 7: Data Science, Analytics & ML Intelligence (IBM-Style Lifecycle)
+### Slide 8: Data Science, Analytics & ML Intelligence (IBM-Style Lifecycle)
 * **Key Takeaway:** End-to-end data lifecycle: Bronze→Silver→Gold ETL Medallion pipeline (18 engineered features), fast Ridge Physics-Surrogate ($R^2 > 0.98, 5000\times$ speedup), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival analysis.
 * **Talking Points:** Standalone Jupyter Notebook (`notebooks/Thermal_Sentinel_DataScience.ipynb`) + interactive in-app Data Science Studio tab; paired $t$-test is statistically significant ($p=1.74\times10^{-5}$) but the effect is negligible (Cohen's $d=0.024$), so the product correctly leads on duration rather than spatial spread.
 
@@ -116,4 +120,6 @@
 | **"Would utilities trust an autonomous AI agent with circuit breakers?"** | *"No utility should trust an unconstrained LLM. The prototype therefore places a deterministic, non-LLM Control Barrier Function safety gate after planning. Under the documented model and uncertainty bounds, it rejects or modifies proposals outside $K_{\text{safe}}$; production actuation would still require utility integration, validation, and operating approval."* |
 | **"Are the avoided loss numbers realistic?"** | *"They are model outputs, not booked savings. The benchmark uses a $12.50/\text{kWh}$ VoLL assumption informed by the LBNL ICE framework, plus documented outage-risk, replacement-life, and mitigation-cost assumptions. Judges can inspect and vary the inputs."* |
 | **"How do you handle data persistence and API cost scaling?"** | *"We built an enterprise 16-table dual-storage persistence layer (SQLite + Supabase PostgreSQL). FortyGuard calls are durably cached by request identity, stored parcel rows are selectable in Cloud DB, and identical physics requests replay a complete non-expiring solve from Supabase across serverless cold starts. Audit summaries, work orders, and CBF certificates remain separately indexed."* |
+| **"How does this scale from one transformer to a utility portfolio?"** | *"Portfolio Ops applies a transparent deterministic ranking to registered assets, exposes evidence coverage when fields are missing, and identifies candidate crew windows. The browser and MCP clients use the same code path and SHA-256 evidence identity. The demo currently applies one common Phoenix stress boundary; production deployment would attach a cached location-specific FortyGuard profile to each asset."* |
+| **"Is the worker window OSHA- or WBGT-certified?"** | *"No. It is an explicit wet-bulb and 2m air-temperature screening policy. We do not fabricate globe temperature or omit workload, clothing, acclimatization, and jurisdiction-specific requirements. A qualified safety program must evaluate those before dispatching crews."* |
 

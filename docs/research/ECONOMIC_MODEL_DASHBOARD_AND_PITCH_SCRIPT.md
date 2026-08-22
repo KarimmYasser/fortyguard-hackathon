@@ -87,20 +87,21 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
 └───────────────────────────────────────────────┴─────────────────────────────┘
 ```
 
-### 2.2 12-Module Operational Suite
-The platform is organized into 12 dedicated operational tabs:
-1. **Home:** Interactive pitch, live demo video player, and 12-module operational launchpad.
+### 2.2 13-Module Operational Suite
+The platform is organized into 13 dedicated tabs:
+1. **Home:** Interactive pitch, live demo video player, and operational launchpad.
 2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
-3. **⚡ What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
-4. **🔥 72h Compounding:** Frozen live FortyGuard 24×3 weather capture driving modelled soil dryout and continuous thermal accumulation.
-5. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
-6. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-7. **📚 Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
-8. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
-9. **4 Scientific Moats:** Deep-dive physical formulations.
-10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and gateway-configured GPT-5.4 work-order synthesis with deterministic fallback.
-11. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
-12. **Data Science Studio:** Bronze→Silver→Gold ETL diagnostics, empirical correlations with tautology filtering, ML surrogate metrics, anomaly detection, and Weibull RUL.
+3. **Portfolio Ops:** Deterministic asset ranking, explicit worker-intervention screening, evidence coverage, SHA-256 JSON export, and MCP-compatible tool invocation. The current demo applies one common Phoenix scenario and does not claim per-asset scans or occupational-safety certification.
+4. **⚡ What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
+5. **🔥 72h Compounding:** Frozen live FortyGuard 24×3 weather capture driving modelled soil dryout and continuous thermal accumulation.
+6. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
+7. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
+8. **📚 Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
+9. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+10. **4 Scientific Moats:** Deep-dive physical formulations.
+11. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and gateway-configured GPT-5.4 work-order synthesis with deterministic fallback.
+12. **Avoided Loss Financial Audit:** LBNL ICE-informed scenario ROI model and side-by-side comparison tables.
+13. **Data Science Studio:** Bronze→Silver→Gold ETL diagnostics, empirical correlations with tautology filtering, ML surrogate metrics, anomaly detection, and Weibull RUL.
 
 ### 2.3 Technology Stack
 * **Framework:** React 19 + Vite + TypeScript

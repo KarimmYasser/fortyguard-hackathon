@@ -95,7 +95,7 @@ flowchart TD
     B2CAlert --> End
 ```
 
-## 2.2 Core Modules to Build in `src/`
+## 2.2 Core Modules Implemented in `src/`
 
 1. **`src/api/fortyguard_client.py`:**
  - Asynchronous submit-and-poll client for FortyGuard API.
@@ -108,16 +108,19 @@ flowchart TD
  - `MountingLocation`: `GROUND_LEVEL` (0-1m), `STREET_INTERFACE` (1-2m), `BALCONY_FACADE` (2-5m), `ROOFTOP`.
  - `ThermalLimits`: `max_safe_ambient_temp_c` (e.g. 40°C), `critical_explosion_temp_c` (e.g. 50°C).
 
-3. **`src/agent/agent_graph.py`:**
+3. **`src/agent/graph.py`:**
  - Deterministic LangGraph StateGraph.
  - Physical-envelope constraint layer clamping LLM reasoning to physical thermodynamics.
  - Formal failure routing and self-correction loops.
 
-4. **`src/server/main.py`:**
- - FastAPI server exposing:
- - `POST /api/v1/scan-grid`: Trigger spatial scan over a target bounding box or city coordinates.
- - `POST /api/v1/register-asset`: Register new physical building assets.
- - `GET /api/v1/risk-dashboard`: Real-time risk data for web UI.
+4. **`src/operations/portfolio.py`:**
+ - Deterministic asset triage normalized over available evidence.
+ - Explicit wet-bulb/2m-air worker intervention screening with no WBGT certification claim.
+ - Content-addressed SHA-256 evidence snapshots shared by REST and MCP-compatible tools.
+
+5. **`src/server/main.py` and `src/server/routes/`:**
+ - FastAPI server exposing live scan, asset registry, deterministic replay, sandbox, analytics, persistence, portfolio operations, and MCP-compatible endpoints.
+ - Current operations routes: `GET/POST /api/v1/operations/portfolio` and `GET/POST /api/v1/mcp`.
 
 ---
 
@@ -238,7 +241,7 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (86/86 Pytest Tests Passing)
+## 6.1 Core Tested Architecture (96/96 Pytest Tests Passing)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, durable request caching, and explicit fixture replay paths. Live scan failures surface as errors rather than silently switching locations.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
@@ -255,18 +258,20 @@ flowchart TD
   2. *Coupled Electro-Thermal BESS Degradation & SEI Kinetics (`src/physics/bess_electro_thermal.py`)*
   3. *Arrhenius-Weibull Grid Fragility & Cascading Outage Risk (`src/physics/weibull_hazard.py`)*
   4. *Analytical Uncertainty-Bounded Dispatch Screen (`src/physics/chance_constrained_opf.py`)*
-* **LangGraph Multi-Agent Workflow (`src/agent/agent_graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
-* **Operator Dashboard (12-Tab React 19 / TypeScript / Apache ECharts):**
+* **LangGraph Multi-Agent Workflow (`src/agent/graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
+* **Portfolio Operations (`src/operations/portfolio.py`):** Read-only deterministic fleet triage, explicit wet-bulb/2m-air intervention screening, evidence-coverage reporting, and SHA-256 mitigation evidence. The same service is available through REST and an MCP-compatible JSON-RPC tool subset. The current view applies one common Phoenix stress profile and does not claim per-asset measurement or occupational-safety certification.
+* **Operator Dashboard (13-Tab React 19 / TypeScript / Apache ECharts):**
   1. 🎬 Executive Pitch & Video Showcase (Home launchpad with video + interactive slide deck)
   2. ⚡ Mission Control Overview (12h synchronized replay scrubber & 3-axis telemetry)
-  3. 🎛️ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
-  4. 🔥 72-Hour Compounding Heatwave Viewer (Continuous 3-day thermal accumulation)
-  5. ⚡ AC Distribution Power Flow & Single-Line Diagram (DLR ampacity + Volt/VAR control)
-  6. 🏆 IEEE Annex G Standard Benchmark Suite (Clause G.2 & G.3 numerical proof)
-  7. 📚 Academic Provenance & alphaXiv Corpus (22 indexed papers with LaTeX proofs)
-  8. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
-  9. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
-  10. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
-  11. 💰 Avoided Loss Financial Audit (DOE LBNL ICE investment-grade ROI calculator)
-  12. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
+  3. 🧭 Portfolio Operations (Fleet ranking, worker screen, evidence export, MCP invocation)
+  4. 🎛️ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
+  5. 🔥 72-Hour Compounding Heatwave Viewer (Continuous 3-day thermal accumulation)
+  6. ⚡ AC Distribution Power Flow & Single-Line Diagram (DLR ampacity + Volt/VAR control)
+  7. 🏆 IEEE Annex G Standard Benchmark Suite (Clause G.2 & G.3 numerical proof)
+  8. 📚 Academic Provenance & alphaXiv Corpus (22 indexed papers with LaTeX proofs)
+  9. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
+  10. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
+  11. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
+  12. 💰 Avoided Loss Financial Audit (DOE LBNL ICE-informed ROI calculator)
+  13. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
 

@@ -30,7 +30,9 @@ This microclimate heat trap creates massive **cumulative thermal soak**, pushing
 
 ---
 
-## 🧭 Portfolio Operations & Human-Safe Intervention
+## 🧭 Portfolio Operations & Worker Intervention Screening
+
+*For the complete as-built contract, formulas, limitations, and examples, see **[Portfolio Operations, Worker Intervention Screening & MCP](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md)**.*
 
 The operator dashboard now extends the single-asset thermal replay into a read-only portfolio decision surface:
 
@@ -105,7 +107,7 @@ flowchart LR
 
 Thermal Sentinel Grid is built with a dual-mode ingestion pattern:
 1. **Mode A: Live Cloud Ingestion (`AsyncFortyGuardClient` / `POST /api/v1/scan`):** Fully integrated with FortyGuard's async submit-and-poll lifecycle (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{activity_id}`, `/v1/system/fetch-api-key-usage`) with live credit billing.
-2. **Mode B: Deterministic Benchmark Replay (`PhoenixHeatwaveReplayEngine` / `POST /api/v1/replay/phoenix-2023`):** Uses high-resolution pre-ingested Phoenix July 2023 heatwave fixtures ([`phoenix_heatwave_2023.json`](src/api/fixtures/phoenix_heatwave_2023.json)). This delivers **$<15\text{ms}$ benchmark ODE solving**, smooth timeline scrubbing, deterministic replay for IEEE Annex G validation, and independence from live vendor calls during judging presentations.
+2. **Mode B: Deterministic Benchmark Replay (`PhoenixHeatwaveReplayEngine` / `GET /api/v1/replay/phoenix-2023`):** Uses high-resolution pre-ingested Phoenix July 2023 heatwave fixtures ([`phoenix_heatwave_2023.json`](src/api/fixtures/phoenix_heatwave_2023.json)). This delivers **$<15\text{ms}$ benchmark ODE solving**, smooth timeline scrubbing, deterministic replay for IEEE Annex G validation, and independence from live vendor calls during judging presentations.
 
 ### 🏛️ System Boundary & Simulation Taxonomy
 | Layer | Implementation | Status | Purpose |
@@ -179,7 +181,7 @@ fortyguard-hackathon/
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
 │       └── routes/                     # Modular API Routers (Replay, Live Scan, Research/alphaXiv)
-└── tests/                              # Automated Pytest Physics & Safety Validation Suite (25 Tests)
+└── tests/                              # Automated Pytest Physics, API & Persistence Suite (96 Tests)
 ```
 
 ---
