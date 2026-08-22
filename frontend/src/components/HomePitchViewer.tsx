@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Video,
   Sparkles,
@@ -44,7 +44,19 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [videoUnavailable, setVideoUnavailable] = useState<boolean>(false);
+  // 'unknown' until probed. Rendering <video src> and waiting for onError works,
+  // but the failed media request is still logged to the console, which is noise
+  // in demos and screen recordings. A HEAD probe decides before we mount it.
+  const [videoStatus, setVideoStatus] = useState<'unknown' | 'ok' | 'missing'>('unknown');
+
+  useEffect(() => {
+    let cancelled = false;
+    setVideoStatus('unknown');
+    fetch(videoSources[activeVideoSource].url, { method: 'HEAD' })
+      .then((r) => { if (!cancelled) setVideoStatus(r.ok ? 'ok' : 'missing'); })
+      .catch(() => { if (!cancelled) setVideoStatus('missing'); });
+    return () => { cancelled = true; };
+  }, [activeVideoSource]);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStartTour = () => {
@@ -265,7 +277,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
         {/* Standard Native Video Player Card (Medium Cinema Size) */}
         <div className="max-w-6xl mx-auto w-full rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl p-2.5 sm:p-4">
-          {videoUnavailable ? (
+          {videoStatus === 'missing' ? (
             <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800 flex flex-col items-center justify-center gap-3 px-8 text-center">
               <Film className="h-8 w-8 text-slate-600" />
               <p className="text-sm font-bold text-slate-300 font-heading uppercase tracking-wide">
@@ -277,6 +289,8 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 served rather than shown with numbers the dashboard contradicts.
               </p>
             </div>
+          ) : videoStatus === 'unknown' ? (
+            <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800" />
           ) : (
             <video
               key={activeVideoSource}
@@ -285,7 +299,6 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               controls
               playsInline
               preload="metadata"
-              onError={() => setVideoUnavailable(true)}
               className="w-full aspect-video rounded-2xl bg-black shadow-inner"
             />
           )}
