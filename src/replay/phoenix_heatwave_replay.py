@@ -90,9 +90,9 @@ class PhoenixHeatwaveReplayEngine:
                 "time_label": fc.get("time_label"),
                 
                 # Chart 1: Boundary Ambient Comparison
-                "airport_reference_temp_c": fc.get("airport_reference_temp_c"),
+                "coolest_tile_2m_c": fc.get("coolest_tile_2m_c"),
                 "fortyguard_2m_ambient_c": fc.get("fortyguard_2m_ambient_c"),
-                "microclimate_delta_c": fc.get("microclimate_delta_c"),
+                "intra_aoi_spread_c": fc.get("intra_aoi_spread_c"),
                 "solar_irradiance_w_m2": fc.get("solar_irradiance_w_m2"),
                 
                 # Chart 2: Internal Physical State (Baseline vs Mitigated)

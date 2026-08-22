@@ -20,7 +20,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
 
   // 1. Option for Chart A: Thermal Boundary Condition
   const optionA = useMemo(() => {
-    const airportData = steps.map((s) => s.airport_reference_temp_c);
+    const coolestTileData = steps.map((s) => s.coolest_tile_2m_c);
     const fortyguardData = steps.map((s) => s.fortyguard_2m_ambient_c);
     const solarData = steps.map((s) => s.solar_irradiance_w_m2);
 
@@ -34,7 +34,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
         axisPointer: { type: 'cross', lineStyle: { color: '#f59e0b', type: 'dashed' } },
       },
       legend: {
-        data: ['Airport Weather (Synoptic)', 'FortyGuard 2m Ambient', 'Solar Irradiance (W/m²)'],
+        data: ['Coolest Tile In AOI', 'FortyGuard 2m Ambient', 'Solar Irradiance (W/m²)'],
         textStyle: { color: '#94a3b8', fontSize: 11 },
         top: 0,
         right: 10,
@@ -69,9 +69,9 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
       ],
       series: [
         {
-          name: 'Airport Weather (Synoptic)',
+          name: 'Coolest Tile In AOI',
           type: 'line',
-          data: airportData,
+          data: coolestTileData,
           smooth: true,
           lineStyle: { color: '#94a3b8', width: 2, type: 'dashed' },
           itemStyle: { color: '#94a3b8' },
@@ -374,10 +374,10 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
             </div>
             <div>
               <h3 className="text-xs font-extrabold text-white uppercase tracking-wider font-heading">
-                A. Hyperlocal Thermal Boundary Forcing (FortyGuard 2m vs Airport Weather)
+                A. Hyperlocal Thermal Boundary Forcing (FortyGuard 2m, AOI Mean vs Coolest Tile)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Capturing the +1.1°C measured land-cover delta, 890 W/m² solar irradiance, and 12h above 40°C
+                AOI mean vs coolest cell (spread is sub-degree); 12h above 40°C is what drives aging
               </p>
             </div>
           </div>

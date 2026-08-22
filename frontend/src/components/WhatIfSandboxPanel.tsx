@@ -49,7 +49,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          microclimate_delta_c: d,
+          intra_aoi_spread_c: d,
           heatwave_day: day,
           transformer_mva: mva,
           bess_capacity_mwh: bess,
@@ -85,7 +85,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
       bess = 25.0;
       hw = 1.85;
       cooling = true;
-    } else if (preset === 'airport_blindspot') {
+    } else if (preset === 'station_weather_blindspot') {
       d = 0.0; // Blind to local heat
       day = 5;
       mva = 25.0;
@@ -156,9 +156,9 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
             ⚡ Phoenix '23 Peak
           </button>
           <button
-            onClick={() => applyPreset('airport_blindspot')}
+            onClick={() => applyPreset('station_weather_blindspot')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
-              activePreset === 'airport_blindspot'
+              activePreset === 'station_weather_blindspot'
                 ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30 font-black'
                 : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
             }`}

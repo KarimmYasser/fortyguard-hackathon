@@ -26,7 +26,7 @@ class DaySummary(BaseModel):
     date: str
     peak_ambient_2m_c: float
     airport_peak_c: float
-    microclimate_delta_c: float
+    intra_aoi_spread_c: float
     end_of_day_soil_resistivity_rho: float
     cable_conductor_peak_c: float
     baseline_peak_hot_spot_c: float
@@ -112,7 +112,7 @@ class MultiDayHeatwaveEngine:
                     "time_label": f"{h:02d}:00",
                     "airport_temp_c": round(t_air, 1),
                     "fortyguard_2m_ambient_c": round(t_2m, 1),
-                    "microclimate_delta_c": round(t_2m - t_air, 1),
+                    "intra_aoi_spread_c": round(t_2m - t_air, 1),
                     "solar_irradiance_w_m2": round(solar, 1),
                     "baseline_load_k": round(base_k, 2),
                 })
@@ -244,7 +244,7 @@ class MultiDayHeatwaveEngine:
                     date=step["date"],
                     peak_ambient_2m_c=round(day_peak_2m, 1),
                     airport_peak_c=round(day_peak_air, 1),
-                    microclimate_delta_c=round(day_peak_2m - day_peak_air, 1),
+                    intra_aoi_spread_c=round(day_peak_2m - day_peak_air, 1),
                     end_of_day_soil_resistivity_rho=round(rho_soil, 2),
                     cable_conductor_peak_c=round(day_peak_cable_tc, 1),
                     baseline_peak_hot_spot_c=round(day_peak_base_hs, 1),

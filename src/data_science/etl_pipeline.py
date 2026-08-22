@@ -76,8 +76,8 @@ class ThermalDataPipeline:
                 "time_label": h.get("time_label", ""),
                 # Temperatures
                 "fortyguard_2m_ambient_c": h.get("fortyguard_2m_ambient_c", 0.0),
-                "airport_reference_temp_c": h.get("airport_reference_temp_c", 0.0),
-                "microclimate_delta_c": h.get("microclimate_delta_c", 0.0),
+                "coolest_tile_2m_c": h.get("coolest_tile_2m_c", 0.0),
+                "intra_aoi_spread_c": h.get("intra_aoi_spread_c", 0.0),
                 # Environmental
                 "solar_irradiance_w_m2": h.get("solar_irradiance_w_m2", 0.0),
                 "relative_humidity_pct": h.get("relative_humidity_pct", 0.0),
@@ -157,7 +157,7 @@ class ThermalDataPipeline:
 
         # ── Thermal features ──
         # 1. delta_microclimate_c — already exists but re-derive for accuracy
-        df["delta_microclimate_c"] = df["fortyguard_2m_ambient_c"] - df["airport_reference_temp_c"]
+        df["delta_microclimate_c"] = df["fortyguard_2m_ambient_c"] - df["coolest_tile_2m_c"]
 
         # 2. rolling_3h_avg_ambient — 3-hour rolling mean of 2m temperature
         df["rolling_3h_avg_ambient"] = df["fortyguard_2m_ambient_c"].rolling(window=3, min_periods=1).mean()

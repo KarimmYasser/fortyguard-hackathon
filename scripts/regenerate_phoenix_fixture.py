@@ -102,7 +102,7 @@ async def main() -> int:
         "measured_fields": [
             "fortyguard_2m_ambient_c",
             "tile_peak_2m_c",
-            "airport_reference_temp_c",
+            "coolest_tile_2m_c",
             "relative_humidity_pct",
             "wet_bulb_temp_c",
             "heat_index_c",

@@ -117,7 +117,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
             <thead>
               <tr className="border-b border-slate-800 text-slate-400 uppercase text-[11px]">
                 <th className="pb-3 pr-4 font-bold">Dimension</th>
-                <th className="pb-3 px-4 text-rose-400 font-bold">Baseline Controller (Airport Weather + Static)</th>
+                <th className="pb-3 px-4 text-rose-400 font-bold">Baseline Controller (Static Rating, No Forecast)</th>
                 <th className="pb-3 px-4 text-emerald-400 font-bold">Thermal Sentinel Grid (FortyGuard + Physics)</th>
                 <th className="pb-3 pl-4 text-amber-400 font-bold">Resilience Advantage</th>
               </tr>

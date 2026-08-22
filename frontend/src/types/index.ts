@@ -68,10 +68,10 @@ export interface TimelineStep {
    * Coolest tile in the AOI. Named for historical reasons — this is NOT an
    * airport station reading. Sky Harbor measures *warmer* than downtown.
    */
-  airport_reference_temp_c: number;
+  coolest_tile_2m_c: number;
   fortyguard_2m_ambient_c: number;
   /** Measured spatial spread within the AOI (mean − min), not an assumed constant. */
-  microclimate_delta_c: number;
+  intra_aoi_spread_c: number;
   solar_irradiance_w_m2: number;
   /** Hottest tile in the AOI — what the most exposed asset actually sees. */
   tile_peak_2m_c?: number;

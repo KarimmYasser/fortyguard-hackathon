@@ -26,7 +26,7 @@ router = APIRouter(prefix="/sandbox", tags=["What-If Stress Studio"])
 
 class SandboxSimulationRequest(BaseModel):
     """Dynamic inputs for the what-if sandbox simulation."""
-    microclimate_delta_c: float = Field(default=4.5, ge=0.0, le=8.0, description="FortyGuard 2m delta above airport (°C)")
+    intra_aoi_spread_c: float = Field(default=4.5, ge=0.0, le=8.0, description="FortyGuard 2m delta above airport (°C)")
     heatwave_day: int = Field(default=24, ge=1, le=31, description="Compounding heatwave day (soil dryout progression)")
     transformer_mva: float = Field(default=25.0, ge=10.0, le=100.0, description="Transformer nameplate rating (MVA)")
     bess_capacity_mwh: float = Field(default=25.0, ge=0.0, le=100.0, description="Available utility BESS capacity (MWh)")
@@ -64,7 +64,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
 
     # 2. Canyon Aerodynamics
     canyon_res = canyon_engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=43.1 + req.microclimate_delta_c,
+        fortyguard_2m_ambient_c=43.1 + req.intra_aoi_spread_c,
         solar_irradiance_w_m2=980.0,
     )
     eta_cool = canyon_res["cooling_derate_eta_cool"]
@@ -72,7 +72,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     # 3. Build Forecast Stream with user's microclimate delta
     forecast_dicts: List[Dict[str, Any]] = []
     for h, time_lbl, t_air, s_w in zip(range(6, 18), time_labels, airport_temps, solar_fluxes):
-        t_2m = t_air + req.microclimate_delta_c
+        t_2m = t_air + req.intra_aoi_spread_c
         forecast_dicts.append(
             {
                 "hour_index": h,
@@ -166,8 +166,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         mitigated_peak_hot_spot_c=mitigated_traj.peak_hot_spot_c,
         baseline_loss_of_life_hours=baseline_traj.total_loss_of_life_hours,
         mitigated_loss_of_life_hours=mitigated_traj.total_loss_of_life_hours,
-        persistence_hours=min(7.17 * (req.microclimate_delta_c / 4.5), 11.0),
-        thermal_soak_index=min(4.12 * (req.microclimate_delta_c / 4.5), 8.0),
+        persistence_hours=min(7.17 * (req.intra_aoi_spread_c / 4.5), 11.0),
+        thermal_soak_index=min(4.12 * (req.intra_aoi_spread_c / 4.5), 8.0),
         bess_discharged_mwh=bess_discharged_mwh,
         cooling_runtime_hours=7.0 if req.forced_cooling_enabled else 0.0,
     )
@@ -186,9 +186,9 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
                 "hour_index": idx,
                 "timestamp": f_dict["timestamp"],
                 "time_label": f_dict["time_label"],
-                "airport_reference_temp_c": airport_temps[idx],
+                "coolest_tile_2m_c": airport_temps[idx],
                 "fortyguard_2m_ambient_c": f_dict["fortyguard_2m_ambient_c"],
-                "microclimate_delta_c": round(f_dict["fortyguard_2m_ambient_c"] - airport_temps[idx], 1),
+                "intra_aoi_spread_c": round(f_dict["fortyguard_2m_ambient_c"] - airport_temps[idx], 1),
                 "solar_irradiance_w_m2": f_dict["solar_irradiance_w_m2"],
                 "baseline_top_oil_c": b_step.t_top_oil_c,
                 "baseline_hot_spot_c": b_step.t_hot_spot_c,
@@ -208,8 +208,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         sim_id = f"SIM-{uuid.uuid4().hex[:8].upper()}"
         sim_record = SimulationRunRecord(
             simulation_id=sim_id,
-            scenario_name=f"WhatIf Delta={req.microclimate_delta_c}C Day={req.heatwave_day}",
-            delta_c=req.microclimate_delta_c,
+            scenario_name=f"WhatIf Delta={req.intra_aoi_spread_c}C Day={req.heatwave_day}",
+            delta_c=req.intra_aoi_spread_c,
             heatwave_day=req.heatwave_day,
             transformer_mva=req.transformer_mva,
             bess_mwh=req.bess_capacity_mwh,

@@ -65,10 +65,10 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
                 {metadata.name}
               </h2>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-rose-950/80 text-rose-300 border border-rose-800/60 flex items-center gap-1">
-                <Flame className="h-3 w-3 text-rose-400" /> 119°F / 48.3°C HISTORIC PEAK
+                <Flame className="h-3 w-3 text-rose-400" /> 108.9°F / 42.7°C MEASURED PEAK
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-900 text-slate-400 border border-slate-800">
-                July 24, 2023 · Phoenix AZ
+                July 19, 2023 · Phoenix AZ
               </span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
@@ -191,7 +191,7 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
                   {temp.toFixed(0)}°C
                 </div>
                 <div className={`text-[9px] mt-0.5 opacity-80 ${isSelected ? 'text-slate-900 font-bold' : 'text-slate-500'}`}>
-                  +{(step.microclimate_delta_c).toFixed(1)}°
+                  +{(step.intra_aoi_spread_c).toFixed(1)}°
                 </div>
 
                 {isPeak && !isSelected && (

@@ -19,7 +19,7 @@ import { HeatmapCollection, HeatmapFeature } from '../types';
 interface GeospatialMicroclimateViewerProps {
   heatmapData: HeatmapCollection;
   currentAmbient2m: number;
-  airportAmbient: number;
+  coolestTile2m: number;
   deltaAmbient: number;
   onOpenLiveScan?: () => void;
 }
@@ -27,7 +27,7 @@ interface GeospatialMicroclimateViewerProps {
 export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewerProps> = ({
   heatmapData,
   currentAmbient2m,
-  airportAmbient,
+  coolestTile2m,
   deltaAmbient,
   onOpenLiveScan,
 }) => {
@@ -123,7 +123,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
             <div className="bg-rose-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-rose-800/80 text-xs font-mono text-rose-300 font-bold flex items-center gap-2 shadow-lg">
               <Flame className="h-4 w-4 text-rose-400" />
               <span>Parcel: {currentAmbient2m.toFixed(1)}°C</span>
-              <span className="text-slate-400 text-[10px]">(Coolest tile: {airportAmbient.toFixed(1)}°C · +{deltaAmbient.toFixed(1)}°C)</span>
+              <span className="text-slate-400 text-[10px]">(Coolest tile: {coolestTile2m.toFixed(1)}°C · +{deltaAmbient.toFixed(1)}°C)</span>
             </div>
           </div>
 

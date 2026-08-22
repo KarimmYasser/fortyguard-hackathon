@@ -68,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <AlertTriangle className="h-3.5 w-3.5" />
-              Baseline (Airport/Static)
+              Baseline (Static Rating)
             </button>
             <button
               onClick={() => !isMitigatedMode && onToggleMode()}

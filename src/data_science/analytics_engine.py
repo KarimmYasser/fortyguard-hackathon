@@ -25,7 +25,7 @@ logger = logging.getLogger("thermal_sentinel.data_science.analytics")
 # from correlation analysis (they remain visible in the EDA / stats views).
 _TRIVIAL_DERIVED_COLUMNS = {
     "hour_of_day",              # = hour_index + 6
-    "delta_microclimate_c",     # duplicate of microclimate_delta_c (same formula)
+    "delta_microclimate_c",     # duplicate of intra_aoi_spread_c (same formula)
     "voltage_deviation_pu",     # = 0.02 * baseline_load_ratio_k
     "safety_margin_c",          # = 140 - estimated_hot_spot_c
     "diurnal_recovery_deficit", # = estimated_top_oil_rise_c - min(estimated_top_oil_rise_c)
@@ -165,11 +165,11 @@ class ThermalAnalyticsEngine:
         Statistical comparison between airport reference temps and FortyGuard 2m readings.
         Quantifies the systematic measurement bias using paired t-test and Cohen's d.
         """
-        if "fortyguard_2m_ambient_c" not in gold_df.columns or "airport_reference_temp_c" not in gold_df.columns:
+        if "fortyguard_2m_ambient_c" not in gold_df.columns or "coolest_tile_2m_c" not in gold_df.columns:
             return {"error": "Temperature comparison columns not available"}
 
         fg = gold_df["fortyguard_2m_ambient_c"].values
-        ap = gold_df["airport_reference_temp_c"].values
+        ap = gold_df["coolest_tile_2m_c"].values
         delta = fg - ap
 
         # Analytical Paired t-test

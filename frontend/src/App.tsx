@@ -254,8 +254,8 @@ export const App: React.FC = () => {
 
             heatmapData={dataset.heatmap_geojson_tiles}
             currentAmbient2m={currentStep.fortyguard_2m_ambient_c}
-            airportAmbient={currentStep.airport_reference_temp_c}
-            deltaAmbient={currentStep.microclimate_delta_c}
+            coolestTile2m={currentStep.coolest_tile_2m_c}
+            deltaAmbient={currentStep.intra_aoi_spread_c}
             onOpenLiveScan={() => setIsLiveScanOpen(true)}
           />
         )}

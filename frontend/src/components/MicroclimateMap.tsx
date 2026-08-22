@@ -5,14 +5,14 @@ import { HeatmapCollection } from '../types';
 interface MicroclimateMapProps {
   heatmapData: HeatmapCollection;
   currentAmbient2m: number;
-  airportAmbient: number;
+  coolestTile2m: number;
   deltaAmbient: number;
 }
 
 export const MicroclimateMap: React.FC<MicroclimateMapProps> = ({
   heatmapData,
   currentAmbient2m,
-  airportAmbient,
+  coolestTile2m,
   deltaAmbient,
 }) => {
   const [selectedTile, setSelectedTile] = useState<string>('tile_phx_sub_04');
@@ -29,10 +29,10 @@ export const MicroclimateMap: React.FC<MicroclimateMapProps> = ({
             Hyperlocal 2m Microclimate GIS Layer
           </h3>
         </div>
-        {/* Airport Delta Badge */}
+        {/* Coolest-tile delta badge */}
         <div className="flex items-center gap-1.5 text-[11px] font-mono">
           <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">
-            Airport: {airportAmbient.toFixed(1)}°C
+            Coolest tile: {coolestTile2m.toFixed(1)}°C
           </span>
           <span className="px-2 py-0.5 rounded bg-rose-950/80 border border-rose-800/80 text-rose-300 font-bold flex items-center gap-1">
             <Flame className="h-3 w-3" /> Parcel 2m: {currentAmbient2m.toFixed(1)}°C (+{deltaAmbient.toFixed(1)}°C)
@@ -107,7 +107,7 @@ export const MicroclimateMap: React.FC<MicroclimateMapProps> = ({
           })}
         </div>
 
-        {/* Airport Distance Marker Annotation */}
+        {/* Reference-tile marker annotation */}
         <div className="absolute bottom-2 left-2 z-20 px-2 py-1 rounded bg-slate-900/90 border border-slate-800 text-[10px] font-mono text-slate-400 flex items-center gap-1.5 backdrop-blur-md">
           <MapPin className="h-3 w-3 text-slate-500" />
           Phoenix Sky Harbor Station: 7.2 mi East (Shaded Airfield)

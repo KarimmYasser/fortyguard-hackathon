@@ -658,8 +658,8 @@ class AsyncFortyGuardClient:
                     "time_label": datetime.strptime(f"{hour:02d}:00", "%H:%M").strftime("%I:%M %p"),
                     # --- measured by FortyGuard ---
                     "fortyguard_2m_ambient_c": ambient,
-                    "airport_reference_temp_c": coolest,
-                    "microclimate_delta_c": round(ambient - coolest, 2),
+                    "coolest_tile_2m_c": coolest,
+                    "intra_aoi_spread_c": round(ambient - coolest, 2),
                     "tile_peak_2m_c": round(temps["max"], 2),
                     "relative_humidity_pct": round(
                         _hourly("relative_humidity_percent", hour, fallback.get("relative_humidity_pct", 20.0)), 1

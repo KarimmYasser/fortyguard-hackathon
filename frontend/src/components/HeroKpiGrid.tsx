@@ -108,11 +108,11 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
               {currentStep.fortyguard_2m_ambient_c.toFixed(1)}°C
             </span>
             <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800">
-              +{currentStep.microclimate_delta_c.toFixed(1)}°C vs Airport
+              +{currentStep.intra_aoi_spread_c.toFixed(1)}°C across AOI
             </span>
           </div>
           <div className="text-xs text-slate-400 mt-1 font-mono flex items-center justify-between">
-            <span>Airport Station: <strong className="text-slate-300">{currentStep.airport_reference_temp_c.toFixed(1)}°C</strong></span>
+            <span>Coolest tile in AOI: <strong className="text-slate-300">{currentStep.coolest_tile_2m_c.toFixed(1)}°C</strong></span>
             <span>Solar: <strong className="text-amber-400">{currentStep.solar_irradiance_w_m2.toFixed(0)} W/m²</strong></span>
           </div>
         </div>

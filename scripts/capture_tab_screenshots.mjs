@@ -11,16 +11,18 @@ const DASHBOARD_DIR = path.resolve(projectRoot, 'videos/thermal-sentinel-pitch/a
 fs.mkdirSync(DASHBOARD_DIR, { recursive: true });
 
 const tabsToCapture = [
-  { tabText: 'Home', filename: 'dashboard_home.png' },
-  { tabText: 'Overview', filename: 'dashboard_overview.png' },
-  { tabText: 'What-If', filename: 'dashboard_sandbox.png' },
-  { tabText: '72h Heatwave', filename: 'dashboard_72h_heatwave.png' },
-  { tabText: 'Power Flow', filename: 'dashboard_power_flow.png' },
+  { tabText: 'Pitch & Video', filename: 'dashboard_home.png' },
+  { tabText: 'Mission Control', filename: 'dashboard_overview.png' },
+  { tabText: 'What-If Studio', filename: 'dashboard_sandbox.png' },
+  { tabText: '72h Compounding', filename: 'dashboard_72h_heatwave.png' },
+  { tabText: 'AC Power Flow', filename: 'dashboard_power_flow.png' },
   { tabText: 'IEEE Annex G', filename: 'dashboard_ieee_annex_g.png' },
-  { tabText: '2m GIS Heatmap', filename: 'dashboard_gis_map.png' },
-  { tabText: 'Scientific Moats', filename: 'dashboard_physics_moats.png' },
-  { tabText: 'LangGraph', filename: 'dashboard_agent_graph.png' },
-  { tabText: 'Financial ROI', filename: 'dashboard_financial_roi.png' },
+  { tabText: 'Academic Provenance', filename: 'dashboard_academic_provenance.png' },
+  { tabText: 'Hyperlocal 2m GIS', filename: 'dashboard_gis_map.png' },
+  { tabText: '4 Scientific Moats', filename: 'dashboard_physics_moats.png' },
+  { tabText: 'LangGraph Engine', filename: 'dashboard_agent_graph.png' },
+  { tabText: 'Avoided Loss ROI', filename: 'dashboard_financial_roi.png' },
+  { tabText: 'Data Science Studio', filename: 'dashboard_data_science.png' },
 ];
 
 async function captureAllTabs() {
@@ -37,29 +39,51 @@ async function captureAllTabs() {
   const TARGET_URL = process.env.TARGET_URL || 'https://fortyguard-hackathon.vercel.app';
   console.log(`🌐 Opening ${TARGET_URL} ...`);
   await page.goto(TARGET_URL, { waitUntil: 'networkidle0', timeout: 30000 });
-  await new Promise((r) => setTimeout(r, 1500));
+  await page.waitForSelector('nav button', { timeout: 30000 });
+  await new Promise((r) => setTimeout(r, 2500));
 
+  const available = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('nav button')).map((b) => b.textContent.trim()));
+  const missing = tabsToCapture.map((t) => t.tabText).filter((l) => !available.includes(l));
+  if (missing.length) {
+    console.error('❌ Tab labels not present in the UI:', missing);
+    console.error('   Available:', available);
+    await browser.close();
+    process.exit(1);
+  }
+
+  const failures = [];
   for (const { tabText, filename } of tabsToCapture) {
     console.log(`📸 Capturing tab: "${tabText}" -> ${filename}...`);
     try {
-      await page.evaluate((text) => {
-        const btns = Array.from(document.querySelectorAll('nav button'));
-        const target = btns.find((b) => b.textContent && b.textContent.includes(text));
-        if (target) target.click();
+      const clicked = await page.evaluate((text) => {
+        const btn = Array.from(document.querySelectorAll('nav button'))
+          .find((b) => b.textContent.trim() === text);
+        if (!btn) return false;
+        btn.click();
+        return true;
       }, tabText);
+      if (!clicked) throw new Error(`tab button "${tabText}" disappeared`);
 
-      await new Promise((r) => setTimeout(r, 1200));
+      // Charts, maps and KaTeX need a beat to lay out after the tab swaps.
+      await new Promise((r) => setTimeout(r, 2200));
 
       const outPath = path.resolve(DASHBOARD_DIR, filename);
       await page.screenshot({ path: outPath, type: 'png' });
       console.log(`✅ Saved ${outPath}`);
     } catch (err) {
       console.error(`❌ Failed capturing tab "${tabText}":`, err.message);
+      failures.push(tabText);
     }
   }
 
   await browser.close();
-  console.log('🎉 All tab screenshots successfully captured!');
+
+  if (failures.length) {
+    console.error(`\n❌ ${failures.length} tab(s) failed: ${failures.join(', ')}`);
+    process.exit(1);
+  }
+  console.log(`\n🎉 Captured ${tabsToCapture.length} tabs to ${DASHBOARD_DIR}`);
 }
 
 captureAllTabs().catch((err) => {

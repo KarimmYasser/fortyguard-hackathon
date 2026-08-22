@@ -10,7 +10,7 @@ def client():
 
 def test_sandbox_simulate_default(client):
     payload = {
-        "microclimate_delta_c": 4.5,
+        "intra_aoi_spread_c": 4.5,
         "heatwave_day": 24,
         "transformer_mva": 25.0,
         "bess_capacity_mwh": 25.0,
@@ -31,7 +31,7 @@ def test_sandbox_simulate_default(client):
 
 def test_sandbox_simulate_extreme_heat_zero_bess(client):
     payload = {
-        "microclimate_delta_c": 6.0,
+        "intra_aoi_spread_c": 6.0,
         "heatwave_day": 31,
         "transformer_mva": 35.0,
         "bess_capacity_mwh": 0.0,

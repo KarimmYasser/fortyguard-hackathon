@@ -29,7 +29,7 @@ export const PhysicsTelemetryCharts: React.FC<PhysicsTelemetryChartsProps> = ({
   // 1. Boundary Ambient Range: 30°C to 55°C
   const minTempA = 30;
   const maxTempA = 55;
-  const pathAirport = steps.map((s, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(s.airport_reference_temp_c, minTempA, maxTempA)}`).join(' ');
+  const pathCoolest = steps.map((s, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(s.coolest_tile_2m_c, minTempA, maxTempA)}`).join(' ');
   const pathFortyGuard = steps.map((s, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(s.fortyguard_2m_ambient_c, minTempA, maxTempA)}`).join(' ');
 
   // 2. Internal State Range: 60°C to 155°C
@@ -60,12 +60,12 @@ export const PhysicsTelemetryCharts: React.FC<PhysicsTelemetryChartsProps> = ({
           <div className="flex items-center gap-2">
             <Sun className="h-4 w-4 text-amber-400" />
             <h4 className="text-xs font-bold text-white uppercase tracking-wider font-heading">
-              A. Thermal Boundary: Airport (Macroscopic) vs FortyGuard 2-Meter Ambient
+              A. Thermal Boundary: FortyGuard 2-Meter Ambient (AOI Mean vs Coolest Tile)
             </h4>
           </div>
           <div className="flex items-center gap-3 text-[11px] font-mono">
             <span className="flex items-center gap-1 text-slate-400">
-              <span className="h-2 w-2 rounded-full bg-slate-400 inline-block"></span> Airport Weather
+              <span className="h-2 w-2 rounded-full bg-slate-400 inline-block"></span> Coolest Tile In AOI
             </span>
             <span className="flex items-center gap-1 text-rose-400 font-bold">
               <span className="h-2 w-2 rounded-full bg-rose-500 inline-block"></span> FortyGuard 2m (+1.1°C measured)
@@ -84,7 +84,7 @@ export const PhysicsTelemetryCharts: React.FC<PhysicsTelemetryChartsProps> = ({
             <text x={padding.left - 8} y={getY(45, minTempA, maxTempA) + 3} fill="#94a3b8" fontSize="9" fontFamily="monospace" textAnchor="end">45°C</text>
 
             {/* Curves */}
-            <path d={pathAirport} fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4 4" />
+            <path d={pathCoolest} fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4 4" />
             <path d={pathFortyGuard} fill="none" stroke="#f43f5e" strokeWidth="2.5" />
 
             {/* Current scrubber vertical line */}

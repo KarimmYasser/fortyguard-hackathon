@@ -44,7 +44,7 @@ async def test_async_fortyguard_client_mock():
     assert max(temps) > 40.0, "benchmark scenario must exceed the 40C threshold"
 
     # Delta is measured spatial spread within the AOI, not an assumed constant.
-    assert all(h["microclimate_delta_c"] >= 0 for h in forecast)
+    assert all(h["intra_aoi_spread_c"] >= 0 for h in forecast)
 
     # Test persistence
     persist = await client.get_persistence_and_exceedance()
