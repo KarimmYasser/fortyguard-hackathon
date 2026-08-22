@@ -46,6 +46,9 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
   const peakF = peakC != null ? peakC * 9 / 5 + 32 : null;
   const scenarioDate = metadata?.date_range?.start_date ?? null;
   const scenarioPlace = metadata?.location?.city ?? null;
+  const firstStep = steps?.length ? steps[0] : null;
+  const lastStep = steps?.length ? steps[steps.length - 1] : null;
+  const tC = (v?: number | null) => (v == null || Number.isNaN(v) ? '—' : `${v.toFixed(1)}°C`);
   const currentStep = steps[currentHourIndex] || steps[0];
 
   const handlePrev = () => {
@@ -165,14 +168,14 @@ export const ReplayControlBar: React.FC<ReplayControlBarProps> = ({
         {/* Track Label Bar */}
         <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
           <span className="flex items-center gap-1.5">
-            <Sun className="h-3.5 w-3.5 text-amber-400" /> 06:00 AM (Sunrise · 34.2°C)
+            <Sun className="h-3.5 w-3.5 text-amber-400" /> {firstStep?.time_label ?? '—'} (Start · {tC(firstStep?.fortyguard_2m_ambient_c)})
           </span>
           <span className="text-rose-400 font-bold flex items-center gap-1 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-800/40 animate-pulse">
             <Flame className="h-3.5 w-3.5" /> {peakStep?.time_label ?? '—'} Peak Forcing{' '}
             ({peakC != null ? `${peakC.toFixed(1)}°C / ${peakF!.toFixed(1)}°F` : '—'})
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-slate-500" /> 05:00 PM (Evening · 44.1°C)
+            <Clock className="h-3.5 w-3.5 text-slate-500" /> {lastStep?.time_label ?? '—'} (End · {tC(lastStep?.fortyguard_2m_ambient_c)})
           </span>
         </div>
 

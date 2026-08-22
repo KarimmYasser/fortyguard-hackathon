@@ -143,7 +143,9 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               Benchmark Comparison: Baseline Controller vs. Thermal Sentinel Grid
             </h3>
             <p className="text-xs text-slate-400 font-mono">
-              Heatwave Episode Validation Matrix · benchmark capture 2023-07-19
+              Heatwave Episode Validation Matrix · capture{' '}
+              {metadata?.date_range?.start_date ?? '—'}
+              {metadata?.location?.city ? ` · ${metadata.location.city}` : ''}
             </p>
           </div>
         </div>

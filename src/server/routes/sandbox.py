@@ -126,7 +126,14 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         # Patched onto the dashboard's scenario metadata so the header, date and
         # persistence row track the scan instead of the benchmark.
         scan_binding["scenario_metadata_patch"] = {
-            "location": {"city": req.city or f"{req.latitude:.4f}, {req.longitude:.4f}"},
+            "location": {
+                "city": req.city or f"{req.latitude:.4f}, {req.longitude:.4f}",
+                # There is no asset registry entry for an arbitrary scan, so name
+                # the modelled asset rather than keeping the Phoenix substation.
+                "substation_name": f"Generic {req.transformer_mva:.0f} MVA asset model (unregistered site)",
+                "latitude": req.latitude,
+                "longitude": req.longitude,
+            },
             "date_range": {"start_date": req.analysis_date},
             "persistence_metrics": live_persistence or None,
         }
