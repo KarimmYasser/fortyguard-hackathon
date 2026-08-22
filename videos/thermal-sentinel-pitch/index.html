@@ -166,13 +166,10 @@
       width: 1920px;
       height: 1080px;
       overflow: hidden;
-      display: none;
-      opacity: 0;
-    }
-
-    .clip.active-scene {
-      display: block;
-      opacity: 1;
+      /* Visibility is owned by the framework, which toggles `display` from the
+         clip's data-start/data-duration. Do not set `opacity: 0` here: the
+         framework does not manage opacity, so it would display every scene
+         fully transparent and render a film of empty backgrounds. */
     }
 
     .scene-content {
@@ -563,7 +560,7 @@
               </div>
               <div class="metric-card alert" id="s1-m2">
                 <div class="metric-label">Insulation Aging Speedup</div>
-                <div class="metric-val red" id="s1-counter-aging">15.0×</div>
+                <div class="metric-val red" id="s1-counter-aging">144.3×</div>
               </div>
               <div class="metric-card cyan" id="s1-m3">
                 <div class="metric-label">Consecutive Days ≥ 110°F</div>
@@ -571,7 +568,7 @@
               </div>
               <div class="metric-card alert" id="s1-m4">
                 <div class="metric-label">Substation Outage Loss</div>
-                <div class="metric-val gold">$2.8M</div>
+                <div class="metric-val gold">$2.74M</div>
               </div>
             </div>
           </div>
@@ -904,11 +901,11 @@
       }, null, cap.t);
     });
 
-    // Scene visibility is owned by the framework via data-start/data-duration
-    // on each .clip section - we only drive the inner content wrappers here.
-    // Each wrapper gets an explicit opacity:1 at its scene start and a hard
-    // opacity:0 kill at its scene end so non-linear seeking can never land on
-    // stale visibility state mid-fade.
+    // The framework owns .clip visibility via data-start/data-duration, so we
+    // only drive the inner content wrappers. Each wrapper is reset to opacity 1
+    // at its scene start (it is faded out on exit, and a backwards seek must
+    // not leave it transparent) and hard-killed to 0 at its scene end, matching
+    // the target of the exit tween.
     tl.set("#s1-content", { opacity: 1 }, 0);
 
     // -------------------------------------------------------------

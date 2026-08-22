@@ -11,10 +11,6 @@ decks
 docs
 temperature-api-quickstart
 videos
-frontend/public/videos
-*.mp4
-*.webm
-*.mov
 notebooks
 data
 *.db
@@ -24,5 +20,6 @@ data
 .agents
 tests
 .claude
-.agents
-videos
+
+# The pitch render is served from frontend/public/videos and must ship.
+# 'videos' above still excludes the composition sources and their assets.

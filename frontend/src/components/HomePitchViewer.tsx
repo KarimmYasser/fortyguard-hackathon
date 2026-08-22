@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Video,
   Sparkles,
@@ -44,26 +44,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
   const [currentTime, setCurrentTime] = useState<number>(0);
-  // Whether the renders ship with this build. They are excluded from the Vercel
-  // deployment (58 MB of mp4, and the current cut narrates figures superseded by
-  // the live-API capture), so in production this is false and we must not request
-  // them at all - both <video src> and a HEAD probe log a 404 to the console,
-  // which is noise in demos and screen recordings. Set VITE_PITCH_RENDER=1 for
-  // local dev, where frontend/public/videos is served normally.
-  const rendersBundled = import.meta.env.VITE_PITCH_RENDER === '1';
-  const [videoStatus, setVideoStatus] = useState<'unknown' | 'ok' | 'missing'>(
-    rendersBundled ? 'unknown' : 'missing',
-  );
 
-  useEffect(() => {
-    if (!rendersBundled) { setVideoStatus('missing'); return; }
-    let cancelled = false;
-    setVideoStatus('unknown');
-    fetch(videoSources[activeVideoSource].url, { method: 'HEAD' })
-      .then((r) => { if (!cancelled) setVideoStatus(r.ok ? 'ok' : 'missing'); })
-      .catch(() => { if (!cancelled) setVideoStatus('missing'); });
-    return () => { cancelled = true; };
-  }, [activeVideoSource, rendersBundled]);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStartTour = () => {
@@ -76,13 +57,18 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
   const videoSources = {
     pitch: {
+      bundled: true,
       url: '/videos/video.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Can be updated with real YouTube video ID
       title: '🎬 3-Minute Motion Illustration Pitch',
       badge: 'Official Pitch Video',
       description: 'Programmatic motion-graphics pitch breaking down the market blindspot, 4 scientific moats, and hybrid Physical-AI architecture.',
     },
+      // The walkthrough recording still shows the pre-correction UI - old
+      // metrics, the retired airport framing - so it is withheld rather than
+      // served next to a dashboard that contradicts it.
     live_demo: {
+      bundled: false,
       url: '/videos/live_product_demo.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       title: '💻 Live UI Product Demo Walkthrough',
@@ -284,20 +270,18 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
         {/* Standard Native Video Player Card (Medium Cinema Size) */}
         <div className="max-w-6xl mx-auto w-full rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl p-2.5 sm:p-4">
-          {videoStatus === 'missing' ? (
+          {!videoSources[activeVideoSource].bundled ? (
             <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800 flex flex-col items-center justify-center gap-3 px-8 text-center">
               <Film className="h-8 w-8 text-slate-600" />
               <p className="text-sm font-bold text-slate-300 font-heading uppercase tracking-wide">
-                Render not bundled with this deployment
+                Walkthrough recording is being re-captured
               </p>
               <p className="text-xs text-slate-500 font-mono max-w-lg">
-                The pitch renders are large binaries kept out of the deploy. The current cut also
-                narrates figures superseded by the live-API capture, so it is intentionally not
-                served rather than shown with numbers the dashboard contradicts.
+                The previous recording shows the pre-correction UI, so it is withheld rather than
+                served beside a dashboard that contradicts it. The 3-minute motion pitch above is
+                current.
               </p>
             </div>
-          ) : videoStatus === 'unknown' ? (
-            <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800" />
           ) : (
             <video
               key={activeVideoSource}
