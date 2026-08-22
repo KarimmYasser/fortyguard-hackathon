@@ -917,6 +917,31 @@ class HybridDatabaseManager:
             await self._supabase_insert("financial_audit_snapshots", record.model_dump())
 
     # --- 11. Microclimate Parcel Store ---
+    async def get_microclimate_parcels(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """
+        Read back stored scans, newest first. Supabase is the source of truth;
+        SQLite in /tmp is wiped on every cold start, so it is merged in only as
+        an offline cache.
+        """
+        sqlite_rows: List[Dict[str, Any]] = []
+        try:
+            with self._get_connection() as conn:
+                cur = conn.execute(
+                    "SELECT * FROM microclimate_parcel_store ORDER BY rowid DESC LIMIT ?",
+                    (limit,),
+                )
+                sqlite_rows = [dict(r) for r in cur.fetchall()]
+        except Exception as exc:
+            logger.warning("SQLite parcel read failed: %s", exc, exc_info=True)
+
+        if not self.is_supabase_enabled:
+            return sqlite_rows
+
+        supabase_rows = await self._supabase_select("microclimate_parcel_store", limit=limit)
+        return self._merge_by_key(
+            supabase_rows, sqlite_rows, lambda x: x.get("parcel_id", ""), limit=limit
+        )
+
     async def save_microclimate_parcel(self, record: MicroclimateParcelRecord) -> None:
         geojson_str = json.dumps(record.polygon_geojson)
         with self._get_connection() as conn:

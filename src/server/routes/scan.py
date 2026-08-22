@@ -79,6 +79,13 @@ from src.db.database import db_manager
 from src.db.models import MicroclimateParcelRecord
 
 
+@router.get("/parcels")
+async def list_scanned_parcels(limit: int = 50) -> Dict[str, Any]:
+    """Read back stored scans so a scan result can be located after the fact."""
+    rows = await db_manager.get_microclimate_parcels(limit=limit)
+    return {"status": "success", "table": "microclimate_parcel_store", "count": len(rows), "parcels": rows}
+
+
 @router.post("")
 async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
     """
