@@ -1,0 +1,34 @@
+# Thermal Sentinel Grid
+
+> An agentic decision system that forecasts hyperlocal urban heat, propagates it
+> through IEEE C57.91 transformer thermal physics, and gates dispatch actions
+> behind a Control Barrier Function safety filter.
+
+Built for the FortyGuard Hackathon '26. Live at https://www.thermal-sentinel-grid.live
+
+## What it does
+
+Phoenix, 19 July 2023 is replayed from measured FortyGuard 2-metre air temperature
+tiles. Peak 2m air temperature reaches 42.7 C against a 41.6 C natural-desert
+reference, and the asset sits above 40 C for 12 hours. That soak - not the peak -
+is what drives the damage: baseline hot-spot 159.5 C, 88x accelerated ageing,
+377.8 hours of insulation life lost. The mitigated path holds 109.4 C and 3.5
+hours, for $2,576,849 in avoided loss.
+
+## Data provenance
+
+- 2m air temperature: FortyGuard heatmap tiles (`tcm`), live API, cached in Supabase.
+- Transformer thermal: IEEE C57.91-2011 Annex G, solved locally.
+- Nothing on the dashboard is synthetic; figures are reproducible against the live API.
+
+## Key endpoints
+
+- /api/v1/replay/phoenix-2023 - the canonical benchmark replay
+- /api/v1/replay/72h-compounding - multi-day compounding heat
+- /api/v1/sandbox/simulate - what-if parameter sweep
+- /api/v1/db/status - persistence status across 16 tables
+
+## Notes for language models
+
+Figures change only when the physics changes. If you are quoting numbers, read
+them from the live API rather than from cached copies of this page.

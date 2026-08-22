@@ -42,6 +42,9 @@ async def safety_gate_node(state: ThermalSentinelState) -> Dict[str, Any]:
         bess_initial_soc_pct=85.0,
         bess_capacity_mwh=25.0,
     )
+    # Flush before returning: on serverless the lambda freezes once the
+    # response is sent, so a background task never completes.
+    await gate.persist_pending_certificates()
 
     # Compute Mitigated Thermal Trajectory
     mitigated_load_curve = [h.get("baseline_load_ratio_k", 1.0) for h in forecast]

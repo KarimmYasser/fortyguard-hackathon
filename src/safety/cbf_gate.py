@@ -7,12 +7,18 @@ N-1 contingency reserve, and BESS energy envelopes under bounded forecast uncert
 from __future__ import annotations
 
 import math
+import logging
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.models.safety import ActionType, MitigationAction, SafetyGateVerdict, SafetyStatus
 from src.models.thermal import TransformerThermalParams
 from src.physics.transformer_thermal import TransformerThermalEngine
+
+
+from src.db.models import CBFSafetyCertificateRecord
+
+logger = logging.getLogger(__name__)
 
 
 class CBFSafetyGate:
@@ -31,6 +37,24 @@ class CBFSafetyGate:
         self.physics = TransformerThermalEngine(self.params)
         self.epsilon_c = forecast_uncertainty_epsilon_c
         self.gamma = gamma_decay
+        self.pending_certificates: List[CBFSafetyCertificateRecord] = []
+
+    async def persist_pending_certificates(self) -> int:
+        """Flush buffered CBF certificates. Await this before returning a response."""
+        if not self.pending_certificates:
+            return 0
+        from src.db.database import db_manager
+
+        pending, self.pending_certificates = self.pending_certificates, []
+        written = 0
+        for cert in pending:
+            try:
+                await db_manager.save_cbf_safety_certificate(cert)
+                written += 1
+            except Exception as exc:
+                logger.warning("Failed to persist CBF certificate %s: %s",
+                               cert.certificate_id, exc, exc_info=True)
+        return written
 
     def evaluate_grid_voltage_pu(
         self,
@@ -223,13 +247,17 @@ class CBFSafetyGate:
         audit_time = time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime())
         barrier_slack = round(self.params.t_hs_max_c - trajectory.peak_hot_spot_c, 2)
 
-        # Asynchronously persist CBF safety certificate
-        try:
-            import uuid
-            import asyncio
-            from src.db.database import db_manager
-            from src.db.models import CBFSafetyCertificateRecord
-            cert_rec = CBFSafetyCertificateRecord(
+        # Build the CBF safety certificate and stash it for the caller to
+        # persist. This used to fire-and-forget via loop.create_task(), which
+        # cannot work on serverless: the response returns, the lambda freezes,
+        # and the in-flight Supabase POST is cancelled - surfacing as a
+        # "Supabase sync non-fatal error ... :" with an empty message. Callers
+        # now await persist_pending_certificates() before returning.
+        import uuid
+        from src.db.models import CBFSafetyCertificateRecord
+
+        self.pending_certificates.append(
+            CBFSafetyCertificateRecord(
                 certificate_id=f"CERT-{uuid.uuid4().hex[:8].upper()}",
                 asset_id=asset_id,
                 nominal_k_load=round(peak_k, 3),
@@ -237,17 +265,12 @@ class CBFSafetyGate:
                 barrier_value_h=barrier_slack,
                 qp_slack_xi=0.0 if is_fully_safe else max(0.0, -barrier_slack),
                 is_safe_invariant=is_fully_safe,
-                mathematical_proof=f"Control Barrier Function dot_h(x,u) + gamma*h(x) >= 0 evaluated at peak T_hs={trajectory.peak_hot_spot_c:.1f}C under K_safe={safe_max_k:.3f} pu.",
+                mathematical_proof=(
+                    f"Control Barrier Function dot_h(x,u) + gamma*h(x) >= 0 evaluated at "
+                    f"peak T_hs={trajectory.peak_hot_spot_c:.1f}C under K_safe={safe_max_k:.3f} pu."
+                ),
             )
-            # Safe scheduling across both sync and async contexts
-            try:
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(db_manager.save_cbf_safety_certificate(cert_rec))
-            except Exception:
-                pass
-        except Exception:
-            pass
+        )
 
         return SafetyGateVerdict(
             status=status,

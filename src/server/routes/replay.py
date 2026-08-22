@@ -28,6 +28,9 @@ async def get_phoenix_2023_replay() -> Dict[str, Any]:
     Baseline Controller vs. Thermal Sentinel Grid during Phoenix July 2023, logging to database.
     """
     data = _REPLAY_ENGINE.generate_replay_dataset()
+    # The engine is synchronous, so it buffers CBF certificates rather than
+    # scheduling background writes that a frozen lambda would cancel.
+    await _REPLAY_ENGINE.safety_gate.persist_pending_certificates()
 
     try:
         steps = data.get("timeline_steps", [])

@@ -95,11 +95,14 @@ class PhysicsSurrogateModel:
     def train(self) -> Dict[str, Any]:
         """Train the surrogate model and report metrics."""
         if not _SKLEARN_AVAILABLE:
-            self.is_trained = True
-            self.r2_score = 0.98
-            self.mae = 1.2
-            self.max_error = 3.5
-            self.n_training_samples = 500
+            # Report the truth. This used to set is_trained=True and invent
+            # R2=0.98 / MAE=1.2 / n=500, so a deployment without scikit-learn
+            # served fabricated accuracy metrics for a model that never existed.
+            self.is_trained = False
+            self.r2_score = None
+            self.mae = None
+            self.max_error = None
+            self.n_training_samples = 0
             return self.get_metrics()
 
         data = self._generate_synthetic_training_data(500)
@@ -149,15 +152,26 @@ class PhysicsSurrogateModel:
         return float(self._pipeline.predict(X)[0])
 
     def get_metrics(self) -> Dict[str, Any]:
+        def _r(v, nd):
+            return round(v, nd) if isinstance(v, (int, float)) else None
+
         return {
             "model_name": "Physics Surrogate Regressor (Ridge + Poly2)",
             "is_trained": self.is_trained,
-            "r2_score": round(self.r2_score, 4),
-            "mae_celsius": round(self.mae, 2),
-            "max_error_celsius": round(self.max_error, 2),
+            "backend": "scikit-learn" if _SKLEARN_AVAILABLE else "unavailable",
+            "r2_score": _r(self.r2_score, 4),
+            "mae_celsius": _r(self.mae, 2),
+            "max_error_celsius": _r(self.max_error, 2),
             "n_training_samples": self.n_training_samples,
             "speedup_factor": "~5000x vs full ODE solver",
             "description": "Sub-millisecond city-wide transformer hot-spot screening surrogate",
+            **({} if _SKLEARN_AVAILABLE else {
+                "status_note": (
+                    "scikit-learn is not installed in this deployment; the surrogate "
+                    "falls back to a closed-form physics approximation and reports no "
+                    "trained-model accuracy metrics."
+                )
+            }),
         }
 
 
@@ -230,9 +244,16 @@ class SensorAnomalyDetector:
                      self.n_anomalies, self.n_total,
                      100 * self.n_anomalies / max(self.n_total, 1))
 
+        # Name the estimator that actually ran. The z-score fallback is real
+        # work and its counts are genuine, but calling it "Isolation Forest"
+        # misreports the method.
         return {
-            "model_name": "Sensor Anomaly Detector (Isolation Forest)",
+            "model_name": (
+                "Sensor Anomaly Detector (Isolation Forest)" if _SKLEARN_AVAILABLE
+                else "Sensor Anomaly Detector (z-score percentile fallback)"
+            ),
             "is_trained": self.is_trained,
+            "backend": "scikit-learn" if _SKLEARN_AVAILABLE else "numpy-zscore",
             "total_records": self.n_total,
             "anomalies_detected": self.n_anomalies,
             "anomaly_rate_pct": round(100 * self.n_anomalies / max(self.n_total, 1), 2),

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The API is live and stateful; keep crawlers off it.
+Disallow: /api/
+
+Sitemap: https://www.thermal-sentinel-grid.live/sitemap.xml

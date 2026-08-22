@@ -97,17 +97,21 @@ async def simulate_bess_thermal_trajectory(req: BESSSimulateRequest) -> List[BES
     # Persist BESS telemetry steps
     try:
         from src.db.models import BESSDegradationRecord
-        for r in results:
+        # BESSThermalStepResult exposes time_minutes / discharge_power_mw /
+        # state_of_charge_pct / state_of_health_pct / hourly_degradation_cost_usd.
+        # Five of the nine fields here read names that never existed, so this
+        # write raised on the first attribute and no BESS row was ever stored.
+        for idx, r in enumerate(results):
             rec = BESSDegradationRecord(
                 bess_id="BESS-PHX-CENTRAL-01",
-                hour_step=r.hour_step,
+                hour_step=idx,
                 ambient_c=r.ambient_temp_c,
-                dispatch_power_mw=r.dispatch_power_mw,
+                dispatch_power_mw=r.discharge_power_mw,
                 core_temp_c=r.core_temp_c,
                 surface_temp_c=r.surface_temp_c,
-                soc_pct=r.soc_pct,
-                soh_pct=r.soh_pct,
-                degradation_cost_usd=r.degradation_cost_usd,
+                soc_pct=r.state_of_charge_pct,
+                soh_pct=r.state_of_health_pct,
+                degradation_cost_usd=r.hourly_degradation_cost_usd,
             )
             await db_manager.log_bess_degradation(rec)
     except Exception as exc:
@@ -184,7 +188,7 @@ async def solve_chance_constrained_opf(req: CC_OPF_Request) -> CC_OPF_Solution:
             total_dispatch_cost_usd=solution.objective_cost_usd_per_hr,
             solver_status=solution.robustness_status,
         )
-        db_manager.save_chance_constrained_opf_log(opf_rec)
+        await db_manager.log_chance_constrained_opf(opf_rec)
     except Exception as exc:
         logger.warning("Failed to persist chance-constrained OPF log: %s", exc, exc_info=True)
 

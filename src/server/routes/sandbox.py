@@ -168,6 +168,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         bess_capacity_mwh=max(req.bess_capacity_mwh, 1.0),
         transformer_rating_mva=req.transformer_mva,
     )
+    await safety_gate.persist_pending_certificates()
 
     # 7. Soil Dryout & Virtual Moisture
     soil_eval = soil_engine.evaluate_compound_site_margin(
