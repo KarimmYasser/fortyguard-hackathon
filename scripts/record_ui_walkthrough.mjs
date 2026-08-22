@@ -12,6 +12,9 @@ const OUTPUT_VIDEO = path.resolve(projectRoot, 'videos/thermal-sentinel-pitch/re
 const PUBLIC_VIDEO = path.resolve(projectRoot, 'frontend/public/videos/live_product_demo.mp4');
 const BGM_AUDIO = path.resolve(projectRoot, 'videos/thermal-sentinel-pitch/assets/audio/bgm_cyber_ambient.mp3');
 const RAW_VIDEO = path.resolve(projectRoot, 'scratch/raw_screencast.mp4');
+// Hardcoding /opt/homebrew/bin/ffmpeg only works on an Apple-silicon Mac with
+// Homebrew; resolve it instead so the script runs anywhere ffmpeg is on PATH.
+const FFMPEG = process.env.FFMPEG_PATH || 'ffmpeg';
 
 // Ensure output dirs exist
 fs.mkdirSync(path.dirname(OUTPUT_VIDEO), { recursive: true });
@@ -120,7 +123,7 @@ async function recordLiveWalkthrough() {
 
   // Start FFmpeg process for CDP Screencast
   console.log('🎥 Initializing CDP Screencast & FFmpeg...');
-  const ffmpeg = spawn('/opt/homebrew/bin/ffmpeg', [
+  const ffmpeg = spawn(FFMPEG, [
     '-y',
     '-f', 'image2pipe',
     '-vcodec', 'mjpeg',
@@ -189,25 +192,26 @@ async function recordLiveWalkthrough() {
   }
 
   async function clickTabByText(tabLabel, waitAfter = 600) {
-    try {
-      const rect = await page.evaluate((text) => {
-        const btns = Array.from(document.querySelectorAll('nav button'));
-        const target = btns.find((b) => b.textContent?.includes(text));
-        if (!target) return null;
-        const r = target.getBoundingClientRect();
-        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-      }, tabLabel);
+    const rect = await page.evaluate((text) => {
+      const btns = Array.from(document.querySelectorAll('button'));
+      const target = btns.find((b) => b.textContent?.trim() === text);
+      if (!target) return null;
+      target.scrollIntoView({ block: 'center' });
+      const r = target.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }, tabLabel);
 
-      if (rect) {
-        await smoothMouseMove(rect.x, rect.y, 350);
-        await page.evaluate((x, y) => window.triggerClickEffect(x, y), rect.x, rect.y);
-        await page.evaluate((text) => {
-          const btns = Array.from(document.querySelectorAll('nav button'));
-          const target = btns.find((b) => b.textContent?.includes(text));
-          if (target) target.click();
-        }, tabLabel);
-      }
-    } catch (err) {}
+    if (!rect) {
+      throw new Error(`control not found: "${tabLabel}"`);
+    }
+
+    await smoothMouseMove(rect.x, rect.y, 350);
+    await page.evaluate((x, y) => window.triggerClickEffect(x, y), rect.x, rect.y);
+    await page.evaluate((text) => {
+      const target = Array.from(document.querySelectorAll('button'))
+        .find((b) => b.textContent?.trim() === text);
+      target.click();
+    }, tabLabel);
     await new Promise((r) => setTimeout(r, waitAfter));
   }
 
@@ -217,6 +221,25 @@ async function recordLiveWalkthrough() {
       await page.evaluate((dy) => window.scrollBy(0, dy), deltaY / steps);
       await new Promise((r) => setTimeout(r, 20));
     }
+  }
+
+  // Verify every control this walkthrough drives exists before spending five
+  // minutes recording. Previously a renamed control just produced a video of
+  // the Home tab.
+  const REQUIRED_CONTROLS = [
+    'FortyGuard Live API Scan', 'Mission Control', 'Baseline', 'Mitigated',
+    'What-If Studio', '72h Compounding', 'AC Power Flow', 'IEEE Annex G',
+    'Hyperlocal 2m GIS', '4 Scientific Moats', 'LangGraph Engine',
+    'Avoided Loss ROI', 'Pitch & Video',
+  ];
+  const present = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('button')).map((b) => b.textContent.trim()));
+  const absent = REQUIRED_CONTROLS.filter((c) => !present.includes(c));
+  if (absent.length) {
+    console.error('❌ Controls missing from the UI:', absent);
+    console.error('   Present:', present.filter(Boolean));
+    await browser.close();
+    process.exit(1);
   }
 
   console.log('🎬 Starting Snappy, High-Energy Choreographed Walkthrough...\n');
@@ -229,7 +252,7 @@ async function recordLiveWalkthrough() {
   await new Promise((r) => setTimeout(r, 600));
 
   // Open Live API Scan Modal
-  await clickTabByText('Live API Scan', 600);
+  await clickTabByText('FortyGuard Live API Scan', 600);
   await smoothMouseMove(960, 480, 350);
   await new Promise((r) => setTimeout(r, 600));
 
@@ -252,7 +275,7 @@ async function recordLiveWalkthrough() {
   // SECTION 2: MISSION CONTROL (10 - 22s)
   // ==========================================
   console.log('📍 [02/10] Mission Control Telemetry & 12h Scrubbing...');
-  await clickTabByText('Overview', 800);
+  await clickTabByText('Mission Control', 800);
 
   // Scrub through 12h replay bar
   await smoothMouseMove(500, 140, 300);
@@ -267,11 +290,11 @@ async function recordLiveWalkthrough() {
   }
 
   // Toggle Baseline vs Mitigated
-  await clickTabByText('MITIGATED', 600);
+  await clickTabByText('Mitigated', 600);
   await new Promise((r) => setTimeout(r, 600));
-  await clickTabByText('BASELINE', 600);
+  await clickTabByText('Baseline', 600);
   await new Promise((r) => setTimeout(r, 600));
-  await clickTabByText('MITIGATED', 600);
+  await clickTabByText('Mitigated', 600);
 
   await smoothScroll(300, 400);
   await smoothMouseMove(600, 600, 350);
@@ -282,7 +305,7 @@ async function recordLiveWalkthrough() {
   // SECTION 3: WHAT-IF STUDIO (22 - 32s)
   // ==========================================
   console.log('📍 [03/10] What-If Stress Studio...');
-  await clickTabByText('What-If', 800);
+  await clickTabByText('What-If Studio', 800);
 
   // Click Stress Presets
   const presetButtons = await page.$$('button');
@@ -309,7 +332,7 @@ async function recordLiveWalkthrough() {
   // SECTION 4: 72H COMPOUNDING HEATWAVE (32 - 40s)
   // ==========================================
   console.log('📍 [04/10] 72-Hour Compounding Heatwave Simulation...');
-  await clickTabByText('72h Heatwave', 800);
+  await clickTabByText('72h Compounding', 800);
 
   // Click Day 1 -> Day 2 -> Day 3
   const dayButtons = await page.$$('button');
@@ -332,7 +355,7 @@ async function recordLiveWalkthrough() {
   // SECTION 5: 14-BUS AC POWER FLOW (40 - 48s)
   // ==========================================
   console.log('📍 [05/10] 14-Bus AC Distribution Feeder Power Flow...');
-  await clickTabByText('Power Flow', 800);
+  await clickTabByText('AC Power Flow', 800);
 
   await smoothMouseMove(960, 450, 400);
   await smoothScroll(200, 350);
@@ -354,7 +377,7 @@ async function recordLiveWalkthrough() {
   // SECTION 7: 2M GIS HEATMAP (54 - 62s)
   // ==========================================
   console.log('📍 [07/10] Hyperlocal 2m Microclimate GIS Heatmap...');
-  await clickTabByText('2m GIS Heatmap', 800);
+  await clickTabByText('Hyperlocal 2m GIS', 800);
 
   await smoothMouseMove(600, 500, 400);
   await new Promise((r) => setTimeout(r, 1000));
@@ -363,7 +386,7 @@ async function recordLiveWalkthrough() {
   // SECTION 8: 4 SCIENTIFIC MOATS (62 - 68s)
   // ==========================================
   console.log('📍 [08/10] 4 Asymmetric Scientific Moats...');
-  await clickTabByText('Scientific Moats', 800);
+  await clickTabByText('4 Scientific Moats', 800);
 
   await smoothMouseMove(800, 400, 350);
   await smoothScroll(200, 300);
@@ -374,7 +397,7 @@ async function recordLiveWalkthrough() {
   // SECTION 9: LANGGRAPH AGENT ENGINE WITH LIVE GPT-5.4 (68 - 82s)
   // ==========================================
   console.log('📍 [09/10] LangGraph Multi-Agent Stack & Live GPT-5.4...');
-  await clickTabByText('LangGraph', 800);
+  await clickTabByText('LangGraph Engine', 800);
 
   // Click nodes in DAG
   const dagButtons = await page.$$('div#tour-agent-dag button');
@@ -406,7 +429,7 @@ async function recordLiveWalkthrough() {
   // SECTION 10: FINANCIAL ROI MODEL & CONCLUSION (82 - 90s)
   // ==========================================
   console.log('📍 [10/10] Financial ROI & Final Pitch Screen...');
-  await clickTabByText('Financial ROI', 800);
+  await clickTabByText('Avoided Loss ROI', 800);
 
   await smoothMouseMove(600, 400, 350);
   await smoothScroll(300, 400);
@@ -414,7 +437,7 @@ async function recordLiveWalkthrough() {
   await smoothScroll(-300, 400);
 
   // Return to Home view for a clean finish
-  await clickTabByText('Home', 800);
+  await clickTabByText('Pitch & Video', 800);
   await smoothMouseMove(960, 450, 400);
   await new Promise((r) => setTimeout(r, 1500));
 
@@ -433,7 +456,7 @@ async function recordLiveWalkthrough() {
 
   // Mux BGM Audio (No Voiceover)
   console.log(`🎵 Muxing clean background sound (No Voiceover): ${BGM_AUDIO}...`);
-  const muxProcess = spawn('/opt/homebrew/bin/ffmpeg', [
+  const muxProcess = spawn(FFMPEG, [
     '-y',
     '-i', RAW_VIDEO,
     '-i', BGM_AUDIO,

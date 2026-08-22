@@ -64,16 +64,13 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
       badge: 'Official Pitch Video',
       description: 'Programmatic motion-graphics pitch breaking down the market blindspot, 4 scientific moats, and hybrid Physical-AI architecture.',
     },
-      // The walkthrough recording still shows the pre-correction UI - old
-      // metrics, the retired airport framing - so it is withheld rather than
-      // served next to a dashboard that contradicts it.
     live_demo: {
-      bundled: false,
+      bundled: true,
       url: '/videos/live_product_demo.mp4',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       title: '💻 Live UI Product Demo Walkthrough',
       badge: 'Interactive Product Demo',
-      description: 'Full 1080p automated recording of the live running React + FastAPI platform, What-If Studio, and AC power flow.',
+      description: 'Unedited 1080p capture of the deployed platform: live FortyGuard scan, 12-hour scrub, What-If Studio, AC power flow, and a real LangGraph dispatch run. Figures shift as the sandbox sliders move — that is the simulation responding, not a different dataset.',
     },
   };
 
