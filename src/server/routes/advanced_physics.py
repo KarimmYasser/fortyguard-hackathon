@@ -120,7 +120,7 @@ async def get_grid_cascading_hazard(is_mitigated: bool = False) -> CascadingOuta
     """
     engine = ArrheniusWeibullHazardEngine()
     if is_mitigated:
-        tx_traj = [94.0, 106.0, 120.0, 134.0, 148.0, 158.0, 163.0, 165.7, 164.0, 158.0, 148.0, 136.0]
+        tx_traj = [94.0, 106.0, 120.0, 134.0, 148.0, 158.0, 163.0, 159.5, 164.0, 158.0, 148.0, 136.0]
         cable_traj = [65.0, 70.0, 76.0, 82.0, 86.0, 84.0, 80.0, 75.0, 70.0, 66.0, 62.0, 58.0]
         line_traj = [52.0, 58.0, 64.0, 70.0, 73.5, 71.0, 66.0, 60.0, 55.0, 50.0, 46.0, 42.0]
         ambient_peak = 42.74

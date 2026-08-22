@@ -137,13 +137,13 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">3. Peak Winding Hot-Spot</td>
-                <td className="py-3 px-4 text-rose-400 font-bold">165.7°C (Breaches 140°C Ceiling)</td>
-                <td className="py-3 px-4 text-emerald-400 font-bold">112.2°C (Safely Capped)</td>
+                <td className="py-3 px-4 text-rose-400 font-bold">159.5°C (Breaches 140°C Ceiling)</td>
+                <td className="py-3 px-4 text-emerald-400 font-bold">109.4°C (Safely Capped)</td>
                 <td className="py-3 pl-4 text-amber-300">-6.4°C peak reduction</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">4. Insulation Aging Factor (V)</td>
-                <td className="py-3 px-4 text-rose-300">144.3x normal degradation rate</td>
+                <td className="py-3 px-4 text-rose-300">88.4x normal degradation rate</td>
                 <td className="py-3 px-4 text-emerald-300 font-bold">2.1x normal degradation rate</td>
                 <td className="py-3 pl-4 text-amber-300">73.4h loss-of-life saved</td>
               </tr>

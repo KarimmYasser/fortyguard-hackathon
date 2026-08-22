@@ -264,7 +264,7 @@ Thermal Sentinel Grid incorporates a **Dual-Storage Persistence Engine** (Local 
 7. **`multi_day_heatwave_logs`:** 72h compounding heatwave progression ($\rho_{\text{soil}}$, cumulative aging hours).
 8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
 9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
-10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.79M net avoided loss, 5,952× ROI).
+10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.58M net avoided loss, 5,495× ROI).
 11. **`microclimate_parcel_store`:** FortyGuard 2-meter microclimate parcel GeoJSON polygons and asphalt heat trap deltas.
 12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (\$/hr).
 13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) & $VoLL$ at risk.

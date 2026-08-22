@@ -79,7 +79,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
     { time: 30, label: '0:30 4 Scientific Moats', desc: 'Soil Dryout & IEEE Physics ODEs', icon: Layers },
     { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + CBF-QP Safety Barrier', icon: Cpu },
     { time: 90, label: '1:30 Live Mission Control', desc: '12h Proactive Dispatch & What-If Studio', icon: Sliders },
-    { time: 135, label: '2:15 Auditable ROI', desc: 'LBNL ICE Model ($2.74M Net Savings)', icon: Calculator },
+    { time: 135, label: '2:15 Auditable ROI', desc: 'LBNL ICE Model ($2.58M Net Savings)', icon: Calculator },
     { time: 165, label: '2:45 Verification & Outro', desc: 'Tracks 06 & 02 Compliance Seals', icon: Award },
   ];
 
@@ -182,11 +182,11 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             <div className="space-y-2 divide-y divide-slate-800/60">
               <div className="flex items-center justify-between pt-1">
                 <span className="text-slate-400">Net Avoided Loss:</span>
-                <span className="text-emerald-400 font-bold">$2,736,106 / event</span>
+                <span className="text-emerald-400 font-bold">$2,576,849 / event</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Economic ROI:</span>
-                <span className="text-amber-400 font-bold">5,834.9x (LBNL ICE)</span>
+                <span className="text-amber-400 font-bold">5,495.3x (LBNL ICE)</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Microclimate Trap:</span>
@@ -194,7 +194,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Aging Life Saved:</span>
-                <span className="text-cyan-400 font-bold">604.6 Equiv. Hours</span>
+                <span className="text-cyan-400 font-bold">374.3 Equiv. Hours</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Hospital Feeder Uptime:</span>
@@ -605,7 +605,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 Investment-Grade Avoided Loss ROI
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Department of Energy LBNL ICE certified model: $2.74M net avoided loss and 5,834.9x ROI for utility rate basing.
+                Department of Energy LBNL ICE certified model: $2.58M net avoided loss and 5,495.3x ROI for utility rate basing.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-bold pt-4">

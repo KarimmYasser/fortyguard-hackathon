@@ -53,8 +53,8 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       role: 'Multi-Physics ODE Differential Solver',
       type: 'Deterministic Physical Model',
       inputs: ['FortyGuard 2m Boundary', 'Substation Feeder Load Curve', 'Asset Constants (tau_o, tau_w, R)'],
-      outputs: ['Baseline Hot-Spot (165.7°C)', 'Soil Resistivity Surge (2.45 K·m/W)', 'Canyon Derate (eta_cool = 0.68)'],
-      reasoning: 'Baseline controller projects 165.7°C winding hot-spot (breaching 140°C emergency limit) and 88.6 hours equivalent aging life.',
+      outputs: ['Baseline Hot-Spot (159.5°C)', 'Soil Resistivity Surge (2.45 K·m/W)', 'Canyon Derate (eta_cool = 0.68)'],
+      reasoning: 'Baseline controller projects 159.5°C winding hot-spot (breaching 140°C emergency limit) and 88.6 hours equivalent aging life.',
     },
     {
       id: 'planner_node',
@@ -80,8 +80,8 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       role: 'SCADA Work Order & Public Advisory',
       type: 'Downstream Integration',
       inputs: ['Approved Actions', 'Safety Gate Certificate', 'Economic ROI Evaluation'],
-      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Financial Ledger ($2.74M Saved)'],
-      reasoning: 'Dispatched automated SCADA commands to substation pumps and BESS inverters; logged $2.74M net avoided loss to utility reliability ledger.',
+      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Financial Ledger ($2.58M Saved)'],
+      reasoning: 'Dispatched automated SCADA commands to substation pumps and BESS inverters; logged $2.58M net avoided loss to utility reliability ledger.',
     },
   ];
 

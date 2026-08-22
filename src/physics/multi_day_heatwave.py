@@ -139,7 +139,15 @@ class MultiDayHeatwaveEngine:
         soil_moisture = 0.18
         bess_soc = 85.0
 
-        canyon_res = self.canyon_engine.calculate_cooling_derate_factor(45.0, 980.0)
+        # 980 was passed positionally into reference_wind_speed_m_s, i.e. a solar
+        # irradiance figure landing in the wind slot and modelling a 980 m/s wind,
+        # which massively over-estimated convective heat rejection. Both values
+        # also predate the live capture.
+        canyon_res = self.canyon_engine.calculate_cooling_derate_factor(
+            fortyguard_2m_ambient_c=42.74,
+            reference_wind_speed_m_s=2.8,
+            solar_irradiance_w_m2=889.8,
+        )
         eta_cool = canyon_res["cooling_derate_eta_cool"]
 
         day_base_life = 0.0

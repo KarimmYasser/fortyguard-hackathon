@@ -137,7 +137,7 @@ async def get_economic_roi_metrics() -> Dict[str, Any]:
             avoided_customer_outage_loss=float(result.get("breakdown", {}).get("avoided_customer_outage_costs", 1541338.0)),
             avoided_aging_deferral=float(result.get("breakdown", {}).get("asset_life_extension_value", 18450.0)),
             net_avoided_loss=float(result.get("net_avoided_loss", 2791338.0)),
-            economic_roi_multiplier=float(result.get("roi_multiplier", 5834.9)),
+            economic_roi_multiplier=float(result.get("roi_multiplier", 5495.3)),
         )
         await db_manager.save_financial_audit(audit)
     except Exception:

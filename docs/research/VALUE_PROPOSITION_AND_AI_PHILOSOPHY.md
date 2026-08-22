@@ -44,7 +44,7 @@ Rather than a toy ML model, Thermal Sentinel Grid implements the state-of-the-ar
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   THE 4 LAYERS OF REAL-WORLD VALUE                                     │
 │                                                                                                        │
-│  1. 💵 Hard Financial Value       ──► $175k to $2.79M Net Avoided Loss per Heat Event (24.3x+ ROI)     │
+│  1. 💵 Hard Financial Value       ──► $175k to $2.58M Net Avoided Loss per Heat Event (24.3x+ ROI)     │
 │  2. ⚡ Grid Reliability & Life     ──► 846.8 Aging Hours Saved & 100% Hospital Feeder Uptime          │
 │  3. 🛡️ Catastrophic Risk Reduction──► Prevents Transformer Blowouts, Dielectric Arcing & Fires        │
 │  4. 🌍 Commercial Value for FG    ──► Turns FortyGuard from "Weather Data" into "Critical Grid Tech"   │
@@ -58,8 +58,8 @@ $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigate
 * **Avoided Emergency Asset Replacement ($C_{\text{replace}} = \$1.5\text{M}$):** $+\$540,000$ risk reduction
 * **Deferred Capital Asset Replacement ($846.8\text{ life hours saved}$):** $+\$1,646$
 * **Actual Mitigation Cost (BESS degradation + fan power):** $-\$469$
-* **NET VALUE DELIVERED:** **$+\$2,791,338$ per extreme heatwave event**
-* **RETURN ON INVESTMENT (ROI):** **$5,952.7\text{x}$**
+* **NET VALUE DELIVERED:** **$+\$2,576,849$ per extreme heatwave event**
+* **RETURN ON INVESTMENT (ROI):** **$5,495.3\text{x}$**
 
 ---
 

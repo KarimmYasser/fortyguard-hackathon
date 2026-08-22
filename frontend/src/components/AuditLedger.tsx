@@ -18,7 +18,7 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:15 UTC',
     category: 'PHYSICS',
-    message: 'IEEE C57.91 Solver: Baseline controller projects 165.7°C hot-spot (breaches 140°C emergency ceiling). Aging factor V = 144.3x.',
+    message: 'IEEE C57.91 Solver: Baseline controller projects 159.5°C hot-spot (breaches 140°C emergency ceiling). Aging factor V = 88.4x.',
     status: 'WARN',
   },
   {
@@ -30,7 +30,7 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:22 UTC',
     category: 'SAFETY_GATE',
-    message: 'Non-LLM CBF-QP Gate: Filtered candidate plan, solved safe maximum load K_safe = 0.98 pu, capped hot-spot at 112.2°C.',
+    message: 'Non-LLM CBF-QP Gate: Filtered candidate plan, solved safe maximum load K_safe = 0.98 pu, capped hot-spot at 109.4°C.',
     status: 'SUCCESS',
   },
   {

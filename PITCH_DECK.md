@@ -14,7 +14,7 @@
 │   0:30 - 1:00 (30s)  ──► The Solution: FortyGuard 2m AI + IEEE Differential Physical Engine      │
 │   1:00 - 1:30 (30s)  ──► The Agentic AI Stack: LangGraph + Non-LLM CBF-QP Safety Gate            │
 │   1:30 - 2:15 (45s)  ──► Live Demo: What-If Studio, 72h Compounding & AC Power Flow Network      │
-│   2:15 - 2:45 (30s)  ──► Auditable Financial Value: $2.79M Net Avoided Loss (5,952x ROI)         │
+│   2:15 - 2:45 (30s)  ──► Auditable Financial Value: $2.58M Net Avoided Loss (5,495x ROI)         │
 │   2:45 - 3:00 (15s)  ──► Call to Action & Conclusion                                             │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -52,10 +52,10 @@
 ---
 
 ### 🎬 Scene 5: Auditable ROI & Impact (2:15 - 2:45)
-* **Visual:** Avoided Loss Financial Audit tab showing the LBNL ICE Calculator breakdown and $5,952.7\text{x}$ ROI badge.
+* **Visual:** Avoided Loss Financial Audit tab showing the LBNL ICE Calculator breakdown and $5,495.3\text{x}$ ROI badge.
 * **Voiceover:**
   > *"Our economic engine uses the Department of Energy's LBNL ICE standard: we quantify avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs.*  
-  > *For a single heatwave event, Thermal Sentinel Grid delivers $2.79 million in net avoided loss at a 5,952x ROI, saving 846 equivalent aging hours and protecting critical medical feeders."*
+  > *For a single heatwave event, Thermal Sentinel Grid delivers $2.79 million in net avoided loss at a 5,495x ROI, saving 846 equivalent aging hours and protecting critical medical feeders."*
 
 ---
 
@@ -93,7 +93,7 @@
 
 
 ### Slide 5: Investment-Grade Avoided Loss (LBNL ICE)
-* **Key Takeaway:** $\$2,791,338$ Net Avoided Loss; $5,952\text{x}$ ROI; $\$12.50/\text{kWh}$ VoLL.
+* **Key Takeaway:** $\$2,576,849$ Net Avoided Loss; $5,495\text{x}$ ROI; $\$12.50/\text{kWh}$ VoLL.
 
 ### Slide 6: Enterprise Zero-Data-Loss Dual-Storage Architecture (16 Tables)
 * **Key Takeaway:** 16-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Row Level Security (RLS) & FortyGuard API query caching.

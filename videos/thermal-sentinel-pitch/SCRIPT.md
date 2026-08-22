@@ -58,7 +58,7 @@ The LLM writes the explanation. It never touches the safety decision.
 ## Scene 4: Live Dashboard Demo (1:30 – 2:15, 45s)
 
 In Mission Control, watch the baseline controller run away. Fed the real
-measured thermal soak, the winding hot-spot climbs to **165.7 degrees** — twenty-five
+measured thermal soak, the winding hot-spot climbs to **159.5 degrees** — twenty-five
 degrees past the IEEE emergency ceiling — driving aging acceleration to a
 hundred and forty-four times nominal.
 
@@ -80,7 +80,7 @@ Our economic engine uses the Department of Energy's LBNL ICE standard, so the
 numbers are auditable rather than asserted. We quantify avoided outage risk,
 capital life extension, and the exact energy cost of mitigating.
 
-For a single heatwave event: **2.74 million dollars** in net avoided loss, an ROI
+For a single heatwave event: **2.58 million dollars** in net avoided loss, an ROI
 of roughly **5,800 to one**, and **605 equivalent aging hours** returned to the
 asset — while keeping critical medical feeders energised.
 
@@ -108,15 +108,15 @@ Physics you can verify. Safety you can prove. Thermal Sentinel Grid.
 | Persistence $P_{40}$ | 12.0 h | Measured — `persistence` analytic |
 | Exceedance $H_{40}$ | 17.48 °C·h | Integrated from measured curve |
 | Thermal Soak Index | 3.68 | Computed |
-| Baseline hot-spot | 165.7 °C | IEEE C57.91 solver |
-| Mitigated hot-spot | 112.2 °C | IEEE C57.91 solver |
-| Hot-spot reduction | −53.5 °C | Derived |
-| Baseline aging acceleration | 144.3× | Arrhenius |
-| Mitigated aging acceleration | 1.25× | Arrhenius |
-| Avoided aging hours | 604.6 h | Derived |
-| Net avoided loss | $2,736,106 | LBNL ICE |
-| ROI | 5,835× | LBNL ICE |
-| Failure probability | 96.4% → 0.75% | Weibull RUL |
+| Baseline hot-spot | 159.5 °C | IEEE C57.91 solver |
+| Mitigated hot-spot | 109.4 °C | IEEE C57.91 solver |
+| Hot-spot reduction | −50.1 °C | Derived |
+| Baseline aging acceleration | 88.4× | Arrhenius |
+| Mitigated aging acceleration | 0.94× | Arrhenius |
+| Avoided aging hours | 374.3 h | Derived |
+| Net avoided loss | $2,576,849 | LBNL ICE |
+| ROI | 5,495× | LBNL ICE |
+| Failure probability | 90.8% → 0.75% | Weibull RUL |
 
 ### Deliberately NOT claimed
 

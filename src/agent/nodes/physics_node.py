@@ -38,9 +38,14 @@ async def physics_node(state: ThermalSentinelState) -> Dict[str, Any]:
     ) if forecast else {}
 
     # 1. Urban Canyon Cooling Derate
+    # Take wind and solar from the peak hour rather than leaving them at the
+    # signature defaults (3.0 m/s, 850 W/m^2). The forecast already carries both,
+    # and using them keeps this identical to the replay path - the two disagreed
+    # on avoided loss for the same inputs while both claimed the same date.
     canyon_res = canyon_engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=peak_hour.get("fortyguard_2m_ambient_c", 47.6),
-        reference_wind_speed_m_s=3.0,
+        fortyguard_2m_ambient_c=peak_hour.get("fortyguard_2m_ambient_c", 42.74),
+        reference_wind_speed_m_s=peak_hour.get("wind_speed_m_s") or 3.0,
+        solar_irradiance_w_m2=peak_hour.get("solar_irradiance_w_m2", 889.8),
     )
     eta_cool = canyon_res.get("cooling_derate_eta_cool", 0.68)
 

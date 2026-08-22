@@ -240,7 +240,7 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | **7** | `multi_day_heatwave_logs` | 72h continuous compounding progression ($\rho_{\text{soil}}$ dry-out) | Forensics on compounding underground thermal debt. |
 | **8** | `dlr_catenary_telemetry` | Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) & sag | Wildfire and flashover prevention compliance. |
 | **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, CBF proofs, and GPT tokens | Explainable AI (XAI) for control room operators. |
-| **10** | `financial_audit_snapshots` | LBNL ICE calculations ($2.79M avoided loss, 5,952× ROI) | Investment-grade rate-basing filing for utility regulators. |
+| **10** | `financial_audit_snapshots` | LBNL ICE calculations ($2.58M avoided loss, 5,495× ROI) | Investment-grade rate-basing filing for utility regulators. |
 | **11** | `microclimate_parcel_store` | FortyGuard 2-meter parcel GeoJSON & asphalt heat traps | Cached offline map rendering with sub-millisecond latency. |
 | **12** | `bess_degradation_logs` | Coupled core/surface ODEs & Arrhenius SEI capacity fade | Protects million-dollar battery storage warranty limits. |
 | **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |

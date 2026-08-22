@@ -39,10 +39,29 @@ class PhoenixHeatwaveReplayEngine:
         forecast = self.fixture.get("hourly_forecast_12h", [])
         tiles = self.fixture.get("heatmap_geojson_tiles", {})
 
+        # Derive the canyon derate from the capture itself. This used to pass a
+        # hardcoded 47.6 C - the superseded synthetic peak - so replay and the
+        # live agent computed different eta_cool from identical inputs and
+        # disagreed on avoided loss by ~1.3%. Resolve the hottest hour rather
+        # than indexing a fixed position, matching physics_node.
+        peak_hour = max(
+            forecast, key=lambda h: h.get("fortyguard_2m_ambient_c", 0.0), default={}
+        ) if forecast else {}
+        peak_ambient_c = peak_hour.get("fortyguard_2m_ambient_c", 42.74)
+        peak_wind_m_s = peak_hour.get("wind_speed_m_s") or 3.0
+
         canyon_res = self.canyon_engine.calculate_cooling_derate_factor(
-            fortyguard_2m_ambient_c=47.6, reference_wind_speed_m_s=3.0
+            fortyguard_2m_ambient_c=peak_ambient_c,
+            reference_wind_speed_m_s=peak_wind_m_s,
+            solar_irradiance_w_m2=peak_hour.get("solar_irradiance_w_m2", 889.8),
         )
         eta_cool = canyon_res.get("cooling_derate_eta_cool", 0.68)
+
+        # The measured persistence metrics must reach the thermal model. Omitting
+        # them silently fell back to the retired 7.17 h / 34.25 C*h literals.
+        persistence = meta.get("persistence_metrics", {})
+        p40 = persistence.get("persistence_hours_p40")
+        h40 = persistence.get("exceedance_degree_hours_h40")
 
         # 1. Baseline Simulation (Using Airport Weather + Static Rating without Mitigation)
         baseline_load = [h.get("baseline_load_ratio_k", 1.0) for h in forecast]
@@ -52,6 +71,8 @@ class PhoenixHeatwaveReplayEngine:
             load_k_series=baseline_load,
             cooling_derate=eta_cool,
             forced_cooling_active=False,
+            persistence_hours_p40=p40,
+            exceedance_degree_hours_h40=h40,
         )
 
         # 2. Mitigated Simulation (With FortyGuard early warning + Stage 2 cooling + BESS)
@@ -69,6 +90,8 @@ class PhoenixHeatwaveReplayEngine:
             load_k_series=mitigated_load,
             cooling_derate=eta_cool * 1.35,  # Forced cooling engaged
             forced_cooling_active=True,
+            persistence_hours_p40=p40,
+            exceedance_degree_hours_h40=h40,
         )
 
         # 3. Synchronized Timeline Alignment
@@ -94,6 +117,9 @@ class PhoenixHeatwaveReplayEngine:
                 "fortyguard_2m_ambient_c": fc.get("fortyguard_2m_ambient_c"),
                 "intra_aoi_spread_c": fc.get("intra_aoi_spread_c"),
                 "solar_irradiance_w_m2": fc.get("solar_irradiance_w_m2"),
+                "wind_speed_m_s": fc.get("wind_speed_m_s"),
+                "baseline_load_ratio_k": fc.get("baseline_load_ratio_k"),
+                "hospital_critical_load_mw": fc.get("hospital_critical_load_mw"),
                 
                 # Chart 2: Internal Physical State (Baseline vs Mitigated)
                 "baseline_top_oil_c": b_step.t_top_oil_c,
@@ -110,7 +136,7 @@ class PhoenixHeatwaveReplayEngine:
                 "mitigated_cumulative_aging_hours": m_step.cumulative_loss_of_life_hours,
                 "baseline_load_k": b_step.load_ratio_k,
                 "mitigated_load_k": m_step.load_ratio_k,
-                "bess_soc_pct": round(bess_soc, 1),
+                "bess_soc_pct": round(fc.get("bess_soc_pct", bess_soc), 1),
             })
 
         # 4. Safety Gate Preflight

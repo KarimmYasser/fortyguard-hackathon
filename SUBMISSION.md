@@ -65,7 +65,7 @@ In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecut
 │   Reaction Time        Reactive: Trips alarm at 135°C (5m left)  Proactive: Dispatches 12h ahead       │
 │   Physical Cascades    Blind to soil dryout & canyon winds       4 Deep Physics & Aerodynamic Moats    │
 │   Safety Guarantee     Rule-based / human operator triage        Non-LLM CBF-QP Mathematical Firewall  │
-│   Financial Value      Incurs emergency blackout replacement     $2.79M Net Avoided Loss (5,952x ROI)  │
+│   Financial Value      Incurs emergency blackout replacement     $2.58M Net Avoided Loss (5,495x ROI)  │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -117,7 +117,7 @@ In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecut
 | **Heatwave Persistence** | Blind to $12\text{h}$ continuous $>40^\circ\mathrm{C}$ | Tracks $P_{40}$ & Thermal Soak Index ($3.68$) | Proactive pre-cooling 12h ahead |
 | **Peak Winding Hot-Spot ($T_{hs}$)** | **$143.2^\circ\mathrm{C}$** *(Breaches $140^\circ\mathrm{C}$ Limit)* | **$136.8^\circ\mathrm{C}$** *(Safely Bounded)* | **$-6.4^\circ\mathrm{C}$ peak reduction** |
 | **Insulation Aging Factor ($V$)** | $14.8\times$ normal aging rate | $2.1\times$ normal aging rate | **$846.8\text{ hours}$ life saved** |
-| **Net Avoided Loss (LBNL ICE)** | $\$0$ *(Incurs catastrophic blowout)* | **$\$175,276$ to $\$2,791,338$** | **$24.3\times$ to $5,952\times$ ROI** |
+| **Net Avoided Loss (LBNL ICE)** | $\$0$ *(Incurs catastrophic blowout)* | **$\$162,088$ to $\$2,576,849$** | **$24.3\times$ to $5,495\times$ ROI** |
 
 ---
 
@@ -161,7 +161,7 @@ Thermal Sentinel Grid incorporates a **Graceful Dual-Storage Persistence Layer**
 7. **`multi_day_heatwave_logs`:** 72h continuous compounding heatwave progression ($\rho_{\text{soil}}$, cumulative aging hours).
 8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
 9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
-10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.79M net avoided loss, 5,952× ROI).
+10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.58M net avoided loss, 5,495× ROI).
 11. **`microclimate_parcel_store`:** FortyGuard 2-meter microclimate parcel GeoJSON polygons and asphalt heat trap deltas.
 12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (\$/hr).
 13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) & $VoLL$ at risk.

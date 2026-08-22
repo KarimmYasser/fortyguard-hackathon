@@ -46,35 +46,35 @@ export const BENCHMARK = {
 
   /** Physics — baseline (no mitigation). */
   baseline: {
-    topOilC: 134.5,
-    hotSpotC: 165.7,
-    agingAccelerationX: 144.3,
-    lossOfLifeHours: 609.2,
-    failureProbabilityPct: 96.4,
+    topOilC: 128.3,
+    hotSpotC: 159.5,
+    agingAccelerationX: 88.4,
+    lossOfLifeHours: 377.8,
+    failureProbabilityPct: 90.8,
   },
 
   /** Physics — after CBF-QP-gated agent mitigation. */
   mitigated: {
-    topOilC: 84.8,
-    hotSpotC: 112.2,
-    agingAccelerationX: 1.25,
-    lossOfLifeHours: 4.61,
+    topOilC: 82.0,
+    hotSpotC: 109.4,
+    agingAccelerationX: 0.94,
+    lossOfLifeHours: 3.51,
     failureProbabilityPct: 0.75,
   },
 
   /** IEEE C57.91 emergency ceiling. */
   hotSpotLimitC: 140,
 
-  avoidedAgingHours: 604.6,
-  netAvoidedLossUsd: 2736106,
-  roiMultiple: 5834.9,
+  avoidedAgingHours: 374.3,
+  netAvoidedLossUsd: 2576849,
+  roiMultiple: 5495.3,
   outageConsequenceUsd: 2860000,
 } as const;
 
 /** Peak hot-spot reduction attributable to the agent, in °C. */
 export const HOT_SPOT_REDUCTION_C = Number(
   (BENCHMARK.baseline.hotSpotC - BENCHMARK.mitigated.hotSpotC).toFixed(1),
-); // 53.5
+); // 50.1
 
 export type DataSource = 'fortyguard_live' | 'fortyguard_live_partial' | 'phoenix_fixture';
 

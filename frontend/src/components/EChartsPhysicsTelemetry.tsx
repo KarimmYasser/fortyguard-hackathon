@@ -404,7 +404,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 B. Internal Physical State Estimation (IEEE Std C57.91 & IEC 60076-7)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Baseline hot-spot breaches 140°C limit; Thermal Sentinel safely caps at 112.2°C
+                Baseline hot-spot breaches 140°C limit; Thermal Sentinel safely caps at 109.4°C
               </p>
             </div>
           </div>
@@ -431,7 +431,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 C. Insulation Loss-of-Life (Arrhenius V(t)) & BESS State of Charge
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Accelerated aging reduced from 144.3x to 2.1x (73.4 avoided equivalent loss-of-life hours)
+                Accelerated aging reduced from 88.4x to 2.1x (73.4 avoided equivalent loss-of-life hours)
               </p>
             </div>
           </div>

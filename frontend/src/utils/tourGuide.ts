@@ -171,7 +171,7 @@ export const startTourGuide = ({
             popover: {
               title: '💰 Tab 11: Avoided Loss & ROI Audit',
               description:
-                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.74M net savings and 5,835x economic ROI per heatwave event.',
+                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.58M net savings and 5,495x economic ROI per heatwave event.',
               side: 'top',
               align: 'start',
             },
@@ -205,7 +205,7 @@ export const startTourGuide = ({
             popover: {
               title: '📊 Real-Time Physics & Microclimate KPI Grid',
               description:
-                'Examine the four primary telemetry indicators: FortyGuard 2m Ambient Air (42.7°C), Top-Oil Temperature (134.5°C baseline / 84.8°C mitigated), Winding Hot-Spot (165.7°C baseline / 112.2°C mitigated), and Arrhenius Insulation Aging Acceleration (144.3x vs 1.25x).',
+                'Examine the four primary telemetry indicators: FortyGuard 2m Ambient Air (42.7°C), Top-Oil Temperature (128.3°C baseline / 82.0°C mitigated), Winding Hot-Spot (159.5°C baseline / 109.4°C mitigated), and Arrhenius Insulation Aging Acceleration (88.4x vs 0.94x).',
               side: 'top',
               align: 'center',
             },
@@ -571,7 +571,7 @@ export const startTourGuide = ({
             popover: {
               title: '💵 Quantified Outage & Capital Protection',
               description:
-                'Auditable breakdown of avoided catastrophic replacement costs ($1.25M), customer interruption costs (VoLL), and capital aging deferral ($2.74M net savings).',
+                'Auditable breakdown of avoided catastrophic replacement costs ($1.25M), customer interruption costs (VoLL), and capital aging deferral ($2.58M net savings).',
               side: 'top',
               align: 'center',
             },
@@ -581,7 +581,7 @@ export const startTourGuide = ({
             popover: {
               title: '📊 Comparative Advantage Matrix',
               description:
-                'Demonstrates up to $2.74M net avoided loss per extreme heatwave event with >24x to 5,835x operational ROI over baseline station-weather controllers.',
+                'Demonstrates up to $2.58M net avoided loss per extreme heatwave event with >24x to 5,495x operational ROI over baseline station-weather controllers.',
               side: 'top',
               align: 'center',
             },

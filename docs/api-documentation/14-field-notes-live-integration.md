@@ -248,3 +248,37 @@ you whether the last response actually came from the API.
 | 7 | Spatial contrast ≈ 1 °C, airports are hot | Overstated claims |
 | 8 | AOI ring must be closed | `400 Bad Request` |
 | 9 | Fallbacks that mimic success | Undetectable synthetic data |
+
+## Finding 10 — replay and the live agent disagreed on identical inputs
+
+Comparing `GET /api/v1/replay/phoenix-2023` against `POST
+/api/v1/dispatch/run-mitigation` for the same pinned date showed matching
+ambient, persistence and solar series but a ~1.3 % gap in net avoided loss.
+Three separate causes, all in our own code rather than the API:
+
+1. `phoenix_heatwave_replay.py` computed the urban-canyon derate from a
+   hardcoded `47.6 °C` — the superseded synthetic peak — while the live path
+   resolved the real hottest hour (42.74 °C).
+2. The replay never forwarded `persistence_hours_p40` /
+   `exceedance_degree_hours_h40` into `simulate_trajectory`, so it silently fell
+   back to the retired `7.17 h` / `34.25 °C·h` literals.
+3. `physics_node` and the replay disagreed on wind and solar for the derate:
+   one used the signature defaults (3.0 m/s, 850 W/m²), the other the captured
+   series.
+
+A fourth, unrelated defect surfaced while tracing it: `multi_day_heatwave.py`
+called `calculate_cooling_derate_factor(45.0, 980.0)` positionally, placing a
+solar-irradiance figure into `reference_wind_speed_m_s` and modelling a 980 m/s
+wind — roughly Mach 3 — which grossly over-estimated convective heat rejection.
+
+Both paths now derive the derate from the peak hour of the capture and forward
+the measured persistence metrics. The baseline trajectory is byte-identical
+across replay and live dispatch (peak hot-spot 159.53 °C, top-oil 128.26 °C,
+loss-of-life 377.77 h). The mitigated trajectories still differ, correctly:
+replay applies a scripted BESS shave, the live path applies whatever the agent's
+CBF-QP gate admits.
+
+**This lowered the headline figures.** Net avoided loss moved from $2,736,106 to
+$2,576,849 and ROI from 5,834.9× to 5,495.3×, because the inflated 47.6 °C
+ambient and the stale persistence literals had been overstating baseline
+degradation. The corrected numbers are the ones now reproducible from the API.

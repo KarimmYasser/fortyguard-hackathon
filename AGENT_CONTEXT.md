@@ -246,7 +246,7 @@ flowchart TD
   2. *Control Barrier Functions [CBF-QP] (`src/safety/cbf_gate.py`)*
   3. *Urban Canyon Aerodynamic Throttling (`src/physics/urban_canyon.py`)*
   4. *Virtual Paper-to-Oil Moisture Desorption (`src/physics/virtual_moisture.py`)*
-* **Investment-Grade Economic Engine (`src/physics/economic_model.py`):** LBNL ICE Calculator integration calculating Net Avoided Loss ($175k to $2.79M) and dynamic ROI.
+* **Investment-Grade Economic Engine (`src/physics/economic_model.py`):** LBNL ICE Calculator integration calculating Net Avoided Loss ($175k to $2.58M) and dynamic ROI.
 * **IEEE Std C57.91-2011 Annex G Benchmark Engine (`src/physics/ieee_annex_g_benchmark.py`):** Verified against Clause G.2 (Step Load) & Clause G.3 (Diurnal Ambient Ramp) with $<0.0001^\circ\mathrm{C}$ error.
 * **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Multi-day heatwave progression with continuous overnight heat soak and compounding soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
 * **AC Distribution Feeder Power Flow Engine (`src/physics/power_flow.py`):** 4-Bus radial grid solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.

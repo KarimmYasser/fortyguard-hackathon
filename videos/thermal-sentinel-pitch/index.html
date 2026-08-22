@@ -560,7 +560,7 @@
               </div>
               <div class="metric-card alert" id="s1-m2">
                 <div class="metric-label">Insulation Aging Speedup</div>
-                <div class="metric-val red" id="s1-counter-aging">144.3×</div>
+                <div class="metric-val red" id="s1-counter-aging">88.4×</div>
               </div>
               <div class="metric-card cyan" id="s1-m3">
                 <div class="metric-label">Consecutive Days ≥ 110°F</div>
@@ -568,7 +568,7 @@
               </div>
               <div class="metric-card alert" id="s1-m4">
                 <div class="metric-label">Substation Outage Loss</div>
-                <div class="metric-val gold">$2.74M</div>
+                <div class="metric-val gold">$2.58M</div>
               </div>
             </div>
           </div>
@@ -720,19 +720,19 @@
             <div class="eyebrow"><span style="color:#10b981">●</span> LIVE OPERATOR MISSION CONTROL</div>
             <h1 class="scene-heading">Proactive Dispatch &amp; Sub-15ms What-If Sandbox</h1>
             <p class="scene-subheading">
-              Fed the real measured soak, the unmitigated baseline blows past the 140°C limit to 165.7°C. Thermal Sentinel Grid engages
+              Fed the real measured soak, the unmitigated baseline blows past the 140°C limit to 159.5°C. Thermal Sentinel Grid engages
               12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW BESS to cap the hot-spot
-              safely at 112.2°C.
+              safely at 109.4°C.
             </p>
 
             <div class="metric-grid">
               <div class="metric-card alert" id="s4-m1">
                 <div class="metric-label">Baseline Peak Hot-Spot</div>
-                <div class="metric-val red" id="s4-hotspot-base">165.7°C (Trip)</div>
+                <div class="metric-val red" id="s4-hotspot-base">159.5°C (Trip)</div>
               </div>
               <div class="metric-card success" id="s4-m2">
                 <div class="metric-label">Sentinel Mitigated Hot-Spot</div>
-                <div class="metric-val green" id="s4-hotspot-mit">112.2°C (Safe)</div>
+                <div class="metric-val green" id="s4-hotspot-mit">109.4°C (Safe)</div>
               </div>
               <div class="metric-card cyan" id="s4-m3">
                 <div class="metric-label">What-If Studio Solver Latency</div>
@@ -770,7 +770,7 @@
           <!-- Left Hero Text -->
           <div class="hero-text-col" id="s5-hero">
             <div class="eyebrow"><span style="color:#f59e0b">●</span> INVESTMENT-GRADE ECONOMIC VALUE</div>
-            <h1 class="scene-heading">$2.74M Net Avoided Loss at 5,835× ROI</h1>
+            <h1 class="scene-heading">$2.58M Net Avoided Loss at 5,495× ROI</h1>
             <p class="scene-subheading">
               Using the Department of Energy's LBNL Interruption Cost Estimate (ICE) standard (VoLL = $12.50/kWh),
               Thermal Sentinel Grid quantifies non-overlapping avoided catastrophic outage costs and deferred capital
@@ -780,15 +780,15 @@
             <div class="metric-grid">
               <div class="metric-card success" id="s5-m1">
                 <div class="metric-label">Net Avoided Loss (Per Heatwave)</div>
-                <div class="metric-val gold" id="s5-counter-loss">$2,736,106</div>
+                <div class="metric-val gold" id="s5-counter-loss">$2,576,849</div>
               </div>
               <div class="metric-card success" id="s5-m2">
                 <div class="metric-label">Operational ROI Multiple</div>
-                <div class="metric-val gold" id="s5-counter-roi">5,834.9×</div>
+                <div class="metric-val gold" id="s5-counter-roi">5,495.3×</div>
               </div>
               <div class="metric-card cyan" id="s5-m3">
                 <div class="metric-label">Transformer Insulation Life Saved</div>
-                <div class="metric-val cyan">604.6 Hours</div>
+                <div class="metric-val cyan">374.3 Hours</div>
               </div>
               <div class="metric-card success" id="s5-m4">
                 <div class="metric-label">Proactive Mitigation Cost</div>
@@ -802,7 +802,7 @@
             <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel">
             <div class="hud-chip">
               <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
-              <span style="color:#34d399;">5,834.9x ROI MULTIPLE</span>
+              <span style="color:#34d399;">5,495.3x ROI MULTIPLE</span>
             </div>
           </div>
         </div>
@@ -883,11 +883,11 @@
       { t: 44, time: "0:44", text: "We pair FortyGuard's 2-meter Temperature AI — and its persistence and exceedance analytics — with exact IEEE C57.91 and IEC 60287 thermal equations, modeling soil dryout, canyon wind throttling, and paper-oil moisture." },
       { t: 60, time: "1:00", text: "Rather than training an unverified black-box neural net that hallucinates, we built a hybrid Physical-AI architecture." },
       { t: 74, time: "1:14", text: "Exact physics ODEs handle the thermal math, FortyGuard supplies the measured boundary, LangGraph coordinates dispatch, and a non-LLM CBF quadratic program acts as a mathematical firewall. The LLM writes the explanation — it never touches the safety decision." },
-      { t: 90, time: "1:30", text: "In Mission Control, fed the real measured soak, the baseline hot-spot runs away to 165.7°C — 25 degrees past the IEEE emergency ceiling." },
+      { t: 90, time: "1:30", text: "In Mission Control, fed the real measured soak, the baseline hot-spot runs away to 159.5°C — 25 degrees past the IEEE emergency ceiling." },
       { t: 105, time: "1:45", text: "Thermal Sentinel Grid sees it twelve hours ahead: pre-cooling radiators at 8 AM while power is cheap, then discharging 5 MW of storage to cap the hot-spot at 112°C — a 53-degree reduction." },
       { t: 120, time: "2:00", text: "In our What-If Studio, judges can modulate microclimate deltas in real time (<15ms ODE re-solving), while our AC power flow solver maintains 100% hospital feeder uptime." },
       { t: 135, time: "2:15", text: "Our economic engine uses the Department of Energy's LBNL ICE standard: quantifying avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs." },
-      { t: 150, time: "2:30", text: "For a single heatwave event: $2.74 million in net avoided loss, roughly 5,800-to-1 ROI, and 605 equivalent aging hours returned — with failure probability dropping from 96% to under 1%." },
+      { t: 150, time: "2:30", text: "For a single heatwave event: $2.58 million in net avoided loss, roughly 5,800-to-1 ROI, and 605 equivalent aging hours returned — with failure probability dropping from 96% to under 1%." },
       { t: 165, time: "2:45", text: "Every number you just saw came back from the live FortyGuard API — and we publish the field notes, including where our own early assumptions turned out to be wrong." },
       { t: 173, time: "2:53", text: "Physics you can verify. Safety you can prove. Test the live platform at fortyguard-hackathon.vercel.app" }
     ];
