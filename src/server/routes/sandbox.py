@@ -6,6 +6,8 @@ BESS capacity, and asset ratings, recalculating IEEE C57.91 & CBF-QP trajectorie
 
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
 
 from typing import Dict, Any, List, Optional
@@ -20,7 +22,9 @@ from src.physics.virtual_moisture import VirtualMoistureEngine
 from src.physics.economic_model import EconomicEngine
 from src.safety.cbf_gate import CBFSafetyGate, ActionType, MitigationAction
 from src.db.database import db_manager
-from src.db.models import SimulationRunRecord
+from datetime import datetime, timezone
+
+from src.db.models import ApiCallCacheRecord, SimulationRunRecord
 
 logger = logging.getLogger(__name__)
 
@@ -45,11 +49,36 @@ class SandboxSimulationRequest(BaseModel):
     city: Optional[str] = Field(default=None, description="Label recorded with the simulation run")
 
 
+def _simulation_cache_key(req: SandboxSimulationRequest) -> str:
+    """
+    Deterministic identity for a solve. The physics is a pure function of these
+    inputs, so the same inputs must resolve to the same stored result forever
+    rather than being recomputed and discarded.
+    """
+    payload = json.dumps(req.model_dump(), sort_keys=True, separators=(",", ":"))
+    return "sim:" + hashlib.sha256(payload.encode()).hexdigest()[:40]
+
+
 @router.post("/simulate")
 async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any]:
     """
     Executes live multi-physics simulation and CBF-QP safety gate under customized parameters.
+
+    Results are content-addressed and persisted, so re-opening the same stored
+    scan returns the solved trajectory it produced before instead of paying for
+    the FortyGuard hours and the solve again.
     """
+    cache_key = _simulation_cache_key(req)
+    cached = await db_manager.get_cached_api_call(cache_key)
+    if isinstance(cached, dict) and cached.get("timeline_steps"):
+        cached = dict(cached)
+        cached["cache"] = {
+            "hit": True,
+            "key": cache_key,
+            "stored_at": cached.get("cache", {}).get("stored_at"),
+            "note": "Replayed from the persisted solve; inputs are identical.",
+        }
+        return cached
     # Coolest-tile and solar series from the 2023-07-19 capture. These were
     # invented curves peaking at 43.1 C / 980 W/m^2, which no longer matched
     # anything the API returns.
@@ -332,7 +361,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     except Exception as exc:
         logger.warning("Failed to persist sandbox simulation run: %s", exc, exc_info=True)
 
-    return {
+    result: Dict[str, Any] = {
         "status": "success",
         # Says plainly whether these numbers came from a live scan of the
         # requested coordinates or from the frozen Phoenix benchmark curve.
@@ -362,3 +391,26 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         "virtual_moisture_state": moisture_eval,
         "urban_canyon_state": canyon_res,
     }
+
+    stored_at = datetime.now(timezone.utc).isoformat()
+    result["cache"] = {"hit": False, "key": cache_key, "stored_at": stored_at}
+
+    # Persist the whole solved payload, not a summary of it. simulation_runs
+    # keeps scalars for the audit trail but cannot reconstruct a trajectory, so
+    # without this the work is recomputed on every visit and the result is lost.
+    try:
+        await db_manager.save_cached_api_call(
+            ApiCallCacheRecord(
+                query_hash=cache_key,
+                endpoint="sandbox/simulate",
+                request_params=req.model_dump(),
+                response_payload=result,
+                credits_spent=0.0,
+                created_at=stored_at,
+                expires_at=None,
+            )
+        )
+    except Exception as exc:
+        logger.warning("Failed to persist simulation result %s: %s", cache_key, exc, exc_info=True)
+
+    return result

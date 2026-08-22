@@ -94,7 +94,7 @@ export const App: React.FC = () => {
   // Handle dynamic sandbox results
   const handleSandboxSimulateResult = (simResult: any) => {
     if (simResult?.scan_binding?.mode === 'live_scan') {
-      setActiveBinding(simResult.scan_binding);
+      setActiveBinding({ ...simResult.scan_binding, cache_hit: simResult.cache?.hit === true });
     }
     if (data && simResult.timeline_steps) {
       const patch = simResult?.scan_binding?.scenario_metadata_patch;
@@ -189,6 +189,14 @@ export const App: React.FC = () => {
               {' '}· peak 2m {activeBinding.peak_2m_ambient_c}°C · measured spread{' '}
               {activeBinding.measured_intra_aoi_spread_c}°C · {activeBinding.n_hours}h solved
             </span>
+            {activeBinding.cache_hit && (
+              <span
+                className="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold"
+                title="Identical inputs, so this is the stored solve rather than a recomputation."
+              >
+                REPLAYED FROM STORE
+              </span>
+            )}
             <span className="text-slate-500">Not the Phoenix 2023 benchmark.</span>
             <button
               onClick={() => { setActiveBinding(null); fetchReplayData(); }}
