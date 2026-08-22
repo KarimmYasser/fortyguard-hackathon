@@ -19,7 +19,7 @@ This document is the **single source of truth and context reservoir** for any fu
 
 # SECTION 1: PRIMARY PROJECT VISION - Thermal Sentinel Grid
 
-*For the complete specifications, see **[Thermal Sentinel Grid Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)** and **[Asymmetric Innovation & Physical Mechanisms](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)**.*
+*For the complete specifications, see **[Thermal Sentinel Grid Specification](docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)** and **[Asymmetric Innovation & Physical Mechanisms](docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)**.*
 
 
 ## 1.1 The Core Problem & The Physics of 2-Meter Heat
@@ -30,7 +30,7 @@ However, **critical urban and building electrical infrastructure sits in the 2-m
 - **Street-level electrical distribution boxes, transformers, and building junction meters** (1-2m above sidewalks).
 - **Rooftop solar inverters, balcony lithium battery storage, and EV charging stations** (0-2m).
 
-In dense urban environments, unshaded asphalt radiates intense convective and radiative heat. While a weather app reports a manageable 38°C, the actual ambient air **2 meters above the ground** surrounding an electrical transformer or AC compressor regularly exceeds **48°C-52°C**.
+In dense urban environments, unshaded asphalt radiates intense convective and radiative heat. While a weather app reports a manageable 38°C, the relevant ambient air **2 meters above the ground** can remain dangerously hot for hours. The pinned downtown Phoenix capture peaks at **42.74°C** and stays above **40°C for all 12 sampled hours**.
 
 ### The Failure Mechanism (Thermal Soak -> Thermal Runaway):
 - Standard electrical components (capacitors, breakers, inverters, lithium battery cells) are rated for safe continuous operation up to **40°C-45°C ambient**.
@@ -60,11 +60,11 @@ FortyGuard provides 4 proprietary capabilities that directly solve this blind sp
 - **Agent Deliverable:** Real-time push alerts ("Your facade will hit 49°C persistence between 1 PM-4 PM: run AC on moderate eco-cycle and avoid simultaneous high-draw appliances to prevent circuit breaker fires").
 
 ## 1.5 Why Physics-Constrained Agentic AI (Track 06) Over Black-Box ML Training
-*(For the full deep-dive, see **[Value Proposition & AI Philosophy](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
+*(For the full deep-dive, see **[Value Proposition & AI Philosophy](docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
 - **FortyGuard Already Solved Microclimate ML:** 2m convective air, land-cover morphology, and 12h forecasts are directly provided by FortyGuard's AI.
 - **Physical Differential ODEs are Exact:** Transformer heat rises and Arrhenius cellulose degradation are governed by exact physical ODEs (IEEE Std C57.91 / IEC 60076-7). Replacing exact physics with an approximate neural net introduces hallucinations and out-of-distribution failure.
-- **Mission-Critical Safety Demands CBF-QP:** Utilities and fire insurers will never allow a black-box ML model to trip breakers or dispatch BESS. They require mathematical forward-invariance of safe sets ($T_{hs} \le 140^\circ\mathrm{C}$, $0.95 \le V_{\text{pu}} \le 1.05$).
-- **The 4-Layer Stack:** Perception (FortyGuard AI) $\to$ Physical Truth (IEEE ODEs) $\to$ Agentic Planner (LangGraph StateGraph) $\to$ Safety Barrier (Non-LLM CBF-QP).
+- **Mission-Critical Safety Demands Deterministic Validation:** A black-box LLM must not directly control breakers or BESS. The prototype evaluates proposed actions against bounded thermal, voltage, reserve, and state-of-charge trajectories.
+- **The 4-Layer Stack:** Perception (FortyGuard AI) $\to$ Physical Model (IEEE-based ODEs) $\to$ Agentic Planner (LangGraph StateGraph) $\to$ Deterministic Safety Envelope.
 
 ---
 
@@ -175,9 +175,9 @@ flowchart TD
 
 ## 4.3 Key Mentor & Session Insights (Full Dialogues in `docs/sessions-dialogue/`)
 
-*For the complete implementation specification, see **[Thermal Sentinel Grid Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)**. For the 4 asymmetric innovation mechanisms, see **[Asymmetric Innovation & Physical Mechanisms](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)**. For the financial model and pitch script, see **[Economic Model, UI Architecture & Pitch Script](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ECONOMIC_MODEL_DASHBOARD_AND_PITCH_SCRIPT.md)**. For the comprehensive playbook and idea selection framework, see **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**. For the rigorous physical models and IEEE/UL standards synthesis, see **[Physical-AI Research & Standards Synthesis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md)**. For individual transcripts, see **[docs/sessions-dialogue/](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/README.md)**:*
+*For the complete implementation specification, see **[Thermal Sentinel Grid Specification](docs/research/THERMAL_SENTINEL_GRID_SPECIFICATION.md)**. For the 4 asymmetric innovation mechanisms, see **[Asymmetric Innovation & Physical Mechanisms](docs/research/ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md)**. For the financial model and pitch script, see **[Economic Model, UI Architecture & Pitch Script](docs/research/ECONOMIC_MODEL_DASHBOARD_AND_PITCH_SCRIPT.md)**. For the comprehensive playbook and idea selection framework, see **[Mentor Insights & Idea Selection Framework](docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**. For the rigorous physical models and IEEE/UL standards synthesis, see **[Physical-AI Research & Standards Synthesis](docs/research/RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md)**. For individual transcripts, see **[docs/sessions-dialogue/](docs/sessions-dialogue/README.md)**:*
 
-1. **[01. Onboarding & Kickoff Session](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/1-onboarding-kickoff-session.md):**
+1. **[01. Onboarding & Kickoff Session](docs/sessions-dialogue/1-onboarding-kickoff-session.md):**
 
 
 
@@ -188,15 +188,15 @@ flowchart TD
  - *Speakers:* Jay (Founder & CEO) & Nahil (Community Lead).
  - *Guidelines:* Sprint period August 18-30 (deadline Aug 30 11:59 PM GST). $6,000 cash pool + NVIDIA Jetson AI Developer Kits. Mandatory deliverables: working live URL, 3-minute video pitch, public repo with `Hackathon FG` added as collaborator. US data coverage at 2m resolution with 12h forecast and historical back to 2021.
 
-2. **[02. Building on FortyGuard Temperature API®](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/2-building-fortyguard-temperature-api.md):**
+2. **[02. Building on FortyGuard Temperature API®](docs/sessions-dialogue/2-building-fortyguard-temperature-api.md):**
  - *Speaker:* Fawad Shah (Head of Software Engineering at FortyGuard).
  - *Technical Guidance:* API queries for bounding boxes/polygons are compute-heavy and follow an **asynchronous submit-and-poll lifecycle** (poll every 3-5 seconds). 6 key endpoints: Heat Map, Parcel Analytics, Time-Series / Historical, Forecast, Exceedance, and Environmental Parameters. Essential for Agentic AI (Track 06) tool-calling architectures.
 
-3. **[03. Heat Intelligence Cloud: What You Can Build](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/3-heat-cloud-webinar-session.md):**
+3. **[03. Heat Intelligence Cloud: What You Can Build](docs/sessions-dialogue/3-heat-cloud-webinar-session.md):**
  - *Speaker:* FortyGuard Lead Solutions Architect / AI ML Team.
  - *Architecture Guidance:* 4 core data layers: *Surface Temperature* (2m microclimate), *Thermal Comfort Analysis* (UTCI / Apparent Temp), *Air Quality* (AQI, PM2.5), and *Land Cover* (Canopy/Facade). Showcased 6 production demo products across PropTech, InsurTech, Logistics, Worker Safety, Urban Planning, and Utility Peak Load.
 
-4. **[04. Breaking Silos with Autodesk: Data to Design](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/4-autodesk-webinar-session.md):**
+4. **[04. Breaking Silos with Autodesk: Data to Design](docs/sessions-dialogue/4-autodesk-webinar-session.md):**
  - *Speakers:* Jordana Rosa (Senior Technical Specialist, Autodesk Forma · 4x Hackathon Winner) & Jay (CEO).
  - *Mentorship Guidance:* Bringing FortyGuard 2m microclimate data into AEC design tools (Autodesk Forma, Revit, Civil 3D) for early-stage thermal performance modeling before breaking ground. Key winning strategies: team trust, leadership, rapid iteration, and pitching measurable real-world outcomes.
 
@@ -238,34 +238,35 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (63/63 Pytest Tests Passing)
-* **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, automatic fallback to Phoenix July 2023 ground truth dataset.
+## 6.1 Core Tested Architecture (86/86 Pytest Tests Passing)
+* **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, durable request caching, and explicit fixture replay paths. Live scan failures surface as errors rather than silently switching locations.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
   1. *IEC 60287 Cable-Soil Moisture Dryout (`src/physics/soil_cable.py`)*
-  2. *Control Barrier Functions [CBF-QP] (`src/safety/cbf_gate.py`)*
+  2. *CBF-Inspired Deterministic Safety Envelope (`src/safety/cbf_gate.py`)*
   3. *Urban Canyon Aerodynamic Throttling (`src/physics/urban_canyon.py`)*
   4. *Virtual Paper-to-Oil Moisture Desorption (`src/physics/virtual_moisture.py`)*
 * **Investment-Grade Economic Engine (`src/physics/economic_model.py`):** LBNL ICE Calculator integration calculating Net Avoided Loss ($175k to $2.58M) and dynamic ROI.
 * **IEEE Std C57.91-2011 Annex G Benchmark Engine (`src/physics/ieee_annex_g_benchmark.py`):** Verified against Clause G.2 (Step Load) & Clause G.3 (Diurnal Ambient Ramp) with $<0.0001^\circ\mathrm{C}$ error.
-* **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Multi-day heatwave progression with continuous overnight heat soak and compounding soil desertification ($\rho_{\text{soil}} = 0.95 \to 2.48\text{ K}\cdot\text{m/W}$).
+* **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Frozen live FortyGuard boundaries for every hour of July 24–26, 2023, with modelled continuous overnight heat soak and soil dryout (end-of-day $\rho_{\text{soil}} = 1.52 \to 2.13 \to 2.41\text{ K}\cdot\text{m/W}$).
 * **AC Distribution Feeder Power Flow Engine (`src/physics/power_flow.py`):** 4-Bus radial grid solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
 * **4 Advanced Mathematical Moats:**
   1. *Dynamic Line Rating (IEEE Std 738-2012) & Conductor Sag (`src/physics/dynamic_line_rating.py`)*
   2. *Coupled Electro-Thermal BESS Degradation & SEI Kinetics (`src/physics/bess_electro_thermal.py`)*
   3. *Arrhenius-Weibull Grid Fragility & Cascading Outage Risk (`src/physics/weibull_hazard.py`)*
-  4. *Chance-Constrained AC Optimal Power Flow SOCP (`src/physics/chance_constrained_opf.py`)*
+  4. *Analytical Uncertainty-Bounded Dispatch Screen (`src/physics/chance_constrained_opf.py`)*
 * **LangGraph Multi-Agent Workflow (`src/agent/agent_graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
-* **Operator Dashboard (11-Tab React 19 / TypeScript / Apache ECharts):**
+* **Operator Dashboard (12-Tab React 19 / TypeScript / Apache ECharts):**
   1. 🎬 Executive Pitch & Video Showcase (Home launchpad with video + interactive slide deck)
   2. ⚡ Mission Control Overview (12h synchronized replay scrubber & 3-axis telemetry)
   3. 🎛️ Live What-If Stress Studio (6 interactive sliders with sub-15ms live physics re-solving)
   4. 🔥 72-Hour Compounding Heatwave Viewer (Continuous 3-day thermal accumulation)
   5. ⚡ AC Distribution Power Flow & Single-Line Diagram (DLR ampacity + Volt/VAR control)
   6. 🏆 IEEE Annex G Standard Benchmark Suite (Clause G.2 & G.3 numerical proof)
-  7. 📚 Academic Provenance & alphaXiv Corpus (50+ peer-reviewed papers with LaTeX proofs)
+  7. 📚 Academic Provenance & alphaXiv Corpus (22 indexed papers with LaTeX proofs)
   8. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
   9. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
   10. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
   11. 💰 Avoided Loss Financial Audit (DOE LBNL ICE investment-grade ROI calculator)
+  12. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
 

@@ -136,30 +136,33 @@ flowchart LR
                                              └───────────────────────────────────┘
 ```
 
-### JSON Structured Action Contract (Deterministic Output Example)
+### JSON Structured Action Contract (Illustrative Schema)
+
+The following is a **schema illustration**, not a captured production result. Numeric fields must be populated from a specific measured boundary and solver run rather than copied from this document.
+
 ```json
 {
-  "asset_id": "TX-DIST-4402",
+  "asset_id": "<asset-id>",
   "asset_type": "distribution_transformer_pad",
-  "location": {"lat": 33.4484, "lon": -112.0740},
+  "location": {"lat": "<latitude>", "lon": "<longitude>"},
   "external_boundary": {
-    "fortyguard_2m_ambient_c": 47.8,
-    "persistence_hours_above_40c": 5.5,
-    "solar_irradiance_wm2": 920.0
+    "fortyguard_2m_ambient_c": "<measured>",
+    "persistence_hours_above_40c": "<measured>",
+    "solar_irradiance_wm2": "<derived>"
   },
   "physics_estimation": {
-    "estimated_top_oil_temp_c": 104.2,
-    "hot_spot_temp_c": 128.6,
-    "relative_aging_rate": 8.7
+    "estimated_top_oil_temp_c": "<modelled>",
+    "hot_spot_temp_c": "<modelled>",
+    "relative_aging_rate": "<modelled>"
   },
   "safety_gate": {
-    "status": "PASSED",
-    "ieee_c57_91_compliant": true,
-    "feeder_voltage_pu": 0.98,
-    "n_minus_1_reserve_maintained": true
+    "status": "<PASSED|MODIFIED|REJECTED>",
+    "ieee_c57_91_compliant": "<boolean>",
+    "feeder_voltage_pu": "<modelled>",
+    "n_minus_1_reserve_maintained": "<boolean>"
   },
-  "recommended_action": "shed_flexible_ev_load_and_enable_forced_cooling",
-  "expected_hotspot_reduction_c": -14.2,
-  "approval_required": "automated_dispatch"
+  "recommended_action": "<validated-action>",
+  "expected_hotspot_reduction_c": "<modelled>",
+  "approval_required": "<policy-value>"
 }
 ```

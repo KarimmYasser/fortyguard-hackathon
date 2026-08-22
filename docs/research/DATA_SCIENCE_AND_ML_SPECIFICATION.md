@@ -28,7 +28,7 @@ To bridge the gap between microscopic physical differential equations and macros
 
 ## 🏗️ 2. Medallion ETL Pipeline (Bronze $\to$ Silver $\to$ Gold)
 
-Implemented in [`src/data_science/etl_pipeline.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/data_science/etl_pipeline.py):
+Implemented in [`src/data_science/etl_pipeline.py`](../../src/data_science/etl_pipeline.py):
 
 ### 🥉 Bronze Layer: Raw Ingestion
 - Ingests raw telemetry and FortyGuard polygon heatmaps across 12-hour hourly steps.
@@ -63,7 +63,7 @@ Implemented in [`src/data_science/etl_pipeline.py`](file:///Users/karim/Developm
 
 ## 🤖 3. Machine Learning Models & Physics Surrogates
 
-Implemented in [`src/data_science/ml_models.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/data_science/ml_models.py):
+Implemented in [`src/data_science/ml_models.py`](../../src/data_science/ml_models.py):
 
 ### Model 1: Polynomial Ridge Physics-Surrogate Regressor
 - **Problem:** Full discrete-time ODE solvers (IEEE C57.91) require $\approx 5\text{ms}$ per asset. City-scale operations across 10,000+ distribution transformers demand sub-millisecond screening.
@@ -100,7 +100,7 @@ Implemented in [`src/data_science/ml_models.py`](file:///Users/karim/Development
 
 ## 🧪 4. Statistical Hypothesis Testing & EDA
 
-Implemented in [`src/data_science/analytics_engine.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/data_science/analytics_engine.py):
+Implemented in [`src/data_science/analytics_engine.py`](../../src/data_science/analytics_engine.py):
 
 ### Correlation Ranking: Tautology Filtering & Small-Sample Disclosure
 

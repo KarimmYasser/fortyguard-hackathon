@@ -108,7 +108,7 @@ $$\Delta T_{cable} = q_{loss} \cdot \left[R_{internal} + \frac{\rho_{soil}}{2\pi
 ---
 
 ## 4. 🛡️ ANSI C84.1 Voltage Envelope Enforcement
-The CBF-QP safety gate monitors all bus voltages to enforce ANSI C84.1 Range A service limits:
+The deterministic safety gate checks all modelled bus voltages against ANSI C84.1 Range A service limits:
 $$0.95\text{ pu} \le |\mathbf{V}_i| \le 1.05\text{ pu}, \quad \forall i \in \{1, 2, 3, 4\}$$
 
 When heavy afternoon peak loads drive Bus 4 below $0.95\text{ pu}$, the engine engages:

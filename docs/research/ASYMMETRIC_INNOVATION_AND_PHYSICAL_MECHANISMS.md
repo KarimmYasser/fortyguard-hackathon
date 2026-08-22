@@ -14,7 +14,7 @@
 │                                                                                                          │
 │   Thermal Sentinel Grid:     "Infers 4 hidden, unmonitored physical states that SCADA misses:            │
 │                              1. Underground cable-soil moisture dryout & thermal resistivity surge       │
-│                              2. Provably safe forward-invariance via Control Barrier Functions (CBF-QP)  │
+│                              2. Deterministic bounded-trajectory safety-envelope validation              │
 │                              3. Urban canyon aerodynamic wind-sheltering & cooling throttling            │
 │                              4. Arrhenius paper-to-oil moisture desorption & dielectric breakdown risk"  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -53,17 +53,17 @@ flowchart TD
 
 ---
 
-## 2. 🛡️ Provably Safe Control via Robust Control Barrier Functions (CBFs)
+## 2. 🛡️ Deterministic Safety Filtering Inspired by Control Barrier Functions
 
 ### 2.1 The Hidden Failure Mechanism
 Generic agentic architectures use simple `if hotspot > 140: shed_load()` heuristics. This intervenes too late, offers zero mathematical guarantees under forecast error, and causes oscillatory chattering.
-Thermal Sentinel Grid uses **Control Barrier Functions (CBFs)** formulated as a Quadratic Program (CBF-QP) to guarantee that the state trajectory $(T_o, T_{hs})$ remains strictly within the **forward-invariant safe set $\mathcal{C}$** under bounded FortyGuard 12-hour forecast uncertainty ($T_a \pm \epsilon_a$).
+Thermal Sentinel Grid uses a deterministic **Control Barrier Function-inspired safety filter** to test proposed actions against a configured **safe set $\mathcal{C}$** under bounded FortyGuard 12-hour forecast uncertainty ($T_a \pm \epsilon_a$). The implementation records pass/modify/reject decisions for the modelled trajectory; it is not a field-certified guarantee for an unmodelled physical grid.
 
 ```mermaid
 flowchart LR
-    Nominal[LLM / Multi-Agent Planner\nProposes Nominal Action u_nom] --> CBF[Robust CBF-QP Safety Filter\nmin ||u - u_nom||^2]
+    Nominal[LLM / Multi-Agent Planner\nProposes Nominal Action u_nom] --> CBF[Deterministic CBF Safety Filter\nValidate / modify u_nom]
     FortyGuard[FortyGuard 12h Forecast\nT_a ± eps_a Bound] --> CBF
-    CBF --> Output[Provably Safe Dispatch u*\nGuarantees Forward Invariance]
+    CBF --> Output[Model-Checked Dispatch u*\nWithin Configured Envelope]
 ```
 
 ### 2.2 Mathematical Formulation
@@ -73,9 +73,11 @@ flowchart LR
   $$T_a^{\text{worst}}(t) = \widehat{T}_a(t) + \epsilon_a$$
 * **Discrete-Time Barrier Certificate:**
   $$h_i\left(F(x_k, u_k, \widehat{T}_{a,k} + \epsilon_a)\right) \ge (1 - \gamma_i) h_i(x_k) \quad (0 < \gamma_i \le 1)$$
-* **Safety-Filter Quadratic Program (CBF-QP):**
+* **Reference CBF-QP formulation from the literature (not the current implementation):**
   $$u_k^* = \arg\min_{u, \delta} \|u - u_{\text{nom},k}\|_Q^2 + \lambda \|\delta\|_2^2$$
   $$\text{s.t. } h_i(F(x_k, u, \widehat{T}_{a,k} + \epsilon_a)) \ge (1 - \gamma_i) h_i(x_k) - \delta_i, \quad u_{\min} \le u \le u_{\max}, \quad \delta_i \ge 0$$
+
+  The shipped gate instead performs forward simulation and bisection over the permissible load interval.
 
 ### 2.3 Literature & Standards Basis
 * **Schneeberger, Dörfler & Mastellone (2024):** *"Advanced Safety Filter for Smooth Transient Operation of a Battery Energy Storage System"* (CBF forward invariance for energy storage converters).
@@ -144,7 +146,7 @@ flowchart TD
 ---
 
 ## 5. ⚡ Advanced Grid Physics & Heavy Computational Moats
-For complete mathematical monographs, LaTeX formulations, and arXiv citations on our four expanded engineering moats, see **[`ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md`](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md)**:
+For complete mathematical monographs, LaTeX formulations, and arXiv citations on our four expanded engineering moats, see **[`ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md`](ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md)**:
 
 1. **Dynamic Line Rating & Conductor Catenary Sag (IEEE Std 738-2012):**
    Iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) unlocking $+22.5\%$ dynamic ampacity headroom while preventing ground flashover sag ($S(T_c)$).
@@ -152,6 +154,6 @@ For complete mathematical monographs, LaTeX formulations, and arXiv citations on
    2-state lumped core ($T_c$) vs. surface ($T_s$) differential thermal equations with continuous electrochemical SEI growth ($dQ_{\text{loss}}/dt$), tracking real-time degradation cost (\$/MWh) and enforcing the $55^\circ\mathrm{C}$ thermal runaway ceiling.
 3. **Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk:**
    Time-dependent non-homogeneous Poisson-Weibull failure hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to output joint cascading failure probability ($P_{\text{cascade}}$).
-4. **Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Convex Bounds):**
-   Convex Second-Order Cone Programming (SOCP) branch flow formulation guaranteeing $95\%/99\%$ Gaussian confidence bounds on thermal line loading and ANSI C84.1 voltage profiles under FortyGuard forecast uncertainty.
+4. **Analytical Uncertainty-Bounded Dispatch Screen:**
+   Gaussian quantile bounds are applied to a simplified four-bus feeder approximation, followed by heuristic BESS, OLTC, and shedding selection. SOCP is the research basis, not the shipped numerical algorithm.
 

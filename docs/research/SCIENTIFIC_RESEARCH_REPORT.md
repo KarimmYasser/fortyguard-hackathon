@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-To establish rigorous scientific grounding and mathematical provenance for **Thermal Sentinel Grid** and the **FortyGuard Thermal AI Architecture**, we executed automated academic literature discovery using [`src/api/alphaxiv_client.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/alphaxiv_client.py).
+To establish rigorous scientific grounding and mathematical provenance for **Thermal Sentinel Grid** and the **FortyGuard Thermal AI Architecture**, we executed automated academic literature discovery using [`src/api/alphaxiv_client.py`](../../src/api/alphaxiv_client.py).
 
 Our systematic research retrieved **47 unique peer-reviewed papers and preprints** across five foundational domains:
 1. **High-Resolution Satellite Thermal Downscaling & Super-Resolution** (e.g. PGDM, MoCoLSK, GrokLST, Landsat 30m Downscaling)
@@ -160,9 +160,9 @@ Cities must balance capital expenditure (budget constraints) against thermal rel
 
 ---
 
-### Pillar 9: Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Bounds)
+### Pillar 9: Uncertainty-Bounded Dispatch (SOCP Research Basis)
 * **Key Papers:** [arXiv:2207.09520](https://arxiv.org/abs/2207.09520), [arXiv:1801.03652](https://arxiv.org/abs/1801.03652)
-* **Mathematical Core:** Second-Order Cone Programming (SOCP) convex branch flow relaxation with analytical Gaussian quantile chance constraints ($\mathbb{P}(I_{ij}^2 \le I_{\max}^2) \ge 1 - \alpha$, $\mathbb{P}(0.95 \le V_k \le 1.05) \ge 1 - \alpha$) under FortyGuard 2m temperature uncertainty.
+* **Research Basis:** Second-Order Cone Programming (SOCP) branch-flow relaxations motivate high-probability thermal and voltage constraints. The prototype implementation is narrower: it applies Gaussian quantile bounds to a simplified four-bus approximation and selects BESS, OLTC, and shedding actions analytically rather than solving a cone program.
 
 ---
 
@@ -174,10 +174,10 @@ Cities must balance capital expenditure (budget constraints) against thermal rel
 | **Multi-Modal LST Fusion** | *Dai et al., 2024 (MoCoLSK)* [2409.19835v2](https://arxiv.org/abs/2409.19835v2) | Cross-modal feature conditioning (optical NDVI + Sentinel SAR + Elevation + FortyGuard IoT). |
 | **Cool Pavements Physics** | *Hendel, 2024 (Cool Pavements)* [2409.12242v2](https://arxiv.org/abs/2409.12242v2) | Provides analytical equations for albedo modification ($\alpha = 0.12 \to 0.45$) and sensible heat flux reduction in the simulation engine. |
 | **Physics-Informed PDEs** | *PINN Diffusivity* [2309.17345v3](https://arxiv.org/abs/2309.17345v3) | Enforces energy conservation laws in `ThermalForecaster` to prevent unrealistic thermal drift. |
-| **Dynamic Line Rating (DLR)** | *DLR Survey* [2607.23536](https://arxiv.org/abs/2607.23536) | Implements IEEE Std 738-2012 dynamic ampacity and catenary sag in [`dynamic_line_rating.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/dynamic_line_rating.py). |
-| **BESS Electro-Thermal** | *Battery Degradation* [2502.07070](https://arxiv.org/abs/2502.07070) | 2-state thermal ODEs and continuous Arrhenius SEI capacity fade in [`bess_electro_thermal.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/bess_electro_thermal.py). |
-| **Arrhenius-Weibull Risk** | *Grid Reliability* [2207.08146](https://arxiv.org/abs/2207.08146) | Time-dependent Poisson-Weibull hazard integration in [`weibull_hazard.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/weibull_hazard.py). |
-| **Chance-Constrained OPF** | *Convex SOCP OPF* [2207.09520](https://arxiv.org/abs/2207.09520) | Second-Order Cone OPF with Gaussian quantile chance constraints in [`chance_constrained_opf.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/chance_constrained_opf.py). |
+| **Dynamic Line Rating (DLR)** | *DLR Survey* [2607.23536](https://arxiv.org/abs/2607.23536) | Implements IEEE Std 738-2012 dynamic ampacity and catenary sag in [`dynamic_line_rating.py`](../../src/physics/dynamic_line_rating.py). |
+| **BESS Electro-Thermal** | *Battery Degradation* [2502.07070](https://arxiv.org/abs/2502.07070) | 2-state thermal ODEs and continuous Arrhenius SEI capacity fade in [`bess_electro_thermal.py`](../../src/physics/bess_electro_thermal.py). |
+| **Arrhenius-Weibull Risk** | *Grid Reliability* [2207.08146](https://arxiv.org/abs/2207.08146) | Time-dependent Poisson-Weibull hazard integration in [`weibull_hazard.py`](../../src/physics/weibull_hazard.py). |
+| **Uncertainty-Bounded Dispatch** | *Convex SOCP OPF* [2207.09520](https://arxiv.org/abs/2207.09520) | Research basis for the analytical Gaussian-quantile screen in [`chance_constrained_opf.py`](../../src/physics/chance_constrained_opf.py); no numerical SOCP solve is implemented. |
 | **Spatio-Temporal GNN** | *Jin et al., 2023 (STGNN Survey)* [2303.14483v3](https://arxiv.org/abs/2303.14483v3) | Drives the Thermal Sentinel Grid spatial graph connectivity and canyon wind diffusion modeling. |
 | **Dynamic Pareto Optimization**| *Lei et al., 2024 (DMOPs)* [2410.05787v2](https://arxiv.org/abs/2410.05787v2) | Multi-objective countermeasure allocator for city planners (budget vs. heat reduction vs. equity). |
 

@@ -67,39 +67,40 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
 ├───────────────────────────────┬─────────────────────────────────────────────┤
 │                               │  Risk Command Panel                         │
 │  Geospatial Microclimate Map  │  • Risk Tier: OPERATOR ACTION REQUIRED      │
-│  Deck.gl / MapLibre GL        │  • Projected Hot-Spot: 136.8°C (Max: 140°C) │
-│  • FortyGuard 2m Heat Raster  │  • Continuous Persistence: 7h 10m > 40°C    │
-│  • Substation & BESS Glyphs   │  • Failure-Risk Delta: -6.5 pp              │
-│  • Land-Cover Segmentation    │  • Net Avoided Loss: $175,276               │
-│  • Airport Reference Marker   │  • Action: Enable Stage 2 Cooling + BESS    │
+│  Deck.gl / MapLibre GL        │  • Baseline / mitigated: 159.53 / 109.43°C   │
+│  • FortyGuard 2m Heat Raster  │  • Continuous Persistence: 12.0h > 40°C     │
+│  • Substation & BESS Glyphs   │  • Failure Risk: 90.84% → 0.75%             │
+│  • Land-Cover Segmentation    │  • Net Avoided Loss: $2,576,849             │
+│  • Coolest in-AOI Tile        │  • Action: Enable Stage 2 Cooling + BESS    │
 ├───────────────────────────────┴─────────────────────────────────────────────┤
 │ Physics Telemetry (Apache ECharts 3-Axis Synchronized Timeline):            │
 │ Chart A: Boundary Temp (Natural 41.6°C vs FortyGuard 2m 42.7°C [+1.1°C])   │
-│ Chart B: Internal State (Top-Oil 104.2°C < 110°C, Hot-Spot 136.8°C < 140°C) │
-│ Chart C: Aging Factor V(t) (Log scale: 1x -> 14.8x) & Load Ratio K(t)       │
+│ Chart B: Baseline hot-spot 159.53°C vs mitigated hot-spot 109.43°C          │
+│ Chart C: Aging Factor V(t) (88.36x baseline vs 0.94x mitigated peak)        │
 ├───────────────────────────────────────────────┬─────────────────────────────┤
 │ Deterministic Safety Gate Preflight           │ Audit & Action Ledger       │
 │ [✓ ACCEPT]  [△ MODIFY]  [✕ REJECT]            │ 14:05 Ingest 7h persistence │
 │ ✓ IEEE C57.91 Hot-Spot Envelope               │ 14:06 Baseline hot-spot 143C│
 │ ✓ Voltage Envelope (0.963 - 1.032 pu)         │ 14:07 Safety Gate modifies  │
 │ ✓ N-1 Feeder & Inverter Contingency           │ 14:08 Operator approval     │
-│ ✓ BESS Reserve (SOC 38% > 30% min)            │ 14:30 Hotspot capped 136.8C │
+│ ✓ BESS Reserve (SOC 38% > 30% min)            │ 14:30 Hotspot held 109.43C │
 └───────────────────────────────────────────────┴─────────────────────────────┘
 ```
 
-### 2.2 11-Module Operational Suite
-The platform is organized into 11 dedicated operational tabs:
-1. **Home:** Interactive pitch, live demo video player, and 11-module operational launchpad.
+### 2.2 12-Module Operational Suite
+The platform is organized into 12 dedicated operational tabs:
+1. **Home:** Interactive pitch, live demo video player, and 12-module operational launchpad.
 2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 3. **⚡ What-If Studio:** Interactive real-time sandbox with multi-physics sliders and 2-state BESS electro-thermal & SEI degradation sub-engine.
-4. **🔥 72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
-5. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and Chance-Constrained SOCP OPF.
+4. **🔥 72h Compounding:** Frozen live FortyGuard 24×3 weather capture driving modelled soil dryout and continuous thermal accumulation.
+5. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
 6. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-7. **📚 Scientific Provenance:** 50+ peer-reviewed papers with LaTeX proofs and alphaXiv live search engine.
+7. **📚 Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
 8. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
 9. **4 Scientific Moats:** Deep-dive physical formulations.
-10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and GPT-5.4 work order synthesis.
+10. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and gateway-configured GPT-5.4 work-order synthesis with deterministic fallback.
 11. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+12. **Data Science Studio:** Bronze→Silver→Gold ETL diagnostics, empirical correlations with tautology filtering, ML surrogate metrics, anomaly detection, and Weibull RUL.
 
 ### 2.3 Technology Stack
 * **Framework:** React 19 + Vite + TypeScript
@@ -133,7 +134,7 @@ The platform is organized into 11 dedicated operational tabs:
 * **Voiceover:** *"Transformers do not fail from a brief temperature spike. Disasters occur from cumulative thermal soak. A few hours of persistent heat pushes top-oil and winding hot-spots past critical insulation thresholds, accelerating aging by up to 15 times."*
 
 ### ⏱️ 0:45-1:00 - Phoenix July 2023 Replay Setup
-* **Visual:** Operator dashboard loading the **Phoenix July 24-25, 2023 heatwave** (31 consecutive days $\ge 110^\circ\mathrm{F}$, peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$).
+* **Visual:** Operator dashboard loading the **Phoenix July 24–26, 2023 frozen live capture**: 72 hourly boundaries with daily 2m peaks of $42.44/42.76/42.52^\circ\mathrm{C}$.
 * **Voiceover:** *"We replayed the record-breaking Phoenix 2023 heatwave across an urban substation with parallel distribution transformers, critical hospital loads, and battery storage."*
 
 ### ⏱️ 1:00-1:15 - Baseline Failure Mode
@@ -142,19 +143,19 @@ The platform is organized into 11 dedicated operational tabs:
 * **On-Screen Text:** `BASELINE: CRITICAL THERMAL ENVELOPE BREACH`
 
 ### ⏱️ 1:15-1:30 - FortyGuard Early Warning & Autonomous Planning
-* **Visual:** FortyGuard layer activated. Dashboard displays `7h 10m persistence > 40°C`. LangGraph StateGraph nodes light up: `Thermal Forecast -> Physics Simulation -> Mitigation Planner`.
-* **Voiceover:** *"Thermal Sentinel detects 7 continuous hours of extreme persistence. Twelve hours ahead of peak, our LangGraph agent synthesizes an autonomous mitigation package: activate forced cooling, dispatch the battery, and shift flexible EV load."*
+* **Visual:** FortyGuard layer activated. Dashboard displays `P₄₀: 12.0h` for the canonical July 19 replay. LangGraph StateGraph nodes light up: `Thermal Forecast -> Physics Simulation -> Mitigation Planner`.
+* **Voiceover:** *"Thermal Sentinel detects twelve sampled hours of extreme persistence. Twelve hours ahead of peak, our LangGraph agent synthesizes an autonomous mitigation package: activate forced cooling, dispatch the battery, and shift flexible EV load."*
 
 ### ⏱️ 1:30-1:45 - Deterministic Safety Gate
 * **Visual:** Full-screen zoom into the Safety Gate panel. Checklist items animate green: `IEEE C57.91 Envelope [PASS]`, `Voltage 0.963-1.032 pu [PASS]`, `N-1 Contingency [PASS]`, `BESS Reserve 38% > 30% [PASS]`.
 * **Voiceover:** *"Crucially, the LLM never controls equipment directly. Every action enters a deterministic Safety Gate that mathematically validates transformer limits, grid voltage, N-1 redundancy, and battery reserves."*
 
 ### ⏱️ 1:45-2:15 - Technical Defensibility & Avoided Aging
-* **Visual:** Side-by-side comparison table showing Baseline vs. Thermal Sentinel Grid. Hot-spot capped at $136.8^\circ\mathrm{C}$ safe, avoiding $73.4\text{ hours}$ of insulation loss-of-life.
+* **Visual:** Side-by-side comparison table showing Baseline vs. Thermal Sentinel Grid. Hot-spot held to $109.43^\circ\mathrm{C}$ versus a $159.53^\circ\mathrm{C}$ baseline, avoiding $374.3\text{ hours}$ of equivalent insulation aging.
 * **Voiceover:** *"Under the hood, we integrate IEEE C57.91 and IEC 60076-7 thermal differential equations with power-flow validation. The agent keeps the hot-spot safely below limits and preserves critical hospital supply."*
 
 ### ⏱️ 2:15-2:45 - Commercial ROI & Avoided Loss
-* **Visual:** Net Avoided Loss ROI card highlighting: `Avoided Outage Risk: $182K`, `Avoided Aging: $486`, `Net Avoided Loss: $175,276`, `ROI: 24.3x`.
+* **Visual:** Net Avoided Loss ROI card highlighting: `Avoided Outage Risk: $2,576,590`, `Avoided Aging: $728`, `Net Avoided Loss: $2,576,849`, `ROI: 5,495.3x`.
 * **Voiceover:** *"For utilities, this prevents multi-million dollar transformer blowouts and SAIDI penalties. For property and fire insurers, it provides an auditable risk-reduction ledger."*
 
 ### ⏱️ 2:45-3:00 - Final Closing Hook

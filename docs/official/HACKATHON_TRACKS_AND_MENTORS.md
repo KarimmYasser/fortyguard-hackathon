@@ -53,7 +53,7 @@
 
 2. **Fawad Shah** - *Software Engineering Lead, FortyGuard*
  - **Keynote:** *"Building on the FortyGuard Temperature API."*
- - **Transcript & Notes:** [Building on FortyGuard Temperature API® Dialogue](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/2-building-fortyguard-temperature-api.md)
+ - **Transcript & Notes:** [Building on FortyGuard Temperature API® Dialogue](../sessions-dialogue/2-building-fortyguard-temperature-api.md)
  - **Core Advice:** The API is asynchronous (submit-and-poll). Understand snapshot vs exceedance vs persistence layers. Surface the API as structured tools for agent orchestration.
 
 3. **Karol Wiszowaty** - *Mentor · Co-founder & COO, Inspeerity*
@@ -66,12 +66,12 @@
 
 5. **Jordana Rosa** - *Mentor · Senior Technical Specialist, Autodesk Forma*
  - **Keynote:** *"Breaking Silos with Autodesk: Bringing Context from Data to Design."*
- - **Transcript & Notes:** [Breaking Silos with Autodesk Dialogue](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/4-autodesk-webinar-session.md)
+ - **Transcript & Notes:** [Breaking Silos with Autodesk Dialogue](../sessions-dialogue/4-autodesk-webinar-session.md)
  - **Core Advice:** Contextual site data, environmental analysis, early-stage design workflows, connecting APIs to AI tools.
 
 6. **Aashan Javed** - *AI/ML Engineer, FortyGuard*
  - **Keynote:** *"Heat Intelligence Cloud: What You Can Build on the FortyGuard API."*
- - **Transcript & Notes:** [Heat Intelligence Cloud Webinar Dialogue](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/3-heat-cloud-webinar-session.md)
+ - **Transcript & Notes:** [Heat Intelligence Cloud Webinar Dialogue](../sessions-dialogue/3-heat-cloud-webinar-session.md)
  - **Core Advice:** Live demo of real shipped products on the Temperature API.
 
 7. **Tarek Fouad** - *Mentor · Founder & CEO, Narrative One; Former CCO, Shorooq*
@@ -80,8 +80,8 @@
 ---
 
 > [!TIP]
-> * 📖 **Idea Selection & Mentor Synthesis:** See the complete synthesized playbook in **[Mentor Insights & Idea Selection Framework](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
-> * 🎙️ **Full Transcripts & Recordings:** Verbatim session dialogues are curated in **[docs/sessions-dialogue/](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/README.md)**.
+> * 📖 **Idea Selection & Mentor Synthesis:** See the complete synthesized playbook in **[Mentor Insights & Idea Selection Framework](../research/MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md)**.
+> * 🎙️ **Full Transcripts & Recordings:** Verbatim session dialogues are curated in **[docs/sessions-dialogue/](../sessions-dialogue/README.md)**.
 
 
 

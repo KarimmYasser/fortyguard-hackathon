@@ -472,4 +472,4 @@ Form URL: **[https://forms.gle/jLgBzVTG1NhJ3gNe6](https://forms.gle/jLgBzVTG1NhJ
 ---
 
 > [!TIP]
-> For complete OpenAPI 3.1 specifications and detailed payload definitions, refer to the [FortyGuard API Master Reference](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/api-documentation/FORTYGUARD_API_MASTER_REFERENCE.md) and [Official Announcements](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/official/OFFICIAL_ANNOUNCEMENTS.md).
+> For complete OpenAPI 3.1 specifications and detailed payload definitions, refer to the [FortyGuard API Master Reference](../api-documentation/FORTYGUARD_API_MASTER_REFERENCE.md) and [Official Announcements](OFFICIAL_ANNOUNCEMENTS.md).

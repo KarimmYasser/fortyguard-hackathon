@@ -17,7 +17,7 @@ mode: autonomous
 - voiceover: "During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away..."
 - src: index.html#scene-1
 
-Open on a stark split-screen contrast: natural desert terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $41.6^\circ\mathrm{C}$ vs $42.7^\circ\mathrm{C}$, the $+1.1^\circ\mathrm{C}$ land-cover delta, and the figure that actually matters — $P_{40}=12.0\text{h}$ above $40^\circ\mathrm{C}$ — driving a 124x aging acceleration factor and $2.8M in catastrophic blackout damage.
+Open on a stark split-screen contrast: natural desert terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $41.6^\circ\mathrm{C}$ vs $42.7^\circ\mathrm{C}$, the $+1.1^\circ\mathrm{C}$ land-cover delta, and the figure that actually matters — $P_{40}=12.0\text{h}$ above $40^\circ\mathrm{C}$. Under the benchmark load profile, the model reaches $88.4\times$ peak aging acceleration and $2.58M net avoided loss after mitigation.
 
 ## Frame 2 - The Solution: FortyGuard 2m AI + IEEE Differential Engine
 
@@ -26,14 +26,14 @@ Open on a stark split-screen contrast: natural desert terrain on the left vs rad
 - poster: 38s
 - transition_in: wipe
 - status: animated
-- voiceover: "Introducing Thermal Sentinel Grid: the world's first physics-constrained agentic resilience engine for urban energy infrastructure..."
+- voiceover: "Introducing Thermal Sentinel Grid: a physics-constrained agentic resilience engine for urban energy infrastructure..."
 - src: index.html#scene-2
 
 Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\text{soil}} = 0.90 \to 2.48\text{ K}\cdot\text{m/W}$), 2. Canyon Aerodynamics ($-32\%$ cooling fin derate), 3. Virtual Paper-to-Oil Moisture Desorption ($RS_o = 42\%$), and 4. Exact IEEE Winding Hot-Spot Differential Equations ($T_{hs} \le 140^\circ\mathrm{C}$).
 
-## Frame 3 - Why Agentic Physical AI (LangGraph + Non-LLM CBF-QP)
+## Frame 3 - Why Agentic Physical AI (LangGraph + Deterministic Safety Gate)
 
-- scene: 4-Layer Hybrid Stack and glowing CBF-QP Mathematical Safety Firewall
+- scene: 4-Layer Hybrid Stack and glowing deterministic Safety-Envelope Firewall
 - duration: 30s
 - poster: 68s
 - transition_in: crossfade
@@ -41,7 +41,7 @@ Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\te
 - voiceover: "Rather than training an unverified black-box neural net that hallucinates, we built a hybrid Physical-AI architecture..."
 - src: index.html#scene-3
 
-Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential ODE Solver $\to$ LangGraph Multi-Agent Planner $\to$ Non-LLM CBF-QP Safety Barrier. A glowing cyan and amber firewall enforces the forward-invariance envelope ($0.95 \le V_{\text{pu}} \le 1.05$, $T_{hs} \le 140^\circ\mathrm{C}$).
+Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE-based ODE Solver $\to$ LangGraph Multi-Agent Planner $\to$ Non-LLM Safety-Envelope Gate. A glowing cyan and amber firewall visualizes checks against the configured voltage and thermal limits ($0.95 \le V_{\text{pu}} \le 1.05$, $T_{hs} \le 140^\circ\mathrm{C}$).
 
 ## Frame 4 - Live Dashboard Demo: What-If Studio & AC Power Flow
 
@@ -53,7 +53,7 @@ Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential O
 - voiceover: "In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM..."
 - src: index.html#scene-4
 
-High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $109.4^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms solver speed, and 4-bus AC Power Flow demonstrates 100% hospital feeder uptime.
+High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $109.4^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms benchmark solver speed, and the 4-bus AC Power Flow demonstrates constraint-aware support for the modelled hospital feeder.
 
 ## Frame 5 - Auditable ROI & Financial Impact (LBNL ICE Standard)
 
@@ -65,7 +65,7 @@ High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^
 - voiceover: "Our economic engine uses the Department of Energy's LBNL ICE standard: we quantify avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs..."
 - src: index.html#scene-5
 
-Prominent gold and emerald financial audit card: $5,495.3\text{x}$ ROI hero badge, $\$2,576,849$ Net Avoided Loss, $374.3$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and $100\%$ critical medical uptime.
+Prominent gold and emerald financial audit card: $5,495.3\text{x}$ ROI hero badge, $\$2,576,849$ Net Avoided Loss, $374.3$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and protected critical-load service in the benchmark scenario.
 
 ## Frame 6 - Outro & Official Submission Lockup
 
@@ -74,7 +74,7 @@ Prominent gold and emerald financial audit card: $5,495.3\text{x}$ ROI hero badg
 - poster: 172s
 - transition_in: crossfade
 - status: animated
-- voiceover: "By coupling FortyGuard's Temperature AI with first-principles physics and deterministic safety guarantees, Thermal Sentinel Grid makes cities and power grids truly heat-resilient..."
+- voiceover: "By coupling FortyGuard's Temperature AI with standards-based physics and deterministic model checks, Thermal Sentinel Grid helps operators plan for urban heat risk..."
 - src: index.html#scene-6
 
 Closing branded lockup: Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy), IEEE & IEC compliance seals, author Karim Yasser (Cairo University), live platform URL `https://www.thermal-sentinel-grid.live`, and GitHub repository link.

@@ -19,8 +19,9 @@ But transformers don't fail from a peak. They fail from a soak.
 
 In Phoenix, on July nineteenth 2023, FortyGuard measured the air two meters
 above downtown asphalt holding above forty degrees for **twelve unbroken
-hours**. That sustained load aged transformer insulation a hundred and
-forty-four times faster than normal. Nobody was watching the duration.
+hours**. Under the benchmark load profile, that sustained boundary drove peak
+transformer aging acceleration to **88.4 times nominal**. Nobody was watching
+the duration.
 
 ---
 
@@ -47,9 +48,9 @@ Physical-AI architecture with a strict division of labour.
 
 Exact physics ODEs do the thermal math. FortyGuard supplies the measured
 environmental boundary. LangGraph coordinates autonomous multi-agent dispatch
-planning. And a deterministic Control Barrier Function — a quadratic program,
-not a language model — acts as a mathematical firewall, proving that voltage and
-temperature limits can never be violated before a single command is issued.
+planning. And a deterministic Control Barrier Function safety gate — not a
+language model — rejects or modifies actions outside the configured voltage and
+temperature envelope before a command can be proposed.
 
 The LLM writes the explanation. It never touches the safety decision.
 
@@ -59,12 +60,12 @@ The LLM writes the explanation. It never touches the safety decision.
 
 In Mission Control, watch the baseline controller run away. Fed the real
 measured thermal soak, the winding hot-spot climbs to **159.5 degrees** — twenty-five
-degrees past the IEEE emergency ceiling — driving aging acceleration to a
-hundred and forty-four times nominal.
+degrees past the IEEE emergency ceiling — driving peak aging acceleration to
+**88.4 times nominal**.
 
 Thermal Sentinel Grid sees it twelve hours ahead. It pre-cools radiators at
 8 AM while power is cheap, then discharges five megawatts of storage across the
-afternoon, capping the hot-spot at **112 degrees** — a **53-degree** reduction,
+afternoon, capping the hot-spot at **109.4 degrees** — a **50.1-degree** reduction,
 held safely inside the limit.
 
 In the What-If Studio, judges can modulate the microclimate delta, heatwave
@@ -84,15 +85,16 @@ For a single heatwave event: **2.58 million dollars** in net avoided loss, an RO
 of roughly **5,500 to one**, and **374 equivalent aging hours** returned to the
 asset — while keeping critical medical feeders energised.
 
-Failure probability drops from ninety-six percent to under one.
+Modelled failure probability drops from **90.8 percent to 0.75 percent**.
 
 ---
 
 ## Scene 6: Outro (2:45 – 3:00, 15s)
 
-Every number you just saw came back from the live FortyGuard API, and we publish
-the field notes — including the places our own early assumptions turned out to
-be wrong.
+Every environmental boundary you just saw came from the live FortyGuard API;
+the grid, asset, dispatch, and financial values were derived by our documented
+models. We publish the field notes — including where early assumptions were
+wrong.
 
 Physics you can verify. Safety you can prove. Thermal Sentinel Grid.
 

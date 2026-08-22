@@ -9,7 +9,7 @@
 
 ## 📖 Executive Abstract
 
-During extreme heatwaves, macroscopic ambient forecasts (e.g. 38°C–42°C measured at regional airports) fail to capture the severe microclimatic envelope enveloping electrical infrastructure in the **0–2 meter urban boundary layer**, where trapped convective heat regularly exceeds **48°C–54°C**.
+During extreme heatwaves, macroscopic ambient forecasts (e.g. 38°C–42°C measured at regional airports) fail to capture the severe microclimatic envelope enveloping electrical infrastructure in the **0–2 meter urban boundary layer**, where parcel conditions and persistence can diverge from regional summaries. In the pinned downtown Phoenix capture, the measured 2m peak is **42.74°C** and all 12 sampled hours exceed **40°C**.
 
 This monograph establishes the formal mathematical derivations, differential equations, optimization formulations, and peer-reviewed provenance for the four advanced computational engines powering **Thermal Sentinel Grid**:
 1. **Dynamic Line Rating (IEEE Std 738-2012) & Conductor Catenary Sag Mechanics**
@@ -166,7 +166,7 @@ $$\mathbb{P}\left( V_{\min}^2 \le v_k(t) \le V_{\max}^2 \right) \ge 1 - \alpha \
 
 Where $1 - \alpha$ is the prescribed confidence level (e.g. $95\%$ or $99\%$).
 
-### 4.2 Analytical Second-Order Cone Programming (SOCP) Reformulation
+### 4.2 Reference Second-Order Cone Programming (SOCP) Formulation
 Using Gaussian quantile reformulation ($\Phi^{-1}(1 - \alpha)$):
 
 $$\mathbb{E}\left[ I_{ij}^2 \right] + \Phi^{-1}(1 - \alpha) \cdot \sqrt{\text{Var}\left( I_{ij}^2(T) \right)} \le I_{ij, \max}^2(\mu_T)$$
@@ -179,7 +179,7 @@ Where:
 * $\ell_{ij} = |I_{ij}|^2$ (squared branch current magnitude)
 * $P_{ij}, Q_{ij}$ (active and reactive branch power flows)
 
-This guarantees robust, non-conservative dispatch bounding grid voltages strictly within ANSI C84.1 ($0.95 \le V_{\text{pu}} \le 1.05$) under worst-case microclimate heat surges.
+This is the research formulation that motivates the prototype. The current `chance_constrained_opf.py` implementation does **not** solve this cone program: it applies Gaussian quantile bounds to a simplified four-bus approximation and selects BESS, OLTC, and shedding actions analytically. Its output is a model-screening result, not an optimality certificate.
 
 ---
 
@@ -190,4 +190,4 @@ This guarantees robust, non-conservative dispatch bounding grid voltages strictl
 | **Dynamic Line Rating (DLR)** | IEEE Std 738-2012 | [arXiv:2607.23536](https://arxiv.org/abs/2607.23536) | Exact multi-regime convection & catenary sag flashover warning |
 | **BESS Electro-Thermal** | IEC 62619 / UL 9540A | [arXiv:2404.04429](https://arxiv.org/abs/2404.04429) | Dual-state core/surface ODEs + Arrhenius SEI capacity fade |
 | **Weibull Cascading Risk** | IEEE Std C57.91-2011 | [arXiv:2207.08146](https://arxiv.org/abs/2207.08146) | Time-dependent hazard rate $\lambda(t, T)$ & grid cascading probability |
-| **Chance-Constrained OPF** | ANSI C84.1 Range A | [arXiv:2207.09520](https://arxiv.org/abs/2207.09520) | Convex SOCP robust dispatch under 2m microclimate uncertainty |
+| **Uncertainty-Bounded Dispatch** | ANSI C84.1 Range A | [arXiv:2207.09520](https://arxiv.org/abs/2207.09520) | Prototype analytical quantile screen; SOCP is the documented future formulation |

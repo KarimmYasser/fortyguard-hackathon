@@ -77,8 +77,8 @@ These are **not static mocks or hardcoded tables**. Every value is computed in r
 | **Transformer Thermal Dynamics** | **IEEE Std C57.91-2011 Annex G** | 2nd-order non-linear differential equations: $\tau_{TO} \frac{d\Theta_{TO}}{dt} = [\Delta\Theta_{TO,U} - \Delta\Theta_{TO}]$ and $\tau_W \frac{d\Delta\Theta_H}{dt} = [\Delta\Theta_{H,U} - \Delta\Theta_H]$. |
 | **Arrhenius Insulation Aging** | **Arrhenius Loss of Life** | Exact Arrhenius aging acceleration factor: $F_{AA} = \exp\left(\frac{15000}{383.15} - \frac{15000}{\Theta_H + 273.15}\right)$ and equivalent aging $F_{EQ} = \frac{1}{T} \int_0^T F_{AA}(t) dt$. |
 | **Underground Cable Soil Dryout** | **IEC 60287-2-1** | 3-zone transient soil thermal resistivity solver with critical moisture threshold ($\psi_{\text{crit}}$) and thermal runaway boundary. |
-| **AC Power Flow & Voltage Stability** | **14-Bus Newton-Raphson** | Full non-linear AC power flow calculating active/reactive power ($P_i, Q_i$), bus voltages ($V_i, \theta_i$), and On-Load Tap Changer (OLTC) stepping. |
-| **Safety Barrier Invariance** | **Control Barrier Functions (CBF-QP)** | Quadratic program ensuring safety set invariance: $h(x) = \Theta_{H,\max} - \Theta_H \ge 0$ with Lie derivative constraint $\dot{h}(x) \ge -\gamma h(x)$. |
+| **AC Power Flow & Voltage Stability** | **4-Bus Forward-Backward Sweep** | Iterative complex radial-feeder power flow calculating active/reactive flow, bus-voltage magnitudes, losses, and OLTC stepping. |
+| **Safety Envelope Filter** | **CBF-inspired deterministic validator** | Simulates the bounded-uncertainty trajectory, checks thermal/voltage/BESS/N-1 limits, and uses bisection to find a safe maximum load. The current implementation does not solve a quadratic program. |
 | **Avoided Loss Financial Model** | **LBNL ICE Calculator** | Quantifies avoided capital loss ($\text{Asset Value} \times \Delta L$) minus BESS cycling wear and auxiliary fan kWh costs. |
 
 ---
@@ -87,11 +87,11 @@ These are **not static mocks or hardcoded tables**. Every value is computed in r
 
 | Item | Source Location | Status | Architectural Justification |
 | :--- | :--- | :---: | :--- |
-| **Phoenix July 2023 Replay Dataset** | [`src/api/fixtures/phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json) | **Cached Fixture** | Pre-ingested benchmark ground truth. Enables sub-10ms scrubbing on the interactive 12-hour replay bar and offline judging tests without burning API credits on every slider tick. Now reached only via an **explicitly labelled** replay path (`data_source: "phoenix_fixture"`), never as a silent fallback masquerading as live data. |
+| **Phoenix July 2023 Replay Dataset** | [`src/api/fixtures/phoenix_heatwave_2023.json`](../../src/api/fixtures/phoenix_heatwave_2023.json) | **Cached Fixture** | Pre-ingested benchmark ground truth. Enables sub-10ms scrubbing on the interactive 12-hour replay bar and offline judging tests without burning API credits on every slider tick. Now reached only via an **explicitly labelled** replay path (`data_source: "phoenix_fixture"`), never as a silent fallback masquerading as live data. |
 | **Grid-Side Telemetry** | `hourly_forecast[].wind_speed_m_s`, `baseline_load_ratio_k`, `hospital_critical_load_mw`, `bess_soc_pct` | **Modelled** | FortyGuard is an environmental API and exposes no SCADA telemetry. These four fields are modelled from the diurnal load profile and are labelled as modelled in every response. |
-| **Utility Substation Assets** | [`src/server/routes/assets.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/server/routes/assets.py) | **Synthetic Asset Registry** | 3 representative transformer nameplate profiles (Phoenix TX-04 50 MVA, San Jose Diridon 35 MVA, Las Vegas Strip 60 MVA) parameterized per IEEE standards. |
-| **Baseline Grid Load Curve** | [`src/physics/transformer_thermal.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/physics/transformer_thermal.py) | **Simulated Profile** | Diurnal load curve ($0.75\,\text{pu}$ morning ramp to $1.18\,\text{pu}$ afternoon peak) modeling desert urban summer air conditioning demand. |
-| **Hardware Actuator Signals** | [`src/models/safety.py`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/models/safety.py) | **Simulated Actuation** | Generates schema-validated dispatch commands (`COOLING_STAGE_2`, `BESS_PEAK_SHAVING`, `EV_SMART_CURTAIL`, `FEEDER_TRANSFER`) for software state machines rather than physical substation SCADA RTUs. |
+| **Utility Substation Assets** | [`src/server/routes/assets.py`](../../src/server/routes/assets.py) | **Synthetic Asset Registry** | 3 representative transformer nameplate profiles (Phoenix TX-04 50 MVA, San Jose Diridon 35 MVA, Las Vegas Strip 60 MVA) parameterized per IEEE standards. |
+| **Baseline Grid Load Curve** | [`src/physics/transformer_thermal.py`](../../src/physics/transformer_thermal.py) | **Simulated Profile** | Diurnal load curve ($0.75\,\text{pu}$ morning ramp to $1.18\,\text{pu}$ afternoon peak) modeling desert urban summer air conditioning demand. |
+| **Hardware Actuator Signals** | [`src/models/safety.py`](../../src/models/safety.py) | **Simulated Actuation** | Generates schema-validated dispatch commands (`COOLING_STAGE_2`, `BESS_PEAK_SHAVING`, `EV_SMART_CURTAIL`, `FEEDER_TRANSFER`) for software state machines rather than physical substation SCADA RTUs. |
 
 ---
 
@@ -101,7 +101,7 @@ A common question is whether the simulated elements should be connected to "live
 
 ### 1. Phoenix July 2023 Dataset (`phoenix_heatwave_2023.json`)
 * **Sub-10ms UI Responsiveness:** Scrubbing the 12-hour replay timeline or adjusting the **What-If Studio** sliders requires instantaneous ODE recalculation ($<10\text{ ms}$). Waiting 30–90 seconds for a cloud API roundtrip on every tick would destroy real-time operator usability.
-* **Scientific Ground Truth & IEEE Annex G Reproducibility:** Evaluating transformer hot-spot rise ($143.2^\circ\mathrm{C} \to 136.8^\circ\mathrm{C}$) and Arrhenius life extension ($846.8\text{ h saved}$) requires an **immutable, standardized weather boundary condition** that judges and automated test suites (`pytest tests/`) can verify identically every time.
+* **Scientific Ground Truth & IEEE Annex G Reproducibility:** Evaluating transformer hot-spot change ($159.53^\circ\mathrm{C} \to 109.43^\circ\mathrm{C}$) and Arrhenius life extension ($374.3\text{ h saved}$) requires an **immutable, standardized weather boundary condition** that judges and automated test suites (`pytest tests/`) can verify identically every time.
 * **Credit Conservation:** Running continuous automated integration tests or live presentations against FortyGuard's billing endpoints on every page reload would rapidly exhaust the 2,000,000 credit quota.
 
 ### 2. Utility Substation Assets (`assets.py`)
@@ -112,7 +112,7 @@ A common question is whether the simulated elements should be connected to "live
 * The $0.75\,\text{pu} \to 1.18\,\text{pu}$ diurnal load shape models peak heatwave cooling demand. In a digital twin, using a calibrated diurnal load shape is standard practice to test whether mitigation agents successfully shave peak load ($1.18\,\text{pu} \to 0.98\,\text{pu}$).
 
 ### 4. Hardware Actuator Signals (`safety.py`)
-* A hackathon software system cannot physically trip real high-voltage $69\,\text{kV}$ substation circuit breakers, discharge physical utility battery banks, or spin physical radiator fans. Emitting structured, schema-validated dispatch payloads with mathematically verified **CBF-QP safety invariants** is the exact objective for **Track 06 (Agentic AI)** and **Track 02 (Future Buildings & Energy)**.
+* A hackathon software system cannot physically trip real high-voltage $69\,\text{kV}$ substation circuit breakers, discharge physical utility battery banks, or spin physical radiator fans. Emitting structured, schema-validated dispatch payloads with deterministic **model-envelope checks** is the prototype objective for **Track 06 (Agentic AI)** and **Track 02 (Future Buildings & Energy)**.
 
 ---
 
@@ -160,7 +160,7 @@ curl -X POST "https://www.thermal-sentinel-grid.live/api/v1/scan" \
 ```
 
 ### C. Live Quickstart Notebooks
-Navigate to [`temperature-api-quickstart/notebooks/`](file:///Users/karim/Development/projects/fortyguard-hackathon/temperature-api-quickstart/notebooks/) and execute any notebook (e.g. `01_create_heatmap.ipynb`, `02_environmental_parameters.ipynb`) with `REFRESH = True` to run live cloud queries against FortyGuard's infrastructure.
+Navigate to [`temperature-api-quickstart/notebooks/`](../../temperature-api-quickstart/notebooks) and execute any notebook (e.g. `01_create_heatmap.ipynb`, `02_environmental_parameters.ipynb`) with `REFRESH = True` to run live cloud queries against FortyGuard's infrastructure.
 
 ---
 
@@ -192,11 +192,40 @@ Navigate to [`temperature-api-quickstart/notebooks/`](file:///Users/karim/Develo
         └──────────────────────────────────────────────────────────────────────┘
 ```
 
-Every response is memoised by request hash in the durable `api_call_cache`
-(Supabase-backed), so a repeat scan of the same AOI/date costs **0 credits** and
-returns in **~1.2 s** instead of ~90 s.
+Every response is memoised by deterministic MD5 request identity in the durable
+`api_call_cache` (Supabase-backed), so a repeat scan of the same AOI/date costs
+**0 credits** and returns in **~1.2 s** instead of ~90 s. The same table also
+stores complete deterministic simulation payloads under a `sim:` SHA-256
+identity. Those solve records have no expiry: identical coordinates, catalog
+date, city, and physics parameters replay the prior trajectory across serverless
+cold starts instead of recomputing and discarding it.
 
-### B. Why the hour loop exists
+### B. Persisted scan → persisted solve lifecycle
+
+`POST /api/v1/scan` writes the measured parcel to
+`microclimate_parcel_store`. Its GeoJSON properties carry `city`,
+`analysis_date`, coordinates, measured peak, persistence and provenance, so the
+record remains re-runnable without changing the existing Supabase schema.
+`GET /api/v1/scan/parcels` exposes those rows newest-first in the Cloud DB
+**Saved Scans** tab. Choosing **Use for calculations** posts the stored
+coordinates/date to `/api/v1/sandbox/simulate` and rebases the dashboard.
+
+The sandbox result is itself persisted as a complete payload in
+`api_call_cache`, keyed as `sim:` plus a SHA-256 digest of every request field.
+`simulation_runs` remains the compact scalar audit table; it is not sufficient
+to reconstruct the timeline. Solve entries have `expires_at = NULL` because the
+physics is deterministic for identical inputs. A repeat request therefore
+returns the stored trajectory and carries `cache.hit=true`; the dashboard marks
+it **REPLAYED FROM STORE**. Supabase is authoritative in production, while local
+SQLite is only a warm/offline fallback and is ephemeral on Vercel.
+
+Rows written before GeoJSON properties were introduced were repaired from
+stored evidence rather than guessed or deleted: a backfill matched each parcel's
+coordinates and measured peak to a unique full 12-hour group in
+`api_call_cache`, tagged the result `backfilled_from: api_call_cache`, and left
+all measured columns untouched.
+
+### C. Why the hour loop exists
 
 There is **no time-series endpoint** in the OpenAPI surface — the paths are
 `/v1/heatmap`, `/v1/satellite`, `/v1/streetview`, `/v1/heat_intelligence`,
@@ -205,7 +234,7 @@ temperature curve must therefore be assembled from **N single-hour `tcm` calls**
 This is the single largest cost and latency driver in the system, and the reason
 caching is not optional.
 
-### C. Field provenance
+### D. Field provenance
 
 Scope: this is the **ingestion schema** — the per-hour record assembled from the
 API and frozen into `src/api/fixtures/phoenix_heatwave_2023.json`. The replay
@@ -236,7 +265,7 @@ that projection.
 > size (Cohen's d = 0.024). The damage in this scenario comes from **duration**,
 > not spatial gradient.
 
-### D. Provenance contract
+### E. Provenance contract
 
 | `data_source` | Meaning |
 | :--- | :--- |
@@ -248,7 +277,7 @@ Provenance is decided by **response content** (presence of the `locations` key),
 not by the absence of an exception — the client wrapper returns a fixture on
 failure, so a well-formed dict does not imply live data.
 
-### E. Configuration
+### F. Configuration
 
 | Variable | Default | Purpose |
 | :--- | :--- | :--- |
@@ -283,6 +312,19 @@ Two honest caveats, also recorded in `SUBMISSION.md`:
   originally assumed.
 
 ---
+
+### G. 72-hour capture and replay
+
+The multi-day endpoint does not invent a sinusoidal weather curve and does not
+issue 75 paid jobs on every page load. `scripts/regenerate_phoenix_72h_fixture.py`
+requests all 24 `tcm` hours plus `env_params` for each of July 24–26, validates
+an exact 00:00–23:00 sequence and live provenance, then freezes the 72 rows in
+`src/api/fixtures/phoenix_heatwave_2023_72h.json`. Daily measured 2m peaks are
+**42.44 / 42.76 / 42.52 °C** and minima are **35.33 / 35.13 / 33.43 °C**.
+Temperature, humidity, wet bulb and cloud cover are measured; solar is derived
+from live GHI/cloud plus geometry; load, soil, transformer and dispatch state
+are modelled. The replay API returns this distinction under
+`scenario_metadata.provenance`.
 
 ## 🧾 8. Regression Guards
 

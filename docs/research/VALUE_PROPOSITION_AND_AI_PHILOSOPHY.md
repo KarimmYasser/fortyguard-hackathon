@@ -15,7 +15,7 @@ The answer is an unequivocal **NO**. Training a custom black-box ML model is an 
 2. **Thermodynamic Ground Truth is Solved by Physics:**  
    Transformer top-oil rise ($\Delta \theta_o$), winding hot-spot rise ($\Delta \theta_w$), and Arrhenius insulation aging ($V(t)$) are governed by exact physical differential equations established in **IEEE Std C57.91-2011** and **IEC 60076-7**. Replacing exact first-principles ODEs with an approximate neural net introduces unforced approximation errors and out-of-distribution hallucinations.
 3. **Utilities and Regulators Demand Certifiable Safety:**  
-   Grid operators (e.g. APS, ConEd, PG&E, National Grid) and fire insurers will **never** allow an unconstrained black-box ML model to trip substation breakers or dispatch utility-scale BESS batteries. They require **deterministic safety barriers (CBF-QP)** and **mathematical forward-invariance**.
+   Grid operators (e.g. APS, ConEd, PG&E, National Grid) and fire insurers will **never** allow an unconstrained black-box ML model to trip substation breakers or dispatch utility-scale BESS batteries. They require deterministic validation independent of any LLM. The current prototype provides bounded-trajectory model checks; a production controller would require utility-grade certification and validation.
 4. **Alignment with Track 06 (Agentic AI) & Track 02 (Energy):**  
    Track 06 specifically grades **Agentic AI** - multi-agent state machines (LangGraph), API tool orchestration, heuristic planning, and real-world decision execution.
 
@@ -32,7 +32,7 @@ Rather than a toy ML model, Thermal Sentinel Grid implements the state-of-the-ar
 │  1. Perception Layer (ML)         ──► FortyGuard Temperature AI (2m Boundary Layer & 12h Forecast)     │
 │  2. Physical Truth Layer (ODE)    ──► IEEE C57.91 / IEC 60076-7 Differential Thermal Solvers           │
 │  3. Agentic Planner Layer (AI)    ──► LangGraph Multi-Agent State Machine (Heuristic Dispatch Planner) │
-│  4. Safety Barrier Layer (Control)──► Non-LLM Deterministic Control Barrier Function (CBF-QP)          │
+│  4. Safety Barrier Layer (Control)──► Non-LLM Deterministic Safety-Envelope Filter                    │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -45,7 +45,7 @@ Rather than a toy ML model, Thermal Sentinel Grid implements the state-of-the-ar
 │                                   THE 4 LAYERS OF REAL-WORLD VALUE                                     │
 │                                                                                                        │
 │  1. 💵 Hard Financial Value       ──► $175k to $2.58M Net Avoided Loss per Heat Event (24.3x+ ROI)     │
-│  2. ⚡ Grid Reliability & Life     ──► 846.8 Aging Hours Saved & 100% Hospital Feeder Uptime          │
+│  2. ⚡ Grid Reliability & Life     ──► 374.3 Aging Hours Saved & Protected Critical-Load Service      │
 │  3. 🛡️ Catastrophic Risk Reduction──► Prevents Transformer Blowouts, Dielectric Arcing & Fires        │
 │  4. 🌍 Commercial Value for FG    ──► Turns FortyGuard from "Weather Data" into "Critical Grid Tech"   │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -56,7 +56,7 @@ $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigate
 
 * **Avoided Catastrophic Outage ($180\text{ MWh}$ at $VoLL = \$12.50/\text{kWh}$):** $+\$2,250,000$
 * **Avoided Emergency Asset Replacement ($C_{\text{replace}} = \$1.5\text{M}$):** $+\$540,000$ risk reduction
-* **Deferred Capital Asset Replacement ($846.8\text{ life hours saved}$):** $+\$1,646$
+* **Deferred Capital Asset Replacement ($374.3\text{ equivalent aging hours saved}$):** $+\$728$
 * **Actual Mitigation Cost (BESS degradation + fan power):** $-\$469$
 * **NET VALUE DELIVERED:** **$+\$2,576,849$ per extreme heatwave event**
 * **RETURN ON INVESTMENT (ROI):** **$5,495.3\text{x}$**

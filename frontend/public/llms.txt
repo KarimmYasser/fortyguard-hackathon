@@ -19,13 +19,14 @@ hours, for $2,576,849 in avoided loss.
 
 - 2m air temperature: FortyGuard heatmap tiles (`tcm`), live API, cached in Supabase.
 - Transformer thermal: IEEE C57.91-2011 Annex G, solved locally.
-- Nothing on the dashboard is synthetic; figures are reproducible against the live API.
+- Environmental boundaries are measured FortyGuard captures. Grid load, transformer/cable physics, soil evolution, BESS dispatch, asset names, and financial consequences are explicitly modelled; the UI labels this split.
 
 ## Key endpoints
 
 - /api/v1/replay/phoenix-2023 - the canonical benchmark replay
-- /api/v1/replay/72h-compounding - multi-day compounding heat
-- /api/v1/sandbox/simulate - what-if parameter sweep
+- /api/v1/replay/72h-compounding - frozen live 72-hour environmental capture driving modelled compounding physics
+- /api/v1/sandbox/simulate - deterministic what-if solve; identical requests replay a non-expiring full payload from Supabase
+- /api/v1/scan/parcels - persisted parcel scans selectable in Cloud DB
 - /api/v1/db/status - persistence status across 16 tables
 
 ## Notes for language models

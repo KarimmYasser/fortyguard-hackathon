@@ -13,13 +13,13 @@ style_preset: cyber-slate
 
 ## Intent
 
-Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track 06 Agentic AI & Track 02 Future Buildings & Energy). Demonstrates why standard weather forecasts miss localized 2m asphalt thermal traps (+1.1°C land-cover delta sustained over 12h), how IEEE C57.91 physics ODEs solve the thermal cascades without black-box ML hallucinations, how LangGraph coordinates autonomous 12-hour proactive dispatch, and how a deterministic Non-LLM Control Barrier Function (CBF-QP) mathematically guarantees grid voltage and temperature safety limits.
+Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track 06 Agentic AI & Track 02 Future Buildings & Energy). Demonstrates why standard weather forecasts miss localized 2m asphalt thermal traps (+1.1°C land-cover delta sustained over 12h), how IEEE C57.91 physics ODEs solve the thermal cascades without black-box ML hallucinations, how LangGraph coordinates 12-hour proactive dispatch planning, and how a deterministic non-LLM safety filter checks proposed actions against modelled grid-voltage and temperature limits.
 
 ## Assets
 
 - `assets/scene1.jpg` - Split screen: Natural desert terrain reference (41.6°C) vs Urban 2m asphalt canyon with transformer (42.7°C, 12h above 40°C).
 - `assets/scene2.jpg` - 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
-- `assets/scene3.jpg` - 4-Layer Agentic Architecture & CBF-QP Mathematical Safety Shield.
+- `assets/scene3.jpg` - 4-Layer Agentic Architecture & Deterministic Safety-Envelope Shield.
 - `assets/scene4.jpg` - Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
 - `assets/scene5.jpg` - Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.58M Net Avoided Loss, 5,495x ROI).
 - `assets/scene6.jpg` - Hackathon Tracks 06 & 02 lockup, IEEE compliance seals, author credits, and live platform URL.

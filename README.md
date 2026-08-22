@@ -5,18 +5,18 @@
 [![Track: Agentic AI](https://img.shields.io/badge/Track%2006-Agentic%20AI-0e9ec4?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Future%20Buildings%20%26%20Energy-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Standards: IEEE & IEC](https://img.shields.io/badge/Standards-IEEE%20C57.91%20%7C%20IEC%2060076--7-blue?style=for-the-badge)](https://standards.ieee.org/)
-[![Safety: Robust CBF-QP](https://img.shields.io/badge/Safety%20Gate-Robust%20CBF--QP-success?style=for-the-badge)](https://github.com/KarimmYasser/fortyguard-hackathon)
+[![Safety: Deterministic Envelope](https://img.shields.io/badge/Safety%20Gate-Deterministic%20Envelope-success?style=for-the-badge)](https://github.com/KarimmYasser/fortyguard-hackathon)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-www.thermal--sentinel--grid.live-10b981?style=for-the-badge&logo=vercel)](https://www.thermal-sentinel-grid.live/)
 
 ---
 
 ## 🧭 Executive Summary
 
-During extreme urban heatwaves, standard meteorological forecasts report broad, regional temperatures measured miles away at airports or high above open terrain (e.g., 38°C-42°C). However, critical grid infrastructure - **substation distribution transformers, underground MV cables, padmount switchgear, and outdoor Battery Energy Storage Systems (BESS)** - operates directly within the **2-meter boundary layer** above radiating asphalt and urban street canyons, where convective air temperatures regularly exceed **48°C-52°C**.
+During extreme urban heatwaves, standard meteorological forecasts report broad regional conditions, while critical grid infrastructure—**substation distribution transformers, underground MV cables, padmount switchgear, and outdoor Battery Energy Storage Systems (BESS)**—operates inside the **2-meter boundary layer** above radiating asphalt and urban street canyons. In the pinned downtown Phoenix capture, FortyGuard measured a **42.74°C peak and 12 consecutive sampled hours above 40°C**. The operational signal is the sustained parcel-level boundary, not an assumed airport-to-city temperature gap.
 
 This microclimate heat trap creates massive **cumulative thermal soak**, pushing transformer top-oil and winding hot-spot temperatures past critical limits, accelerating insulation aging by orders of magnitude, and driving catastrophic substation blowouts and grid outages.
 
-**Thermal Sentinel Grid** bridges this critical gap by fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential equations** and an autonomous **LangGraph multi-agent harness guarded by a deterministic Control Barrier Function (CBF-QP) Safety Gate**.
+**Thermal Sentinel Grid** bridges this critical gap by fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential equations** and a **LangGraph multi-agent harness guarded by a deterministic, CBF-inspired safety-envelope filter**.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -24,7 +24,7 @@ This microclimate heat trap creates massive **cumulative thermal soak**, pushing
 │                                                                                                          │
 │   1. External Boundary Condition  ──►  FortyGuard 2m Ambient Air + 12h Forecast + Persistence Runs       │
 │   2. Physical State Estimation    ──►  IEEE C57.91 / IEC 60076-7 Differential Thermal & Aging Equations  │
-│   3. Deterministic Safety Gate    ──►  Robust Control Barrier Function (CBF-QP) Voltage & N-1 Envelopes │
+│   3. Deterministic Safety Gate    ──►  Bounded-trajectory checks for thermal, voltage, BESS & N-1 limits │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -50,14 +50,14 @@ flowchart LR
     E3 --> F
     E4 --> F
     
-    G[Multi-Agent Planner\nBESS, Cooling, EV Shift] --> H{Robust CBF-QP Safety Gate\nNon-LLM Deterministic Filter}
+    G[Multi-Agent Planner\nBESS, Cooling, EV Shift] --> H{Safety Envelope Gate\nNon-LLM Deterministic Filter}
     F --> H
-    H -->|Provably Safe| I[Autonomous Dispatch / Work Order]
+    H -->|Within Model Envelope| I[Dispatch Recommendation / Work Order]
 ```
 
 ### Core Substation & Microclimate Moats
 1. **Buried Cable-Soil Moisture Dryout (IEC 60287):** Ingests 5-day FortyGuard persistence to infer non-linear soil thermal resistivity surge ($\rho_{\text{soil}}$ from $0.9$ to $> 2.5\text{ K}\cdot\text{m/W}$), exposing the hidden underground cable bottleneck.
-2. **Provably Safe Control Barrier Functions (CBF-QP):** Enforces forward-invariance of safe thermal sets $\mathcal{C} = \{x : h_o(x) \ge 0, h_{hs}(x) \ge 0\}$ under bounded FortyGuard forecast uncertainty ($\widehat{T}_a \pm \epsilon$).
+2. **Deterministic CBF-Inspired Safety Filter:** Simulates bounded-uncertainty trajectories, checks thermal, voltage, BESS, and N-1 limits, and uses bisection to compute a safe maximum load. It is a prototype model check, not a field-certified QP controller.
 3. **Urban Canyon Aerodynamic Throttling (Oke / Evola):** Computes morphological wind-sheltering ($\kappa_{\text{morph}}$) and equipment cooling derate ($\eta_{\text{cool}}$) caused by deep building canyons ($H/W$) and reflected facade irradiance.
 4. **Virtual Moisture & Dielectric Risk Sensor (Fick's Law):** Models temperature-driven moisture desorption from cellulose paper into oil, alerting to dielectric arcing risk before emergency hot-spot limits trip.
 
@@ -65,7 +65,7 @@ flowchart LR
 5. **Dynamic Line Rating & Catenary Sag (IEEE Std 738-2012):** Solves iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) to unlock dynamic ampacity headroom (+22.5%) and prevent ground flashover sag ($S(T_c)$).
 6. **BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Fade:** Integrates 2-state lumped thermal differential equations ($T_{\text{core}}$, $T_{\text{surf}}$) with Arrhenius Solid Electrolyte Interphase (SEI) kinetics ($dQ_{\text{loss}}/dt$), calculating real-time battery degradation cost (\$/MWh) and enforcing the $55^\circ\text{C}$ thermal runaway safety ceiling.
 7. **Arrhenius-Weibull Grid Fragility & Cascading Outage Risk:** Non-homogeneous Poisson-Weibull hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to compute joint cascading blackout probability ($P_{\text{cascade}}$).
-8. **Chance-Constrained AC Optimal Power Flow (CC-OPF with SOCP Convex Bounds):** Second-Order Cone Programming (SOCP) convex branch flow relaxation guaranteeing 95%/99% Gaussian confidence bounds on thermal currents and ANSI C84.1 voltage profiles ($0.95-1.05\text{ pu}$) under FortyGuard microclimate uncertainty.
+8. **Analytical Uncertainty-Bounded Dispatch Screen:** Applies Gaussian 90%/95%/99% quantiles to a simplified 4-bus feeder approximation, then selects BESS, OLTC, and shedding actions heuristically. This is not a numerical SOCP optimization solve.
 
 
 ---
@@ -83,20 +83,20 @@ flowchart LR
 ---
 
 ## 🔌 FortyGuard API Dual-Mode Architecture & System Taxonomy
-*(For the complete architectural design record, see **[API Integration & Replay Architecture](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md)**)*
+*(For the complete architectural design record, see **[API Integration & Replay Architecture](docs/research/API_INTEGRATION_AND_REPLAY_ARCHITECTURE.md)**)*
 
 Thermal Sentinel Grid is built with a dual-mode ingestion pattern:
 1. **Mode A: Live Cloud Ingestion (`AsyncFortyGuardClient` / `POST /api/v1/scan`):** Fully integrated with FortyGuard's async submit-and-poll lifecycle (`/v1/heatmap`, `/v1/env_params`, `/v1/status/{activity_id}`, `/v1/system/fetch-api-key-usage`) with live credit billing.
-2. **Mode B: Deterministic Benchmark Replay (`PhoenixHeatwaveReplayEngine` / `POST /api/v1/replay/phoenix-2023`):** Uses high-resolution pre-ingested Phoenix July 2023 heatwave fixtures ([`phoenix_heatwave_2023.json`](file:///Users/karim/Development/projects/fortyguard-hackathon/src/api/fixtures/phoenix_heatwave_2023.json)). This delivers **$<15\text{ms}$ sub-second ODE solving**, smooth 60 FPS timeline scrubbing, 100% scientific reproducibility for IEEE Annex G validation, and zero-downtime stability during live judging presentations.
+2. **Mode B: Deterministic Benchmark Replay (`PhoenixHeatwaveReplayEngine` / `POST /api/v1/replay/phoenix-2023`):** Uses high-resolution pre-ingested Phoenix July 2023 heatwave fixtures ([`phoenix_heatwave_2023.json`](src/api/fixtures/phoenix_heatwave_2023.json)). This delivers **$<15\text{ms}$ benchmark ODE solving**, smooth timeline scrubbing, deterministic replay for IEEE Annex G validation, and independence from live vendor calls during judging presentations.
 
 ### 🏛️ System Boundary & Simulation Taxonomy
 | Layer | Implementation | Status | Purpose |
 | :--- | :--- | :---: | :--- |
 | **FortyGuard Live API** | `/v1/env_params`, `/v1/heatmap`, `/v1/system/fetch-api-key-usage` | 🟢 **LIVE** | On-demand parcel scanning, microclimate index lookup & real-time quota accounting. |
-| **Physics ODE Solvers** | IEEE C57.91 Annex G, Arrhenius Aging, IEC 60287 Soil, 14-Bus AC Flow | ⚡ **CALCULATED LIVE** | Real-time continuous differential equations and CBF-QP safety barrier evaluations. |
+| **Physics & Grid Solvers** | IEEE C57.91, Arrhenius aging, IEC 60287 soil, 4-bus FBS power flow | ⚡ **CALCULATED LIVE** | Deterministic thermal trajectories, radial-feeder flow, and safety-envelope evaluations. |
 | **Substation Asset Digital Twin** | IEEE C57.91 standard transformer parameters (50 MVA, $\tau_{TO}$, $\tau_W$, $R$) | 📦 **SIMULATED TWIN** | Industry-standard CIM/GIS substation nameplate profiles for digital twin benchmarking. |
-| **Benchmark Weather Fixture** | Phoenix July 2023 heatwave ($42.7^\circ\mathrm{C}$, $960\,\mathrm{W/m}^2$, $P_{40}=12.0\,\mathrm{h}$) | 📦 **CACHED GROUND TRUTH** | Zero-latency 12h timeline scrubbing and immutable baseline for scientific reproducibility. |
-| **Hardware Actuators** | SCADA dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated dispatch control commands with guaranteed CBF-QP safety invariants. |
+| **Benchmark Weather Fixture** | Phoenix July 19, 2023 capture ($42.74^\circ\mathrm{C}$ peak, $889.8\,\mathrm{W/m}^2$ peak derived solar, $P_{40}=12.0\,\mathrm{h}$) | 📦 **FROZEN LIVE CAPTURE** | Zero-latency 12h timeline scrubbing and reproducible physics. |
+| **Hardware Actuators** | Dispatch payloads (BESS discharge, fan stage 2, EV curtailment) | 📦 **SIMULATED ACTUATORS** | Emits schema-validated recommendations checked against the modelled safety envelope; no physical SCADA is connected. |
 
 ---
 
@@ -106,12 +106,12 @@ To validate real-world performance, Thermal Sentinel Grid is benchmarked against
 
 ```text
 ┌───────────────────────────────────────────────┬───────────────────────────────────────────────┐
-│ BASELINE CONTROLLER (Airport Weather + Static)│ THERMAL SENTINEL GRID (FortyGuard + Physical) │
+│ BASELINE CONTROLLER (No proactive dispatch)  │ THERMAL SENTINEL GRID (FortyGuard + Physical) │
 ├───────────────────────────────────────────────┼───────────────────────────────────────────────┤
-│ • Uses natural-terrain reference (41.6°C)     │ • Detects parcel 2m ambient (42.7°C, +1.1°C)  │
-│ • Blind to 12h continuous persistence         │ • 12h forward warning triggers proactive pre-cool│
-│ • Hot-spot breaches 140°C emergency ceiling   │ • Projected hot-spot safely capped at 136.8°C  │
-│ • Accelerated insulation aging (V = 14.8x)    │ • 73.4 avoided equivalent aging hours (L_eq)  │
+│ • No proactive response to the measured soak │ • Uses measured parcel 2m ambient (42.74°C)    │
+│ • Blind to 12h continuous persistence         │ • Persistence triggers proactive pre-cooling   │
+│ • Hot-spot reaches 159.53°C                   │ • Mitigated hot-spot held to 109.43°C          │
+│ • 377.77 equivalent aging hours               │ • 374.3 equivalent aging hours avoided        │
 │ • Unplanned emergency load shedding           │ • Zero voltage (0.95-1.05pu) & N-1 violations │
 └───────────────────────────────────────────────┴───────────────────────────────────────────────┘
 ```
@@ -126,7 +126,7 @@ $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigate
 
 * **Avoided Outage Consequence ($C_{\text{consequence}}$):** Emergency replacement + customer interruption costs ($VoLL$ via LBNL ICE Calculator) + SAIDI/SAIFI reliability incentives.
 * **Capital Deferral ($\Delta PV_{\text{aging}}$):** Present value of deferred transformer capital replacement ($C_{\text{replace}}$ over 180,000-hour design life).
-* **Net Operational ROI:** Replay demonstrates **$175,276 net avoided loss per extreme heat event** at an ROI multiple of $> 24\text{x}$.
+* **Net Operational ROI:** The canonical replay computes **$2,576,849.10 net avoided loss per event** at **5,495.3× ROI**, using $2,576,590.38 avoided outage risk, $727.73 capital-aging deferral, and $469 mitigation cost.
 
 ---
 
@@ -139,7 +139,7 @@ fortyguard-hackathon/
 ├── docs/                               # Comprehensive Documentation & Reference Hub
 │   ├── README.md                       # Master Documentation Index
 │   ├── official/                       # Hackathon Official Rules, FAQ, Tracks & Announcements
-│   ├── research/                       # Physical AI Specs, Math Equations, CBF-QP & Pitch Script
+│   ├── research/                       # Physical AI specs, equations & pitch script
 │   │   ├── README.md                   # Research Catalog Index
 │   │   ├── THERMAL_SENTINEL_GRID_SPECIFICATION.md # Full math, IEEE/IEC equations & StateGraph
 │   │   ├── ASYMMETRIC_INNOVATION_AND_PHYSICAL_MECHANISMS.md # 4 asymmetric scientific moats
@@ -155,7 +155,7 @@ fortyguard-hackathon/
 ├── src/                                # Thermal Sentinel Core Application
 │   ├── api/                            # FortyGuard Async Submit-and-Poll Client & Tool Adapters
 │   ├── physics/                        # IEEE C57.91 / IEC 60076-7 Solvers & Soil Moisture State
-│   ├── safety/                         # Robust CBF-QP Deterministic Safety Gate
+│   ├── safety/                         # Deterministic safety-envelope gate
 │   ├── models/                         # Asset, Risk, and Thermal Pydantic Schemas
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
@@ -173,7 +173,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (63 Tests Passing)
+### 2. Run Automated Pytest Suite (86 Tests Passing)
 ```bash
 pytest tests/ -v
 ```
@@ -204,11 +204,11 @@ npx hyperframes render videos/thermal-sentinel-pitch --quality high --output vid
 
 ---
 
-## 🗄️ Enterprise Zero-Data-Loss Database Architecture (16 Tables)
+## 🗄️ Durable Hybrid Database Architecture (16 Tables)
 
 Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
-* **Without Supabase Keys:** Operates with zero external dependencies via local **SQLite** (`data/thermal_sentinel.db`), guaranteeing 100% test pass rates and instant offline judging reproducibility.
-* **With Supabase Keys:** Automatically syncs and queries **Supabase PostgreSQL** via PostgREST, providing live multi-client synchronization, Row Level Security (RLS), and permanent regulatory audit trails.
+* **Without Supabase Keys:** Uses local **SQLite** (`data/thermal_sentinel.db`) for offline development and deterministic fixture-based tests; external live-data and cloud-persistence features remain unavailable.
+* **With Supabase Keys:** Automatically syncs and queries **Supabase PostgreSQL** via PostgREST, providing durable multi-client synchronization and PostgREST-backed audit records. Supabase—not Vercel's ephemeral filesystem—is the production source of truth.
 
 ```
                                ┌────────────────────────────────┐
@@ -223,112 +223,55 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
                   [SUPABASE_URL set]   ▼                ▼  [Default / Fallback]
                        ┌───────────────────────┐  ┌───────────────────────┐
                        │  Supabase Cloud DB    │  │  Local SQLite DB      │
-                       │  (PostgreSQL + RLS)   │  │  (data/sentinel.db)   │
+                       │  (Durable PostgREST)  │  │  (data/sentinel.db)   │
                        └───────────────────────┘  └───────────────────────┘
 ```
 
-### Complete 16-Table Enterprise Schema Matrix
+### Complete 16-Table Application Schema Matrix
 
-| # | Table Name | Data Domain & Physical Source | Zero-Data-Loss Purpose |
+| # | Table Name | Data Domain & Physical Source | Persistence Purpose |
 | :-: | :--- | :--- | :--- |
-| **1** | `api_call_cache` | FortyGuard responses + MD5 request hash | Prevents duplicate paid API credit deductions. |
-| **2** | `dispatch_work_orders` | Authorized B2B SCADA work orders ($K_{\text{safe}}$, BESS, OLTC) | Full legal audit trail for utility control rooms. |
+| **1** | `api_call_cache` | FortyGuard responses (MD5 request identity) plus full deterministic simulation payloads (SHA-256 request identity) | Prevents duplicate API charges and replays identical solves across serverless cold starts; solve entries do not expire. |
+| **2** | `dispatch_work_orders` | Prototype dispatch work orders ($K_{\text{safe}}$, BESS, OLTC) | Traceable history of modelled control recommendations. |
 | **3** | `credit_accounting_ledger` | Real-time FortyGuard credit deductions per activity | Verifiable API accounting and spend reconciliation. |
-| **4** | `academic_research_papers` | 21+ indexed research papers with LaTeX math & alphaXiv links | Scientific grounding and physical formulation lineage. |
-| **5** | `substation_telemetry_logs` | 12-hour hourly SCADA physical telemetry ($\theta_o, \theta_w, V(t)$) | NERC/FERC compliance and thermal limit verification. |
-| **6** | `simulation_runs` | What-If sandbox scenario snapshots and slider inputs | Zero session loss: allows saving, sharing, and comparing runs. |
-| **7** | `multi_day_heatwave_logs` | 72h continuous compounding progression ($\rho_{\text{soil}}$ dry-out) | Forensics on compounding underground thermal debt. |
+| **4** | `academic_research_papers` | 22 indexed research records with LaTeX math & alphaXiv links | Scientific grounding and physical formulation lineage. |
+| **5** | `substation_telemetry_logs` | 12-hour modelled asset telemetry ($\theta_o, \theta_w, V(t)$) | Thermal-limit verification and scenario audit. |
+| **6** | `simulation_runs` | What-If input and scalar-output audit summaries | Searchable audit history; full replayable trajectories are persisted in `api_call_cache`. |
+| **7** | `multi_day_heatwave_logs` | Per-step 72h compounding audit records | Forensics for modelled soil dryout and cumulative aging; environmental forcing comes from the 72-row frozen live capture. |
 | **8** | `dlr_catenary_telemetry` | Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) & sag | Wildfire and flashover prevention compliance. |
 | **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, CBF proofs, and GPT tokens | Explainable AI (XAI) for control room operators. |
-| **10** | `financial_audit_snapshots` | LBNL ICE calculations ($2.58M avoided loss, 5,495× ROI) | Investment-grade rate-basing filing for utility regulators. |
-| **11** | `microclimate_parcel_store` | FortyGuard 2-meter parcel GeoJSON & asphalt heat traps | Cached offline map rendering with sub-millisecond latency. |
+| **10** | `financial_audit_snapshots` | ICE-informed calculations ($2.58M avoided loss, 5,495× ROI in the canonical scenario) | Reproducible financial-model snapshots and assumption review. |
+| **11** | `microclimate_parcel_store` | FortyGuard 2m parcel geometry, measured peak/spread, location and catalog date | Saved-scan selector in Cloud DB; operators can re-run calculations without creating a new scan. |
 | **12** | `bess_degradation_logs` | Coupled core/surface ODEs & Arrhenius SEI capacity fade | Protects million-dollar battery storage warranty limits. |
 | **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |
-| **14** | `chance_constrained_opf_logs` | Second-Order Cone (SOCP) CC-OPF quantile solutions ($z_{1-\alpha}$) | Economic dispatch justification under forecast uncertainty. |
-| **15** | `cbf_safety_certificates` | Control Barrier Function QP slack ($\xi^*$) & invariance proofs | Mathematical proof that safety envelopes were never violated. |
+| **14** | `chance_constrained_opf_logs` | Analytical quantile-bounded dispatch results ($z_{1-\alpha}$) | Reviewable model output under forecast uncertainty. |
+| **15** | `cbf_safety_certificates` | Control Barrier Function slack ($\xi^*$) and model checks | Records whether proposed actions satisfy the configured safety envelope. |
 | **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
 
-* **Live Database Hub in UI:** Operators can click the **`Cloud DB (16 Tables)`** navbar badge to inspect live records, credit deductions, and database health directly inside the dashboard.
-* **Setup Guide & SQL Migrations:** See [docs/SUPABASE_SETUP_GUIDE.md](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
+* **Live Database Hub in UI:** Operators can click **`Cloud DB (16 Tables)`** to inspect health, records, credit deductions, and **Saved Scans**. Selecting a stored parcel runs—or replays from the permanent solve cache—the corresponding physics and rebases every dashboard tab.
+* **Setup Guide & SQL Migrations:** See [docs/SUPABASE_SETUP_GUIDE.md](scratch/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
 
 
 ---
 
-## 📡 Sample FortyGuard API Request & Response (Judge Verification)
+## 📡 FortyGuard API Contract (Judge Verification)
 
-Thermal Sentinel Grid interacts programmatically with FortyGuard's async submit-and-poll API endpoints. Below is a real production payload and response pair used in the platform:
+Thermal Sentinel Grid uses FortyGuard's asynchronous submit-and-poll API through [`AsyncFortyGuardClient`](src/api/fortyguard_client.py). The application endpoint below is the safest reproducible contract to inspect because it normalizes several separate vendor analytics without pretending they arrive in one raw FortyGuard payload:
 
-### 1. Request (`POST /v1/heatmap`)
-```json
-{
-  "polygon_aoi": {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [[
-            [-112.0780, 33.4450],
-            [-112.0700, 33.4450],
-            [-112.0700, 33.4520],
-            [-112.0780, 33.4520],
-            [-112.0780, 33.4450]
-          ]]
-        },
-        "properties": {
-          "substation_id": "SUB-PHX-DOWNTOWN-04",
-          "asset_class": "Distribution_Transformer_50MVA"
-        }
-      }
-    ]
-  },
-  "date_time": {
-    "start_date": "2023-07-24T14:00:00Z",
-    "filter_type": 2
-  },
-  "granularity": 60,
-  "analytic_type": "persistence",
-  "threshold": 40.0,
-  "direction": "above"
-}
+```bash
+curl -sS -X POST https://www.thermal-sentinel-grid.live/api/v1/scan \
+  -H 'content-type: application/json' \
+  -d '{
+    "city": "Phoenix, AZ (Substation TX-04)",
+    "latitude": 33.4484,
+    "longitude": -112.0740,
+    "start_date": "2023-07-19",
+    "analytic_type": "tcm",
+    "threshold_c": 40.0
+  }'
 ```
 
-### 2. Async Submission Response (`200 OK`)
-```json
-{
-  "status": "success",
-  "data": {
-    "activity_id": "act_phx_sub04_20230724_tcm_60m",
-    "message": "Heatmap generation task successfully enqueued."
-  }
-}
-```
-
-### 3. Polled Result (`GET /v1/status/act_phx_sub04_20230724_tcm_60m`)
-```json
-{
-  "status": "succeeded",
-  "data": {
-    "activity_id": "act_phx_sub04_20230724_tcm_60m",
-    "execution_time_ms": 1420,
-    "result": {
-      "mean_temperature_2m_c": 42.7,
-      "max_temperature_2m_c": 51.2,
-      "min_temperature_2m_c": 44.8,
-      "persistence_hours_p40": 12.0,
-      "exceedance_degree_hours_h40": 17.48,
-      "thermal_soak_index": 3.68,
-      "urban_canyon": {
-        "aspect_ratio_hw": 1.85,
-        "wind_shelter_kappa": 0.58,
-        "cooling_derate_eta": 0.68
-      },
-      "tiles_count": 144
-    }
-  }
-}
-```
+The response contains `metrics.peak_2m_ambient_c`, `mean_2m_ambient_c`, `coolest_tile_2m_c`, same-hour `intra_aoi_spread_c`, `persistence_hours_p40`, `exceedance_degree_hours_h40`, `thermal_soak_index_tsi`, provenance, and the persisted `parcel_id`. Values come from separate `tcm`, persistence/exceedance, and environmental requests; modelled canyon, grid, and asset values are deliberately **not** represented as FortyGuard response fields. Raw submit, polling, and observed field semantics are documented in [the live-integration field notes](docs/api-documentation/14-field-notes-live-integration.md).
 
 ---
 
@@ -352,7 +295,7 @@ To ensure full transparency with the judging committee, here are current prototy
 
 * **Private Repository Collaborator:** `hackathon@fortyguard.com` (GitHub: `Hackathon-FG`) has been invited to this repository.
 * **Zero API Key Commitment Policy:** No API keys or sensitive credentials are committed to version control. All keys are injected at runtime via `.env` (see `.env.example`).
-* **Development Timeline Transparency:** Initial repository setup, architectural scoping, and mock-data structure: **17 August 2026**. Real FortyGuard Temperature API integration, physical ODE solvers, CBF-QP safety gate, and core functionality: **18 August 2026 onward** (following official API key release).
+* **Development Timeline Transparency:** Initial repository setup, architectural scoping, and mock-data structure: **17 August 2026**. Real FortyGuard Temperature API integration, physical ODE solvers, deterministic safety gate, and core functionality: **18 August 2026 onward** (following official API key release).
 
 
 ---
@@ -361,13 +304,13 @@ To ensure full transparency with the judging committee, here are current prototy
 
 * **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 * **⚡ Live "What-If" Physics Stress Studio:** Interactive real-time sandbox allowing judges to modulate FortyGuard 2m delta ($0^\circ\mathrm{C} \to +6^\circ\mathrm{C}$), multi-day heatwave dryout (Day 1 to 31), BESS capacity ($0 \to 50\text{ MWh}$), and transformer MVA with sub-15ms live ODE recalculation.
-* **📊 Data Science & Analytics Studio (IBM Certified Stack):** Complete data science lifecycle tab featuring Bronze→Silver→Gold medallion feature distributions, Pearson/Spearman correlation heatmaps, paired $t$-test microclimate divergence statistics, sub-millisecond Ridge Physics-Surrogate ($R^2 > 0.98$), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival curves. Standalone Jupyter notebook available at [`notebooks/Thermal_Sentinel_DataScience.ipynb`](file:///Users/karim/Development/projects/fortyguard-hackathon/notebooks/Thermal_Sentinel_DataScience.ipynb).
-* **📚 Academic Provenance & alphaXiv Literature Explorer:** Search engine and curated repository of **47 peer-reviewed papers & preprints** directly mapped to FortyGuard 2-meter physical models with live discussion retrieval.
+* **📊 Data Science & Analytics Studio (IBM-Style Lifecycle):** Complete data science lifecycle tab featuring Bronze→Silver→Gold medallion feature distributions, Pearson/Spearman correlation heatmaps, paired $t$-test microclimate divergence statistics, sub-millisecond Ridge Physics-Surrogate ($R^2 > 0.98$), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival curves. Standalone Jupyter notebook available at [`notebooks/Thermal_Sentinel_DataScience.ipynb`](notebooks/Thermal_Sentinel_DataScience.ipynb).
+* **📚 Academic Provenance & alphaXiv Literature Explorer:** Search engine and curated repository of **22 indexed papers & preprints** directly mapped to FortyGuard 2-meter physical models with live discussion retrieval.
 * **📐 Publication-Grade LaTeX Mathematical Engine (KaTeX):** Full LaTeX typography and auto-scaled, responsive mathematical equations across all telemetry, safety certificates, and scientific moat cards.
 * **🗓️ 72-Hour Multi-Day Cumulative Heatwave Analyzer:** Replays a frozen live FortyGuard capture of every hour from Phoenix, July 24–26, 2023 (72 measured environmental boundaries) to track thermal ratcheting, nightly recovery debt, and cumulative Kraft paper degradation. Grid load, soil evolution, and dispatch are explicitly modelled because the environmental API exposes no SCADA.
 * **🏛️ IEEE C57.91 Annex G Validation Benchmark:** Side-by-side ODE step-by-step verification against the IEEE Standard Annex G reference test dataset.
 * **Hyperlocal 2-Meter GIS Viewer:** Parcel-level convective heat tiles ($60\text{m}$ resolution) and interactive asset inspector.
-* **Four Scientific Moats Viewer:** First-principles deep dives into Cable-Soil dryout, CBF-QP safety filter, Canyon aerodynamics, and Virtual moisture sensor.
+* **Four Scientific Moats Viewer:** Deep dives into cable-soil dryout, the CBF-inspired safety filter, canyon aerodynamics, and the virtual moisture sensor.
 * **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation.
 * **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
 

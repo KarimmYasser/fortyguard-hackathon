@@ -275,8 +275,8 @@ Both paths now derive the derate from the peak hour of the capture and forward
 the measured persistence metrics. The baseline trajectory is byte-identical
 across replay and live dispatch (peak hot-spot 159.53 °C, top-oil 128.26 °C,
 loss-of-life 377.77 h). The mitigated trajectories still differ, correctly:
-replay applies a scripted BESS shave, the live path applies whatever the agent's
-CBF-QP gate admits.
+replay applies a scripted BESS shave, while the live path applies the actions
+admitted by the deterministic safety-envelope gate.
 
 **This lowered the headline figures.** Net avoided loss moved from $2,736,106 to
 $2,576,849 and ROI from 5,834.9× to 5,495.3×, because the inflated 47.6 °C

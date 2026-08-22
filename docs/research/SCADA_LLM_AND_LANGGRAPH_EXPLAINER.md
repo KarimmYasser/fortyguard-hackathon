@@ -51,7 +51,7 @@ It is an industrial architecture combining hardware and software deployed across
 | **Response Horizon** | **Reactive:** Alarms trip when a threshold is already breached (e.g. alarm rings at $135^\circ\text{C}$, ~5 min before failure). | **Proactive:** Ingests 12–72h forecast curves to pre-cool assets and shift peak load hours before thermal stress sets in. |
 | **Data Scope** | **Point telemetry:** Reads only physical probes directly wired to RTUs (often relying on airport weather 10 miles away). | **Hyperlocal Microclimate:** Merges 2-meter boundary layer temperatures, satellite land cover, and urban heat island physics. |
 | **Latent Physics** | **Ignored:** Treats equipment as static black boxes. | **Simulated:** Models underground soil dryout ($\rho_{\text{dry}}$), canyon wind stagnation, and Fickian paper-oil moisture desorption. |
-| **Control Logic** | **Rule-based trips / Manual operator dispatch.** | **Constrained Optimization (CBF-QP):** Mathematical safety barrier ensuring zero constraint violations. |
+| **Control Logic** | **Rule-based trips / Manual operator dispatch.** | **Deterministic safety filter:** Simulates proposed actions and accepts, modifies, or rejects them against configured model limits. |
 
 ---
 
@@ -71,8 +71,8 @@ Power grids, substations, water valves, and chemical reactors cannot depend on p
        [Forecast / Telemetry] ──► [IEEE Physics ODEs] ──► [Candidate Planner]
                                                                 │
                                                                 ▼
-                                                   [Robust CBF-QP Safety Gate]
-                                                   (Mathematical Invariant Filter)
+                                                   [Deterministic Safety Gate]
+                                                   (Model-Envelope Filter)
                                                                 │
                                               ┌─────────────────┴─────────────────┐
                                               ▼                                   ▼
@@ -88,7 +88,7 @@ Power grids, substations, water valves, and chemical reactors cannot depend on p
 | **Physical ODE Models** | IEEE Std C57.91 & IEC 60287 | ❌ **No** | Deterministic numerical differential equation solvers. |
 | **Risk Forecaster** | Trajectory & Uncertainty Tubes | ❌ **No** | Numerical calculation of upper thermal bounds. |
 | **Mitigation Planner** | Candidate Action Generator | ❌ **No** | Synthesizes candidate actions (Cooling Stage 2, BESS Shaving). |
-| **Safety Gate Filter** | Control Barrier Functions (CBF-QP) | ❌ **No** | Quadratic program solving $u^* = \arg\min \frac{1}{2}\|u - u_{\text{plan}}\|^2$ subject to $\dot{h} + \gamma h \ge 0$. |
+| **Safety Gate Filter** | CBF-inspired bounded-trajectory validator | ❌ **No** | Simulates worst-case ambient forcing, checks thermal/voltage/BESS/N-1 limits, and uses bisection to compute a safe maximum load. The current code does not solve a QP. |
 | **Audit & Advisory Node** | Narrative Synthesis | ⚠️ **Yes (Optional)** | Calls **GPT-5.4** via Siemens SDC Gateway **solely to generate human-readable citizen early-warning advisories** and plain-English summaries. Offline fallback to deterministic templates is guaranteed. |
 
 ---
@@ -112,7 +112,7 @@ Power grids, substations, water valves, and chemical reactors cannot depend on p
                ┌─────────► Step 2 (Physics) ──► Step 3 (Planner) ──┐
                │                                       │           │
                │                                       ▼           ▼
-        [Step 1 Ingest]                     [Step 4: Safety Gate (CBF-QP)]
+        [Step 1 Ingest]                     [Step 4: Safety Envelope Gate]
                ▲                                       │
                │                         ┌─────────────┴─────────────┐
                │                     Approved                     Rejected
@@ -140,7 +140,7 @@ Power grids, substations, water valves, and chemical reactors cannot depend on p
 
 In this project, LangGraph provides three key engineering benefits:
 1. **Deterministic Separation of Concerns:** Isolates probabilistic planning steps from deterministic physical barrier gates (`safety_gate_node`).
-2. **Immutable Audit Ledger:** Every node transition automatically appends to an immutable `audit_trail` logged into SQLite/PostgreSQL for NERC/FERC regulatory compliance.
+2. **Traceable Audit Data:** Node outputs and safety certificates can be persisted to SQLite/Supabase for inspection; this prototype does not claim regulatory certification or an immutable ledger.
 3. **Enterprise Extensibility:** Lays the foundational state-machine architecture for live utility control rooms requiring Human-in-the-Loop (HITL) dispatch authorization.
 
 ---
