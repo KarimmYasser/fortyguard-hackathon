@@ -289,6 +289,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <button
+              id="tour-db-close"
               onClick={onClose}
               className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-all border border-slate-700"
             >

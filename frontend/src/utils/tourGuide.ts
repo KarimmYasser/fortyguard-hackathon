@@ -95,8 +95,8 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-powerflow-header', '⚡ 4-Bus Feeder Analysis', 'The shipped network uses a nonlinear forward-backward sweep, not a 14-bus Newton-Raphson model.'),
         step('#tour-powerflow-subviews', '🧭 Three Grid Views', 'Switch among feeder topology, IEEE 738 dynamic line rating, and cascading-hazard analysis.'),
         step('#tour-cc-opf-controls', '🛡️ Uncertainty-Aware Dispatch Screen', 'Compare deterministic flow with the analytical Gaussian-quantile uncertainty screen and confidence controls.'),
-        step('#tour-powerflow-diagram', '🗺️ Single-Line Topology', 'Inspect bus voltage, power injection, line loading, and compliance state.', 'top'),
-        step('#tour-powerflow-voltvar', '🎛️ Volt/VAR Controls', 'Tune OLTC position and BESS P/Q support, then inspect the recalculated voltage envelope.', 'top'),
+        step('#tour-powerflow-diagram', '🗺️ Single-Line Topology', 'Inspect bus voltage, power injection, line loading, and compliance state.', 'top', 'center', click('#tour-powerflow-tab-topology')),
+        step('#tour-powerflow-voltvar', '🎛️ Volt/VAR Controls', 'Tune OLTC position and BESS P/Q support, then inspect the recalculated voltage envelope.', 'top', 'center', click('#tour-powerflow-tab-topology')),
         step('#tour-dlr-panel', '🌬️ IEEE 738 Dynamic Line Rating', 'Switching this tour step opens the DLR view and waits for its panel before highlighting conductor heat balance and ampacity.', 'top', 'center', click('#tour-powerflow-tab-dlr')),
         step('#tour-hazard-gauge', '⚠️ Cascading Hazard', 'The hazard view translates the current operating state into modelled time-dependent cascading-risk indicators.', 'top', 'center', click('#tour-powerflow-tab-hazard')),
       ];
@@ -222,6 +222,61 @@ const waitForVisibleTarget = (selector: string, timeoutMs: number): Promise<HTML
     check();
   });
 
+const refreshActiveTarget = (driverObj: Driver) => {
+  window.requestAnimationFrame(() => {
+    driverObj.refresh();
+    // Driver.js can leave the prior element's marker behind when React swaps
+    // views during an animated transition. Keep exactly one semantic target.
+    document.querySelectorAll('.driver-active-element').forEach((element) => {
+      if (element !== driverObj.getActiveElement()) {
+        element.classList.remove('driver-active-element', 'driver-no-interaction');
+        element.removeAttribute('aria-haspopup');
+        element.removeAttribute('aria-expanded');
+        element.removeAttribute('aria-controls');
+      }
+    });
+  });
+};
+
+const installTargetAwareKeyboardNavigation = (
+  driverObj: Driver,
+  isUnavailable: () => boolean,
+): (() => void) => {
+  const onKeyUp = (event: KeyboardEvent) => {
+    const target = event.target;
+    if (
+      target instanceof HTMLElement
+      && target.closest('input, textarea, select, [contenteditable="true"]')
+    ) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      driverObj.destroy();
+      return;
+    }
+
+    if (isUnavailable() || driverObj.getActiveIndex() === undefined) return;
+
+    const buttonSelector = event.key === 'ArrowRight'
+      ? '.driver-popover-next-btn'
+      : event.key === 'ArrowLeft'
+        ? '.driver-popover-prev-btn'
+        : null;
+    if (!buttonSelector) return;
+
+    const button = document.querySelector<HTMLButtonElement>(buttonSelector);
+    if (!button || button.disabled) return;
+    event.preventDefault();
+    button.click();
+  };
+
+  // Driver.js keyboard control stays disabled because its built-in arrow
+  // handlers call moveTo synchronously. Clicking our rendered controls routes
+  // keyboard navigation through the same lazy/API/modal preparation callbacks.
+  window.addEventListener('keyup', onKeyUp);
+  return () => window.removeEventListener('keyup', onKeyUp);
+};
+
 export const startTourGuide = ({
   activeTab,
   onNavigateTab,
@@ -233,6 +288,7 @@ export const startTourGuide = ({
 
   let preparing = false;
   let destroyed = false;
+  let removeKeyboardNavigation = () => {};
 
   const runAction = (action?: TourAction) => {
     if (!action) return;
@@ -246,10 +302,14 @@ export const startTourGuide = ({
       return;
     }
     if (action.type === 'open-live-scan') {
+      const closeDatabase = document.querySelector('#tour-db-close');
+      if (closeDatabase instanceof HTMLElement) closeDatabase.click();
       if (!onOpenLiveScan) throw new Error('The live scan opener is unavailable.');
       onOpenLiveScan();
       return;
     }
+    const closeLiveScan = document.querySelector('#tour-live-scan-close');
+    if (closeLiveScan instanceof HTMLElement) closeLiveScan.click();
     if (!onOpenDatabaseModal) throw new Error('The database opener is unavailable.');
     onOpenDatabaseModal();
   };
@@ -265,8 +325,9 @@ export const startTourGuide = ({
       }
       await waitForVisibleTarget(targetStep.element, targetStep.data?.timeoutMs ?? TARGET_TIMEOUT_MS);
       if (!destroyed) {
-        driverObj.moveTo(index);
-        window.requestAnimationFrame(() => driverObj.refresh());
+        if (driverObj.getActiveIndex() === undefined) driverObj.drive(index);
+        else driverObj.moveTo(index);
+        refreshActiveTarget(driverObj);
       }
     } catch (error) {
       console.error(error);
@@ -306,9 +367,14 @@ export const startTourGuide = ({
     },
     onDestroyed: () => {
       destroyed = true;
+      removeKeyboardNavigation();
     },
   });
 
+  removeKeyboardNavigation = installTargetAwareKeyboardNavigation(
+    driverObj,
+    () => preparing || destroyed,
+  );
   void prepareAndMove(driverObj, 0);
 };
 
@@ -319,6 +385,7 @@ export const startPlatformServicesTour = ({
   const steps = getModalSteps();
   let preparing = false;
   let destroyed = false;
+  let removeKeyboardNavigation = () => {};
 
   const runAction = (action?: TourAction) => {
     if (!action) return;
@@ -327,6 +394,8 @@ export const startPlatformServicesTour = ({
       if (!(target instanceof HTMLElement)) throw new Error(`Tour action target is unavailable: ${action.selector}`);
       target.click();
     } else if (action.type === 'open-live-scan') {
+      const closeDatabase = document.querySelector('#tour-db-close');
+      if (closeDatabase instanceof HTMLElement) closeDatabase.click();
       if (!onOpenLiveScan) throw new Error('The live scan opener is unavailable.');
       onOpenLiveScan();
     } else {
@@ -334,6 +403,29 @@ export const startPlatformServicesTour = ({
       if (close instanceof HTMLElement) close.click();
       if (!onOpenDatabaseModal) throw new Error('The database opener is unavailable.');
       onOpenDatabaseModal();
+    }
+  };
+
+  const prepareAndMove = async (driverObj: Driver, index: number) => {
+    if (preparing || destroyed || index < 0 || index >= steps.length) return;
+    preparing = true;
+    const targetStep = steps[index];
+
+    try {
+      if (!isVisible(document.querySelector(targetStep.element))) {
+        runAction(targetStep.data?.action);
+      }
+      await waitForVisibleTarget(targetStep.element, targetStep.data?.timeoutMs ?? TARGET_TIMEOUT_MS);
+      if (!destroyed) {
+        if (driverObj.getActiveIndex() === undefined) driverObj.drive(index);
+        else driverObj.moveTo(index);
+        refreshActiveTarget(driverObj);
+      }
+    } catch (error) {
+      console.error(error);
+      driverObj.destroy();
+    } finally {
+      preparing = false;
     }
   };
 
@@ -351,40 +443,25 @@ export const startPlatformServicesTour = ({
     doneBtnText: 'Finish Tour ✨',
     steps,
     onNextClick: (_element, _activeStep, { driver: instance, index }) => {
-      if (preparing || destroyed || index === undefined) return;
-      if (index >= steps.length - 1) return instance.destroy();
-      preparing = true;
-      const next = steps[index + 1];
-      try {
-        if (!isVisible(document.querySelector(next.element))) {
-          runAction(next.data?.action);
-        }
-        void waitForVisibleTarget(next.element, next.data?.timeoutMs ?? TARGET_TIMEOUT_MS)
-          .then(() => !destroyed && instance.moveTo(index + 1))
-          .catch((error) => { console.error(error); instance.destroy(); })
-          .finally(() => { preparing = false; });
-      } catch (error) {
-        console.error(error);
-        preparing = false;
+      if (index === undefined || index >= steps.length - 1) {
         instance.destroy();
+        return;
       }
+      void prepareAndMove(instance, index + 1);
     },
     onPrevClick: (_element, _activeStep, { driver: instance, index }) => {
-      if (preparing || destroyed || index === undefined || index <= 0) return;
-      const previous = steps[index - 1];
-      const element = document.querySelector(previous.element);
-      if (isVisible(element)) instance.moveTo(index - 1);
+      if (index !== undefined && index > 0) void prepareAndMove(instance, index - 1);
     },
-    onDestroyed: () => { destroyed = true; },
+    onDestroyed: () => {
+      destroyed = true;
+      removeKeyboardNavigation();
+    },
   });
 
-  const first = steps[0];
-  try {
-    runAction(first.data?.action);
-    void waitForVisibleTarget(first.element, TARGET_TIMEOUT_MS)
-      .then(() => !destroyed && driverObj.drive(0))
-      .catch((error) => console.error(error));
-  } catch (error) {
-    console.error(error);
-  }
+  removeKeyboardNavigation = installTargetAwareKeyboardNavigation(
+    driverObj,
+    () => preparing || destroyed,
+  );
+
+  void prepareAndMove(driverObj, 0);
 };
