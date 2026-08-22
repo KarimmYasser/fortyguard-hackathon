@@ -4,6 +4,8 @@ FastAPI Routes for Academic Literature, Scientific Provenance & alphaXiv Search
 
 from __future__ import annotations
 
+import logging
+
 import json
 import os
 import re
@@ -13,6 +15,8 @@ from fastapi import APIRouter, Query, HTTPException
 from src.api.alphaxiv_client import AlphaXivClient
 from src.db.database import db_manager
 from src.db.models import AcademicPaperRecord
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1/research", tags=["Academic Provenance & Research"])
 
@@ -40,8 +44,8 @@ async def get_research_corpus() -> Dict[str, Any]:
         try:
             with open(corpus_path, "r", encoding="utf-8") as f:
                 base_corpus = json.load(f)
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Could not read local research corpus %s: %s", corpus_path, exc)
 
     # Query latest papers from SQLite / Supabase
     db_papers = await db_manager.get_academic_papers(limit=200)
@@ -143,8 +147,8 @@ async def search_academic_papers(
                     relevance_to_fortyguard=p.get("relevance_to_fortyguard"),
                 )
                 await db_manager.save_academic_paper(record)
-            except Exception:
-                pass
+            except Exception as exc:
+                logger.warning("Failed to persist academic paper: %s", exc, exc_info=True)
 
         source = "arxiv_live"
 

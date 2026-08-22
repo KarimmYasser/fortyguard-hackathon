@@ -9,6 +9,8 @@ Exposes endpoints for:
 
 from __future__ import annotations
 
+import logging
+
 from typing import Dict, Any, List, Optional
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
@@ -19,6 +21,8 @@ from src.physics.weibull_hazard import ArrheniusWeibullHazardEngine, CascadingOu
 from src.physics.chance_constrained_opf import ChanceConstrainedOPFEngine, CC_OPF_Request, CC_OPF_Solution
 from src.db.database import db_manager
 from src.db.models import DLRCatenaryRecord
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/physics", tags=["Advanced Mathematical Moats"])
 
@@ -58,8 +62,8 @@ async def solve_dynamic_line_rating(req: DLRSolveRequest) -> DLRSolution:
             clearance_margin_m=sol.ground_clearance_margin_m,
         )
         await db_manager.log_dlr_telemetry(record)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist DLR telemetry: %s", exc, exc_info=True)
 
     return sol
 
@@ -106,8 +110,8 @@ async def simulate_bess_thermal_trajectory(req: BESSSimulateRequest) -> List[BES
                 degradation_cost_usd=r.degradation_cost_usd,
             )
             await db_manager.log_bess_degradation(rec)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist BESS degradation log: %s", exc, exc_info=True)
 
     return results
 
@@ -152,8 +156,8 @@ async def get_grid_cascading_hazard(is_mitigated: bool = False) -> CascadingOuta
             total_voll_risk_usd=report.total_voll_financial_risk_usd,
         )
         await db_manager.save_cascading_risk_snapshot(snap)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist cascading risk snapshot: %s", exc, exc_info=True)
 
     return report
 
@@ -181,7 +185,7 @@ async def solve_chance_constrained_opf(req: CC_OPF_Request) -> CC_OPF_Solution:
             solver_status=solution.robustness_status,
         )
         db_manager.save_chance_constrained_opf_log(opf_rec)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist chance-constrained OPF log: %s", exc, exc_info=True)
 
     return solution

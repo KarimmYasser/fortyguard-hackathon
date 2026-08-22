@@ -5,12 +5,16 @@ Serves the Phoenix July 2023 heatwave benchmark replay dataset for baseline vs. 
 
 from __future__ import annotations
 
+import logging
+
 from typing import Any, Dict
 from fastapi import APIRouter
 from src.replay.phoenix_heatwave_replay import PhoenixHeatwaveReplayEngine
 
 from src.db.database import db_manager
 from src.db.models import SubstationTelemetryRecord, MultiDayHeatwaveRecord
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/replay", tags=["Historical Replay"])
 
@@ -40,8 +44,8 @@ async def get_phoenix_2023_replay() -> Dict[str, Any]:
                 is_mitigated=True,
             )
             await db_manager.log_substation_telemetry(rec)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist substation telemetry: %s", exc, exc_info=True)
 
     return data
 

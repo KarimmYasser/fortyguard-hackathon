@@ -5,11 +5,15 @@ Handles geospatial microclimate bounding box and parcel scanning via FortyGuard 
 
 from __future__ import annotations
 
+import logging
+
 from typing import Any, Dict, Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from src.api.fortyguard_client import AsyncFortyGuardClient
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/scan", tags=["Geospatial Scan"])
 
@@ -120,8 +124,8 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
                 asphalt_heat_trap_delta=1.1,
             )
             await db_manager.save_microclimate_parcel(parcel_rec)
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Failed to persist microclimate parcel: %s", exc, exc_info=True)
 
         return {
             "status": "success",

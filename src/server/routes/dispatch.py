@@ -5,6 +5,7 @@ Triggers the full LangGraph agent pipeline and evaluates investment-grade avoide
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
@@ -17,6 +18,8 @@ from src.db.models import (
     AgentExecutionTraceRecord,
     FinancialAuditRecord,
 )
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/dispatch", tags=["Agentic Dispatch & ROI"])
 
@@ -100,8 +103,9 @@ async def run_mitigation_pipeline(req: MitigationTriggerRequest) -> Dict[str, An
                 start = datetime.strptime(trail[0]["timestamp"], fmt)
                 end = datetime.strptime(trail[-1]["timestamp"], fmt)
                 duration_ms = max((end - start).total_seconds() * 1000.0, 0.0)
-        except Exception:
-            pass
+        except Exception as exc:
+            # Non-fatal: duration is telemetry, not a result.
+            logger.debug("Could not derive agent duration from audit trail: %s", exc)
 
         trace_record = AgentExecutionTraceRecord(
             trace_id=f"TRACE-{uuid.uuid4().hex[:8].upper()}",
@@ -133,15 +137,20 @@ async def get_economic_roi_metrics() -> Dict[str, Any]:
         audit = FinancialAuditRecord(
             audit_id=f"AUDIT-{uuid.uuid4().hex[:8].upper()}",
             asset_id="SUB-PHX-DOWNTOWN-04",
-            avoided_equipment_loss=float(result.get("breakdown", {}).get("avoided_catastrophic_replacement", 1250000.0)),
-            avoided_customer_outage_loss=float(result.get("breakdown", {}).get("avoided_customer_outage_costs", 1541338.0)),
-            avoided_aging_deferral=float(result.get("breakdown", {}).get("asset_life_extension_value", 18450.0)),
-            net_avoided_loss=float(result.get("net_avoided_loss", 2791338.0)),
-            economic_roi_multiplier=float(result.get("roi_multiplier", 5495.3)),
+            # Fall back to 0.0 rather than inventing figures. These defaults
+            # used to restate the retired 2,791,338 / 1,541,338 / 1,250,000
+            # numbers, so a missing key silently wrote a fabricated audit row
+            # that looked authoritative in the ledger.
+            avoided_equipment_loss=float(result.get("breakdown", {}).get("avoided_catastrophic_replacement", 0.0)),
+            avoided_customer_outage_loss=float(result.get("breakdown", {}).get("avoided_customer_outage_costs", 0.0)),
+            avoided_aging_deferral=float(result.get("breakdown", {}).get("asset_life_extension_value", 0.0)),
+            net_avoided_loss=float(result.get("net_avoided_loss", 0.0)),
+            economic_roi_multiplier=float(result.get("roi_multiplier", 0.0)),
         )
         await db_manager.save_financial_audit(audit)
-    except Exception:
-        pass
+    except Exception as exc:
+        # Persistence is the point of this endpoint; do not swallow silently.
+        logger.warning("Failed to persist financial audit snapshot: %s", exc, exc_info=True)
 
     return result
 

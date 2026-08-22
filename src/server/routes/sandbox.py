@@ -6,6 +6,8 @@ BESS capacity, and asset ratings, recalculating IEEE C57.91 & CBF-QP trajectorie
 
 from __future__ import annotations
 
+import logging
+
 from typing import Dict, Any, List
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
@@ -19,6 +21,8 @@ from src.physics.economic_model import EconomicEngine
 from src.safety.cbf_gate import CBFSafetyGate, ActionType, MitigationAction
 from src.db.database import db_manager
 from src.db.models import SimulationRunRecord
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/sandbox", tags=["What-If Stress Studio"])
 
@@ -239,11 +243,13 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
             cooling_fans_stage=2 if req.forced_cooling_enabled else 0,
             peak_hot_spot_c=baseline_traj.peak_hot_spot_c,
             hours_above_140c=sum(1.0 for s in baseline_traj.steps if s.t_hot_spot_c >= 140.0),
-            net_avoided_loss=float(economic_eval.get("net_avoided_loss", 2791338.0)),
+            # 0.0 rather than the retired 2,791,338 - a missing key should read as
+            # absent, not as a fabricated headline figure.
+            net_avoided_loss=float(economic_eval.get("net_avoided_loss", 0.0)),
         )
         await db_manager.save_simulation_run(sim_record)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Failed to persist sandbox simulation run: %s", exc, exc_info=True)
 
     return {
         "status": "success",
