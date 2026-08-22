@@ -229,10 +229,16 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
                           isCompliant ? 'text-emerald-400' : 'text-rose-400 animate-pulse'
                         }`}
                       >
-                        {bus.voltage_magnitude_pu ? `${bus.voltage_magnitude_pu.toFixed(3)} pu` : `${bus.voltage_mean_pu} pu`}
+                        {bus.voltage_magnitude_pu != null
+                          ? `${bus.voltage_magnitude_pu.toFixed(3)} pu`
+                          : bus.voltage_mean_pu != null ? `${bus.voltage_mean_pu} pu` : '—'}
                       </span>
                       <span className="text-slate-500 text-[11px]">
-                        {bus.voltage_angle_deg ? `${bus.voltage_angle_deg.toFixed(1)}°` : `[${bus.voltage_lower_bound_pu} - ${bus.voltage_upper_bound_pu}]`}
+                        {bus.voltage_angle_deg != null
+                          ? `${bus.voltage_angle_deg.toFixed(1)}°`
+                          : bus.voltage_lower_bound_pu != null && bus.voltage_upper_bound_pu != null
+                            ? `[${bus.voltage_lower_bound_pu} - ${bus.voltage_upper_bound_pu}]`
+                            : ''}
                       </span>
                     </div>
                   </div>
@@ -241,13 +247,21 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
                     <div className="flex justify-between">
                       <span>P Load / Inj:</span>
                       <span className="text-cyan-300 font-bold">
-                        {bus.active_power_demand_mw ? `${bus.active_power_demand_mw} MW` : `${bus.active_power_injection_mw} MW`}
+                        {bus.active_power_demand_mw != null
+                          ? `${bus.active_power_demand_mw.toFixed(2)} MW`
+                          : bus.bess_active_injection_mw != null
+                            ? `${bus.bess_active_injection_mw.toFixed(2)} MW`
+                            : '—'}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Q Load / Inj:</span>
                       <span className="text-purple-300 font-bold">
-                        {bus.reactive_power_demand_mvar ? `${bus.reactive_power_demand_mvar} MVAr` : `${bus.reactive_power_injection_mvar} MVAr`}
+                        {bus.reactive_power_demand_mvar != null
+                          ? `${bus.reactive_power_demand_mvar.toFixed(2)} MVAr`
+                          : bus.bess_reactive_injection_mvar != null
+                            ? `${bus.bess_reactive_injection_mvar.toFixed(2)} MVAr`
+                            : '—'}
                       </span>
                     </div>
                   </div>

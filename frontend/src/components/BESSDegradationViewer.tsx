@@ -145,11 +145,11 @@ export const BESSDegradationViewer: React.FC = () => {
           </span>
           <div className="flex items-baseline gap-2 mt-1.5">
             <span className="text-2xl font-bold font-mono text-cyan-300">
-              {latest.state_of_health_pct ? `${latest.state_of_health_pct}%` : '99.98%'}
+              {latest.state_of_health_pct != null ? `${latest.state_of_health_pct}%` : '—'}
             </span>
           </div>
           <span className="text-[10px] font-mono text-slate-400 mt-1 block">
-            Loss: {latest.cumulative_capacity_loss_pct ? `${latest.cumulative_capacity_loss_pct}%` : '0.002%'}
+            Loss: {latest.cumulative_capacity_loss_pct != null ? `${latest.cumulative_capacity_loss_pct}%` : '—'}
           </span>
         </div>
 
