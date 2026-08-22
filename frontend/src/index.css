@@ -25,8 +25,14 @@
    them. This preserves the glass treatment without letting background text
    compete with the preview copy. */
 .navbar-tab-preview {
-  backdrop-filter: blur(32px) saturate(115%);
-  -webkit-backdrop-filter: blur(32px) saturate(115%);
+  /* This element is portalled to <body>; keeping it outside the sticky header's
+     own backdrop-filter context lets browsers sample and blur the page below. */
+  background-color: rgba(2, 6, 23, 0.78);
+  /* Declare the standards property once. The Vite/Lightning CSS pipeline emits
+     the WebKit-prefixed fallback; declaring both here caused it to retain only
+     the prefixed form, so Chromium received no effective backdrop filter. */
+  backdrop-filter: blur(36px) saturate(125%);
+  isolation: isolate;
 }
 
 .glass-panel-glow {

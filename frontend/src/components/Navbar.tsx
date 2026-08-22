@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import {
   Zap,
   ShieldCheck,
@@ -163,6 +164,26 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
 
   const [hoveredTab, setHoveredTab] = React.useState<ActiveTab | null>(null);
+  const [previewPosition, setPreviewPosition] = React.useState<{ top: number; left: number } | null>(null);
+
+  const showTabPreview = (tab: ActiveTab, anchor: HTMLElement) => {
+    const rect = anchor.getBoundingClientRect();
+    const previewWidth = window.innerWidth < 640 ? 288 : 320;
+    const gutter = 12;
+    setHoveredTab(tab);
+    setPreviewPosition({
+      top: rect.bottom + 8,
+      left: Math.min(
+        window.innerWidth - previewWidth - gutter,
+        Math.max(gutter, rect.left + rect.width / 2 - previewWidth / 2),
+      ),
+    });
+  };
+
+  const hideTabPreview = () => {
+    setHoveredTab(null);
+    setPreviewPosition(null);
+  };
 
   const tabs = [
     { id: 'home', label: 'Pitch & Video', icon: Sparkles },
@@ -319,26 +340,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Dedicated Expanded Navigation Bar (Directly Under Header) */}
       <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner relative">
         <nav id="tour-navbar-tabs" className="max-w-[1600px] mx-auto flex items-center justify-between gap-1 sm:gap-1.5 overflow-x-auto lg:overflow-x-visible no-scrollbar w-full">
-          {tabs.map((tab, idx) => {
+          {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
-            const isHovered = hoveredTab === tab.id;
-            const preview = TAB_PREVIEWS[tab.id as ActiveTab];
-
-            // Placement calculation so preview tooltip stays cleanly inside screen
-            const alignClass =
-              idx <= 2
-                ? 'left-0 sm:left-0'
-                : idx >= tabs.length - 3
-                ? 'right-0 sm:right-0'
-                : 'left-1/2 -translate-x-1/2';
 
             return (
               <div
                 key={tab.id}
                 className="relative flex-1 min-w-max lg:min-w-0"
-                onMouseEnter={() => setHoveredTab(tab.id as ActiveTab)}
-                onMouseLeave={() => setHoveredTab(null)}
+                onMouseEnter={(event) => showTabPreview(tab.id as ActiveTab, event.currentTarget)}
+                onMouseLeave={hideTabPreview}
               >
                 <button
                   id={`tour-navbar-tab-${tab.id}`}
@@ -353,54 +364,62 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="truncate">{tab.label}</span>
                 </button>
 
-                {/* Floating Preview Card on Hover */}
-                {isHovered && preview && (
-                  <div
-                    className={`absolute top-full pt-2 z-50 w-72 sm:w-80 pointer-events-none transition-all duration-200 animate-in fade-in zoom-in-95 ${alignClass}`}
-                  >
-                    <div className="glass-panel navbar-tab-preview p-4 rounded-2xl border border-slate-700/80 bg-slate-950/95 shadow-2xl shadow-black/80 space-y-2.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${preview.badgeColor}`}>
-                          {preview.badge}
-                        </span>
-                        <span className="text-[10px] text-slate-500 font-mono">
-                          {isActive ? 'ACTIVE VIEW' : 'CLICK TO VIEW'}
-                        </span>
-                      </div>
-
-                      <div>
-                        <h4 className="text-xs font-bold text-white font-heading flex items-center gap-1.5">
-                          <Icon className="h-3.5 w-3.5 text-amber-400" />
-                          {tab.label}
-                        </h4>
-                        <p className="text-[11px] text-amber-300/90 font-medium mt-0.5">
-                          {preview.tagline}
-                        </p>
-                      </div>
-
-                      <p className="text-[11px] text-slate-300 leading-relaxed font-sans border-t border-slate-800/80 pt-2">
-                        {preview.summary}
-                      </p>
-
-                      <div className="bg-slate-900/90 rounded-xl p-2 border border-slate-800 space-y-1">
-                        <div className="text-[10px] uppercase font-mono text-slate-400 font-bold">Key Capabilities:</div>
-                        <ul className="space-y-0.5">
-                          {preview.highlights.map((h, i) => (
-                            <li key={i} className="text-[10.5px] text-slate-300 flex items-center gap-1.5 font-mono">
-                              <span className="h-1 w-1 rounded-full bg-amber-400"></span>
-                              {h}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}
         </nav>
       </div>
+
+      {hoveredTab && previewPosition && typeof document !== 'undefined' && createPortal((() => {
+        const preview = TAB_PREVIEWS[hoveredTab];
+        const tab = tabs.find((item) => item.id === hoveredTab);
+        if (!tab) return null;
+        const Icon = tab.icon;
+        const isActive = activeTab === hoveredTab;
+
+        return (
+          <div
+            className="navbar-tab-preview fixed z-[100] w-72 sm:w-80 pointer-events-none p-4 rounded-2xl border border-slate-700/80 shadow-2xl shadow-black/80 space-y-2.5 animate-in fade-in zoom-in-95"
+            style={{ top: previewPosition.top, left: previewPosition.left }}
+            role="tooltip"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${preview.badgeColor}`}>
+                {preview.badge}
+              </span>
+              <span className="text-[10px] text-slate-500 font-mono">
+                {isActive ? 'ACTIVE VIEW' : 'CLICK TO VIEW'}
+              </span>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold text-white font-heading flex items-center gap-1.5">
+                <Icon className="h-3.5 w-3.5 text-amber-400" />
+                {tab.label}
+              </h4>
+              <p className="text-[11px] text-amber-300/90 font-medium mt-0.5">
+                {preview.tagline}
+              </p>
+            </div>
+
+            <p className="text-[11px] text-slate-300 leading-relaxed font-sans border-t border-slate-800/80 pt-2">
+              {preview.summary}
+            </p>
+
+            <div className="bg-slate-900/90 rounded-xl p-2 border border-slate-800 space-y-1">
+              <div className="text-[10px] uppercase font-mono text-slate-400 font-bold">Key Capabilities:</div>
+              <ul className="space-y-0.5">
+                {preview.highlights.map((highlight, index) => (
+                  <li key={index} className="text-[10.5px] text-slate-300 flex items-center gap-1.5 font-mono">
+                    <span className="h-1 w-1 rounded-full bg-amber-400" />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        );
+      })(), document.body)}
     </header>
   );
 };
