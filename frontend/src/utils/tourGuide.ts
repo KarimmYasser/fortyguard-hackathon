@@ -69,6 +69,7 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
     case 'portfolio_operations':
       return [
         step('#tour-operations-header', '🧭 Portfolio Operations', 'Move from a single asset replay to fleet-level thermal triage, candidate field windows, and shared deterministic evidence.'),
+        step('#tour-operations-controls', '🎚️ Explicit Screening Policy', 'Adjust wet-bulb, 2 m air-temperature, and consecutive-hour thresholds; recalculation produces a new content-addressed evidence identity.', 'bottom'),
         step('#tour-operations-ranking', '📊 Transparent Risk Ranking', 'Rank registered assets using available environmental and registry evidence. Missing fields are excluded rather than silently imputed.', 'top'),
         step('#tour-worker-window', '👷 Candidate Intervention Window', 'Screen measured wet-bulb and 2 m air temperature against explicit thresholds. This is not presented as OSHA or WBGT certification.', 'top'),
         step('#tour-operations-evidence', '🔐 Content-Addressed Evidence', 'The operator API and MCP tools share one read-only deterministic core and return the same SHA-256 evidence identity.', 'top'),

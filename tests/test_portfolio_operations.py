@@ -61,6 +61,7 @@ def test_evidence_digest_is_stable_even_though_generation_time_changes():
     assert first["evidence_id"] == second["evidence_id"]
     assert first["sha256"] == second["sha256"]
     assert first["read_only"] is True
+    assert "not a separate location-specific scan" in first["provenance"]["scope_limitation"]
 
 
 def test_operations_and_mcp_endpoints_share_deterministic_core():
@@ -93,3 +94,21 @@ def test_operations_and_mcp_endpoints_share_deterministic_core():
     assert call.status_code == 200
     mcp_evidence = call.json()["result"]["structuredContent"]
     assert mcp_evidence["evidence_id"] == payload["mitigation_evidence"]["evidence_id"]
+
+
+def test_custom_worker_thresholds_change_window_and_evidence_identity():
+    client = TestClient(app)
+    default = client.get("/api/v1/operations/portfolio").json()
+    custom = client.post("/api/v1/operations/portfolio", json={
+        "max_wet_bulb_c": 22.0,
+        "max_air_temp_c": 39.0,
+        "min_consecutive_hours": 2,
+    })
+    assert custom.status_code == 200
+    payload = custom.json()
+    assert payload["worker_intervention_screen"]["windows"][0]["duration_hours"] == 3
+    assert payload["mitigation_evidence"]["evidence_id"] != default["mitigation_evidence"]["evidence_id"]
+    assert all(
+        row["inputs"]["current_load_percentage"] is None
+        for row in payload["portfolio"]["rankings"]
+    )

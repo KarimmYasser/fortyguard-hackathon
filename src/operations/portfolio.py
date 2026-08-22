@@ -215,6 +215,7 @@ def build_mitigation_evidence(
             "asset_inputs": "grid asset registry metadata",
             "decision_outputs": "deterministically derived by portfolio_rank_v1 and threshold_screen_v1",
             "data_source": metadata.get("persistence_metrics", {}).get("data_source"),
+            "scope_limitation": "One common Phoenix scenario boundary is applied to every registered asset for portfolio triage; this snapshot is not a separate location-specific scan for each asset.",
         },
     }
     canonical = json.dumps(evidence_body, sort_keys=True, separators=(",", ":"), default=str)
