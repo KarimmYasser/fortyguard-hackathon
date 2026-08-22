@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
 import katex from 'katex';
+// Co-located with the only consumer of KaTeX so the stylesheet ships in the
+// lazy math chunk rather than the render-blocking entry CSS.
+import 'katex/dist/katex.min.css';
 
 interface MathViewProps {
   math: string;

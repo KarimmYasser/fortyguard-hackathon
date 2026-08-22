@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import 'katex/dist/katex.min.css';
+// katex.min.css is imported by MathView instead, so its ~25 KB of rules and
+// font @font-face declarations stay out of the render-blocking entry CSS.
 
 
 /**

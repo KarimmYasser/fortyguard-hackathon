@@ -120,27 +120,25 @@ export const App: React.FC = () => {
     };
   }, [isPlaying, playbackSpeed, data]);
 
-  if (!data && isLoading) {
-    return (
-      <div className="min-h-screen bg-[#080C14] flex flex-col items-center justify-center text-white">
-        <div className="h-14 w-14 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin mb-4"></div>
-        <h2 className="text-base font-bold font-heading tracking-wide">Initializing Thermal Sentinel Grid...</h2>
-        <p className="text-xs text-slate-400 font-mono mt-1">Ingesting IEEE C57.91 & FortyGuard 2m Boundary Engine</p>
-      </div>
-    );
-  }
-
+  /**
+   * The shell is NOT gated on the replay fetch.
+   *
+   * That request is a Python serverless function with a multi-second cold
+   * start, and blocking the whole tree on it pushed Largest Contentful Paint
+   * past 4s. The default (home) tab needs no dataset at all, so it paints
+   * immediately and only data-backed tabs wait.
+   */
   const dataset = data;
-  if (!dataset) return null;
-
-  const currentStep: TimelineStep = dataset.timeline_steps[currentHourIndex] || dataset.timeline_steps[0];
+  const currentStep: TimelineStep | null = dataset
+    ? dataset.timeline_steps[currentHourIndex] || dataset.timeline_steps[0]
+    : null;
 
   return (
     <div className="min-h-screen bg-[#080C14] text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
       {/* 1. Global Navigation Bar */}
       <Navbar
-        metadata={dataset.scenario_metadata}
-        verdict={dataset.safety_gate_verdict}
+        metadata={dataset?.scenario_metadata}
+        verdict={dataset?.safety_gate_verdict}
         isMitigatedMode={isMitigatedMode}
         onToggleMode={() => setIsMitigatedMode(!isMitigatedMode)}
         activeTab={activeTab}
@@ -162,8 +160,20 @@ export const App: React.FC = () => {
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         <TabErrorBoundary name={activeTab}>
+          {/* TAB 0: Executive Home & Video Pitch Showcase - renders instantly */}
+          {activeTab === 'home' && (
+            <HomePitchViewer
+              onNavigateTab={setActiveTab}
+              onOpenLiveScan={() => setIsLiveScanOpen(true)}
+            />
+          )}
+
+          {activeTab !== 'home' && (!dataset || !currentStep ? (
+            <DataPending />
+          ) : (
+          <Suspense fallback={<PanelFallback />}>
           {/* Global Replay Scrub Bar (Visible Across Interactive Simulation Tabs) */}
-          {activeTab !== 'home' && (
+          {(
             <ReplayControlBar
               metadata={dataset.scenario_metadata}
               steps={dataset.timeline_steps}
@@ -177,14 +187,6 @@ export const App: React.FC = () => {
               }}
               speed={playbackSpeed}
               onChangeSpeed={setPlaybackSpeed}
-            />
-          )}
-
-          {/* TAB 0: Executive Home & Video Pitch Showcase */}
-          {activeTab === 'home' && (
-            <HomePitchViewer
-              onNavigateTab={setActiveTab}
-              onOpenLiveScan={() => setIsLiveScanOpen(true)}
             />
           )}
 
@@ -320,20 +322,30 @@ export const App: React.FC = () => {
           {activeTab === 'data_science' && (
             <DataScienceStudio />
           )}
+          </Suspense>
+          ))}
         </TabErrorBoundary>
       </main>
 
-      {/* Live FortyGuard API Cloud Ingestion Modal */}
-      <LiveApiScanModal
-        isOpen={isLiveScanOpen}
-        onClose={() => setIsLiveScanOpen(false)}
-      />
+      {/* Live FortyGuard API Cloud Ingestion Modal (chunk fetched on open) */}
+      {isLiveScanOpen && (
+        <Suspense fallback={null}>
+          <LiveApiScanModal
+            isOpen={isLiveScanOpen}
+            onClose={() => setIsLiveScanOpen(false)}
+          />
+        </Suspense>
+      )}
 
-      {/* Enterprise Database Hub & Audit Modal */}
-      <DatabaseAuditModal
-        isOpen={isDbModalOpen}
-        onClose={() => setIsDbModalOpen(false)}
-      />
+      {/* Enterprise Database Hub & Audit Modal (chunk fetched on open) */}
+      {isDbModalOpen && (
+        <Suspense fallback={null}>
+          <DatabaseAuditModal
+            isOpen={isDbModalOpen}
+            onClose={() => setIsDbModalOpen(false)}
+          />
+        </Suspense>
+      )}
 
 
       {/* Footer */}

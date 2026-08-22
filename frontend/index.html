@@ -30,7 +30,18 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Loaded non-blocking: the third-party stylesheet plus its font files sat
+         in front of first paint. `display=swap` already renders text in the
+         fallback face, so nothing is hidden while the webfonts arrive. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all';this.onload=null;"
+    >
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
     <div id="root"></div>

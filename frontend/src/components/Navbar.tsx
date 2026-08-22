@@ -37,8 +37,10 @@ export type ActiveTab =
   | 'data_science';
 
 interface NavbarProps {
-  metadata: ScenarioMetadata;
-  verdict: SafetyGateVerdict;
+  // Optional: the shell renders before the replay dataset resolves so that
+  // first paint is not blocked on the serverless fetch.
+  metadata?: ScenarioMetadata | null;
+  verdict?: SafetyGateVerdict | null;
   isMitigatedMode: boolean;
   onToggleMode: () => void;
   activeTab: ActiveTab;
