@@ -167,11 +167,28 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
             # so a Houston scan was stored as Phoenix constants.
             if metrics["peak_2m_ambient_c"] is not None:
                 parcel_id = f"PARCEL-{req.city[:3].upper()}-{uuid.uuid4().hex[:6].upper()}"
+                # City and analysis date ride inside the GeoJSON properties.
+                # They are needed to re-run a stored scan, and the parcel table
+                # has no column for either - properties is a first-class GeoJSON
+                # member, so this needs no migration of the live Supabase table.
+                geometry = req.polygon_aoi or {
+                    "type": "Point",
+                    "coordinates": [req.longitude, req.latitude],
+                }
                 parcel_rec = MicroclimateParcelRecord(
                     parcel_id=parcel_id,
-                    polygon_geojson=req.polygon_aoi or {
-                        "type": "Point",
-                        "coordinates": [req.longitude, req.latitude],
+                    polygon_geojson={
+                        **geometry,
+                        "properties": {
+                            **(geometry.get("properties") or {}),
+                            "city": req.city,
+                            "analysis_date": metrics["analysis_date"],
+                            "latitude": req.latitude,
+                            "longitude": req.longitude,
+                            "peak_2m_ambient_c": metrics["peak_2m_ambient_c"],
+                            "persistence_hours_p40": metrics["persistence_hours_p40"],
+                            "data_source": metrics["data_source"],
+                        },
                     },
                     # No surface-skin analytic is requested here, so report the
                     # measured air temperature rather than inventing a skin temp.

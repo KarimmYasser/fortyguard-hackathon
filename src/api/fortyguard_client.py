@@ -563,8 +563,29 @@ class AsyncFortyGuardClient:
             return self._fixture_data.get("hourly_forecast_12h", [])
 
         analysis_date = self._resolve_analysis_date(start_time)
+        return await self.get_hourly_profile(
+            latitude=latitude,
+            longitude=longitude,
+            analysis_date=analysis_date,
+            hours=list(range(6, 18)),  # 06:00 - 17:00 local, the heat-of-day window
+        )
+
+    async def get_hourly_profile(
+        self,
+        latitude: float,
+        longitude: float,
+        analysis_date: str,
+        hours: List[int],
+    ) -> List[Dict[str, Any]]:
+        """
+        Build an hourly 2m profile for an arbitrary hour set on a single date.
+
+        Generalises the heat-of-day scan so multi-day work can request full
+        24-hour days, including the overnight hours where a compounding
+        heatwave fails to shed heat. One `tcm` job per hour with bounded
+        fan-out, plus one `env_params` job for the day's hourly arrays.
+        """
         aoi = self._build_aoi(latitude, longitude)
-        hours = list(range(6, 18))  # 06:00 - 17:00 local, the heat-of-day window
 
         # env_params is issued first and on its own. The API appears to serialise
         # work per key: when it was launched alongside 12 heatmap jobs it sat in
@@ -626,13 +647,17 @@ class AsyncFortyGuardClient:
             return default
 
         fixture_hours = self._fixture_data.get("hourly_forecast_12h", [])
+        # Key the fallback by hour-of-day. The benchmark fixture covers 06:00-17:00,
+        # so overnight hours legitimately have no row and fall through to defaults
+        # rather than borrowing an afternoon one.
+        fixture_by_hour = {6 + i: row for i, row in enumerate(fixture_hours)}
         forecast: List[Dict[str, Any]] = []
 
         for idx, hour in enumerate(hours):
             temps = temp_results[idx]
             if temps is None:
                 continue
-            fallback = fixture_hours[idx] if idx < len(fixture_hours) else {}
+            fallback = fixture_by_hour.get(hour, {})
 
             # Despite the name, cloud_cover_octas is reported on a 0-100 percent
             # scale (observed values up to 100.0, where octas cap at 8). Treating

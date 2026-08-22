@@ -21,6 +21,17 @@ import { API_BASE } from '../utils/api';
 interface DatabaseAuditModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Rebases the dashboard onto a stored scan's physics. */
+  onSimulationResult?: (result: any) => void;
+}
+
+interface StoredParcel {
+  parcel_id: string;
+  polygon_geojson: any;
+  surface_temp_c: number;
+  convective_temp_2m_c: number;
+  asphalt_heat_trap_delta: number;
+  scanned_at: string;
 }
 
 interface DbStatus {
@@ -56,8 +67,59 @@ interface DispatchWorkOrder {
   created_at: string;
 }
 
-export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, onClose }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'tables' | 'ledger' | 'dispatch' | 'architecture'>('tables');
+export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, onClose, onSimulationResult }) => {
+  const [activeSubTab, setActiveSubTab] = useState<'tables' | 'scans' | 'ledger' | 'dispatch' | 'architecture'>('tables');
+  const [parcels, setParcels] = useState<StoredParcel[]>([]);
+  const [runningId, setRunningId] = useState<string | null>(null);
+  const [scanError, setScanError] = useState<string | null>(null);
+
+  // Coordinates and catalog date are read back off the stored row, so a saved
+  // scan can be re-solved without spending credits on a fresh ingest.
+  const parcelProps = (p: StoredParcel) => {
+    const g = p.polygon_geojson || {};
+    const props = g.properties || {};
+    const coords = Array.isArray(g.coordinates) ? g.coordinates : null;
+    return {
+      city: props.city ?? null,
+      analysisDate: props.analysis_date ?? null,
+      lat: props.latitude ?? (coords ? coords[1] : null),
+      lon: props.longitude ?? (coords ? coords[0] : null),
+      peak: props.peak_2m_ambient_c ?? p.convective_temp_2m_c ?? null,
+      source: props.data_source ?? null,
+    };
+  };
+
+  const handleRunStoredParcel = async (parcel: StoredParcel) => {
+    const meta = parcelProps(parcel);
+    if (meta.lat == null || meta.lon == null) {
+      setScanError(`${parcel.parcel_id} has no coordinates stored; cannot re-solve it.`);
+      return;
+    }
+    setRunningId(parcel.parcel_id);
+    setScanError(null);
+    try {
+      const resp = await fetch(`${API_BASE}/api/v1/sandbox/simulate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          latitude: meta.lat,
+          longitude: meta.lon,
+          analysis_date: meta.analysisDate,
+          city: meta.city ?? parcel.parcel_id,
+        }),
+      });
+      if (!resp.ok) {
+        const e = await resp.json().catch(() => ({}));
+        throw new Error(e.detail || `HTTP ${resp.status}`);
+      }
+      onSimulationResult?.(await resp.json());
+      onClose();
+    } catch (err: any) {
+      setScanError(err.message || 'Failed to run stored scan');
+    } finally {
+      setRunningId(null);
+    }
+  };
   const [dbStatus, setDbStatus] = useState<DbStatus | null>(null);
   const [ledger, setLedger] = useState<CreditLedgerEntry[]>([]);
   const [dispatchHistory, setDispatchHistory] = useState<DispatchWorkOrder[]>([]);
@@ -79,6 +141,12 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
       }
 
       // 3. Dispatch History
+      const parcelRes = await fetch(`${API_BASE}/api/v1/scan/parcels?limit=50`);
+      if (parcelRes.ok) {
+        const pj = await parcelRes.json();
+        setParcels(pj.parcels || []);
+      }
+
       const dispatchRes = await fetch(`${API_BASE}/api/v1/db/dispatch-history?limit=25`);
       if (dispatchRes.ok) {
         setDispatchHistory(await dispatchRes.json());
@@ -290,6 +358,17 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
             16 Enterprise Tables
           </button>
           <button
+            onClick={() => setActiveSubTab('scans')}
+            className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
+              activeSubTab === 'scans'
+                ? 'border-emerald-400 text-emerald-300 bg-emerald-500/10 rounded-t-lg'
+                : 'border-transparent text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Layers className="h-3.5 w-3.5" />
+            Saved Scans ({parcels.length})
+          </button>
+          <button
             onClick={() => setActiveSubTab('ledger')}
             className={`px-4 py-2 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeSubTab === 'ledger'
@@ -460,6 +539,82 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
           )}
 
           {/* TAB 4: Architecture */}
+          {activeSubTab === 'scans' && (
+            <div className="space-y-3">
+              <div className="flex items-start gap-2 text-[11px] text-slate-400 font-mono">
+                <span>
+                  Stored 2m scans from <span className="text-emerald-300">microclimate_parcel_store</span>.
+                  Re-solving reads the cached FortyGuard hours, so it costs no credits and
+                  needs no new ingest.
+                </span>
+              </div>
+
+              {scanError && (
+                <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-500/50 text-rose-300 text-[11px] font-mono">
+                  {scanError}
+                </div>
+              )}
+
+              {parcels.length === 0 ? (
+                <div className="p-6 text-center text-slate-500 text-xs font-mono">
+                  No stored scans yet — run one from “Live Cloud Scan”.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px]">
+                        <th className="pb-2 pr-3">Parcel</th>
+                        <th className="pb-2 px-3">Location</th>
+                        <th className="pb-2 px-3">Catalog date</th>
+                        <th className="pb-2 px-3">Peak 2m</th>
+                        <th className="pb-2 px-3">Spread</th>
+                        <th className="pb-2 px-3">Scanned</th>
+                        <th className="pb-2 pl-3"></th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      {parcels.map((parcel) => {
+                        const m = parcelProps(parcel);
+                        const runnable = m.lat != null && m.lon != null;
+                        return (
+                          <tr key={parcel.parcel_id}>
+                            <td className="py-2 pr-3 text-emerald-300">{parcel.parcel_id}</td>
+                            <td className="py-2 px-3">
+                              {m.city ?? (runnable ? `${Number(m.lat).toFixed(3)}, ${Number(m.lon).toFixed(3)}` : '—')}
+                            </td>
+                            <td className="py-2 px-3">{m.analysisDate ?? '—'}</td>
+                            <td className="py-2 px-3 text-rose-300">
+                              {m.peak == null ? '—' : `${Number(m.peak).toFixed(2)}°C`}
+                            </td>
+                            <td className="py-2 px-3 text-amber-300">
+                              {parcel.asphalt_heat_trap_delta == null
+                                ? '—'
+                                : `${Number(parcel.asphalt_heat_trap_delta).toFixed(2)}°C`}
+                            </td>
+                            <td className="py-2 px-3 text-slate-500">
+                              {(parcel.scanned_at || '').slice(0, 16).replace('T', ' ')}
+                            </td>
+                            <td className="py-2 pl-3">
+                              <button
+                                onClick={() => handleRunStoredParcel(parcel)}
+                                disabled={!runnable || runningId !== null}
+                                title={runnable ? undefined : 'Stored before coordinates were recorded'}
+                                className="px-3 py-1 rounded-lg bg-amber-500/20 border border-amber-500/50 text-amber-300 font-bold text-[10px] hover:bg-amber-500/30 disabled:opacity-40 disabled:cursor-not-allowed transition whitespace-nowrap"
+                              >
+                                {runningId === parcel.parcel_id ? 'Solving…' : 'Use for calculations'}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
           {activeSubTab === 'architecture' && (
             <div className="space-y-4 text-xs">
               <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3">

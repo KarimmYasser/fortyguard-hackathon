@@ -385,6 +385,7 @@ export const App: React.FC = () => {
           <DatabaseAuditModal
             isOpen={isDbModalOpen}
             onClose={() => setIsDbModalOpen(false)}
+            onSimulationResult={handleSandboxSimulateResult}
           />
         </Suspense>
       )}
