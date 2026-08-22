@@ -22,6 +22,7 @@ import {
   Activity,
   BookOpen,
   Film,
+  BriefcaseBusiness,
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { startTourGuide } from '../utils/tourGuide';
@@ -383,6 +384,32 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
           </div>
 
+          {/* Portfolio Operations */}
+          <div
+            id="tour-card-operations"
+            onClick={() => onNavigateTab('portfolio_operations')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-cyan-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-cyan-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-110 transition-transform">
+                  <BriefcaseBusiness className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">OPERATIONS</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-cyan-400 transition-colors">
+                Portfolio Risk & Intervention Command
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Rank registered assets, screen candidate field-work windows from measured environmental inputs, and inspect MCP-accessible SHA-256 evidence.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-cyan-400 font-bold pt-4">
+              <span>Open Portfolio Operations</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
           {/* Card 2: What-If Studio */}
           <div
             id="tour-card-sandbox"
@@ -631,7 +658,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
-            <span>63 Automated Pytests Passing (pytest tests/ -v)</span>
+            <span>95 Automated Pytests Passing (pytest tests/ -q)</span>
           </div>
         </div>
 

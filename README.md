@@ -30,6 +30,24 @@ This microclimate heat trap creates massive **cumulative thermal soak**, pushing
 
 ---
 
+## 🧭 Portfolio Operations & Human-Safe Intervention
+
+The operator dashboard now extends the single-asset thermal replay into a read-only portfolio decision surface:
+
+1. **Portfolio risk ranking:** registered grid assets are ordered by a transparent deterministic triage score using the environmental boundary and whatever health, loading, and criticality evidence is actually available. Missing fields are excluded from score normalization rather than imputed.
+2. **Worker intervention windows:** measured FortyGuard wet-bulb and 2 m air-temperature observations are screened against explicit thresholds to identify candidate field-work periods. This is an operational screen—not an OSHA/WBGT certification—because globe temperature, workload, clothing, and acclimatization are not measured.
+3. **MCP-accessible tools:** `rank_portfolio_risk`, `find_worker_intervention_windows`, and `get_mitigation_evidence` expose the same deterministic implementation used by the web dashboard.
+4. **Auditable evidence:** each decision snapshot carries a stable SHA-256 digest, environmental and asset provenance, calculation methods, thresholds, rankings, and limitations.
+
+| Interface | Purpose |
+| :--- | :--- |
+| `GET /api/v1/operations/portfolio` | Default read-only portfolio ranking, worker screen, and evidence snapshot. |
+| `POST /api/v1/operations/portfolio` | Repeat the screen with explicit air-temperature, wet-bulb, and minimum-duration thresholds. |
+| `GET /api/v1/mcp` | Discover the deterministic MCP-compatible tool surface. |
+| `POST /api/v1/mcp` | JSON-RPC `initialize`, `tools/list`, and `tools/call` operations. |
+
+---
+
 ## 🛡️ Four Asymmetric Scientific Moats
 
 Generic hackathon entries rely on simple threshold rules (*"if temp > 40°C, shed load"*). **Thermal Sentinel Grid** models four unmeasured physical cascades that utility SCADA and generic AI miss:
@@ -156,6 +174,7 @@ fortyguard-hackathon/
 │   ├── api/                            # FortyGuard Async Submit-and-Poll Client & Tool Adapters
 │   ├── physics/                        # IEEE C57.91 / IEC 60076-7 Solvers & Soil Moisture State
 │   ├── safety/                         # Deterministic safety-envelope gate
+│   ├── operations/                     # Portfolio ranking, worker windows & evidence hashing
 │   ├── models/                         # Asset, Risk, and Thermal Pydantic Schemas
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
@@ -173,7 +192,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (86 Tests Passing)
+### 2. Run Automated Pytest Suite (95 Tests Passing)
 ```bash
 pytest tests/ -v
 ```

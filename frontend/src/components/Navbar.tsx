@@ -20,12 +20,14 @@ import {
   Radio,
   BookOpen,
   Database,
+  BriefcaseBusiness,
 } from 'lucide-react';
 import { ScenarioMetadata, SafetyGateVerdict } from '../types';
 
 export type ActiveTab =
   | 'home'
   | 'overview'
+  | 'portfolio_operations'
   | 'sandbox'
   | 'multi_day_72h'
   | 'power_flow'
@@ -76,6 +78,13 @@ const TAB_PREVIEWS: Record<ActiveTab, TabPreviewInfo> = {
     tagline: 'Real-Time 12h Telemetry & Dispatch',
     summary: 'Synchronized Phoenix July 2023 heatwave timeline scrubber with 3-axis Apache ECharts physics telemetry and real-time mitigation dispatch.',
     highlights: ['12-Hour Timeline Scrubber', 'Top-Oil & Hot-Spot Dynamic Rises', 'Real-Time Dispatch Actuation'],
+  },
+  portfolio_operations: {
+    badge: 'OPERATIONS COMMAND',
+    badgeColor: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+    tagline: 'Portfolio Triage & Field Intervention',
+    summary: 'Ranks registered grid assets, screens candidate crew intervention windows, and emits content-addressed mitigation evidence through the same MCP-accessible deterministic core.',
+    highlights: ['Transparent Portfolio Ranking', 'Worker Intervention Windows', 'MCP + SHA-256 Evidence'],
   },
   sandbox: {
     badge: 'INTERACTIVE LAB',
@@ -188,6 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const tabs = [
     { id: 'home', label: 'Pitch & Video', icon: Sparkles },
     { id: 'overview', label: 'Mission Control', icon: Activity },
+    { id: 'portfolio_operations', label: 'Portfolio Ops', icon: BriefcaseBusiness },
     { id: 'sandbox', label: 'What-If Studio', icon: Sliders },
     { id: 'multi_day_72h', label: '72h Compounding', icon: Flame },
     { id: 'power_flow', label: 'AC Power Flow', icon: Network },

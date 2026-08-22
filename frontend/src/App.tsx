@@ -21,6 +21,7 @@ const named = <K extends string>(key: K) =>
   (mod: Record<K, React.ComponentType<any>>) => ({ default: mod[key] });
 
 const ReplayControlBar = lazy(() => import('./components/ReplayControlBar').then(named('ReplayControlBar')));
+const PortfolioOperationsViewer = lazy(() => import('./components/PortfolioOperationsViewer').then(named('PortfolioOperationsViewer')));
 const HeroKpiGrid = lazy(() => import('./components/HeroKpiGrid').then(named('HeroKpiGrid')));
 const EChartsPhysicsTelemetry = lazy(() => import('./components/EChartsPhysicsTelemetry').then(named('EChartsPhysicsTelemetry')));
 const GeospatialMicroclimateViewer = lazy(() => import('./components/GeospatialMicroclimateViewer').then(named('GeospatialMicroclimateViewer')));
@@ -217,7 +218,13 @@ export const App: React.FC = () => {
             />
           )}
 
-          {activeTab !== 'home' && (!dataset || !currentStep ? (
+          {activeTab === 'portfolio_operations' && (
+            <Suspense fallback={<PanelFallback label="Loading portfolio operations" />}>
+              <PortfolioOperationsViewer />
+            </Suspense>
+          )}
+
+          {activeTab !== 'home' && activeTab !== 'portfolio_operations' && (!dataset || !currentStep ? (
             <DataPending />
           ) : (
           <Suspense fallback={<PanelFallback />}>

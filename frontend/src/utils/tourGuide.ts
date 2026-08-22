@@ -44,14 +44,15 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
   switch (tab) {
     case 'home':
       return [
-        step('#tour-navbar-tour-btn', '🧭 Tour Guide', 'This target-aware guide covers all 12 tabs. It waits for lazy modules and API-backed panels before showing a step, so every popover remains anchored.', 'bottom', 'end'),
+        step('#tour-navbar-tour-btn', '🧭 Tour Guide', 'This target-aware guide covers all 13 tabs. It waits for lazy modules and API-backed panels before showing a step, so every popover remains anchored.', 'bottom', 'end'),
         step('#tour-hero-header', '🌟 Mission & Architecture', 'Thermal Sentinel Grid couples measured FortyGuard 2-meter environmental boundaries with deterministic grid-asset physics, bounded dispatch, and auditable economics.'),
         step('#tour-video-showcase', '🎬 Pitch & Product Walkthrough', 'Watch the motion-graphics pitch or the recorded live product walkthrough, then use chapter markers to jump to the relevant capability.', 'top'),
         step('#tour-navbar-live-scan', '📡 Live FortyGuard Ingestion', 'Open an on-demand scan for a chosen corridor and catalog date. The live result can then drive the complete physics and economics stack.'),
         step('#tour-navbar-db-modal', '🗄️ Durable Cloud Database', 'Inspect Supabase-backed records, saved scans, deterministic solve replays, credit accounting, and dispatch history.'),
         step('#tour-navbar-mode-toggle', '🛡️ Baseline vs Mitigated', 'Switch the shared dashboard between unmitigated and bounded-action trajectories.'),
-        step('#tour-launchpad-header', '🚀 11 Operational Modules', 'The launchpad links to the 11 operational tabs in addition to this pitch page.', 'top'),
+        step('#tour-launchpad-header', '🚀 Operational Modules', 'The launchpad and navigation expose the grid physics, operations, evidence, and analytics modules.', 'top'),
         step('#tour-card-overview', '⚡ Mission Control', 'Scrub the 12-hour trajectory and compare synchronized thermal, safety, and audit telemetry.', 'top', 'start'),
+        step('#tour-card-operations', '🧭 Portfolio Operations', 'Rank registered assets, find candidate crew windows, and retrieve the same deterministic evidence exposed through MCP.', 'top', 'start'),
         step('#tour-card-sandbox', '🎛️ What-If Studio', 'Change environmental and asset assumptions, then persist or replay the complete calculated trajectory.', 'top', 'start'),
         step('#tour-card-72h', '🔥 72h Compounding', 'Inspect three consecutive days from a frozen 72-row live FortyGuard capture driving modelled compounding physics.', 'top', 'start'),
         step('#tour-card-powerflow', '⚡ AC Power Flow', 'Explore the 4-bus forward-backward-sweep model, analytical uncertainty screen, DLR, and cascading hazard views.', 'top', 'start'),
@@ -63,6 +64,14 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-card-roi', '💰 Avoided Loss ROI', 'Audit the scenario-modelled loss components, mitigation costs, and ROI assumptions.', 'top', 'start'),
         step('#tour-navbar-tabs', '📊 Data Science Studio', 'The twelfth tab provides EDA, correlation taxonomy, risk distribution, ML diagnostics, and temporal analysis.', 'bottom'),
         ...getModalSteps(),
+      ];
+
+    case 'portfolio_operations':
+      return [
+        step('#tour-operations-header', '🧭 Portfolio Operations', 'Move from a single asset replay to fleet-level thermal triage, candidate field windows, and shared deterministic evidence.'),
+        step('#tour-operations-ranking', '📊 Transparent Risk Ranking', 'Rank registered assets using available environmental and registry evidence. Missing fields are excluded rather than silently imputed.', 'top'),
+        step('#tour-worker-window', '👷 Candidate Intervention Window', 'Screen measured wet-bulb and 2 m air temperature against explicit thresholds. This is not presented as OSHA or WBGT certification.', 'top'),
+        step('#tour-operations-evidence', '🔐 Content-Addressed Evidence', 'The operator API and MCP tools share one read-only deterministic core and return the same SHA-256 evidence identity.', 'top'),
       ];
 
     case 'overview':
