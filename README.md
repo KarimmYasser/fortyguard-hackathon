@@ -173,7 +173,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (25 Tests Passing)
+### 2. Run Automated Pytest Suite (63 Tests Passing)
 ```bash
 pytest tests/ -v
 ```

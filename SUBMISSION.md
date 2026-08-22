@@ -18,7 +18,7 @@
 | **Target Audience (Who It's For)** | Substation Reliability Engineers & Grid Operators at Electric Utilities (APS, ConEd, ERCOT, PG&E) and Mission-Critical Facility Managers (Data Centers, Hospitals, Military Bases). |
 | **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** - Tested across the historic **July 2023 31-day extreme heatwave** (peaking at $119^\circ\mathrm{F}$ / $48.3^\circ\mathrm{C}$ ambient with $+1.1^\circ\mathrm{C}$ asphalt microclimate delta). |
 | **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 12.0\text{h}$), Exceedance Degree-Hours ($H_{40} = 17.48\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($3.68$), driving proactive 12-hour BESS and transformer cooling dispatch. |
-| **AI & Data Science Tools Used** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Claude 3.5 Sonnet / GPT-4o**: Multi-asset mitigation planning & operator work orders.<br>3. **Non-LLM Control Barrier Functions (CBF-QP)**: Deterministic quadratic program safety gate mathematically guaranteeing ANSI C84.1 voltage ($0.95-1.05\text{ pu}$) and IEEE thermal forward-invariance.<br>4. **Physics Surrogate Regressor (Ridge + Poly2)**: $5000\times$ faster city-wide screening ($R^2 > 0.98, \text{MAE} < 1.5^\circ\mathrm{C}$).<br>5. **Sensor Anomaly Detection (Isolation Forest)**: Identifies sensor drift and thermal runaway pre-cursors.<br>6. **Weibull RUL Survival Analysis**: Extreme value lifetime hazard forecasting under sustained thermal stress.<br>7. **Bronze→Silver→Gold ETL Pipeline**: Medallion architecture generating 18 engineered features for real-time analytics. |
+| **AI & Data Science Tools Used** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Claude 3.5 Sonnet / GPT-4o**: Multi-asset mitigation planning & operator work orders.<br>3. **Non-LLM Control Barrier Functions (CBF)**: Deterministic constraint-projection safety gate (bisection over the CBF condition) guaranteeing ANSI C84.1 voltage ($0.95-1.05\text{ pu}$) and IEEE thermal forward-invariance.<br>4. **Physics Surrogate Regressor (Ridge + Poly2)**: $5000\times$ faster city-wide screening ($R^2 > 0.98, \text{MAE} < 1.5^\circ\mathrm{C}$).<br>5. **Sensor Anomaly Detection (Isolation Forest)**: Identifies sensor drift and thermal runaway pre-cursors.<br>6. **Weibull RUL Survival Analysis**: Extreme value lifetime hazard forecasting under sustained thermal stress.<br>7. **Bronze→Silver→Gold ETL Pipeline**: Medallion architecture generating 18 engineered features for real-time analytics. |
 | **Live Demo URL** | **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (Zero install, no login, full incognito compatibility) · *Local:* `http://localhost:8000` |
 | **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Available locally as Motion Pitch `videos/thermal-sentinel-pitch/renders/video.mp4` and Live UI Walkthrough `videos/thermal-sentinel-pitch/renders/live_product_demo.mp4`, also embedded directly into the Home screen at `/`). |
 | **GitHub Repository Link** | **[https://github.com/KarimmYasser/fortyguard-hackathon](https://github.com/KarimmYasser/fortyguard-hackathon)** *(Collaborator `hackathon@fortyguard.com` / `Hackathon-FG` invited)*. |
@@ -90,7 +90,7 @@ In historic heatwaves - such as the **Phoenix July 2023 benchmark** (31 consecut
 3. **Virtual Paper-to-Oil Moisture Sensor (Fick's Second Law):**  
    Tracks Kraft cellulose paper-to-oil moisture migration, alerting to relative oil saturation ($RS_o = 42\%$) and dielectric arcing risk hours before temperature limits trip.
 4. **Provably Safe Control Barrier Functions (CBF-QP):**  
-   A non-LLM quadratic program that mathematically guarantees forward-invariance of safe thermal ($T_{hs} \le 140^\circ\mathrm{C}$) and ANSI C84.1 voltage ($0.95 \le V_{\text{pu}} \le 1.05$) sets under FortyGuard forecast uncertainty ($\pm 1.5^\circ\mathrm{C}$).
+   A non-LLM deterministic constraint-projection solver that guarantees forward-invariance of safe thermal ($T_{hs} \le 140^\circ\mathrm{C}$) and ANSI C84.1 voltage ($0.95 \le V_{\text{pu}} \le 1.05$) sets under FortyGuard forecast uncertainty ($\pm 1.5^\circ\mathrm{C}$).
 5. **📜 IEEE Std C57.91 Annex G Reference Validation Engine:**  
    Automated verification against official IEEE Clause G.2 (Step Load Response) and Clause G.3 (Diurnal Ambient Ramp), demonstrating **$<0.0001^\circ\mathrm{C}$ error** against published standard tables. *(See **[IEEE Annex G & AC Power Flow Specification](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/research/IEEE_ANNEX_G_AND_AC_POWER_FLOW_SPECIFICATION.md)**)*
 6. **🔥 72-Hour Continuous Multi-Day Compounding Heatwave Simulation:**  
@@ -141,7 +141,7 @@ Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ing
 
 ## 💻 Tech Stack
 
-* **Backend & Physics:** Python 3.13, FastAPI, NumPy, SciPy, Pydantic v2, Uvicorn
+* **Backend & Physics:** Python 3.13, FastAPI, NumPy, pandas, Pydantic v2, Uvicorn (scikit-learn optional, lazily imported for the ML surrogates)
 * **Agentic Architecture:** LangGraph, LangChain, StateGraph, Siemens SDC Gateway (GPT-5.4 / GPT-5.5)
 * **Enterprise Persistence (Zero Data Loss):** SQLite 3 (Local Store), Supabase PostgreSQL (Cloud Sync), PostgREST, Row Level Security (RLS) across 16 enterprise data tables
 * **Standards & Formulations:** IEEE Std C57.91-2011, IEEE Std 738-2012, IEC 60076-7, IEC 60287-1-1, ANSI C84.1, LBNL ICE Calculator
@@ -179,7 +179,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (47 Tests Passing - 100% Green)
+### 2. Run Automated Pytest Suite (63 Tests Passing - 100% Green)
 ```bash
 pytest tests/ -v
 ```

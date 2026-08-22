@@ -232,13 +232,13 @@ flowchart TD
  - **AI Research Intern @ Nile University (SESC Research Center):** Architected an autonomous Multi-Agent AI Pipeline and 19-tool MCP harness translating natural language into verified OpenFOAM CFD/thermal cases. Built deterministic C++ renderers, 3-level preflight gates, thermodynamic envelope constraints, and MPI validation ladders. **Supervisor publishing research paper as co-authors.**
  - **Software Engineer Intern @ Siemens EDA (Solido Design Environment):** Re-architected Commit-Based Analysis Tool (CAT) RTS platform, slashing runtime from 23.6h to 26min (~54.5x speedup) on 21 GB coverage corpus with SQLite covering indexes, worker pools, and persistent AST caches.
  - **Hackathon Track Record:** 1st place in 30+ team i'Supply Hackathon; 1st place in ODC x INSTANT AI Hackathon (3D BraTS medical segmentation).
-- **Core Stack:** Python 3.13, FastAPI, LangGraph, NumPy, SciPy, React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Docker.
+- **Core Stack:** Python 3.13, FastAPI, LangGraph, NumPy, pandas, React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Docker.
 
 ---
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (30/30 Pytest Tests Passing)
+## 6.1 Core Tested Architecture (63/63 Pytest Tests Passing)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, automatic fallback to Phoenix July 2023 ground truth dataset.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**

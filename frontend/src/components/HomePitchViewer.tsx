@@ -628,7 +628,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
-            <span>25 Automated Pytests Passing (100% Coverage)</span>
+            <span>63 Automated Pytests Passing (pytest tests/ -v)</span>
           </div>
         </div>
 
@@ -636,13 +636,13 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           <div className="space-y-1.5">
             <span className="text-slate-400 font-bold text-[11px]">1. FORTYGUARD APIS INTEGRATED</span>
             <p className="text-slate-300">
-              <code>POST /v1/heatmap</code> (GeoJSON polygon scan), <code>POST /v1/stats/aoi</code> (P40 persistence & 12h forecast), and <code>/v1/tcm</code> thermal matrix.
+              <code>POST /v1/heatmap</code> (GeoJSON polygon scan; <code>tcm</code> thermal matrix, <code>persistence</code> P40 & <code>exceedance</code> analytics), <code>POST /v1/env_params</code> (12h boundary conditions), and submit-and-poll <code>GET /v1/status</code>.
             </p>
           </div>
           <div className="space-y-1.5">
             <span className="text-slate-400 font-bold text-[11px]">2. HYBRID PHYSICAL-AI FORMULATION</span>
             <p className="text-slate-300">
-              Scipy differential ODE solver (IEEE C57.91 Annex G) + LangGraph cognitive orchestrator + Non-LLM CBF-QP quadratic program.
+              Closed-form exponential ODE integrator (IEEE C57.91 Annex G, NumPy) + LangGraph cognitive orchestrator + Non-LLM CBF constraint-projection safety gate.
             </p>
           </div>
           <div className="space-y-1.5">

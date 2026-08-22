@@ -225,7 +225,7 @@ export const startTourGuide = ({
             popover: {
               title: '🛡️ Robust Control Barrier Function (CBF-QP) Gate',
               description:
-                'Non-LLM deterministic quadratic program certifying that the candidate mitigation policy maintains forward-invariance of safe thermal sets and ANSI C84.1 voltage envelopes.',
+                'Non-LLM deterministic constraint-projection solver certifying that the candidate mitigation policy maintains forward-invariance of safe thermal sets and ANSI C84.1 voltage envelopes.',
               side: 'top',
               align: 'center',
             },

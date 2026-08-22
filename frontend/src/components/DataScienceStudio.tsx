@@ -91,7 +91,7 @@ export const DataScienceStudio: React.FC = () => {
           </span>
           <span style={{ fontSize: 11, color: '#a78bfa', background: 'rgba(139,92,246,0.15)', padding: '4px 10px', borderRadius: 6 }}>
             <Layers size={12} style={{ marginRight: 4, verticalAlign: 'middle' }} />
-            scikit-learn + SciPy
+            NumPy + pandas + scikit-learn
           </span>
         </div>
       </div>
