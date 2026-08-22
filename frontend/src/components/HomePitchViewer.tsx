@@ -44,19 +44,26 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
   const [currentTime, setCurrentTime] = useState<number>(0);
-  // 'unknown' until probed. Rendering <video src> and waiting for onError works,
-  // but the failed media request is still logged to the console, which is noise
-  // in demos and screen recordings. A HEAD probe decides before we mount it.
-  const [videoStatus, setVideoStatus] = useState<'unknown' | 'ok' | 'missing'>('unknown');
+  // Whether the renders ship with this build. They are excluded from the Vercel
+  // deployment (58 MB of mp4, and the current cut narrates figures superseded by
+  // the live-API capture), so in production this is false and we must not request
+  // them at all - both <video src> and a HEAD probe log a 404 to the console,
+  // which is noise in demos and screen recordings. Set VITE_PITCH_RENDER=1 for
+  // local dev, where frontend/public/videos is served normally.
+  const rendersBundled = import.meta.env.VITE_PITCH_RENDER === '1';
+  const [videoStatus, setVideoStatus] = useState<'unknown' | 'ok' | 'missing'>(
+    rendersBundled ? 'unknown' : 'missing',
+  );
 
   useEffect(() => {
+    if (!rendersBundled) { setVideoStatus('missing'); return; }
     let cancelled = false;
     setVideoStatus('unknown');
     fetch(videoSources[activeVideoSource].url, { method: 'HEAD' })
       .then((r) => { if (!cancelled) setVideoStatus(r.ok ? 'ok' : 'missing'); })
       .catch(() => { if (!cancelled) setVideoStatus('missing'); });
     return () => { cancelled = true; };
-  }, [activeVideoSource]);
+  }, [activeVideoSource, rendersBundled]);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStartTour = () => {
