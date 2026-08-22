@@ -45,7 +45,7 @@ Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE Differential O
 
 ## Frame 4 - Live Dashboard Demo: What-If Studio & AC Power Flow
 
-- scene: Mission Control UI at https://fortyguard-hackathon.vercel.app with 12h scrubber, What-If sliders (<15ms ODE re-solving), and 4-bus power network
+- scene: Mission Control UI at https://www.thermal-sentinel-grid.live with 12h scrubber, What-If sliders (<15ms ODE re-solving), and 4-bus power network
 - duration: 45s
 - poster: 108s
 - transition_in: zoom-through
@@ -77,4 +77,4 @@ Prominent gold and emerald financial audit card: $5,495.3\text{x}$ ROI hero badg
 - voiceover: "By coupling FortyGuard's Temperature AI with first-principles physics and deterministic safety guarantees, Thermal Sentinel Grid makes cities and power grids truly heat-resilient..."
 - src: index.html#scene-6
 
-Closing branded lockup: Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy), IEEE & IEC compliance seals, author Karim Yasser (Cairo University), live platform URL `https://fortyguard-hackathon.vercel.app`, and GitHub repository link.
+Closing branded lockup: Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy), IEEE & IEC compliance seals, author Karim Yasser (Cairo University), live platform URL `https://www.thermal-sentinel-grid.live`, and GitHub repository link.

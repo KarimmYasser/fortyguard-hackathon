@@ -36,7 +36,7 @@ async function captureAllTabs() {
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
 
-  const TARGET_URL = process.env.TARGET_URL || 'https://fortyguard-hackathon.vercel.app';
+  const TARGET_URL = process.env.TARGET_URL || 'https://www.thermal-sentinel-grid.live';
   console.log(`🌐 Opening ${TARGET_URL} ...`);
   await page.goto(TARGET_URL, { waitUntil: 'networkidle0', timeout: 30000 });
   await page.waitForSelector('nav button', { timeout: 30000 });

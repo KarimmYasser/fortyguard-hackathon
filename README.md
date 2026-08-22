@@ -6,7 +6,7 @@
 [![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Future%20Buildings%20%26%20Energy-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Standards: IEEE & IEC](https://img.shields.io/badge/Standards-IEEE%20C57.91%20%7C%20IEC%2060076--7-blue?style=for-the-badge)](https://standards.ieee.org/)
 [![Safety: Robust CBF-QP](https://img.shields.io/badge/Safety%20Gate-Robust%20CBF--QP-success?style=for-the-badge)](https://github.com/KarimmYasser/fortyguard-hackathon)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-fortyguard--hackathon.vercel.app-10b981?style=for-the-badge&logo=vercel)](https://fortyguard-hackathon.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-www.thermal--sentinel--grid.live-10b981?style=for-the-badge&logo=vercel)](https://www.thermal-sentinel-grid.live/)
 
 ---
 
@@ -183,7 +183,7 @@ pytest tests/ -v
 ```bash
 python3 -m uvicorn src.server.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-Open **[https://fortyguard-hackathon.vercel.app](https://fortyguard-hackathon.vercel.app)** (Live Cloud Deployment) or **[http://localhost:8000](http://localhost:8000)** (Local Server) in your browser.
+Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (Live Production Deployment) or **[http://localhost:8000](http://localhost:8000)** (Local Server) in your browser.
 
 ### 4. Launch 3-Minute Video Pitch (HyperFrames Studio Timeline)
 ```bash

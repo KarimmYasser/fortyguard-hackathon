@@ -145,7 +145,7 @@ print("Credits Used This Cycle:", usage["credit_summary"]["cycle_credits_used"])
 ### B. Live Spatial Scan Execution (cURL)
 ```bash
 # Cloud Deployment:
-curl -X POST "https://fortyguard-hackathon.vercel.app/api/v1/scan" \
+curl -X POST "https://www.thermal-sentinel-grid.live/api/v1/scan" \
   -H "Content-Type: application/json" \
   -d '{
     "city": "San Jose, CA (Diridon Energy Hub)",
