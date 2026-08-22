@@ -1,5 +1,6 @@
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { isStaleChunkError, recoverFromStaleDeploy } from '../utils/staleDeploy';
 
 /**
  * Contains a render failure to the tab that caused it.
@@ -34,6 +35,9 @@ export class TabErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error(`[TabErrorBoundary] "${this.props.name}" failed to render`, error, info);
+    // A vanished chunk is a deployment fact, not a fault in this panel. Clearing
+    // the error would only re-request the same dead URL, so recover instead.
+    if (isStaleChunkError(error)) recoverFromStaleDeploy();
   }
 
   /** Reset when the user switches to a different panel. */
@@ -47,23 +51,29 @@ export class TabErrorBoundary extends React.Component<Props, State> {
     const { error } = this.state;
     if (!error) return this.props.children;
 
+    const stale = isStaleChunkError(error);
+
     return (
       <div className="rounded-2xl border border-amber-800/60 bg-amber-950/20 p-6">
         <div className="flex items-center gap-2 text-amber-300 font-bold font-heading uppercase text-sm tracking-wide">
           <AlertTriangle className="h-4 w-4" />
-          {this.props.name} could not render
+          {stale
+            ? `${this.props.name} is from an older version of this page`
+            : `${this.props.name} could not render`}
         </div>
         <p className="mt-2 text-xs text-slate-400 font-mono">
-          This panel hit a data shape it did not expect. The rest of the dashboard is unaffected.
+          {stale
+            ? 'This page was loaded before the latest deploy, so the file for this panel no longer exists at that address. Reloading fetches the current version.'
+            : 'This panel hit a data shape it did not expect. The rest of the dashboard is unaffected.'}
         </p>
         <pre className="mt-3 text-[11px] text-amber-200/80 font-mono whitespace-pre-wrap break-words">
           {error.message}
         </pre>
         <button
-          onClick={() => this.setState({ error: null })}
-          className="mt-4 px-3 py-1.5 rounded-lg text-xs font-bold font-mono bg-amber-600/90 text-white hover:bg-amber-500 transition-colors"
+          onClick={() => (stale ? recoverFromStaleDeploy(true) : this.setState({ error: null }))}
+          className="mt-4 px-3 py-1.5 rounded-lg text-xs font-bold font-mono bg-amber-600/90 text-white hover:bg-amber-500 transition-colors inline-flex items-center gap-1.5"
         >
-          Retry
+          {stale ? <><RefreshCw className="h-3 w-3" /> Reload page</> : 'Retry'}
         </button>
       </div>
     );
