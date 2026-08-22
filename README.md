@@ -249,7 +249,9 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
 
 * **Live Database Hub in UI:** Operators can click **`Cloud DB (16 Tables)`** to inspect health, records, credit deductions, and **Saved Scans**. Selecting a stored parcel runs—or replays from the permanent solve cache—the corresponding physics and rebases every dashboard tab.
-* **Setup Guide & SQL Migrations:** See [docs/SUPABASE_SETUP_GUIDE.md](scratch/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
+* **Read/write boundary:** The canonical `GET /api/v1/replay/phoenix-2023` is read-only and does not append duplicate telemetry or safety certificates when the dashboard is refreshed. Cache reads project only `response_payload`, and Cloud DB counts use exact PostgREST count headers with narrow primary-key projections.
+* **Performance analysis:** See [Database Query Performance & Replay Persistence](docs/research/DATABASE_QUERY_PERFORMANCE.md) for query ownership, remediation details, regression guards, and the production verification checklist.
+* **Setup Guide & SQL Migrations:** See [Supabase Setup & Enterprise Database Guide](scratch/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
 
 
 ---

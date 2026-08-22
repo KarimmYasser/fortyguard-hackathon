@@ -225,6 +225,15 @@ coordinates and measured peak to a unique full 12-hour group in
 `api_call_cache`, tagged the result `backfilled_from: api_call_cache`, and left
 all measured columns untouched.
 
+The canonical `GET /api/v1/replay/phoenix-2023` is intentionally outside this
+write lifecycle. Viewing a fixed replay does not create a new measurement or
+operator decision, so the route neither appends its 12 modelled telemetry steps
+nor persists a fresh safety certificate. Cache retrieval selects only
+`response_payload`; database-health counts use exact PostgREST count headers and
+primary-key projections rather than selecting JSON-heavy rows. See
+[Database Query Performance & Replay Persistence](DATABASE_QUERY_PERFORMANCE.md)
+for the query-report analysis and verification procedure.
+
 ### C. Why the hour loop exists
 
 There is **no time-series endpoint** in the OpenAPI surface — the paths are
