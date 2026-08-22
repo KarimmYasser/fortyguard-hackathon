@@ -10,19 +10,53 @@ import {
   Award,
   FileCheck,
 } from 'lucide-react';
-import { EconomicEvaluation, TrajectorySummary } from '../types';
+import { EconomicEvaluation, TrajectorySummary, ScenarioMetadata, TimelineStep } from '../types';
 
 interface EconomicAuditViewerProps {
   economic: EconomicEvaluation;
   baselineSummary: TrajectorySummary;
   mitigatedSummary: TrajectorySummary;
+  /** Measured ambient inputs, so the matrix tracks the active scan. */
+  metadata?: ScenarioMetadata;
+  steps?: TimelineStep[];
 }
 
 export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
   economic,
   baselineSummary,
   mitigatedSummary,
+  metadata,
+  steps,
 }) => {
+  // Derived from the props, not transcribed. The transcribed version drifted
+  // badly: it claimed a 6.4 C hot-spot reduction against a 50.1 C actual, a
+  // 2.1x mitigated aging factor against 0.94x, and a $175,276 / 24.3x ROI
+  // against the $2,576,849 / 5495x the same page reports elsewhere.
+  const n = (v: number | null | undefined, d = 1) =>
+    v === null || v === undefined || Number.isNaN(v) ? '—' : v.toFixed(d);
+  const usd = (v: number | null | undefined) =>
+    v === null || v === undefined || Number.isNaN(v)
+      ? '—'
+      : `$${Math.round(v).toLocaleString()}`;
+  const peak2mC = steps?.length
+    ? Math.max(...steps.map((s) => s.fortyguard_2m_ambient_c))
+    : null;
+  const coolestTileC = steps?.length
+    ? Math.min(...steps.map((s) => s.coolest_tile_2m_c))
+    : null;
+  const spreadC = peak2mC != null && coolestTileC != null ? peak2mC - coolestTileC : null;
+  const pm = metadata?.persistence_metrics;
+
+  const hotSpotReductionC =
+    baselineSummary?.peak_hot_spot_c != null && mitigatedSummary?.peak_hot_spot_c != null
+      ? baselineSummary.peak_hot_spot_c - mitigatedSummary.peak_hot_spot_c
+      : null;
+  const avoidedLolHours =
+    mitigatedSummary?.avoided_loss_of_life_hours ??
+    (baselineSummary?.total_loss_of_life_hours != null && mitigatedSummary?.total_loss_of_life_hours != null
+      ? baselineSummary.total_loss_of_life_hours - mitigatedSummary.total_loss_of_life_hours
+      : null);
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -107,7 +141,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               Benchmark Comparison: Baseline Controller vs. Thermal Sentinel Grid
             </h3>
             <p className="text-xs text-slate-400 font-mono">
-              Phoenix July 24-26, 2023 Heatwave Episode Validation Matrix
+              Heatwave Episode Validation Matrix · benchmark capture 2023-07-19
             </p>
           </div>
         </div>
@@ -125,27 +159,33 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
             <tbody className="divide-y divide-slate-800/60 text-slate-300">
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">1. Ambient Boundary Input</td>
-                <td className="py-3 px-4 text-rose-300">Natural-terrain reference (41.6°C)</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">Parcel 2m Convective Air (42.7°C)</td>
-                <td className="py-3 pl-4 text-amber-300">+1.1°C microclimate accuracy</td>
+                <td className="py-3 px-4 text-rose-300">Coolest tile in AOI ({n(coolestTileC)}°C)</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">Peak parcel 2m convective air ({n(peak2mC)}°C)</td>
+                <td className="py-3 pl-4 text-amber-300">+{n(spreadC, 2)}°C measured intra-AOI spread</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">2. Duration / Persistence</td>
-                <td className="py-3 px-4 text-rose-300">Blind to 12.0h continuous persistence</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">Tracks P40 & Thermal Soak Index (3.68)</td>
+                <td className="py-3 px-4 text-rose-300">Blind to {n(pm?.persistence_hours_p40)}h continuous persistence</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">Tracks P40 &amp; Thermal Soak Index ({n(pm?.thermal_soak_index_tsi, 2)})</td>
                 <td className="py-3 pl-4 text-amber-300">Proactive pre-cooling 12h ahead</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">3. Peak Winding Hot-Spot</td>
-                <td className="py-3 px-4 text-rose-400 font-bold">159.5°C (Breaches 140°C Ceiling)</td>
-                <td className="py-3 px-4 text-emerald-400 font-bold">109.4°C (Safely Capped)</td>
-                <td className="py-3 pl-4 text-amber-300">-6.4°C peak reduction</td>
+                <td className="py-3 px-4 text-rose-400 font-bold">
+                  {n(baselineSummary?.peak_hot_spot_c)}°C{' '}
+                  {baselineSummary?.breached_emergency_ceiling ? '(Breaches 140°C Ceiling)' : '(Within Ceiling)'}
+                </td>
+                <td className="py-3 px-4 text-emerald-400 font-bold">
+                  {n(mitigatedSummary?.peak_hot_spot_c)}°C{' '}
+                  {mitigatedSummary?.breached_emergency_ceiling ? '(Still Breaching)' : '(Safely Capped)'}
+                </td>
+                <td className="py-3 pl-4 text-amber-300">−{n(hotSpotReductionC)}°C peak reduction</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">4. Insulation Aging Factor (V)</td>
-                <td className="py-3 px-4 text-rose-300">88.4x normal degradation rate</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">2.1x normal degradation rate</td>
-                <td className="py-3 pl-4 text-amber-300">73.4h loss-of-life saved</td>
+                <td className="py-3 px-4 text-rose-300">{n(baselineSummary?.peak_aging_acceleration_v, 2)}x normal degradation rate</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">{n(mitigatedSummary?.peak_aging_acceleration_v, 2)}x normal degradation rate</td>
+                <td className="py-3 pl-4 text-amber-300">{n(avoidedLolHours)}h loss-of-life saved</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">5. Voltage Stability & N-1</td>
@@ -156,8 +196,8 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">6. Net Avoided Loss ROI</td>
                 <td className="py-3 px-4 text-rose-300">$0 (Incurs catastrophic blowout risk)</td>
-                <td className="py-3 px-4 text-emerald-400 font-bold">$175,276 Net Avoided Loss</td>
-                <td className="py-3 pl-4 text-amber-300 font-black">24.3x ROI Multiplier</td>
+                <td className="py-3 px-4 text-emerald-400 font-bold">{usd(economic?.net_avoided_loss_usd)} Net Avoided Loss</td>
+                <td className="py-3 pl-4 text-amber-300 font-black">{n(economic?.roi_multiple)}x ROI Multiplier</td>
               </tr>
             </tbody>
           </table>

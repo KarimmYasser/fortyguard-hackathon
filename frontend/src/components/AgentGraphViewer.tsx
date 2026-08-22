@@ -1,3 +1,4 @@
+import { BENCHMARK } from '../constants/benchmark';
 import React, { useState } from 'react';
 import {
   Cpu,
@@ -43,9 +44,9 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       name: '1. Forecast Ingest Node',
       role: 'FortyGuard 2-Meter API Client',
       type: 'Async Tool Ingest',
-      inputs: ['Location (33.4484° N, 112.0740° W)', 'Start Date (2023-07-24)', 'Analysis (tcm, P40, H40)'],
-      outputs: ['12h Forward 2m Temp (42.7°C Peak)', 'Persistence P₄₀ (12.0h)', 'Exceedance H₄₀ (17.48°C·h)', 'Solar Irradiance (890 W/m²)'],
-      reasoning: 'Detected 12.0h of unbroken persistence above 40°C across the forecast window — the soak, not the peak, is the hazard. Forward forecast indicates a sustained afternoon thermal corridor.',
+      inputs: ['Location (33.4484° N, 112.0740° W)', `Start Date (${BENCHMARK.analysisDate})`, 'Analysis (tcm, P40, H40)'],
+      outputs: [`12h Forward 2m Temp (${BENCHMARK.peak2mC}°C Peak)`, `Persistence P₄₀ (${BENCHMARK.persistenceHoursP40}h)`, `Exceedance H₄₀ (${BENCHMARK.exceedanceDegreeHoursH40}°C·h)`, `Solar Irradiance (${BENCHMARK.peakSolarWm2} W/m²)`],
+      reasoning: `Detected ${BENCHMARK.persistenceHoursP40}h of unbroken persistence above 40°C across the forecast window — the soak, not the peak, is the hazard. Forward forecast indicates a sustained afternoon thermal corridor.`,
     },
     {
       id: 'physics_node',
@@ -53,8 +54,8 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       role: 'Multi-Physics ODE Differential Solver',
       type: 'Deterministic Physical Model',
       inputs: ['FortyGuard 2m Boundary', 'Substation Feeder Load Curve', 'Asset Constants (tau_o, tau_w, R)'],
-      outputs: ['Baseline Hot-Spot (159.5°C)', 'Soil Resistivity Surge (2.45 K·m/W)', 'Canyon Derate (eta_cool = 0.68)'],
-      reasoning: 'Baseline controller projects 159.5°C winding hot-spot (breaching 140°C emergency limit) and 88.6 hours equivalent aging life.',
+      outputs: [`Baseline Hot-Spot (${BENCHMARK.baseline.hotSpotC}°C)`, 'Soil Resistivity Surge (2.45 K·m/W)', 'Canyon Derate (eta_cool = 0.68)'],
+      reasoning: `Baseline controller projects ${BENCHMARK.baseline.hotSpotC}°C winding hot-spot (breaching ${BENCHMARK.hotSpotLimitC}°C emergency limit), an aging acceleration of ${BENCHMARK.baseline.agingAccelerationX}x and ${BENCHMARK.baseline.lossOfLifeHours}h of equivalent life consumed.`,
     },
     {
       id: 'planner_node',

@@ -1,3 +1,4 @@
+import { BENCHMARK } from '../constants/benchmark';
 import React from 'react';
 import { ScrollText, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 
@@ -12,13 +13,13 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:12 UTC',
     category: 'INGEST',
-    message: 'FortyGuard 2-meter API: Ingested 12.0h continuous persistence (>40°C) and 12h forward forecast (42.7°C peak, live capture 2023-07-19).',
+    message: `FortyGuard 2-meter API: Ingested ${BENCHMARK.persistenceHoursP40}h continuous persistence (>${BENCHMARK.thresholdC}°C) and 12h forward forecast (${BENCHMARK.peak2mC}°C peak, live capture ${BENCHMARK.analysisDate}).`,
     status: 'INFO',
   },
   {
     timestamp: '14:05:15 UTC',
     category: 'PHYSICS',
-    message: 'IEEE C57.91 Solver: Baseline controller projects 159.5°C hot-spot (breaches 140°C emergency ceiling). Aging factor V = 88.4x.',
+    message: `IEEE C57.91 Solver: Baseline controller projects ${BENCHMARK.baseline.hotSpotC}°C hot-spot (breaches ${BENCHMARK.hotSpotLimitC}°C emergency ceiling). Aging factor V = ${BENCHMARK.baseline.agingAccelerationX}x.`,
     status: 'WARN',
   },
   {
@@ -42,7 +43,7 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:30 UTC',
     category: 'OPERATOR',
-    message: 'Economic Audit Ledger: Verified $175,276 net avoided loss (24.3x ROI) and 73.4 avoided loss-of-life equivalent hours.',
+    message: `Economic Audit Ledger: Verified $${BENCHMARK.netAvoidedLossUsd.toLocaleString()} net avoided loss (${BENCHMARK.roiMultiple}x ROI) and ${BENCHMARK.avoidedAgingHours} avoided loss-of-life equivalent hours.`,
     status: 'SUCCESS',
   },
 ];

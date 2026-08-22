@@ -16,6 +16,15 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
   isMitigated,
   onSelectHour,
 }) => {
+  // Derived from the plotted series. Hardcoding these let the caption drift to
+  // "88.4x to 2.1x / 73.4h avoided" while the same run reported 0.94x and 374.3h.
+  const last = steps?.length ? steps[steps.length - 1] : null;
+  const peakBaselineV = steps?.length ? Math.max(...steps.map((s) => s.baseline_aging_factor_v)) : null;
+  const peakMitigatedV = steps?.length ? Math.max(...steps.map((s) => s.mitigated_aging_factor_v)) : null;
+  const avoidedAgingH =
+    last ? last.baseline_cumulative_aging_hours - last.mitigated_cumulative_aging_hours : null;
+  const num = (v: number | null, d = 1) =>
+    v === null || v === undefined || Number.isNaN(v) ? '—' : v.toFixed(d);
   const times = useMemo(() => steps.map((s) => s.time_label), [steps]);
 
   // 1. Option for Chart A: Thermal Boundary Condition
@@ -431,12 +440,12 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 C. Insulation Loss-of-Life (Arrhenius V(t)) & BESS State of Charge
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Accelerated aging reduced from 88.4x to 2.1x (73.4 avoided equivalent loss-of-life hours)
+                Accelerated aging reduced from {num(peakBaselineV)}x to {num(peakMitigatedV, 2)}x ({num(avoidedAgingH)} avoided equivalent loss-of-life hours)
               </p>
             </div>
           </div>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20 font-bold hidden sm:inline">
-            73.4h AGING AVOIDED
+            {num(avoidedAgingH)}h AGING AVOIDED
           </span>
         </div>
         <ReactECharts

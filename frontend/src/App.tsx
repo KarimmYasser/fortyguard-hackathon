@@ -340,6 +340,8 @@ export const App: React.FC = () => {
               economic={dataset.economic_evaluation}
               baselineSummary={dataset.baseline_summary}
               mitigatedSummary={dataset.mitigated_summary}
+              metadata={dataset.scenario_metadata}
+              steps={dataset.timeline_steps}
             />
           )}
 

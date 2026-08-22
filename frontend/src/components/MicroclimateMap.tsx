@@ -110,7 +110,7 @@ export const MicroclimateMap: React.FC<MicroclimateMapProps> = ({
         {/* Reference-tile marker annotation */}
         <div className="absolute bottom-2 left-2 z-20 px-2 py-1 rounded bg-slate-900/90 border border-slate-800 text-[10px] font-mono text-slate-400 flex items-center gap-1.5 backdrop-blur-md">
           <MapPin className="h-3 w-3 text-slate-500" />
-          Phoenix Sky Harbor Station: 7.2 mi East (Shaded Airfield)
+          Reference = coolest 2m tile inside the AOI, not an airport station
         </div>
       </div>
 
