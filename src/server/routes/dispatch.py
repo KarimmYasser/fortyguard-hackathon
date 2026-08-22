@@ -11,7 +11,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from src.agent.graph import run_thermal_sentinel_agent
-from src.physics.economic_model import EconomicEngine
+from src.replay.phoenix_heatwave_replay import PhoenixHeatwaveReplayEngine
 from src.db.database import db_manager
 from src.db.models import (
     DispatchWorkOrderRecord,
@@ -128,24 +128,27 @@ async def get_economic_roi_metrics() -> Dict[str, Any]:
     """
     Returns current investment-grade Net Avoided Loss and ROI breakdown, persisting audit snapshot.
     """
-    engine = EconomicEngine()
-    result = engine.evaluate_net_avoided_loss()
+    # Evaluate the canonical Phoenix benchmark rather than the engine's bare
+    # defaults. Calling it with no arguments returned a generic ~$917k / 1578x
+    # result that matched nothing else in the product.
+    replay = PhoenixHeatwaveReplayEngine()
+    result = replay.generate_replay_dataset()["economic_evaluation"]
 
     # Persist Financial Audit Snapshot
     try:
         import uuid
+        # The engine returns net_avoided_loss_usd / roi_multiple and has no
+        # "breakdown" key. This read net_avoided_loss / roi_multiplier /
+        # breakdown.*, so every lookup missed and every row in the ledger was
+        # written from the hardcoded fallbacks - a fabricated audit trail.
         audit = FinancialAuditRecord(
             audit_id=f"AUDIT-{uuid.uuid4().hex[:8].upper()}",
             asset_id="SUB-PHX-DOWNTOWN-04",
-            # Fall back to 0.0 rather than inventing figures. These defaults
-            # used to restate the retired 2,791,338 / 1,541,338 / 1,250,000
-            # numbers, so a missing key silently wrote a fabricated audit row
-            # that looked authoritative in the ledger.
-            avoided_equipment_loss=float(result.get("breakdown", {}).get("avoided_catastrophic_replacement", 0.0)),
-            avoided_customer_outage_loss=float(result.get("breakdown", {}).get("avoided_customer_outage_costs", 0.0)),
-            avoided_aging_deferral=float(result.get("breakdown", {}).get("asset_life_extension_value", 0.0)),
-            net_avoided_loss=float(result.get("net_avoided_loss", 0.0)),
-            economic_roi_multiplier=float(result.get("roi_multiplier", 0.0)),
+            avoided_equipment_loss=float(result.get("avoided_outage_risk_usd", 0.0)),
+            avoided_customer_outage_loss=float(result.get("total_outage_consequence_usd", 0.0)),
+            avoided_aging_deferral=float(result.get("capital_aging_deferral_usd", 0.0)),
+            net_avoided_loss=float(result.get("net_avoided_loss_usd", 0.0)),
+            economic_roi_multiplier=float(result.get("roi_multiple", 0.0)),
         )
         await db_manager.save_financial_audit(audit)
     except Exception as exc:
