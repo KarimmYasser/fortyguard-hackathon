@@ -23,7 +23,7 @@ class ScanRequest(BaseModel):
     latitude: float = Field(default=33.4484)
     longitude: float = Field(default=-112.0740)
     polygon_aoi: Optional[Dict[str, Any]] = None
-    start_date: str = Field(default="2023-07-24")
+    start_date: str = Field(default="2023-07-19")
     analytic_type: str = Field(default="tcm", description="tcm | exceedance | persistence")
     threshold_c: Optional[float] = Field(default=40.0)
 
@@ -82,7 +82,14 @@ from src.db.models import MicroclimateParcelRecord
 @router.post("")
 async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
     """
-    Executes a high-resolution 2-meter thermal scan over target coordinates or polygon, logging to database.
+    Execute a 2-metre thermal scan over the requested point or polygon.
+
+    Returns a normalised `metrics` block whose 2m air temperature comes from the
+    heatmap `tcm` analytic. env_params is *not* a source of air temperature: it
+    echoes back whatever `temperature` you send, and its `heat_index_celsius`
+    is not on the Celsius scale despite the name (Houston returns 99.1 there
+    against a 39.8 apparent temperature). Reading that field as "2m Ambient"
+    was showing a Fahrenheit-scaled heat index as if it were air temperature.
     """
     client = AsyncFortyGuardClient()
     try:
@@ -95,7 +102,6 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
                 direction="above" if req.analytic_type in ("exceedance", "persistence") else None,
             )
         else:
-            # Point parcel environmental lookup
             res = await client.environmental_parameters(
                 latitude=req.latitude,
                 longitude=req.longitude,
@@ -104,26 +110,71 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
                 filter_type=3,
             )
 
+        # Real 2m curve for THIS location and date, from tcm.
+        forecast = await client.get_12h_forecast(
+            latitude=req.latitude,
+            longitude=req.longitude,
+            start_time=req.start_date,
+        )
+
+        # Forward the date. Without it this defaulted to the pinned Phoenix
+        # benchmark date, so a Houston 2025 scan came back stamped 2023-07-19.
         persistence = await client.get_persistence_and_exceedance(
             latitude=req.latitude,
             longitude=req.longitude,
             threshold_c=req.threshold_c or 40.0,
+            start_date=req.start_date,
+            hourly_forecast=forecast or None,
         )
 
-        # Persist microclimate parcel record
+        temps = [h["fortyguard_2m_ambient_c"] for h in forecast
+                 if h.get("fortyguard_2m_ambient_c") is not None] if forecast else []
+        coolest = [h["coolest_tile_2m_c"] for h in forecast
+                   if h.get("coolest_tile_2m_c") is not None] if forecast else []
+        peak_idx = temps.index(max(temps)) if temps else None
+        peak_hour = forecast[peak_idx] if peak_idx is not None else {}
+
+        metrics = {
+            "peak_2m_ambient_c": round(max(temps), 2) if temps else None,
+            "mean_2m_ambient_c": round(sum(temps) / len(temps), 2) if temps else None,
+            "coolest_tile_2m_c": round(min(coolest), 2) if coolest else None,
+            "intra_aoi_spread_c": peak_hour.get("intra_aoi_spread_c"),
+            "solar_irradiance_w_m2": peak_hour.get("solar_irradiance_w_m2"),
+            "wet_bulb_temp_c": peak_hour.get("wet_bulb_temp_c"),
+            "relative_humidity_pct": peak_hour.get("relative_humidity_pct"),
+            "persistence_hours_p40": persistence.get("persistence_hours_p40"),
+            "exceedance_degree_hours_h40": persistence.get("exceedance_degree_hours_h40"),
+            "thermal_soak_index_tsi": persistence.get("thermal_soak_index_tsi"),
+            "analysis_date": persistence.get("analysis_date") or req.start_date,
+            "data_source": (forecast[0].get("data_source") if forecast else None)
+                           or persistence.get("data_source"),
+            "n_hours": len(temps),
+        }
+
+        parcel_id = None
         try:
             import uuid
-            parcel_rec = MicroclimateParcelRecord(
-                parcel_id=f"PARCEL-{req.city[:3].upper()}-{uuid.uuid4().hex[:6].upper()}",
-                polygon_geojson=req.polygon_aoi or {
-                    "type": "Point",
-                    "coordinates": [req.longitude, req.latitude],
-                },
-                surface_temp_c=58.2,
-                convective_temp_2m_c=42.74,
-                asphalt_heat_trap_delta=1.1,
-            )
-            await db_manager.save_microclimate_parcel(parcel_rec)
+            # Persist what was actually measured. This used to write
+            # surface_temp_c=58.2 / convective_temp_2m_c=42.74 /
+            # asphalt_heat_trap_delta=1.1 for every scan regardless of city,
+            # so a Houston scan was stored as Phoenix constants.
+            if metrics["peak_2m_ambient_c"] is not None:
+                parcel_id = f"PARCEL-{req.city[:3].upper()}-{uuid.uuid4().hex[:6].upper()}"
+                parcel_rec = MicroclimateParcelRecord(
+                    parcel_id=parcel_id,
+                    polygon_geojson=req.polygon_aoi or {
+                        "type": "Point",
+                        "coordinates": [req.longitude, req.latitude],
+                    },
+                    # No surface-skin analytic is requested here, so report the
+                    # measured air temperature rather than inventing a skin temp.
+                    surface_temp_c=metrics["peak_2m_ambient_c"],
+                    convective_temp_2m_c=metrics["peak_2m_ambient_c"],
+                    asphalt_heat_trap_delta=metrics["intra_aoi_spread_c"] or 0.0,
+                )
+                await db_manager.save_microclimate_parcel(parcel_rec)
+            else:
+                logger.warning("Scan for %s produced no 2m series; nothing persisted.", req.city)
         except Exception as exc:
             logger.warning("Failed to persist microclimate parcel: %s", exc, exc_info=True)
 
@@ -131,9 +182,12 @@ async def execute_spatial_scan(req: ScanRequest) -> Dict[str, Any]:
             "status": "success",
             "city": req.city,
             "coordinates": {"lat": req.latitude, "lon": req.longitude},
+            "metrics": metrics,
+            "parcel_id": parcel_id,
+            "hourly_2m_profile": forecast,
             "scan_data": res,
             "persistence_layer": persistence,
         }
     except Exception as e:
+        logger.warning("Spatial scan failed for %s: %s", req.city, e, exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
-

@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import logging
 
-from typing import Dict, Any, List
-from fastapi import APIRouter
+from typing import Dict, Any, List, Optional
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from src.models.thermal import TransformerThermalParams
@@ -37,6 +37,13 @@ class SandboxSimulationRequest(BaseModel):
     canyon_aspect_ratio: float = Field(default=1.85, ge=0.2, le=4.0, description="Building canyon height-to-width ratio (H/W)")
     forced_cooling_enabled: bool = Field(default=True, description="Whether active auxiliary cooling pumps are available")
 
+    # Optional live-scan binding. Supply these to run the same physics against a
+    # freshly scanned location instead of the frozen Phoenix benchmark curve.
+    latitude: Optional[float] = Field(default=None, ge=-90.0, le=90.0, description="Run against a live 2m scan at this latitude")
+    longitude: Optional[float] = Field(default=None, ge=-180.0, le=180.0, description="Run against a live 2m scan at this longitude")
+    analysis_date: Optional[str] = Field(default=None, description="YYYY-MM-DD for the live scan; defaults to the benchmark date")
+    city: Optional[str] = Field(default=None, description="Label recorded with the simulation run")
+
 
 @router.post("/simulate")
 async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any]:
@@ -58,6 +65,51 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
     ]
 
+    # When coordinates are supplied, replace the benchmark curve with a real 2m
+    # profile for that location and date. Same solver, same gate, same economics
+    # - only the measured inputs change, which is what makes the study portable
+    # off Phoenix.
+    scan_binding: Dict[str, Any] = {"mode": "benchmark_replay", "city": "Phoenix, AZ"}
+    spread_c = req.intra_aoi_spread_c
+    if req.latitude is not None and req.longitude is not None:
+        from src.api.fortyguard_client import AsyncFortyGuardClient
+
+        client = AsyncFortyGuardClient()
+        live = await client.get_12h_forecast(
+            latitude=req.latitude,
+            longitude=req.longitude,
+            start_time=req.analysis_date,
+        )
+        usable = [h for h in (live or []) if h.get("fortyguard_2m_ambient_c") is not None]
+        if len(usable) < 2:
+            raise HTTPException(
+                status_code=502,
+                detail=(
+                    "Live 2m profile unavailable for that location/date, so the "
+                    "simulation was not run. Refusing to silently fall back to the "
+                    "Phoenix benchmark curve and report it as your scan."
+                ),
+            )
+        coolest_tile_temps = [h.get("coolest_tile_2m_c", h["fortyguard_2m_ambient_c"]) for h in usable]
+        solar_fluxes = [h.get("solar_irradiance_w_m2") or 0.0 for h in usable]
+        time_labels = [h.get("time_label", f"H{h.get('hour_index', i)}") for i, h in enumerate(usable)]
+        # Use the measured spread rather than the slider default.
+        peak = max(usable, key=lambda h: h["fortyguard_2m_ambient_c"])
+        spread_c = peak.get("intra_aoi_spread_c")
+        if spread_c is None:
+            spread_c = round(peak["fortyguard_2m_ambient_c"] - peak.get("coolest_tile_2m_c", peak["fortyguard_2m_ambient_c"]), 3)
+        scan_binding = {
+            "mode": "live_scan",
+            "city": req.city or f"{req.latitude:.4f}, {req.longitude:.4f}",
+            "latitude": req.latitude,
+            "longitude": req.longitude,
+            "analysis_date": req.analysis_date,
+            "n_hours": len(usable),
+            "peak_2m_ambient_c": round(peak["fortyguard_2m_ambient_c"], 2),
+            "measured_intra_aoi_spread_c": spread_c,
+            "data_source": usable[0].get("data_source"),
+        }
+
     # 1. Physical parameters scaled to user MVA
     tx_params = TransformerThermalParams(
         rated_mva=req.transformer_mva,
@@ -75,7 +127,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
 
     # 2. Canyon Aerodynamics
     canyon_res = canyon_engine.calculate_cooling_derate_factor(
-        fortyguard_2m_ambient_c=max(coolest_tile_temps) + req.intra_aoi_spread_c,
+        fortyguard_2m_ambient_c=max(coolest_tile_temps) + spread_c,
         solar_irradiance_w_m2=max(solar_fluxes),
     )
     eta_cool = canyon_res["cooling_derate_eta_cool"]
@@ -83,7 +135,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     # 3. Build Forecast Stream with user's microclimate delta
     forecast_dicts: List[Dict[str, Any]] = []
     for h, time_lbl, t_air, s_w in zip(range(6, 18), time_labels, coolest_tile_temps, solar_fluxes):
-        t_2m = t_air + req.intra_aoi_spread_c
+        t_2m = t_air + spread_c
         forecast_dicts.append(
             {
                 "hour_index": h,
@@ -254,6 +306,9 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
 
     return {
         "status": "success",
+        # Says plainly whether these numbers came from a live scan of the
+        # requested coordinates or from the frozen Phoenix benchmark curve.
+        "scan_binding": scan_binding,
         "inputs_applied": req.model_dump(),
         "timeline_steps": timeline_steps,
         "baseline_summary": {

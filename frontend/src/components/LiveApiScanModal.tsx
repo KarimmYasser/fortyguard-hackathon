@@ -62,6 +62,9 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [scanResult, setScanResult] = useState<any>(null);
   const [scanError, setScanError] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
 
   // Fetch usage on open
   const fetchUsage = async () => {
@@ -92,10 +95,47 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
     setStartDate(preset.date);
   };
 
+  // Runs the full multi-physics + CBF + economics stack against the coordinates
+  // that were just scanned, instead of the frozen Phoenix benchmark curve.
+  // 0.0 is a legitimate measurement (Houston genuinely logs P40 = 0.0h), so
+  // this must test for null, not falsiness. The previous panel used
+  // `value || '12.0'` and therefore relabelled a real zero as Phoenix's 12.0h.
+  const fmt = (v: any, unit = '') =>
+    v === null || v === undefined || Number.isNaN(v) ? '—' : `${v}${unit}`;
+
+  const handleAnalyzeScan = async () => {
+    setIsAnalyzing(true);
+    setAnalysis(null);
+    setAnalysisError(null);
+    try {
+      const resp = await fetch(`${API_BASE}/api/v1/sandbox/simulate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+          analysis_date: startDate,
+          city,
+        }),
+      });
+      if (!resp.ok) {
+        const errJson = await resp.json().catch(() => ({}));
+        throw new Error(errJson.detail || `Analysis failed with HTTP ${resp.status}`);
+      }
+      setAnalysis(await resp.json());
+    } catch (err: any) {
+      setAnalysisError(err.message || 'Analysis failed');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   const handleExecuteScan = async () => {
     setIsScanning(true);
     setScanResult(null);
     setScanError(null);
+    setAnalysis(null);
+    setAnalysisError(null);
 
     try {
       const resp = await fetch(`${API_BASE}/api/v1/scan`, {
@@ -305,29 +345,88 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-emerald-500/20 text-[11px]">
                 <div className="p-2 rounded-xl bg-slate-950/80">
-                  <div className="text-slate-500">2m Ambient:</div>
+                  <div className="text-slate-500">Peak 2m Air:</div>
                   <div className="text-sm font-bold text-rose-400">
-                    {scanResult?.scan_data?.result?.heat_index_celsius || '42.7'}°C
+                    {fmt(scanResult?.metrics?.peak_2m_ambient_c, '°C')}
                   </div>
                 </div>
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">Solar Irradiance:</div>
                   <div className="text-sm font-bold text-amber-400">
-                    {scanResult?.scan_data?.result?.solar_irradiance || '960'} W/m²
+                    {fmt(scanResult?.metrics?.solar_irradiance_w_m2, ' W/m²')}
                   </div>
                 </div>
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">Wet Bulb:</div>
                   <div className="text-sm font-bold text-cyan-400">
-                    {scanResult?.scan_data?.result?.wet_bulb_temperature_celsius || '24.6'}°C
+                    {fmt(scanResult?.metrics?.wet_bulb_temp_c, '°C')}
                   </div>
                 </div>
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">Persistence (P40):</div>
                   <div className="text-sm font-bold text-emerald-400">
-                    {scanResult?.persistence_layer?.persistence_hours_p40 || '12.0'}h
+                    {fmt(scanResult?.metrics?.persistence_hours_p40, 'h')}
                   </div>
                 </div>
+              </div>
+
+              <div className="pt-2 border-t border-emerald-500/20 space-y-2">
+                <div className="text-[10px] text-slate-400 leading-relaxed">
+                  {scanResult?.metrics?.n_hours ?? 0}h 2m profile ·{' '}
+                  {scanResult?.metrics?.analysis_date ?? '—'} · source{' '}
+                  <span className="text-slate-300">{scanResult?.metrics?.data_source ?? '—'}</span>
+                  {scanResult?.parcel_id && (
+                    <> · stored as <span className="text-emerald-300">{scanResult.parcel_id}</span> in <span className="text-emerald-300">microclimate_parcels</span></>
+                  )}
+                </div>
+
+                <button
+                  onClick={handleAnalyzeScan}
+                  disabled={isAnalyzing}
+                  className="w-full py-2 rounded-xl bg-amber-500/20 border border-amber-500/50 text-amber-300 font-bold text-[11px] hover:bg-amber-500/30 disabled:opacity-50 transition"
+                >
+                  {isAnalyzing ? 'Running multi-physics on this scan…' : 'Run Physics + Economics on This Scan'}
+                </button>
+
+                {analysisError && (
+                  <div className="text-[10px] text-rose-300 font-mono">{analysisError}</div>
+                )}
+
+                {analysis && (
+                  <div className="grid grid-cols-2 gap-2 text-[11px]">
+                    <div className="p-2 rounded-xl bg-slate-950/80">
+                      <div className="text-slate-500">Baseline hot-spot:</div>
+                      <div className="text-sm font-bold text-rose-400">
+                        {fmt(analysis?.baseline_summary?.peak_hot_spot_c, '°C')}
+                      </div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/80">
+                      <div className="text-slate-500">Mitigated hot-spot:</div>
+                      <div className="text-sm font-bold text-emerald-400">
+                        {fmt(analysis?.mitigated_summary?.peak_hot_spot_c, '°C')}
+                      </div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/80">
+                      <div className="text-slate-500">Net avoided loss:</div>
+                      <div className="text-sm font-bold text-amber-400">
+                        {analysis?.economic_evaluation?.net_avoided_loss_usd == null
+                          ? '—'
+                          : `$${Number(analysis.economic_evaluation.net_avoided_loss_usd).toLocaleString()}`}
+                      </div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/80">
+                      <div className="text-slate-500">ROI multiple:</div>
+                      <div className="text-sm font-bold text-cyan-400">
+                        {fmt(analysis?.economic_evaluation?.roi_multiple, '×')}
+                      </div>
+                    </div>
+                    <div className="col-span-2 text-[10px] text-slate-400">
+                      Mode <span className="text-slate-300">{analysis?.scan_binding?.mode ?? '—'}</span> ·
+                      measured spread {fmt(analysis?.scan_binding?.measured_intra_aoi_spread_c, '°C')} ·
+                      {' '}{analysis?.scan_binding?.n_hours ?? '—'}h solved
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
