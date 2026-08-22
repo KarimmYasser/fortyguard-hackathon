@@ -21,6 +21,7 @@ import {
   Compass,
   Activity,
   BookOpen,
+  Film,
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { startTourGuide } from '../utils/tourGuide';
@@ -43,6 +44,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [videoUnavailable, setVideoUnavailable] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleStartTour = () => {
@@ -71,11 +73,11 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   };
 
   const chapters: ChapterMarker[] = [
-    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.8M Risk)', icon: Flame },
+    { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.7M Risk)', icon: Flame },
     { time: 30, label: '0:30 4 Scientific Moats', desc: 'Soil Dryout & IEEE Physics ODEs', icon: Layers },
     { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + CBF-QP Safety Barrier', icon: Cpu },
     { time: 90, label: '1:30 Live Mission Control', desc: '12h Proactive Dispatch & What-If Studio', icon: Sliders },
-    { time: 135, label: '2:15 Auditable ROI', desc: 'LBNL ICE Model ($2.79M Net Savings)', icon: Calculator },
+    { time: 135, label: '2:15 Auditable ROI', desc: 'LBNL ICE Model ($2.74M Net Savings)', icon: Calculator },
     { time: 165, label: '2:45 Verification & Outro', desc: 'Tracks 06 & 02 Compliance Seals', icon: Award },
   ];
 
@@ -263,15 +265,30 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
         {/* Standard Native Video Player Card (Medium Cinema Size) */}
         <div className="max-w-6xl mx-auto w-full rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl p-2.5 sm:p-4">
-          <video
-            key={activeVideoSource}
-            ref={videoRef}
-            src={videoSources[activeVideoSource].url}
-            controls
-            playsInline
-            preload="metadata"
-            className="w-full aspect-video rounded-2xl bg-black shadow-inner"
-          />
+          {videoUnavailable ? (
+            <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800 flex flex-col items-center justify-center gap-3 px-8 text-center">
+              <Film className="h-8 w-8 text-slate-600" />
+              <p className="text-sm font-bold text-slate-300 font-heading uppercase tracking-wide">
+                Render not bundled with this deployment
+              </p>
+              <p className="text-xs text-slate-500 font-mono max-w-lg">
+                The pitch renders are large binaries kept out of the deploy. The current cut also
+                narrates figures superseded by the live-API capture, so it is intentionally not
+                served rather than shown with numbers the dashboard contradicts.
+              </p>
+            </div>
+          ) : (
+            <video
+              key={activeVideoSource}
+              ref={videoRef}
+              src={videoSources[activeVideoSource].url}
+              controls
+              playsInline
+              preload="metadata"
+              onError={() => setVideoUnavailable(true)}
+              className="w-full aspect-video rounded-2xl bg-black shadow-inner"
+            />
+          )}
         </div>
 
         {/* Chapter Jump Buttons (Aligned with Player) */}

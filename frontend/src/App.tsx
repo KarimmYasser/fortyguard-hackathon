@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { ReplayControlBar } from './components/ReplayControlBar';
 import { HeroKpiGrid } from './components/HeroKpiGrid';
+import { TabErrorBoundary } from './components/TabErrorBoundary';
 import { DataProvenanceBadge } from './components/DataProvenanceBadge';
 import { EChartsPhysicsTelemetry } from './components/EChartsPhysicsTelemetry';
 import { GeospatialMicroclimateViewer } from './components/GeospatialMicroclimateViewer';
@@ -132,164 +133,166 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 md:px-8 py-6 space-y-6">
-        {/* Global Replay Scrub Bar (Visible Across Interactive Simulation Tabs) */}
-        {activeTab !== 'home' && (
-          <ReplayControlBar
-            metadata={dataset.scenario_metadata}
-            steps={dataset.timeline_steps}
-            currentHourIndex={currentHourIndex}
-            onSelectHour={setCurrentHourIndex}
-            isPlaying={isPlaying}
-            onTogglePlay={() => setIsPlaying(!isPlaying)}
-            onReset={() => {
-              setIsPlaying(false);
-              setCurrentHourIndex(0);
-            }}
-            speed={playbackSpeed}
-            onChangeSpeed={setPlaybackSpeed}
-          />
-        )}
-
-        {/* TAB 0: Executive Home & Video Pitch Showcase */}
-        {activeTab === 'home' && (
-          <HomePitchViewer
-            onNavigateTab={setActiveTab}
-            onOpenLiveScan={() => setIsLiveScanOpen(true)}
-          />
-        )}
-
-        {/* TAB 1: Mission Control Overview */}
-        {activeTab === 'overview' && (
-          <div className="space-y-6">
-            {/* State the data's origin up front, rather than letting a
-                fixture-backed replay read as though it were a live feed. */}
-            <div className="flex items-center justify-end">
-              <DataProvenanceBadge
-                source={dataset.scenario_metadata.persistence_metrics.data_source}
-                analysisDate={dataset.scenario_metadata.persistence_metrics.analysis_date}
-              />
-            </div>
-
-            <HeroKpiGrid
-              isMitigated={isMitigatedMode}
-              baselineSummary={dataset.baseline_summary}
-              mitigatedSummary={dataset.mitigated_summary}
-              verdict={dataset.safety_gate_verdict}
-              economic={dataset.economic_evaluation}
-              persistence={dataset.scenario_metadata.persistence_metrics}
-              currentStep={currentStep}
-            />
-
-            <EChartsPhysicsTelemetry
+        <TabErrorBoundary name={activeTab}>
+          {/* Global Replay Scrub Bar (Visible Across Interactive Simulation Tabs) */}
+          {activeTab !== 'home' && (
+            <ReplayControlBar
+              metadata={dataset.scenario_metadata}
               steps={dataset.timeline_steps}
               currentHourIndex={currentHourIndex}
-              isMitigated={isMitigatedMode}
               onSelectHour={setCurrentHourIndex}
+              isPlaying={isPlaying}
+              onTogglePlay={() => setIsPlaying(!isPlaying)}
+              onReset={() => {
+                setIsPlaying(false);
+                setCurrentHourIndex(0);
+              }}
+              speed={playbackSpeed}
+              onChangeSpeed={setPlaybackSpeed}
             />
+          )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              <div className="lg:col-span-6">
-                <SafetyGateCard
-                  verdict={dataset.safety_gate_verdict}
-                  isMitigated={isMitigatedMode}
+          {/* TAB 0: Executive Home & Video Pitch Showcase */}
+          {activeTab === 'home' && (
+            <HomePitchViewer
+              onNavigateTab={setActiveTab}
+              onOpenLiveScan={() => setIsLiveScanOpen(true)}
+            />
+          )}
+
+          {/* TAB 1: Mission Control Overview */}
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              {/* State the data's origin up front, rather than letting a
+                  fixture-backed replay read as though it were a live feed. */}
+              <div className="flex items-center justify-end">
+                <DataProvenanceBadge
+                  source={dataset.scenario_metadata.persistence_metrics.data_source}
+                  analysisDate={dataset.scenario_metadata.persistence_metrics.analysis_date}
                 />
               </div>
-              <div className="lg:col-span-6">
-                <AuditLedger />
+
+              <HeroKpiGrid
+                isMitigated={isMitigatedMode}
+                baselineSummary={dataset.baseline_summary}
+                mitigatedSummary={dataset.mitigated_summary}
+                verdict={dataset.safety_gate_verdict}
+                economic={dataset.economic_evaluation}
+                persistence={dataset.scenario_metadata.persistence_metrics}
+                currentStep={currentStep}
+              />
+
+              <EChartsPhysicsTelemetry
+                steps={dataset.timeline_steps}
+                currentHourIndex={currentHourIndex}
+                isMitigated={isMitigatedMode}
+                onSelectHour={setCurrentHourIndex}
+              />
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="lg:col-span-6">
+                  <SafetyGateCard
+                    verdict={dataset.safety_gate_verdict}
+                    isMitigated={isMitigatedMode}
+                  />
+                </div>
+                <div className="lg:col-span-6">
+                  <AuditLedger />
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* TAB 2: Live What-If Stress Studio Sandbox */}
-        {activeTab === 'sandbox' && (
-          <div className="space-y-6">
-            <WhatIfSandboxPanel
-              onSimulateResult={handleSandboxSimulateResult}
-              onResetToDefault={fetchReplayData}
+          {/* TAB 2: Live What-If Stress Studio Sandbox */}
+          {activeTab === 'sandbox' && (
+            <div className="space-y-6">
+              <WhatIfSandboxPanel
+                onSimulateResult={handleSandboxSimulateResult}
+                onResetToDefault={fetchReplayData}
+              />
+
+              <HeroKpiGrid
+                isMitigated={isMitigatedMode}
+                baselineSummary={dataset.baseline_summary}
+                mitigatedSummary={dataset.mitigated_summary}
+                verdict={dataset.safety_gate_verdict}
+                economic={dataset.economic_evaluation}
+                persistence={dataset.scenario_metadata.persistence_metrics}
+                currentStep={currentStep}
+              />
+
+              <EChartsPhysicsTelemetry
+                steps={dataset.timeline_steps}
+                currentHourIndex={currentHourIndex}
+                isMitigated={isMitigatedMode}
+                onSelectHour={setCurrentHourIndex}
+              />
+            </div>
+          )}
+
+          {/* TAB 3: 72-Hour Compounding Heatwave */}
+          {activeTab === 'multi_day_72h' && (
+            <MultiDay72hHeatwaveViewer />
+          )}
+
+          {/* TAB 4: AC Distribution Feeder Power Flow */}
+          {activeTab === 'power_flow' && (
+            <ACPowerFlowSingleLineViewer />
+          )}
+
+          {/* TAB 5: IEEE Annex G Standards Benchmark */}
+          {activeTab === 'ieee_annex_g' && (
+            <IEEEAnnexGBenchmarkViewer />
+          )}
+
+          {/* TAB 6: Academic Provenance & alphaXiv Literature */}
+          {activeTab === 'academic_provenance' && (
+            <AcademicProvenanceViewer />
+          )}
+
+          {/* TAB 7: Hyperlocal 2m GIS Map */}
+          {activeTab === 'gis_map' && (
+            <GeospatialMicroclimateViewer
+
+              heatmapData={dataset.heatmap_geojson_tiles}
+              currentAmbient2m={currentStep.fortyguard_2m_ambient_c}
+              coolestTile2m={currentStep.coolest_tile_2m_c}
+              deltaAmbient={currentStep.intra_aoi_spread_c}
+              onOpenLiveScan={() => setIsLiveScanOpen(true)}
             />
+          )}
 
-            <HeroKpiGrid
-              isMitigated={isMitigatedMode}
-              baselineSummary={dataset.baseline_summary}
-              mitigatedSummary={dataset.mitigated_summary}
+          {/* TAB 7: Four Scientific Moats */}
+          {activeTab === 'physics_moats' && (
+            <ScientificMoatsViewer
+              soilState={dataset.soil_cable_state}
+              moistureState={dataset.virtual_moisture_state}
+              verdict={dataset.safety_gate_verdict}
+            />
+          )}
+
+          {/* TAB 8: LangGraph Engine */}
+          {activeTab === 'agent_graph' && (
+            <AgentGraphViewer
               verdict={dataset.safety_gate_verdict}
               economic={dataset.economic_evaluation}
-              persistence={dataset.scenario_metadata.persistence_metrics}
-              currentStep={currentStep}
             />
+          )}
 
-            <EChartsPhysicsTelemetry
-              steps={dataset.timeline_steps}
-              currentHourIndex={currentHourIndex}
-              isMitigated={isMitigatedMode}
-              onSelectHour={setCurrentHourIndex}
+          {/* TAB 9: Avoided Loss & ROI */}
+          {activeTab === 'financial_roi' && (
+            <EconomicAuditViewer
+              economic={dataset.economic_evaluation}
+              baselineSummary={dataset.baseline_summary}
+              mitigatedSummary={dataset.mitigated_summary}
             />
-          </div>
-        )}
+          )}
 
-        {/* TAB 3: 72-Hour Compounding Heatwave */}
-        {activeTab === 'multi_day_72h' && (
-          <MultiDay72hHeatwaveViewer />
-        )}
-
-        {/* TAB 4: AC Distribution Feeder Power Flow */}
-        {activeTab === 'power_flow' && (
-          <ACPowerFlowSingleLineViewer />
-        )}
-
-        {/* TAB 5: IEEE Annex G Standards Benchmark */}
-        {activeTab === 'ieee_annex_g' && (
-          <IEEEAnnexGBenchmarkViewer />
-        )}
-
-        {/* TAB 6: Academic Provenance & alphaXiv Literature */}
-        {activeTab === 'academic_provenance' && (
-          <AcademicProvenanceViewer />
-        )}
-
-        {/* TAB 7: Hyperlocal 2m GIS Map */}
-        {activeTab === 'gis_map' && (
-          <GeospatialMicroclimateViewer
-
-            heatmapData={dataset.heatmap_geojson_tiles}
-            currentAmbient2m={currentStep.fortyguard_2m_ambient_c}
-            coolestTile2m={currentStep.coolest_tile_2m_c}
-            deltaAmbient={currentStep.intra_aoi_spread_c}
-            onOpenLiveScan={() => setIsLiveScanOpen(true)}
-          />
-        )}
-
-        {/* TAB 7: Four Scientific Moats */}
-        {activeTab === 'physics_moats' && (
-          <ScientificMoatsViewer
-            soilState={dataset.soil_cable_state}
-            moistureState={dataset.virtual_moisture_state}
-            verdict={dataset.safety_gate_verdict}
-          />
-        )}
-
-        {/* TAB 8: LangGraph Engine */}
-        {activeTab === 'agent_graph' && (
-          <AgentGraphViewer
-            verdict={dataset.safety_gate_verdict}
-            economic={dataset.economic_evaluation}
-          />
-        )}
-
-        {/* TAB 9: Avoided Loss & ROI */}
-        {activeTab === 'financial_roi' && (
-          <EconomicAuditViewer
-            economic={dataset.economic_evaluation}
-            baselineSummary={dataset.baseline_summary}
-            mitigatedSummary={dataset.mitigated_summary}
-          />
-        )}
-
-        {/* TAB 12: Data Science & Analytics Studio */}
-        {activeTab === 'data_science' && (
-          <DataScienceStudio />
-        )}
+          {/* TAB 12: Data Science & Analytics Studio */}
+          {activeTab === 'data_science' && (
+            <DataScienceStudio />
+          )}
+        </TabErrorBoundary>
       </main>
 
       {/* Live FortyGuard API Cloud Ingestion Modal */}
