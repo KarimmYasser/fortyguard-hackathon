@@ -37,7 +37,28 @@ $$T_{a,eff}(t) = T_a(t) + \frac{\alpha_{abs} F_{view} A_{proj}}{h_{eff} A_{surf}
 
 ## 2. 🔥 72-Hour Continuous Compounding Soil Dryout Formulation (IEC 60287)
 
-Under extreme heatwave conditions (e.g. Phoenix July 2023), soil surrounding underground MV cables experiences cumulative evaporative moisture loss without overnight capillary refill:
+### 2.1 Environmental boundary provenance
+
+The `/api/v1/replay/72h-compounding` boundary is a frozen live FortyGuard capture,
+not a generated diurnal curve. `scripts/regenerate_phoenix_72h_fixture.py` fetched
+all 24 hourly `tcm` observations for each of July 24–26, 2023 at Phoenix
+(33.4484, -112.0740), validated an unbroken 00:00–23:00 sequence for every day,
+and wrote 72 rows to
+`src/api/fixtures/phoenix_heatwave_2023_72h.json`. The measured daily mean-tile
+peaks are 42.44, 42.76, and 42.52 °C; overnight minima are 35.33, 35.13, and
+33.43 °C.
+
+Measured fields are 2 m mean/min/max tile temperature, relative humidity,
+wet-bulb temperature, and cloud cover. Solar irradiance is derived from the
+live daily GHI/cloud response plus solar geometry. Transformer load, soil
+moisture evolution, cable state, and BESS dispatch remain modelled because
+FortyGuard is an environmental API and exposes no SCADA. The fixture keeps the
+endpoint deterministic and fast; regeneration uses the durable API cache and
+refuses to overwrite the fixture unless all 72 hours have live provenance.
+
+### 2.2 Compounding model
+
+Under extreme heatwave conditions, soil surrounding underground MV cables experiences cumulative evaporative moisture loss without overnight capillary refill:
 $$\theta_v(t + \Delta t) = \max\left(0.035, \theta_v(t) - \dot{e}_{evap}(T_{2m})\right)$$
 $$\rho_{soil}(\theta_v) = \rho_{wet} + \frac{\rho_{dry} - \rho_{wet}}{1 + \exp\left(a (\theta_v - \theta_{crit})\right)}$$
 

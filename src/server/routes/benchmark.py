@@ -26,8 +26,10 @@ async def get_ieee_annex_g_validation() -> Dict[str, Any]:
 @router.get("/api/v1/replay/72h-compounding")
 async def get_72h_compounding_replay() -> Dict[str, Any]:
     """
-    Returns the continuous 72-hour (3-day) rolling heatwave simulation (July 24-26, 2023)
-    showing compounding soil moisture depletion, surging rho_soil, and multi-day Arrhenius degradation.
+    Replays a frozen live FortyGuard capture containing every hour from
+    July 24-26, 2023 through the continuous transformer / cable model. The
+    environmental boundary is measured; load, soil evolution and mitigation
+    remain explicitly modelled because FortyGuard exposes no grid telemetry.
     """
     engine = MultiDayHeatwaveEngine()
     result = engine.run_72h_simulation()

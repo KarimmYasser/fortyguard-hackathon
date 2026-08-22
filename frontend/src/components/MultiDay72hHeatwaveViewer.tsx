@@ -25,6 +25,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
   const currentDaySteps = (data72h.timeline_72h || []).filter(
     (s: any) => s.day_number === selectedDay
   );
+  const provenance = data72h.scenario_metadata?.provenance;
 
   return (
     <div className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl space-y-6">
@@ -39,31 +40,31 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
           <div>
             <div className="flex items-center gap-2.5">
               <h2 className="text-base font-black text-white uppercase tracking-wide font-heading">
-                72-Hour Compounding Multi-Day Heatwave (July 24-26, 2023)
+                72-Hour Compounding Heatwave · Live Capture Replay
               </h2>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-800 animate-pulse">
-                COMPOUNDING DRYOUT
+                FORTYGUARD 24×3
               </span>
             </div>
             <p className="text-xs text-slate-400 font-mono mt-0.5">
-              Continuous 3-day simulation showing overnight heat trapping and non-linear IEC 60287 soil moisture depletion
+              Every hourly weather boundary measured July 24–26, 2023 · grid load, soil evolution, and mitigation explicitly modelled
             </p>
           </div>
         </div>
 
         {/* Day Switcher */}
         <div id="tour-72h-day-selector" className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
-          {[1, 2, 3].map((d) => (
+          {days.map((day: any) => (
             <button
-              key={d}
-              onClick={() => setSelectedDay(d)}
+              key={day.day_number}
+              onClick={() => setSelectedDay(day.day_number)}
               className={`px-3.5 py-1.5 rounded-xl font-bold transition-all ${
-                selectedDay === d
+                selectedDay === day.day_number
                   ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-md shadow-rose-500/30'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              Day {d} (July {23 + d})
+              Day {day.day_number} ({day.date})
             </button>
           ))}
         </div>
@@ -90,6 +91,14 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
 
               <div className="space-y-2 text-[11px] border-t border-slate-800/80 pt-2">
                 <div className="flex justify-between">
+                  <span className="text-slate-400">Coolest tile @ peak:</span>
+                  <span className="text-cyan-300 font-bold">{day.coolest_tile_at_peak_c}°C</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Measured AOI spread:</span>
+                  <span className="text-cyan-300 font-bold">{day.intra_aoi_spread_c}°C</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-slate-400">Soil Resistivity (ρ):</span>
                   <span className="text-amber-400 font-bold">{day.end_of_day_soil_resistivity_rho} K·m/W</span>
                 </div>
@@ -109,6 +118,13 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
             </div>
           );
         })}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-cyan-900/60 bg-cyan-950/20 px-4 py-2 text-[10px] font-mono text-cyan-200">
+        <span className="font-bold">ENVIRONMENT: {provenance?.data_source ?? '—'}</span>
+        <span>72 hourly tcm rows</span>
+        <span>Solar: live GHI/cloud + geometry</span>
+        <span>Load/soil/dispatch: modelled</span>
       </div>
 
       {/* 24-Hour Timeline of Selected Day */}

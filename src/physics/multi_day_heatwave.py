@@ -7,7 +7,8 @@ and non-linear IEC 60287 soil moisture dryout across 72 hours.
 
 from __future__ import annotations
 
-import math
+import json
+from pathlib import Path
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 
@@ -25,7 +26,7 @@ class DaySummary(BaseModel):
     day_number: int
     date: str
     peak_ambient_2m_c: float
-    airport_peak_c: float
+    coolest_tile_at_peak_c: float
     intra_aoi_spread_c: float
     end_of_day_soil_resistivity_rho: float
     cable_conductor_peak_c: float
@@ -46,6 +47,7 @@ class MultiDaySimulationResult(BaseModel):
     total_avoided_loss_of_life_hours: float
     cumulative_net_avoided_loss_usd: float
     compounding_soil_dryout_factor: float
+    scenario_metadata: Dict[str, Any]
 
 
 class MultiDayHeatwaveEngine:
@@ -62,62 +64,55 @@ class MultiDayHeatwaveEngine:
         self.economic_engine = EconomicEngine()
         self.safety_gate = CBFSafetyGate(thermal_params=self.tx_params)
 
+    FIXTURE_PATH = (
+        Path(__file__).resolve().parents[1]
+        / "api"
+        / "fixtures"
+        / "phoenix_heatwave_2023_72h.json"
+    )
+
+    @staticmethod
+    def _modelled_load_ratio(hour: int) -> float:
+        """Grid load assumption; FortyGuard supplies weather, not SCADA."""
+        if 0 <= hour < 7:
+            return 0.65
+        if 7 <= hour < 12:
+            return 0.95
+        if 12 <= hour < 17:
+            return 1.18
+        if 17 <= hour < 22:
+            return 1.05
+        return 0.75
+
+    def _load_capture(self) -> Dict[str, Any]:
+        """Load and strictly validate the frozen live FortyGuard capture."""
+        if not self.FIXTURE_PATH.exists():
+            raise FileNotFoundError(
+                f"72h live capture missing: {self.FIXTURE_PATH}. "
+                "Run scripts/regenerate_phoenix_72h_fixture.py."
+            )
+        capture = json.loads(self.FIXTURE_PATH.read_text(encoding="utf-8"))
+        rows = capture.get("hourly_profile_72h") or []
+        if len(rows) != 72:
+            raise ValueError(f"72h live capture has {len(rows)} rows; expected exactly 72")
+        expected = list(range(72))
+        actual = [row.get("global_hour") for row in rows]
+        if actual != expected:
+            raise ValueError("72h live capture hours are missing, duplicated, or out of order")
+        if any(not str(row.get("data_source", "")).startswith("fortyguard_live") for row in rows):
+            raise ValueError("72h capture contains a row without live FortyGuard provenance")
+        return capture
+
     def generate_72h_boundary_forcing(self) -> List[Dict[str, Any]]:
-        """
-        Generates 72 hours of realistic Phoenix July 24-26, 2023 hourly microclimate data.
-        Day 1: July 19 (Peak 2m 42.74°C / coolest AOI tile 42.26°C)
-        Day 2: July 25 (Peak 48.1°C / Airport 43.5°C)
-        Day 3: July 26 (Peak 48.3°C / Airport 43.8°C - 119°F Historic High)
-        """
-        steps = []
-        dates = ["2023-07-24", "2023-07-25", "2023-07-26"]
-        peak_deltas = [4.5, 4.6, 4.7]
-        airport_peaks = [43.1, 43.5, 43.8]
-
-        for d_idx, (date_str, delta, air_peak) in enumerate(zip(dates, peak_deltas, airport_peaks)):
-            min_temp = 33.0 + d_idx * 0.5  # Night-time minimum climbs steadily
-            for h in range(24):
-                if h < 5:
-                    rad = math.cos(math.pi * (h + 10) / 19.0)
-                    t_air = min_temp + (air_peak - min_temp) * 0.15 * (1.0 + rad)
-                elif 5 <= h <= 14:
-                    rad = math.sin(math.pi * (h - 5) / 18.0)
-                    t_air = min_temp + (air_peak - min_temp) * rad
-                else:
-                    rad = math.cos(math.pi * (h - 14) / 15.0)
-                    t_air = min_temp + (air_peak - min_temp) * 0.5 * (1.0 + rad)
-
-                t_2m = t_air + delta * (0.4 + 0.6 * max(0.0, math.sin(math.pi * (h - 6) / 12.0) if 6 <= h <= 18 else 0.0))
-
-                solar = 0.0
-                if 6 <= h <= 18:
-                    solar = max(0.0, 980.0 * math.sin(math.pi * (h - 6) / 12.0))
-
-                if 0 <= h < 7:
-                    base_k = 0.65
-                elif 7 <= h < 12:
-                    base_k = 0.95
-                elif 12 <= h < 17:
-                    base_k = 1.18
-                elif 17 <= h < 22:
-                    base_k = 1.05
-                else:
-                    base_k = 0.75
-
-                steps.append({
-                    "global_hour": d_idx * 24 + h,
-                    "day_index": d_idx + 1,
-                    "date": date_str,
-                    "hour_of_day": h,
-                    "time_label": f"{h:02d}:00",
-                    "airport_temp_c": round(t_air, 1),
-                    "fortyguard_2m_ambient_c": round(t_2m, 1),
-                    "intra_aoi_spread_c": round(t_2m - t_air, 1),
-                    "solar_irradiance_w_m2": round(solar, 1),
-                    "baseline_load_k": round(base_k, 2),
-                })
-
-        return steps
+        """Return measured 24×3 boundary forcing plus an explicit load model."""
+        capture = self._load_capture()
+        return [
+            {
+                **row,
+                "baseline_load_k": self._modelled_load_ratio(int(row["hour_of_day"])),
+            }
+            for row in capture["hourly_profile_72h"]
+        ]
 
     def run_72h_simulation(self) -> MultiDaySimulationResult:
         """
@@ -137,23 +132,26 @@ class MultiDayHeatwaveEngine:
         total_mit_life = 0.0
 
         soil_moisture = 0.18
+        initial_soil_resistivity = self.soil_engine.calculate_soil_thermal_resistivity(soil_moisture)
+        final_soil_resistivity = initial_soil_resistivity
         bess_soc = 85.0
 
-        # 980 was passed positionally into reference_wind_speed_m_s, i.e. a solar
-        # irradiance figure landing in the wind slot and modelling a 980 m/s wind,
-        # which massively over-estimated convective heat rejection. Both values
-        # also predate the live capture.
+        # Derive the canyon boundary from the measured hottest hour instead of
+        # importing constants from the separate July 19 benchmark. Wind remains
+        # an explicit model assumption because FortyGuard exposes no wind field.
+        hottest_boundary = max(forcing_steps, key=lambda row: row["fortyguard_2m_ambient_c"])
         canyon_res = self.canyon_engine.calculate_cooling_derate_factor(
-            fortyguard_2m_ambient_c=42.74,
+            fortyguard_2m_ambient_c=hottest_boundary["fortyguard_2m_ambient_c"],
             reference_wind_speed_m_s=2.8,
-            solar_irradiance_w_m2=889.8,
+            solar_irradiance_w_m2=hottest_boundary["solar_irradiance_w_m2"],
         )
         eta_cool = canyon_res["cooling_derate_eta_cool"]
 
         day_base_life = 0.0
         day_mit_life = 0.0
         day_peak_2m = 0.0
-        day_peak_air = 0.0
+        day_coolest_at_peak = 0.0
+        day_spread_at_peak = 0.0
         day_peak_base_hs = 0.0
         day_peak_mit_hs = 0.0
         day_peak_cable_tc = 0.0
@@ -163,12 +161,16 @@ class MultiDayHeatwaveEngine:
             h_day = step["hour_of_day"]
             day_num = step["day_index"]
             t_2m = step["fortyguard_2m_ambient_c"]
-            t_air = step["airport_temp_c"]
+            coolest_tile = step["coolest_tile_2m_c"]
             solar = step["solar_irradiance_w_m2"]
             base_k = step["baseline_load_k"]
 
-            day_peak_2m = max(day_peak_2m, t_2m)
-            day_peak_air = max(day_peak_air, t_air)
+            # Spread is spatial and must be taken from the same hour as the
+            # daily AOI peak, never by subtracting extrema from different hours.
+            if t_2m > day_peak_2m:
+                day_peak_2m = t_2m
+                day_coolest_at_peak = coolest_tile
+                day_spread_at_peak = step["intra_aoi_spread_c"]
 
             # IEC 60287 Compounding Evaporative Soil Moisture Loss
             # Rate increases in afternoon heat and compounds across Day 1 -> 2 -> 3
@@ -176,6 +178,7 @@ class MultiDayHeatwaveEngine:
             soil_moisture = max(0.035, soil_moisture - evap_rate)
 
             rho_soil = self.soil_engine.calculate_soil_thermal_resistivity(soil_moisture)
+            final_soil_resistivity = rho_soil
             cable_tc = self.soil_engine.calculate_cable_temperature(
                 current_ampacity_ratio=base_k,
                 rho_soil=rho_soil,
@@ -232,8 +235,15 @@ class MultiDayHeatwaveEngine:
                 "hour_of_day": h_day,
                 "time_label": f"D{day_num} {step['time_label']}",
                 "fortyguard_2m_ambient_c": t_2m,
-                "airport_temp_c": t_air,
+                "coolest_tile_2m_c": coolest_tile,
+                "tile_peak_2m_c": step["tile_peak_2m_c"],
+                "intra_aoi_spread_c": step["intra_aoi_spread_c"],
+                "relative_humidity_pct": step["relative_humidity_pct"],
+                "wet_bulb_temp_c": step["wet_bulb_temp_c"],
+                "cloud_cover_pct": step["cloud_cover_pct"],
                 "solar_irradiance_w_m2": solar,
+                "boundary_data_source": step["data_source"],
+                "baseline_load_k": base_k,
                 "soil_resistivity_rho": round(rho_soil, 3),
                 "soil_moisture_volumetric": round(soil_moisture, 3),
                 "cable_conductor_temp_c": round(cable_tc, 1),
@@ -250,9 +260,9 @@ class MultiDayHeatwaveEngine:
                 days_summary.append(DaySummary(
                     day_number=day_num,
                     date=step["date"],
-                    peak_ambient_2m_c=round(day_peak_2m, 1),
-                    airport_peak_c=round(day_peak_air, 1),
-                    intra_aoi_spread_c=round(day_peak_2m - day_peak_air, 1),
+                    peak_ambient_2m_c=round(day_peak_2m, 2),
+                    coolest_tile_at_peak_c=round(day_coolest_at_peak, 2),
+                    intra_aoi_spread_c=round(day_spread_at_peak, 2),
                     end_of_day_soil_resistivity_rho=round(rho_soil, 2),
                     cable_conductor_peak_c=round(day_peak_cable_tc, 1),
                     baseline_peak_hot_spot_c=round(day_peak_base_hs, 1),
@@ -263,7 +273,8 @@ class MultiDayHeatwaveEngine:
                 day_base_life = 0.0
                 day_mit_life = 0.0
                 day_peak_2m = 0.0
-                day_peak_air = 0.0
+                day_coolest_at_peak = 0.0
+                day_spread_at_peak = 0.0
                 day_peak_base_hs = 0.0
                 day_peak_mit_hs = 0.0
                 day_peak_cable_tc = 0.0
@@ -273,7 +284,7 @@ class MultiDayHeatwaveEngine:
         cum_avoided_loss = (0.98 - 0.01) * c_consequence + (avoided_life_hours * 1.944) - (3 * 469.0)
 
         return MultiDaySimulationResult(
-            scenario_name="Phoenix July 24-26, 2023 Compounding 72-Hour Heatwave Benchmark",
+            scenario_name="Phoenix July 24-26, 2023 FortyGuard 72-Hour Live Capture Replay",
             total_hours=72,
             days_summary=days_summary,
             timeline_72h=timeline_72h,
@@ -281,5 +292,8 @@ class MultiDayHeatwaveEngine:
             total_mitigated_loss_of_life_hours=round(total_mit_life, 1),
             total_avoided_loss_of_life_hours=round(avoided_life_hours, 1),
             cumulative_net_avoided_loss_usd=round(cum_avoided_loss, 2),
-            compounding_soil_dryout_factor=round(2.48 / 0.95, 2),
+            compounding_soil_dryout_factor=round(
+                final_soil_resistivity / initial_soil_resistivity, 2
+            ),
+            scenario_metadata=self._load_capture()["scenario_metadata"],
         )

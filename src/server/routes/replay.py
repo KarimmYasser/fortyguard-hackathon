@@ -45,12 +45,14 @@ async def get_phoenix_2023_replay(response: Response) -> Dict[str, Any]:
         for s in steps:
             rec = SubstationTelemetryRecord(
                 asset_id="SUB-PHX-DOWNTOWN-04",
-                hour_step=s.get("hour_index", 0),
-                ambient_c=s.get("fortyguard_2m_ambient_c", 43.1),
-                top_oil_c=s.get("mitigated_top_oil_c", 98.0),
-                hot_spot_c=s.get("mitigated_hot_spot_c", 136.8),
-                aging_factor=s.get("mitigated_aging_factor_v", 1.8),
-                load_ratio=s.get("mitigated_load_k", 0.88),
+                # A missing replay field is a schema defect, not permission to
+                # persist a plausible-looking temperature or loading constant.
+                hour_step=s["hour_index"],
+                ambient_c=s["fortyguard_2m_ambient_c"],
+                top_oil_c=s["mitigated_top_oil_c"],
+                hot_spot_c=s["mitigated_hot_spot_c"],
+                aging_factor=s["mitigated_aging_factor_v"],
+                load_ratio=s["mitigated_load_k"],
                 bess_dispatch_mw=4.5,
                 is_mitigated=True,
             )
