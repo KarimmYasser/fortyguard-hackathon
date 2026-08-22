@@ -6,7 +6,6 @@
     "build": "npm --prefix frontend run build"
   },
   "devDependencies": {
-    "playwright": "^1.62.1",
     "puppeteer": "^25.8.0"
   }
 }

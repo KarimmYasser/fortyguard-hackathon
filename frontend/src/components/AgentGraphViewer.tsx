@@ -80,8 +80,8 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       role: 'SCADA Work Order & Public Advisory',
       type: 'Downstream Integration',
       inputs: ['Approved Actions', 'Safety Gate Certificate', 'Economic ROI Evaluation'],
-      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Financial Ledger ($2.79M Saved)'],
-      reasoning: 'Dispatched automated SCADA commands to substation pumps and BESS inverters; logged $2.79M net avoided loss to utility reliability ledger.',
+      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Financial Ledger ($2.74M Saved)'],
+      reasoning: 'Dispatched automated SCADA commands to substation pumps and BESS inverters; logged $2.74M net avoided loss to utility reliability ledger.',
     },
   ];
 

@@ -21,7 +21,7 @@ Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track
 - `assets/scene2.jpg` - 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
 - `assets/scene3.jpg` - 4-Layer Agentic Architecture & CBF-QP Mathematical Safety Shield.
 - `assets/scene4.jpg` - Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
-- `assets/scene5.jpg` - Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.79M Net Avoided Loss, 5,835x ROI).
+- `assets/scene5.jpg` - Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.74M Net Avoided Loss, 5,835x ROI).
 - `assets/scene6.jpg` - Hackathon Tracks 06 & 02 lockup, IEEE compliance seals, author credits, and live platform URL.
 
 ## Customizations

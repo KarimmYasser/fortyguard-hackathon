@@ -171,7 +171,7 @@ export const startTourGuide = ({
             popover: {
               title: '💰 Tab 11: Avoided Loss & ROI Audit',
               description:
-                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.79M net savings and 5,835x economic ROI per heatwave event.',
+                'Audit investment-grade economics with the DOE LBNL ICE model showing $2.74M net savings and 5,835x economic ROI per heatwave event.',
               side: 'top',
               align: 'start',
             },
@@ -571,7 +571,7 @@ export const startTourGuide = ({
             popover: {
               title: '💵 Quantified Outage & Capital Protection',
               description:
-                'Auditable breakdown of avoided catastrophic replacement costs ($1.25M), customer interruption costs (VoLL), and capital aging deferral ($2.79M net savings).',
+                'Auditable breakdown of avoided catastrophic replacement costs ($1.25M), customer interruption costs (VoLL), and capital aging deferral ($2.74M net savings).',
               side: 'top',
               align: 'center',
             },

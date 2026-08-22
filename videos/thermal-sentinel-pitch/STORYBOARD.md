@@ -57,7 +57,7 @@ High-fidelity Mission Control view. Baseline temperature curve spikes to $165.7^
 
 ## Frame 5 - Auditable ROI & Financial Impact (LBNL ICE Standard)
 
-- scene: Investment-grade financial audit with LBNL ICE Standard, 5,835x ROI badge, and $2.79M avoided loss breakdown
+- scene: Investment-grade financial audit with LBNL ICE Standard, 5,835x ROI badge, and $2.74M avoided loss breakdown
 - duration: 30s
 - poster: 145s
 - transition_in: rack-focus

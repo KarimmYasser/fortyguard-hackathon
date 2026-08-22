@@ -37,7 +37,7 @@ export const ReplayScrubber: React.FC<ReplayScrubberProps> = ({
                 {metadata.name}
               </h2>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                119°F PEAK RECORD
+                108.9°F MEASURED PEAK
               </span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-400 mt-0.5">
