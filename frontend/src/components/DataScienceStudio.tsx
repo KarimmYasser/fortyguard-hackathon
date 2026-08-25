@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 
-type SubSection = 'eda' | 'correlation' | 'risk' | 'ml' | 'temporal';
+type SubSection = 'eda' | 'correlation' | 'spatial' | 'risk' | 'ml' | 'temporal';
 
 interface FeatureStat {
   feature: string; count: number; mean: number; std: number;
@@ -27,6 +27,8 @@ export const DataScienceStudio: React.FC = () => {
   const [activeSection, setActiveSection] = useState<SubSection>('eda');
   const [edaData, setEdaData] = useState<any>(null);
   const [corrData, setCorrData] = useState<any>(null);
+  const [spatialData, setSpatialData] = useState<any>(null);
+  const [selectedSpatialModel, setSelectedSpatialModel] = useState<string>('canopy_vs_persistence');
   const [riskData, setRiskData] = useState<any>(null);
   const [mlData, setMlData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +39,7 @@ export const DataScienceStudio: React.FC = () => {
       const endpoints: Record<SubSection, string> = {
         eda: '/api/v1/analytics/eda',
         correlation: '/api/v1/analytics/correlation',
+        spatial: '/api/v1/analytics/spatial-regression',
         risk: '/api/v1/analytics/risk-distribution',
         ml: '/api/v1/analytics/ml-overview',
         temporal: '/api/v1/analytics/risk-distribution',
@@ -46,6 +49,7 @@ export const DataScienceStudio: React.FC = () => {
         const json = await resp.json();
         if (section === 'eda') setEdaData(json);
         else if (section === 'correlation') setCorrData(json);
+        else if (section === 'spatial') setSpatialData(json);
         else if (section === 'risk' || section === 'temporal') setRiskData(json);
         else if (section === 'ml') setMlData(json);
       }
@@ -58,10 +62,12 @@ export const DataScienceStudio: React.FC = () => {
   const sections: { id: SubSection; label: string; icon: React.ReactNode }[] = [
     { id: 'eda', label: 'EDA & Features', icon: <BarChart3 size={16} /> },
     { id: 'correlation', label: 'Correlation Matrix', icon: <TrendingUp size={16} /> },
+    { id: 'spatial', label: 'Spatial Regression (OLS)', icon: <Layers size={16} /> },
     { id: 'risk', label: 'Risk Distribution', icon: <AlertTriangle size={16} /> },
     { id: 'ml', label: 'ML Models', icon: <Brain size={16} /> },
     { id: 'temporal', label: 'Temporal Patterns', icon: <Clock size={16} /> },
   ];
+
 
   const riskColor = (tier: string) => {
     if (tier === 'CRITICAL') return '#ef4444';
@@ -300,8 +306,227 @@ export const DataScienceStudio: React.FC = () => {
         </div>
       )}
 
-      {/* ── SECTION 3: RISK DISTRIBUTION ── */}
+      {/* ── SECTION 3: SPATIAL REGRESSION & MORPHOLOGY ── */}
+      {activeSection === 'spatial' && spatialData && !isLoading && (
+        <div id="tour-data-science-spatial">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <h3 style={{ color: '#f1f5f9', fontSize: 16, margin: 0 }}>📐 Spatial Bivariate Regression & Urban Morphology</h3>
+              <p style={{ color: '#64748b', fontSize: 12, margin: '4px 0 0' }}>
+                Empirical Ordinary Least Squares (OLS) regression & Global Moran's I spatial clustering (FortyGuard ML Session 07).
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {[
+                { id: 'canopy_vs_persistence', label: '🌳 Canopy vs P₄₀' },
+                { id: 'asphalt_vs_delta_t', label: '🛣️ Asphalt vs ΔT₂ₘ' },
+                { id: 'canyon_aspect_vs_cooling_derate', label: '🏙️ Canyon H/W vs Derate' },
+              ].map(m => (
+                <button
+                  key={m.id}
+                  onClick={() => setSelectedSpatialModel(m.id)}
+                  style={{
+                    padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: 'none',
+                    background: selectedSpatialModel === m.id ? 'linear-gradient(135deg, #06b6d4, #3b82f6)' : '#1e293b',
+                    color: selectedSpatialModel === m.id ? '#fff' : '#94a3b8',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {spatialData.models && spatialData.models[selectedSpatialModel] && (() => {
+            const m = spatialData.models[selectedSpatialModel];
+            const pts = m.scatter_points || [];
+            const xs = pts.map((p: any) => p.x);
+            const ys = pts.map((p: any) => p.y);
+            const minX = Math.min(...xs, 0);
+            const maxX = Math.max(...xs, 1);
+            const minY = Math.min(...ys, 0);
+            const maxY = Math.max(...ys, 1);
+            const rangeX = maxX - minX || 1;
+            const rangeY = maxY - minY || 1;
+
+            const scaleX = (val: number) => 40 + ((val - minX) / rangeX) * 420;
+            const scaleY = (val: number) => 220 - ((val - minY) / rangeY) * 180;
+
+            return (
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 1.2fr) minmax(300px, 0.8fr)', gap: 20, marginBottom: 20 }}>
+                {/* SVG Scatter + Trendline Chart */}
+                <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px solid #1e293b' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9' }}>{m.title}</span>
+                    <span style={{ fontSize: 11, color: '#06b6d4', background: 'rgba(6,182,212,0.15)', padding: '2px 8px', borderRadius: 4, fontFamily: 'monospace' }}>
+                      R² = {m.r_squared} · p = {m.p_value}
+                    </span>
+                  </div>
+
+                  <svg viewBox="0 0 500 250" style={{ width: '100%', height: 260, overflow: 'visible' }}>
+                    {/* Grid lines */}
+                    {[0, 0.25, 0.5, 0.75, 1].map((pct, i) => (
+                      <g key={i}>
+                        <line x1="40" y1={scaleY(minY + pct * rangeY)} x2="470" y2={scaleY(minY + pct * rangeY)} stroke="#1e293b" strokeDasharray="3 3" />
+                        <text x="35" y={scaleY(minY + pct * rangeY) + 3} fill="#64748b" fontSize="9" textAnchor="end">
+                          {(minY + pct * rangeY).toFixed(1)}
+                        </text>
+                      </g>
+                    ))}
+
+                    {/* Trendline */}
+                    {m.trendline_points && m.trendline_points.length > 1 && (
+                      <line
+                        x1={scaleX(m.trendline_points[0].x)}
+                        y1={scaleY(m.trendline_points[0].y)}
+                        x2={scaleX(m.trendline_points[m.trendline_points.length - 1].x)}
+                        y2={scaleY(m.trendline_points[m.trendline_points.length - 1].y)}
+                        stroke="#06b6d4"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                    )}
+
+                    {/* Scatter Points */}
+                    {pts.map((p: any, i: number) => {
+                      const cx = scaleX(p.x);
+                      const cy = scaleY(p.y);
+                      const isHighRisk = Math.abs(p.residual) > 1.0;
+                      return (
+                        <g key={i}>
+                          <circle
+                            cx={cx}
+                            cy={cy}
+                            r={5.5}
+                            fill={isHighRisk ? '#f97316' : '#8b5cf6'}
+                            stroke="#0f172a"
+                            strokeWidth="1.5"
+                          >
+                            <title>{`${p.label}: (${p.x} ${m.feature_unit}, ${p.y} ${m.target_unit}) residual=${p.residual}`}</title>
+                          </circle>
+                          <text x={cx + 7} y={cy + 3} fill="#94a3b8" fontSize="8">
+                            {p.label.split(' ')[0]}
+                          </text>
+                        </g>
+                      );
+                    })}
+
+                    {/* Axis Labels */}
+                    <text x="255" y="245" fill="#94a3b8" fontSize="10" textAnchor="middle">
+                      {m.feature_name} ({m.feature_unit}) →
+                    </text>
+                    <text x="15" y="130" fill="#94a3b8" fontSize="10" textAnchor="middle" transform="rotate(-90 15 130)">
+                      ↑ {m.target_name} ({m.target_unit})
+                    </text>
+                  </svg>
+                </div>
+
+                {/* Statistical Parameters & Narrative */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px solid #1e293b' }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                      Model Summary Parameters
+                    </span>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 10 }}>
+                      <div style={{ background: '#1e293b', padding: '10px 12px', borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: '#64748b' }}>R² Determination</div>
+                        <div style={{ fontSize: 18, fontWeight: 700, color: '#06b6d4' }}>{m.r_squared}</div>
+                      </div>
+                      <div style={{ background: '#1e293b', padding: '10px 12px', borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: '#64748b' }}>Pearson r</div>
+                        <div style={{ fontSize: 18, fontWeight: 700, color: m.pearson_r < 0 ? '#f43f5e' : '#10b981' }}>
+                          {m.pearson_r > 0 ? '+' : ''}{m.pearson_r}
+                        </div>
+                      </div>
+                      <div style={{ background: '#1e293b', padding: '10px 12px', borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: '#64748b' }}>p-value (Significance)</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: '#a78bfa' }}>{m.p_value}</div>
+                      </div>
+                      <div style={{ background: '#1e293b', padding: '10px 12px', borderRadius: 8 }}>
+                        <div style={{ fontSize: 10, color: '#64748b' }}>Fisher F-Statistic</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: '#e2e8f0' }}>{m.f_statistic}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: 8 }}>
+                      <div style={{ fontSize: 10, color: '#a78bfa', fontWeight: 600 }}>OLS EQUATION & 95% CI:</div>
+                      <div style={{ fontSize: 12, color: '#f1f5f9', fontFamily: 'monospace', marginTop: 2 }}>
+                        y = {m.slope}x {m.intercept >= 0 ? '+' : ''}{m.intercept}
+                      </div>
+                      <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2 }}>
+                        Slope 95% CI: [{m.confidence_interval_slope_95[0]}, {m.confidence_interval_slope_95[1]}]
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Narrative Interpretation */}
+                  <div style={{ background: '#0f172a', borderRadius: 12, padding: 14, border: '1px solid #1e293b', flex: 1 }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                      Statistical Inference
+                    </span>
+                    <p style={{ margin: '6px 0 0', fontSize: 12, color: '#cbd5e1', lineHeight: 1.5 }}>
+                      {m.narrative}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Moran's I and Cadence Doctrine Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            {spatialData.spatial_autocorrelation && (
+              <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px solid #1e293b' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                  <Activity size={18} color="#06b6d4" />
+                  <h4 style={{ margin: 0, fontSize: 14, color: '#f1f5f9' }}>Global Moran's I Spatial Autocorrelation</h4>
+                  <span style={{ marginLeft: 'auto', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4, background: spatialData.spatial_autocorrelation.is_clustered ? 'rgba(16,185,129,0.2)' : '#1e293b', color: spatialData.spatial_autocorrelation.is_clustered ? '#10b981' : '#94a3b8' }}>
+                    {spatialData.spatial_autocorrelation.is_clustered ? 'SPATIALLY CLUSTERED' : 'RANDOM'}
+                  </span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 10 }}>
+                  <div style={{ background: '#1e293b', padding: 8, borderRadius: 6, textAlign: 'center' }}>
+                    <div style={{ fontSize: 9, color: '#64748b' }}>Moran's I</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#06b6d4' }}>{spatialData.spatial_autocorrelation.morans_i}</div>
+                  </div>
+                  <div style={{ background: '#1e293b', padding: 8, borderRadius: 6, textAlign: 'center' }}>
+                    <div style={{ fontSize: 9, color: '#64748b' }}>Expected I</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#94a3b8' }}>{spatialData.spatial_autocorrelation.expected_i}</div>
+                  </div>
+                  <div style={{ background: '#1e293b', padding: 8, borderRadius: 6, textAlign: 'center' }}>
+                    <div style={{ fontSize: 9, color: '#64748b' }}>z-score</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#a78bfa' }}>{spatialData.spatial_autocorrelation.z_score}</div>
+                  </div>
+                  <div style={{ background: '#1e293b', padding: 8, borderRadius: 6, textAlign: 'center' }}>
+                    <div style={{ fontSize: 9, color: '#64748b' }}>p-value</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#10b981' }}>{spatialData.spatial_autocorrelation.p_value}</div>
+                  </div>
+                </div>
+                <p style={{ margin: 0, fontSize: 11.5, color: '#94a3b8', lineHeight: 1.5 }}>
+                  {spatialData.spatial_autocorrelation.interpretation}
+                </p>
+              </div>
+            )}
+
+            <div style={{ background: '#0f172a', borderRadius: 12, padding: 16, border: '1px solid #1e293b' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <ShieldCheck size={18} color="#8b5cf6" />
+                <h4 style={{ margin: 0, fontSize: 14, color: '#f1f5f9' }}>Multi-Cadence Resampling & Spatial Snapping</h4>
+              </div>
+              <p style={{ margin: 0, fontSize: 11.5, color: '#cbd5e1', lineHeight: 1.6 }}>
+                • <strong>Where / When / What Triad:</strong> Substation coordinates snap to exact 20m/60m raster cells with strict bounding-box validation.<br />
+                • <strong>Rate Matching:</strong> 15-minute telemetry is trapezoidally integrated ($\int P(t) dt$) to preserve cumulative thermal soak energy without peak smoothing.<br />
+                • <strong>PCHIP Monotonic Spline:</strong> 1-hour forecasts are interpolated to sub-hourly continuous time steps preserving physical derivative continuity.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── SECTION 4: RISK DISTRIBUTION ── */}
       {activeSection === 'risk' && riskData && !isLoading && (
+
         <div id="tour-data-science-risk">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             {/* Risk tiers */}

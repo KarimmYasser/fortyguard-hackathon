@@ -106,6 +106,27 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
       bess = 0.0; // No battery buffer
       hw = 2.0;
       cooling = true;
+    } else if (preset === 'solar_farm') {
+      d = 3.2;
+      day = 18;
+      mva = 25.0;
+      bess = 10.0;
+      hw = 0.30;
+      cooling = true;
+    } else if (preset === 'data_center') {
+      d = 4.8;
+      day = 26;
+      mva = 75.0;
+      bess = 20.0;
+      hw = 1.90;
+      cooling = true;
+    } else if (preset === 'hospital_feeder') {
+      d = 2.5;
+      day = 15;
+      mva = 15.0;
+      bess = 8.0;
+      hw = 1.10;
+      cooling = true;
     }
 
     setDeltaC(d);
@@ -153,7 +174,37 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
                 : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
             }`}
           >
-            ⚡ Phoenix '23 Peak
+            ⚡ Utility Substation
+          </button>
+          <button
+            onClick={() => applyPreset('solar_farm')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
+              activePreset === 'solar_farm'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30 font-black'
+                : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
+            }`}
+          >
+            ☀️ Solar Farm (25MVA)
+          </button>
+          <button
+            onClick={() => applyPreset('data_center')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
+              activePreset === 'data_center'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30 font-black'
+                : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
+            }`}
+          >
+            🏢 AI Data Center (75MVA)
+          </button>
+          <button
+            onClick={() => applyPreset('hospital_feeder')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
+              activePreset === 'hospital_feeder'
+                ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30 font-black'
+                : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
+            }`}
+          >
+            🏥 Hospital Feeder (15MVA)
           </button>
           <button
             onClick={() => applyPreset('station_weather_blindspot')}
@@ -163,7 +214,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
                 : 'bg-slate-900/80 text-slate-300 hover:text-white border border-slate-800'
             }`}
           >
-            🚨 Station-Weather Blindspot (0°C)
+            🚨 Weather Blindspot (0°C)
           </button>
           <button
             onClick={() => applyPreset('desertification_31d')}
@@ -187,6 +238,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
           </button>
         </div>
       </div>
+
 
       {/* 5 Interactive Slider Controls */}
       <div id="tour-sandbox-controls" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
