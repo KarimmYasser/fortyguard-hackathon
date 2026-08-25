@@ -1,7 +1,7 @@
 # 🧠 Master Context Reservoir - FortyGuard Hackathon'26
 
 > **Project:** Thermal Sentinel Grid (formerly PyreShield AI ideation base)  
-> **Author:** Karim Yasser  
+> **Author:** Karim Y. Azab (Karim Yasser)  
 > **Target Event:** FortyGuard Hackathon'26 - *Building the World's Temperature AI* (Aug 18-30, 2026)  
 > **Repository Path:** `/Users/karim/Development/projects/fortyguard-hackathon`
 
@@ -242,7 +242,7 @@ flowchart TD
 
 # SECTION 5: AUTHOR BACKGROUND & TECHNICAL CAPABILITIES
 
-- **Developer:** Karim Yasser
+- **Developer:** Karim Y. Azab (Karim Yasser)
 - **Degree:** Bachelor of Engineering in Computer Engineering, Cairo University Faculty of Engineering (GPA: 3.84, Expected Jun 2027).
 - **Key Experience & Credentials:**
  - **AI Research Intern @ Nile University (SESC Research Center):** Architected an autonomous Multi-Agent AI Pipeline and 19-tool MCP harness translating natural language into verified OpenFOAM CFD/thermal cases. Built deterministic C++ renderers, 3-level preflight gates, thermodynamic envelope constraints, and MPI validation ladders. **Supervisor publishing research paper as co-authors.**
