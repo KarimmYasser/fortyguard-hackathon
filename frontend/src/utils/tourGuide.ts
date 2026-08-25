@@ -62,7 +62,7 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-card-moats', '🔬 Scientific Moats', 'Review cable-soil, canyon, moisture, and bounded-trajectory safety models.', 'top', 'start'),
         step('#tour-card-agent', '🤖 LangGraph Engine', 'Inspect the five-node orchestration pipeline and optionally execute it to reveal live result panels.', 'top', 'start'),
         step('#tour-card-roi', '💰 Avoided Loss ROI', 'Audit the scenario-modelled loss components, mitigation costs, and ROI assumptions.', 'top', 'start'),
-        step('#tour-navbar-tabs', '📊 Data Science Studio', 'The twelfth tab provides EDA, correlation taxonomy, risk distribution, ML diagnostics, and temporal analysis.', 'bottom'),
+        step('#tour-card-datascience', '📊 Data Science Studio', 'Inspect the Medallion ETL pipeline, polynomial Ridge physics surrogate, spatial OLS regression, anomaly detection, and Weibull survival analysis.', 'top', 'start'),
         ...getModalSteps(),
       ];
 
@@ -160,9 +160,10 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
     case 'data_science':
       return [
         step('#tour-data-science-header', '📊 Data Science Studio', 'Explore the Bronze→Silver→Gold feature pipeline and analytics derived from the scenario records.'),
-        step('#tour-data-science-tabs', '🧭 Analytics Workbench', 'Five API-backed sections cover EDA, empirical correlations, risk, model diagnostics, and temporal patterns.'),
+        step('#tour-data-science-tabs', '🧭 Analytics Workbench', 'Six API-backed sections cover EDA, empirical correlations, spatial regression (OLS), risk tiers, ML surrogate diagnostics, and temporal patterns.'),
         step('#tour-data-science-eda', '🥉🥈🥇 EDA & Features', 'Review record counts, engineered-feature metadata, null rates, and descriptive statistics.', 'top', 'center', click('#tour-data-science-tab-eda')),
         step('#tour-data-science-correlation', '🔗 Correlation Taxonomy', 'Empirical pairs are ranked separately from derived or structural relationships that are true by construction.', 'top', 'center', click('#tour-data-science-tab-correlation')),
+        step('#tour-data-science-spatial', '🗺️ Spatial Regression (OLS)', 'Inspect Ordinary Least Squares regression linking land-cover canopy deficit and canyon height/width ratio to microclimate temperature spread.', 'top', 'center', click('#tour-data-science-tab-spatial')),
         step('#tour-data-science-risk', '🎯 Risk Distribution', 'Inspect risk tiers and the reported microclimate divergence test with its sample evidence.', 'top', 'center', click('#tour-data-science-tab-risk')),
         step('#tour-data-science-ml', '🧠 Model Diagnostics', 'Review the actual surrogate backend and measured R², MAE, maximum error, anomaly detector, and Weibull assumptions.', 'top', 'center', click('#tour-data-science-tab-ml')),
         step('#tour-data-science-temporal', '⏱️ Temporal Patterns', 'Finish with the hour-by-hour hot-spot, aging, storage, boundary, margin, and loading table.', 'top', 'center', click('#tour-data-science-tab-temporal')),

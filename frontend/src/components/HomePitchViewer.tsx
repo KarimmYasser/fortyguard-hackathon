@@ -23,6 +23,7 @@ import {
   BookOpen,
   Film,
   BriefcaseBusiness,
+  BarChart3,
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { startTourGuide } from '../utils/tourGuide';
@@ -643,6 +644,32 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
+
+          {/* Card 11: Data Science Studio & Analytics */}
+          <div
+            id="tour-card-datascience"
+            onClick={() => onNavigateTab('data_science')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-purple-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:scale-110 transition-transform">
+                  <BarChart3 className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">TAB 12</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-purple-400 transition-colors">
+                Data Science Studio & ML
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Medallion ETL pipeline (Bronze/Silver/Gold 18 features), polynomial Ridge surrogate regressor, spatial OLS, and Weibull survival analysis.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-bold pt-4">
+              <span>Open Data Science Studio</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -658,7 +685,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
-            <span>96 Automated Pytests Passing (pytest tests/ -q)</span>
+            <span>111 Automated Pytests Passing (pytest tests/ -q)</span>
           </div>
         </div>
 
