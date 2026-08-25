@@ -4,7 +4,14 @@
 > **Plan Availability:** <span style="color:#10b981;font-weight:bold;">BOTH</span> (Basic: Up to 3 parameters/request | Premium: Full access to all parameters)  
 > **Official Docs Source:** [https://docs-api.fortyguard.com/docs/environmental-parameters](https://docs-api.fortyguard.com/docs/environmental-parameters)
 
+> [!IMPORTANT]
+> **API Parameter Scope & Dashboard Discrepancy Note:**  
+> • **Supported API Parameters:** The `/env_params` endpoint supports `heat_index_celsius`, `apparent_temperature_celsius`, `wet_bulb_temperature_celsius`, `relative_humidity_percent`, `precipitation_mm`, `cloud_cover_octas`, `elevation`, `solar_irradiance`, and trace air quality gases (`air_quality:idx`, `pm2.5`, `pm10`, `no2`, `co`, `o3`, `so2`, `methane_ppb`, `co2_ppm`).  
+> • **Wind Speed & UV:** While wind speed and UV index appear visually on the FortyGuard Temperature Dashboard, they are fetched by the dashboard's proprietary frontend connector and are **not yet exposed in the Enterprise API `/env_params`**. Applications requiring aerodynamic wind speeds (e.g. convective cooling derates) should couple FortyGuard data with regional meteorological boundary telemetry ($U_{\text{ref}}$).  
+> • **Export Capabilities:** The dashboard offers no direct download button for environmental parameters (exporting only temperature GeoJSON, PDF/DOCX reports, and rendered map images). Programmatic querying via `POST /env_params` is the authoritative route.
+
 A multidimensional temperature intelligence service offering operationally vital metrics including heat index, apparent temperature, and wet bulb temperature for thermal stress assessment. Captures atmospheric and hydrological variables (precipitation, AQI, ozone levels) plus solar irradiance profiles (GHI, DNI, DHI) to support energy modeling, urban planning, and climate resilience.
+
 
 ---
 

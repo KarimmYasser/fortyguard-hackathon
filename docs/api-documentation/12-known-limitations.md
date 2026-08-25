@@ -76,6 +76,10 @@ Measured during live integration. Full detail and reproduction steps in
 | **`overall_temperature_distribution` is a 5-point quantile summary**, not one entry per cell. | Use `n_cells` for the true tile count. |
 | **Spatial contrast at 100m granularity is ~0.1–1 °C.** A 1.9 mi² AOI spans 0.06 °C; 7.7 mi² spans 0.31 °C. Sky Harbor airport measured *warmer* than downtown Phoenix. | Urban-heat-island deltas must be drawn against **natural land cover**, not against an airport station. |
 | **Clock skew silently breaks everything.** A host clock ahead of the archive puts every request outside `2019-01-01 → now + 12h`. | Requests fail as `400` and any fallback path will mask it. Pin an explicit analysis date. |
+| **Wind speed & UV are Dashboard-only connectors.** | `/env_params` does not return wind or UV; fetch regional boundary wind ($U_{\text{ref}}$) for aerodynamic canyon models. |
+| **No pre-flight catalog coverage probe exists.** | Queries on dates/coordinates outside active archive indices return empty results without error codes. |
+| **Dashboard environmental metrics cannot be exported via UI.** | Web dashboard panels for solar irradiance and heat index are display-only; programmatic REST ingestion is required. |
+
 
 ### Measured latencies (Basic plan, ~1.9 mi², granularity 100m)
 

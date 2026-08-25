@@ -177,3 +177,9 @@ Following FortyGuard ML and Cloud Architecture guidance (Session 07), the data s
 - **Canyon Aspect vs. Aerodynamic Cooling Throttling:** Evaluates radiator fin convective derate ($\eta_{\text{cool}}$) against building canyon aspect ratios ($H/W$).
 - **Moran's I Spatial Autocorrelation:** Verifies that spatial clustering of heat vulnerability is statistically non-random ($z > 1.96, p < 0.05$).
 
+### 🌐 C. Multi-Modal Environmental Coupling & REST API Boundaries
+- **Native FortyGuard API Parameters:** Ingests ground-level 2m convective air temperature ($\theta_{\text{amb}}$), solar irradiance components (GHI/DNI), wet-bulb temperature, and relative humidity directly from `POST /v1/env_params` and `/v1/heatmap` (TCM).
+- **Aerodynamic Boundary Forcing:** Because wind speed and UV index are dashboard-connector features not yet exposed on the `/env_params` REST API, the aerodynamic canyon engine couples FortyGuard thermal rasters with regional boundary meteorological wind ($U_{\text{ref}} = 3.0\text{ m/s}$) to compute morphological sheltering ($\kappa_{\text{morph}}$) and equipment convective derates ($\eta_{\text{cool}}$).
+- **Catalog Probe Resilience:** Gracefully handles unindexed date ranges (which return empty payloads rather than HTTP error codes) via strict bounding box validation and deterministic fixture fallback.
+
+
