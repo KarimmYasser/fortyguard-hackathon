@@ -126,9 +126,14 @@ Submit via the **[Official Submission Form](https://forms.gle/jLgBzVTG1NhJ3gNe6)
 
 All live sessions are recorded and distributed to registered participants:
 1. **Onboarding & Kickoff (18 Aug):** Jay Sadiq (CEO) & Snehil Ahuja (Product Lead) - Event mechanics, 7 tracks, scoring rubrics, and winning strategies.
-2. **Building on the FortyGuard Temperature API (18 Aug):** Step-by-step walkthrough of all 6 endpoints, payload formatting, common pitfalls, and agent orchestration.
-3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) - Production use cases, data intelligence patterns, and commercial opportunities.
+2. **Building on the FortyGuard Temperature API (18 Aug):** Fawad Shah (Software Engineering Lead) - Step-by-step walkthrough of all 6 endpoints, payload formatting, async polling, and agent orchestration.
+3. **Heat Intelligence Cloud (19 Aug):** Aashan Javed (AI/ML Engineer) - Production use cases across 6 industry verticals, data intelligence patterns, and commercial opportunities.
 4. **Breaking Silos with Autodesk (19 Aug):** Jordana Rosa (Autodesk Forma) - Contextual site data, environmental analysis, and connecting spatial APIs to generative design tools.
+5. **Escaping the Builder's Trap (20 Aug):** Ahmed Abdelkhalek (Head of Startups, Google Cloud) - Minimum Lovable Products (MLP), Google Cardboard speed, 15-min pre-build checklist, and critical AI justification.
+6. **From Headlines to Impact (20 Aug):** Tarek Fouad (Founder & CEO, Narrative One) - The 3 P's Engine (Perception → Presence → Partnerships), 80/20 headline rule, and founder pitch storytelling.
+7. **From Heat Data to Real Signal (21 Aug):** Mudethir (ML Lead) & Aamir (Cloud/Data Architect) - Spatial/temporal resolution (Where/When/What), "Fact vs. Finding" rule, and cadence matching.
+8. **Finding Product-Market Fit (22 Aug):** Thamir (Partner @ Cultivators, ex-BreezoMeter $\to$ Google) - COCO Customer Discovery framework, early adopters vs enterprise ICPs, and space pen vs pencil test.
+9. **Mastering the Temperature Dashboard (25 Aug):** Snehil Ahuja (Product Lead) & Aamir (Cloud/Data Architect) - Live dashboard masterclass (60m grid, heat flow simulation, environmental parameters, exceedance vs persistence, dual-view segmentation, 5-pillar heat intelligence report), API quota management (2M credits), public community voting ("Cast Your Vote"), and official 4 judging rubrics (Impact 40%, Technical Execution 35%, Innovation 15%, Communication 10%).
 
 ---
 

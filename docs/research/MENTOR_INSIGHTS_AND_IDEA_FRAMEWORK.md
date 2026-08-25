@@ -82,6 +82,28 @@
 
 ---
 
+### E. Temperature Dashboard Masterclass: Microclimate Intelligence & Physical Indicators
+*(Snehil Ahuja - Product Lead at FortyGuard & Aamir - Cloud/Data Architect, FortyGuard - Session 9)*
+
+1. **Granularity Isolation ($60\text{m}$ vs. $100\text{m}$):**
+   * Use $100\text{m}$ for macro city-wide overviews, but switch to $60\text{m}$ for hyperlocal asset-level analysis (substations, industrial transformers, data center chiller yards, individual park segments).
+2. **Exceedance ($H_{\text{threshold}}$) vs. Persistence ($P_{\text{threshold}}$):**
+   * **Exceedance Layer:** Cumulative total hours spent above a safety threshold (e.g., $>35^\circ\text{C}$ / $>66^\circ\text{F}$).
+   * **Persistence Layer:** The longest uninterrupted, continuous stretch of hours without cooling relief. Continuous thermal soak is what destroys equipment insulation and triggers physiological heat stress.
+3. **Diurnal Heat Peak & Forward AI Forecasts:**
+   * Microclimate heat systematically peaks between **1:00 PM and 5:00 PM (13:00 – 17:00)**. 12-hour predictive dispatch engines must initiate pre-cooling and battery peak-shaving hours ahead of this peak.
+4. **Physical & Environmental Parameters ($T_{\text{wb}}$, Solar Irradiance, AQI):**
+   * **Wet-Bulb Temperature ($T_{\text{wb}}$):** The thermodynamic ceiling for human/evaporative cooling; essential for outdoor worker safety shifts and HVAC/data center cooling intake optimization.
+   * **Solar Irradiance ($W/m^2$):** Direct driver of asphalt/concrete thermal retention and Dynamic Line Rating (DLR) conductor sag equilibrium.
+   * **Multi-Gas Air Quality Suite:** Ozone ($O_3$), Sulfur Dioxide ($SO_2$), Nitrogen Dioxide ($NO_2$), and $PM_{2.5}$ for comprehensive environmental risk indexing.
+5. **Dual-Perspective Computer Vision Segmentation:**
+   * **Satellite (Macro Land Cover):** Explains ground heat absorption (e.g., 82% asphalt/concrete absorbing heat vs. 7% canopy).
+   * **Street View (Human/Asset 2m Level):** Panoramic 2m perspective (with sky masked out) measuring exact local shade and canopy relief.
+6. **Seasonal & Baseline Analysis:**
+   * Comparing peak summer heatwaves against baseline months (e.g., January vs. July) isolates permanent structural Urban Heat Islands (UHIs) from transient synoptic weather anomalies.
+
+---
+
 
 ## 2. ⚡ What FortyGuard's Temperature API Uniquely Offers
 
@@ -165,23 +187,26 @@ During the technical webinars, FortyGuard demonstrated 6 production-grade web ap
 
 ---
 
-## 5. 📊 Judging Criteria & Evaluation Weighting
+## 5. 📊 Official 4 Judging Criteria & Percentage Rubrics
+*(Officially confirmed by FortyGuard Leadership in Session 9)*
 
-| Weight | Pillar | What Judges Look For |
-| :-: | :--- | :--- |
-| **40%** | **Impact & Relevance** | Solves an urgent, high-stakes problem; clear commercial buyer; measurable risk reduction. |
-| **25%** | **Technical Execution** | Effective utilization of FortyGuard API, robust async polling, clean architecture, deployed live application. |
-| **15%** | **Innovation** | Non-obvious physical insight, creative multi-source data fusion, unique product angle. |
-| **10%** | **Presentation & Pitch** | 3-minute video showing the working live application (problem clarity beats flashy editing). |
-| **10%** | **Market Readiness / GTM** | Defensible path to commercial deployment (supported by FortyGuard Startup API program). |
+| Weight | Official Criterion | What Judges Evaluate | Thermal Sentinel Grid Alignment |
+| :-: | :--- | :--- | :--- |
+| **40%** | **Impact & Relevance** | Does the project solve a real-world, high-stakes urban heat problem with measurable, defensible outcomes? Is it a production-grade utility rather than a toy demo? | **$2.58M net avoided loss** (LBNL ICE), 374h transformer life saved, prevents catastrophic substation fires for utilities and data centers. |
+| **35%** | **Technical Execution** | Architectural rigor, robust utilization of FortyGuard API data, code quality, security, and live deployment stability. | **97 passing pytest tests**, IEEE Std C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error), dual-storage Supabase persistence, deterministic safety filter. |
+| **15%** | **Innovation** | Novel concept, non-obvious multi-source data coupling, creative synthesis across tracks. | **Physical-AI Hybrid Stack:** FortyGuard 2m microclimate coupled with IEEE ODEs, IEC 60287 soil dryout physics, and LangGraph StateGraph. |
+| **10%** | **Communication** | Clarity of demo pitch, written documentation, value proposition, and communicating the core "Why". | **3-minute screen demo** of live UI, second-by-second pitch script, complete academic documentation suite. |
 
 ---
 
-## 🚨 Mandatory Submission Checklist
+## 🚨 Mandatory Submission Checklist & Rules
+*(Hard Deadline: **August 30, 2026, at 11:59 PM GST**)*
 
-- [ ] **Working Live URL:** Deployed on Vercel, Render, or cloud host (must remain active through judging on Sept 16).
-- [ ] **3-Minute Video Pitch:** Clear demonstration of the problem, technical architecture, live product demo, and business impact.
-- [ ] **Public GitHub Repository:** Clean README, well-documented code.
-- [ ] **Collaborator Access:** Must invite `Hackathon FG` as a collaborator on the repository.
-- [ ] **API Security:** All API keys must remain strictly server-side (in `.env` / environment secrets; never committed to git).
-- [ ] **Submission Deadline:** **August 30, 2026, at 11:59 PM GST**.
+- [ ] **Working Live Application URL:** Publicly deployed web app (e.g. `https://www.thermal-sentinel-grid.live`) with zero authentication barrier and full incognito compatibility.
+- [ ] **3 to 5 Minute Demo Video (English):** Must feature a direct screen recording of the **actual working software UI** (pure AI-generated avatar/marketing videos are strictly disqualified). Hosted on YouTube (unlisted/public) or Vimeo.
+- [ ] **GitHub Repository & Collaborator Access:** Clean codebase with **`Hackathon FG`** (`Hackathon@fortyguard.com`) invited as a collaborator. All API keys kept strictly in server-side environment variables.
+- [ ] **Official Google Form Submission:** Submitted by the team lead via **[https://forms.gle/jLgBzVTG1NhJ3gNe6](https://forms.gle/jLgBzVTG1NhJ3gNe6)** under **Track 06: Agentic AI**. (New submissions overwrite prior ones).
+- [ ] **API Quota Management:** 2,000,000 credits allocated. If exhausted during testing, create a secondary account and include both API keys in the submission notes.
+- [ ] **Public Community Voting Campaign:** Activate network voting when the "Cast Your Vote" tab launches on the Temperature Dashboard (1 verified vote per account for public visibility and social proof).
+- [ ] **Prizes:** Top 3 overall winners receive cash prizes from the $6,000 pool + **1 NVIDIA GPU / Jetson kit per team** (presented by Constantine from NVIDIA). Winners announced on **September 16, 2026**.
+

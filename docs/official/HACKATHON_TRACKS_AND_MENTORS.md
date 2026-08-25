@@ -90,6 +90,11 @@
  - **Transcript & Notes:** [Finding Product-Market Fit Dialogue](../sessions-dialogue/8-product-market-fit-webinar.md)
  - **Core Advice:** Turning microclimate API data into enterprise SaaS, the COCO customer discovery framework, targeting agile early adopters before enterprise utility ICPs, and the space pen vs pencil test.
 
+10. **Snehil Ahuja & Aamir** - *Product Lead & Cloud/Data Architect, FortyGuard*
+ - **Keynote:** *"Mastering the FortyGuard Temperature Dashboard: Microclimate Intelligence, Live Feature Walkthrough & Hackathon Submissions."*
+ - **Transcript & Notes:** [Temperature Dashboard Live Walkthrough Dialogue](../sessions-dialogue/9-temperature-dashboard-webinar.md)
+ - **Core Advice:** Deep technical walkthrough of the dashboard (60m grid, equal interval hotspot isolation, heat flow simulation, wet-bulb / solar irradiance / AQI parameters, exceedance vs persistence, satellite and 2m street view segmentation, 5-pillar heat intelligence reports), API key quota management (2M credits), public community voting, and the 4 official judging rubrics (Impact 40%, Technical Execution 35%, Innovation 15%, Communication 10%).
+
 ---
 
 > [!TIP]
