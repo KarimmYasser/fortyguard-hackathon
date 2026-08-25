@@ -181,7 +181,7 @@ fortyguard-hackathon/
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
 │       └── routes/                     # Modular API Routers (Replay, Live Scan, Research/alphaXiv)
-└── tests/                              # Automated Pytest Physics, API & Persistence Suite (96 Tests)
+└── tests/                              # Automated Pytest Physics, API & Persistence Suite (97 Tests)
 ```
 
 ---
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (96 Tests Passing)
+### 2. Run Automated Pytest Suite (97 Tests Passing)
 ```bash
 pytest tests/ -v
 ```

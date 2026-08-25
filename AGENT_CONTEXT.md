@@ -241,7 +241,7 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (96/96 Pytest Tests Passing)
+## 6.1 Core Tested Architecture (97/97 Pytest Tests Passing)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, durable request caching, and explicit fixture replay paths. Live scan failures surface as errors rather than silently switching locations.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
