@@ -156,3 +156,24 @@ and every ranked pair reports its `p_value`. The dashboard renders both.
   would be the textbook significance-versus-magnitude error, and an earlier
   revision of this document did exactly that with a fabricated $d=0.87$ (LARGE)
   drawn from the superseded airport-reference framing.
+
+---
+
+## 🔬 5. Multi-Cadence Resampling & Spatial Bivariate Regression Engines
+
+Following FortyGuard ML and Cloud Architecture guidance (Session 07), the data science suite includes two specialized engines:
+
+### ⏱️ A. Multi-Cadence Resampling Engine (`src/data_science/cadence_alignment.py`)
+- **Cadence Matching:** Aligns sub-hourly telemetry (e.g., 15-minute electrical SCADA loads or 5-minute MPPT solar inverter streams) with hourly FortyGuard forecasts using trapezoidal integration to strictly conserve total energy ($\int P(t) dt$).
+- **Monotonic Spline Upsampling:** Employs Monotonic Cubic Hermite Spline (PCHIP) interpolation to upsample hourly forecasts to 15-minute intervals for continuous ODE evaluation without introducing artificial overshoots or derivative discontinuities.
+- **Continuous Thermal Soak Integral:** Evaluates $S_{\text{thresh}} = \int \max(0, T(t) - T_{\text{thresh}})\,dt$ in degree-hours ($^\circ\mathrm{C}\cdot\text{h}$) to quantify cumulative heat penetration.
+- **Spatial Containment & Grid Snapping:** Enforces coordinate bounds verification against FortyGuard raster bounding boxes and maps continuous lat/lon coordinates to discrete raster cells $(i, j)$ at $20\text{m}/60\text{m}$ resolution.
+
+### 🗺️ B. Spatial Bivariate Regression Engine (`src/data_science/spatial_correlation.py`)
+- **Canopy vs. Persistence Model:** Quantifies the mitigation effect of urban tree canopy on continuous thermal soak:
+  $$P_{40, i} = \beta_0 + \beta_1 \cdot \text{CanopyPct}_i + \epsilon_i \quad (\beta_1 < 0, p < 0.01)$$
+- **Asphalt vs. Microclimate Delta Model:** Quantifies convective air temperature rise over radiating impervious surfaces:
+  $$\Delta T_{2\text{m}, i} = \alpha_0 + \alpha_1 \cdot \text{AsphaltPct}_i + \epsilon_i$$
+- **Canyon Aspect vs. Aerodynamic Cooling Throttling:** Evaluates radiator fin convective derate ($\eta_{\text{cool}}$) against building canyon aspect ratios ($H/W$).
+- **Moran's I Spatial Autocorrelation:** Verifies that spatial clustering of heat vulnerability is statistically non-random ($z > 1.96, p < 0.05$).
+
