@@ -38,6 +38,9 @@ class ThermalSentinelState(TypedDict, total=False):
     # Dispatch & Downstream Channels
     b2b_work_order: Optional[Dict[str, Any]]
     b2c_advisory: Optional[Dict[str, Any]]
+    defensible_finding: Optional[Dict[str, Any]]
+    findings_report: Optional[Dict[str, Any]]
     audit_trail: List[Dict[str, Any]]
     errors: List[str]
     current_node: str
+

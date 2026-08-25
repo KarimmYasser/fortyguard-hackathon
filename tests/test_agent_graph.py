@@ -31,3 +31,15 @@ async def test_langgraph_workflow_execution():
     eco = result["economic_evaluation"]
     assert eco["net_avoided_loss_usd"] > 100000.0
     assert eco["roi_multiple"] > 15.0
+
+    # Check structured "Fact vs. Finding" Decision Object
+    assert "defensible_finding" in result
+    finding = result["defensible_finding"]
+    assert finding["asset_id"] == "SUB-PHX-DOWNTOWN-04"
+    assert "raw_fact" in finding
+    assert finding["continuous_persistence_hours"] >= 10.0
+    assert finding["arrhenius_aging_acceleration"] > 1.0
+    assert "causality_explanation" in finding
+    assert "defensible_narrative" in finding
+    assert finding["net_avoided_loss_usd"] > 0
+

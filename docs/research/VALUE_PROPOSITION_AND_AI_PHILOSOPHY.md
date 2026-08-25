@@ -36,6 +36,18 @@ Rather than a toy ML model, Thermal Sentinel Grid implements the state-of-the-ar
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
+### 2.1 The "Fact vs. Finding" Decision Engine (Session 07 & Track 06)
+Following FortyGuard ML guidance, LangGraph agent workflows do not stop at reporting raw facts. They systematically synthesize structured, defensible findings (`src/models/findings.py`):
+$$\text{Raw Fact } (42.74^\circ\mathrm{C}) \longrightarrow \text{Finding: } [\Delta T_{\text{canopy}} \text{ Causality}] + [P_{40} \text{ Multiplier}] + [A_F \text{ Aging Factor}] + [\text{Avoided \$ Loss}]$$
+
+Every evaluated asset emits an auditable `DefensibleFinding` capturing:
+1. **Raw Fact:** Static measurement timestamp, coordinate, and parcel peak ($42.74^\circ\mathrm{C}$).
+2. **Comparative Baseline:** Land-cover delta relative to natural desert ($+1.14^\circ\mathrm{C}$) and continuous persistence ratio ($3.16\times$).
+3. **Morphological Causality:** Canopy deficit ($2.1\%$), impervious asphalt ($78.4\%$), and street canyon wind sheltering ($-32\%$ convective derate).
+4. **Physical Degradation:** Peak hot spot ($159.53^\circ\mathrm{C}$ unmitigated), Arrhenius aging acceleration ($88.36\times$), and equivalent loss hours ($377.77\text{h}$).
+5. **Mitigation Outcome:** 12-hour proactive dispatch schedule (pre-cooling + 5.0 MW BESS) capping hot-spot at $109.43^\circ\mathrm{C}$ and delivering $\$2.58\text{M}$ net avoided loss.
+
+
 ---
 
 ## 3. 💵 The 4 Layers of Real-World Value & ROI
