@@ -63,6 +63,25 @@ def test_fastapi_endpoints():
     assert "status" in res_usage.json()
 
 
+def test_security_headers_and_cors_are_restrictive():
+    client = TestClient(app)
+
+    response = client.get(
+        "/api/health",
+        headers={"Origin": "https://www.thermal-sentinel-grid.live"},
+    )
+    assert response.headers["access-control-allow-origin"] == "https://www.thermal-sentinel-grid.live"
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["x-frame-options"] == "DENY"
+    assert response.headers["referrer-policy"] == "strict-origin-when-cross-origin"
+
+    untrusted = client.get(
+        "/api/health",
+        headers={"Origin": "https://attacker.example"},
+    )
+    assert "access-control-allow-origin" not in untrusted.headers
+
+
 def test_vercel_serverless_path_normalizer():
     """Verify that api.index.app correctly handles /v1/... and /api/v1/... routes."""
     from api.index import app as vercel_app

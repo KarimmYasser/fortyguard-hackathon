@@ -35,6 +35,7 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 ---
 
 ### 3. 🏛️ [Official Hackathon Rules & FAQs](official)
+* **[Security & Judge Access](SECURITY_AND_JUDGE_ACCESS.md):** Current edge and application safeguards, private-repository judge access, and the pre-submission availability checklist.
 * **[Official Announcements & Rules](official/OFFICIAL_ANNOUNCEMENTS.md):** Verbatim dates (18-30 Aug 2026), hard deadline (30 Aug 11:59 PM GST), prizes ($6,000 + 3x Jetson kits), rubrics, and 4 required deliverables.
 * **[Frequently Asked Questions (FAQ)](official/HACKATHON_FAQ.md):** Comprehensive Master FAQ compiling official rules, credit quotas, API schemas, and production gotchas.
 * **[Tracks & Mentors](official/HACKATHON_TRACKS_AND_MENTORS.md):** Detailed breakdown of all 7 tracks and keynote mentor/judge advice.

@@ -7,8 +7,9 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from dotenv import load_dotenv
@@ -36,14 +37,41 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS middleware for frontend communication
+# Browser access is limited to the judge-facing production origins and local
+# development. CORS is not authentication, but avoiding a wildcard prevents an
+# unrelated website from driving this API through a visitor's browser.
+ALLOWED_ORIGINS = [
+    "https://www.thermal-sentinel-grid.live",
+    "https://thermal-sentinel-grid.live",
+    "https://thermal-sentinel-grid.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Accept"],
 )
+
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Apply low-risk browser hardening without changing judge access."""
+
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = (
+            "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        )
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        return response
+
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 # Mount API routes
 app.include_router(scan_router, prefix="/api/v1")
