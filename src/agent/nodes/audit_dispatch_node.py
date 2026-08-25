@@ -99,18 +99,26 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     }
 
     # 3. Synthesize Structured "Fact vs. Finding" Decision Object
-    persistence_hours = state.get("persistence_metrics", {}).get("continuous_hours_above_40", 12.0)
-    hot_spot = baseline.get("peak_hot_spot_c", 159.53) if "baseline_trajectory" in state else 159.53
-    af_peak = baseline.get("peak_aging_acceleration_factor", 88.36) if "baseline_trajectory" in state else 88.36
-    aging_hours = baseline.get("total_equivalent_aging_hours", 377.77) if "baseline_trajectory" in state else 377.77
+    persist_meta = state.get("persistence_metrics", {})
+    persistence_hours = float(persist_meta.get("persistence_hours_p40") or persist_meta.get("continuous_hours_above_40", 12.0))
+    hot_spot = float(baseline.get("peak_hot_spot_c", 159.53) if "baseline_trajectory" in state else 159.53)
+    af_peak = float(baseline.get("peak_aging_acceleration_factor", 88.36) if "baseline_trajectory" in state else 88.36)
+    aging_hours = float(baseline.get("total_equivalent_aging_hours", 377.77) if "baseline_trajectory" in state else 377.77)
+    mitigated_hs = float(mitigated.get("peak_hot_spot_c", 109.43) if "mitigated_trajectory" in state else 109.43)
+
+    canyon = state.get("urban_canyon_metrics", {})
+    derate_loss_pct = float(canyon.get("cooling_capacity_loss_pct", 32.0))
+    total_bess_mw = sum(float(a.get("bess_discharge_mw", 0.0)) for a in actions)
+    if total_bess_mw == 0.0 and any(a.get("action_type") == "BESS_PEAK_SHAVING" for a in actions):
+        total_bess_mw = 5.0
 
     finding_narrative = (
         f"{asset_name} entered an extreme {persistence_hours:.1f}-hour thermal soak window above 40°C "
         f"(persistence ratio 3.2x baseline) driven by high asphalt coverage (78.4%) and building canyon wind sheltering "
-        f"(-32% convective derate). Under baseline operation, peak winding hot-spot rises to {hot_spot:.1f}°C, "
+        f"(-{derate_loss_pct:.1f}% convective derate). Under baseline operation, peak winding hot-spot rises to {hot_spot:.1f}°C, "
         f"accelerating Arrhenius insulation degradation by {af_peak:.1f}x (incurring {aging_hours:.1f} equivalent aging hours). "
-        f"Thermal Sentinel Grid's autonomous 12-hour dispatch (pre-cooling + 5.0 MW BESS peak shaving) caps hot-spot at "
-        f"{mitigated.get('peak_hot_spot_c', 109.4):.1f}°C, delivering ${net_loss:,.0f} in net avoided loss."
+        f"Thermal Sentinel Grid's autonomous 12-hour dispatch (pre-cooling + {total_bess_mw:.1f} MW BESS peak shaving) caps hot-spot at "
+        f"{mitigated_hs:.1f}°C, delivering ${net_loss:,.0f} in net avoided loss."
     )
 
     defensible_finding = {
@@ -118,31 +126,32 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
         "asset_name": asset_name,
         "timestamp_utc": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
         "risk_level": "LEVEL_3_CRITICAL" if hot_spot >= 140.0 else "LEVEL_2_ELEVATED" if hot_spot >= 120.0 else "LEVEL_1_SAFE",
-        "raw_fact": f"{asset_name} reached {peak_2m_label}°C at 15:00 UTC",
+        "raw_fact": f"{asset_name} reached {peak_2m_label}°C at peak heat window",
         "measured_2m_temp_c": peak_2m_c,
         "peak_2m_temp_c": peak_2m_c,
         "baseline_reference_name": "South Mountain Natural Desert",
         "baseline_temp_c": 41.60,
         "urban_heat_island_delta_c": round(peak_2m_c - 41.60, 2) if peak_2m_c else 1.14,
         "continuous_persistence_hours": persistence_hours,
-        "persistence_ratio_to_baseline": 3.16,
+        "persistence_ratio_to_baseline": round(persistence_hours / 3.8, 2) if persistence_hours > 0 else 3.16,
         "tree_canopy_pct": 2.1,
         "asphalt_cover_pct": 78.4,
         "building_aspect_hw": 1.85,
-        "cooling_derate_pct": 32.0,
-        "causality_explanation": "Low canopy (2.1%) and 78.4% impervious cover combine with street canyon aspect (H/W=1.85) to throttle convective radiator airflow by 32%.",
-        "winding_hotspot_c": hot_spot,
-        "arrhenius_aging_acceleration": af_peak,
-        "equivalent_aging_hours": aging_hours,
+        "cooling_derate_pct": derate_loss_pct,
+        "causality_explanation": f"Low canopy (2.1%) and 78.4% impervious cover combine with street canyon aspect (H/W=1.85) to throttle convective radiator airflow by {derate_loss_pct:.1f}%.",
+        "winding_hotspot_c": round(hot_spot, 2),
+        "arrhenius_aging_acceleration": round(af_peak, 2),
+        "equivalent_aging_hours": round(aging_hours, 2),
         "insulation_life_loss_pct": round(aging_hours / 180000.0 * 100.0, 3),
-        "cbf_safety_margin_pu": 0.98,
-        "recommended_action": "Proactive 8:00 AM radiator pre-cooling + 5.0 MW BESS peak-shaving dispatch",
-        "bess_dispatch_mw": 5.0,
+        "cbf_safety_margin_pu": float(verdict.get("nominal_load_k", 0.88)),
+        "recommended_action": f"Proactive radiator pre-cooling + {total_bess_mw:.1f} MW BESS peak-shaving dispatch",
+        "bess_dispatch_mw": total_bess_mw,
         "precooling_window_start_utc": "08:00 UTC",
         "precooling_window_end_utc": "11:00 UTC",
         "net_avoided_loss_usd": net_loss,
         "defensible_narrative": finding_narrative,
     }
+
 
     audit_trail = list(state.get("audit_trail", []))
     audit_trail.append(audit_entry)
