@@ -110,7 +110,36 @@ async def screen_portfolio_operations(req: OperationsRequest) -> Dict[str, Any]:
     return await _operations_snapshot(req)
 
 
+@router.get("/operations/commercial-archetypes")
+async def get_commercial_archetypes() -> Dict[str, Any]:
+    """
+    Returns the commercial early adopter archetypes catalog (Solar Farm, Data Center, Hospital, Utility).
+    """
+    from src.models.commercial_presets import COMMERCIAL_ARCHETYPES_CATALOG
+    return {
+        "status": "success",
+        "archetypes": {k: v.model_dump() for k, v in COMMERCIAL_ARCHETYPES_CATALOG.items()},
+    }
+
+
+class COCOBriefRequest(BaseModel):
+    sector_id: str = Field(default="UTILITY_SUBSTATION")
+    prepared_for: str = Field(default="Enterprise Infrastructure Operations")
+
+
+@router.post("/operations/coco-brief")
+async def create_coco_brief(req: COCOBriefRequest) -> Dict[str, Any]:
+    """
+    Generates a structured COCO Customer Discovery Brief (Context, Outcomes, Constraints, Options)
+    with sector-specific financial ROI and payback timeline.
+    """
+    from src.operations.portfolio import generate_coco_executive_brief
+    brief = generate_coco_executive_brief(sector_id=req.sector_id, prepared_for=req.prepared_for)
+    return {"status": "success", "brief": brief}
+
+
 @router.get("/mcp")
+
 async def describe_mcp_server() -> Dict[str, Any]:
     return {
         "name": "thermal-sentinel-grid",
