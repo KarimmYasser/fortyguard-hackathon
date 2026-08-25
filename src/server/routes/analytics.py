@@ -128,3 +128,13 @@ async def get_ml_overview() -> Dict[str, Any]:
         "survival_analysis": survival_results,
         "pipeline_summary": _pipeline.get_pipeline_summary(),
     }
+
+
+@router.get("/spatial-regression")
+async def get_spatial_regression() -> Dict[str, Any]:
+    """
+    Returns empirical spatial bivariate regression models (Canopy vs P40, Asphalt vs Delta-T,
+    Canyon Aspect vs Cooling Derate) and Global Moran's I spatial autocorrelation metrics.
+    """
+    return _analytics_engine.compute_spatial_correlations()
+

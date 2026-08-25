@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import logging
 import math
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -436,3 +436,12 @@ class ThermalAnalyticsEngine:
                 "end": str(gold_df.iloc[-1].get("time_label", "05:00 PM")) if len(gold_df) > 0 else "",
             },
         }
+
+    def compute_spatial_correlations(self, custom_parcels: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
+        """
+        Compute empirical bivariate regressions and Global Moran's I spatial autocorrelation
+        across urban land-cover morphology (canopy, asphalt, canyon aspect) and microclimate metrics.
+        """
+        from .spatial_correlation import SpatialCorrelationEngine
+        return SpatialCorrelationEngine.get_full_spatial_correlation_suite(custom_parcels)
+
