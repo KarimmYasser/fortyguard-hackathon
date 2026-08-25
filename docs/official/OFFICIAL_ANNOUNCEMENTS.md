@@ -134,6 +134,7 @@ All live sessions are recorded and distributed to registered participants:
 7. **From Heat Data to Real Signal (21 Aug):** Mudethir (ML Lead) & Aamir (Cloud/Data Architect) - Spatial/temporal resolution (Where/When/What), "Fact vs. Finding" rule, and cadence matching.
 8. **Finding Product-Market Fit (22 Aug):** Thamir (Partner @ Cultivators, ex-BreezoMeter $\to$ Google) - COCO Customer Discovery framework, early adopters vs enterprise ICPs, and space pen vs pencil test.
 9. **Mastering the Temperature Dashboard (25 Aug):** Snehil Ahuja (Product Lead) & Aamir (Cloud/Data Architect) - Live dashboard masterclass (60m grid, heat flow simulation, environmental parameters, exceedance vs persistence, dual-view segmentation, 5-pillar heat intelligence report), API quota management (2M credits), public community voting ("Cast Your Vote"), and official 4 judging rubrics (Impact 40%, Technical Execution 35%, Innovation 15%, Communication 10%).
+10. **Physical AI and the Future of Smart Cities (25 Aug):** Prof. Jonathan Reichental (Founder of Human Future, ex-CIO City of Palo Alto, Advisor @ FortyGuard) - Keynote on the Cognitive Industrial Revolution, the 4 pillars of Physical AI (GenAI, Sensors, Robotics, Data Infrastructure), autonomous urban infrastructure, temperature as an essential operating layer, and deterministic safety guardrails for mission-critical systems.
 
 ---
 

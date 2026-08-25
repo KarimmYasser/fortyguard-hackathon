@@ -75,11 +75,17 @@ $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigate
 
 ---
 
-## 4. 🎙️ Mentorship Keynote Principles (Google, Inspeerrity, FortyGuard)
+## 4. 🎙️ Mentorship Keynote Principles (Google, FortyGuard, Narrative One, Cultivators)
 
-* **Ahmed Abdelkhalek (Google Cloud Digital Natives, Startups & VC Lead):**  
-  *"The Builder's Trap is spending weeks training unnecessary ML models that add no customer value. Focus on the core painful problem and deliver an auditable, working outcome."*
-* **Karol Wiszowaty (Inspeerity COO):**  
-  *"Sell the outcome, not the hype. Judges look for working real-time execution and risk reduction."*
-* **Fawad Shah (Head of Software Engineering at FortyGuard):**  
-  *"We provide the foundational microclimate temperature AI. Your job is to build the intelligent agentic systems on top that solve painful enterprise problems."*
+* **Professor Jonathan Reichental (Founder of Human Future, former CIO of City of Palo Alto, Advisor @ FortyGuard, Mentor + Judge - Session 10):**  
+  *"We are entering the Cognitive Industrial Revolution—automating the mind. In physical AI, where human life, fire risk, or electrical grid infrastructure is involved, AI agency must be bounded by deterministic validation guardrails and human oversight. The winning hackathon projects anticipate the future, articulate why it matters, and build for real-world impact."*
+* **Ahmed Abdelkhalek (Google Cloud Digital Natives, Startups & VC Lead - Session 5):**  
+  *"The Builder's Trap is spending weeks training unnecessary ML models that add no customer value. Focus on the core painful problem, use the 15-minute pre-build checklist, and deliver an auditable, working outcome."*
+* **Snehil Ahuja (Product Lead, FortyGuard - Session 9):**  
+  *"Use 60m grid resolution for asset isolation; monitor Persistence over raw snapshot exceedance; and leverage wet-bulb, solar irradiance, and 12-hour forward forecast layers to create proactive rather than reactive systems."*
+* **Thamir (Partner @ Cultivators, ex-BreezoMeter $\to$ Google - Session 8):**  
+  *"Fall in love with the problem, not the solution. Follow the COCO Discovery framework (Context, Outcomes, Constraints, Options) and pass the Space Pen vs. Pencil test."*
+* **Tarek Fouad (Founder & CEO, Narrative One - Session 6):**  
+  *"Master the 3 P's Engine (Perception → Presence → Partnerships). Spend 80% of your effort refining the hook and leading with the 'Why' in your 3-minute video pitch."*
+* **Fawad Shah (Head of Software Engineering at FortyGuard - Session 2):**  
+  *"We provide the foundational 2m microclimate temperature AI. Your job is to build the intelligent agentic systems on top that solve painful enterprise problems."*

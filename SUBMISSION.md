@@ -51,6 +51,17 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 
 ---
 
+## 🏆 Official Scoring Rubric & Judging Alignment
+
+| Weight | Official Criterion | What Judges Look For | Thermal Sentinel Grid Moat & Evidence |
+| :---: | :--- | :--- | :--- |
+| **40%** | **Impact & Relevance** | Real-world problem, client benefit, commercial viability over toy demos. | **$2.58M avoided catastrophic loss per heat event**; solves the 2-meter asphalt heat-soak blind spot for utilities (APS, ConEd, PG&E) and mission-critical facilities. |
+| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **97 automated pytest tests passing**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
+| **15%** | **Innovation** | Novel concepts, multi-source coupling, Physical-AI hybrid synthesis. | **Physical-AI Hybrid Stack (Prof. Reichental Model):** Perception (FortyGuard 2m AI) $\to$ Physics Truth (IEEE C57.91 / IEC 60287) $\to$ Cognitive Planner (LangGraph) $\to$ Deterministic Safety Guardrail. |
+| **10%** | **Communication** | Pitch clarity, video quality, documentation, conveying the core "Why". | **3-minute high-velocity screen demo** of the working software UI, second-by-second narrative script, 22 academic citations with LaTeX proofs, and full webinar alignment. |
+
+---
+
 ## 🏛️ The Three Architectural Pillars & Strategic Market Positioning
 
 ### Strategic Positioning: "Tickling the Giants"

@@ -61,9 +61,10 @@
  - **Keynote:** *"Why Great Ideas Die on the Whiteboard (and How to Save Yours)."*
  - **Core Advice:** Sell the outcome, not just the tech stack. Make the idea land with judges and stakeholders.
 
-4. **Professor Jonathan Reichental** - *Mentor + Judge · Founder, Human Future; Former CIO, City of Palo Alto*
- - **Keynote:** *"The Moment To Help Reinvent Our Cities With Physical AI Is Here."*
- - **Core Advice:** Practical applications of Physical AI in local government, smart cities, and public infrastructure.
+4. **Professor Jonathan Reichental** - *Mentor + Judge · Founder, Human Future; Former CIO, City of Palo Alto; Advisor @ FortyGuard*
+ - **Keynote:** *"Physical AI and the Future of Smart Cities: The Cognitive Industrial Revolution."*
+ - **Transcript & Notes:** [Physical AI and the Future of Smart Cities Dialogue](../sessions-dialogue/10-physical-ai-webinar-session.md)
+ - **Core Advice:** Transition from smart cities to cognitive cities (Perceive → Reason → Learn → Act). The 4 pillars of Physical AI (GenAI, Sensors, Robotics, Data Infrastructure). Inseparability of temperature and physical AI. For mission-critical infrastructure and life safety, deterministic validation guardrails and human oversight are mandatory. Smart cities fail from estimation errors, data deficits, and absence of bold vision. Build solutions that anticipate the future and solve high-consequence problems.
 
 5. **Jordana Rosa** - *Mentor · Senior Technical Specialist, Autodesk Forma*
  - **Keynote:** *"Breaking Silos with Autodesk: Bringing Context from Data to Design."*
