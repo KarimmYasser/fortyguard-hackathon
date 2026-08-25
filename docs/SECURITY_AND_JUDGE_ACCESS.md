@@ -18,7 +18,7 @@ The GitHub repository may remain private as long as the official `Hackathon-FG` 
 
 - Vercel's automatic platform DDoS mitigation remains the first network layer.
 - Vercel Firewall denies irrelevant WordPress/Shopify probe paths before application execution.
-- `POST /api/v1/scan` is limited at the Vercel edge to six requests per source IP per hour, protecting paid FortyGuard calls while allowing a judge to compare the four preset locations.
+- Paid live operations (`POST /api/v1/scan` and `POST /api/v1/dispatch/run-mitigation`) share an edge limit of eight requests per source IP per hour. This protects FortyGuard/LLM calls while allowing a judge to compare the four preset locations and execute the agent.
 - Identical vendor requests use durable request-addressed cache entries.
 - Identical simulation requests use permanent content-addressed solve results.
 - CORS permits only the two production origins, the apex custom domain, and local Vite development origins.
