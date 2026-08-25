@@ -81,6 +81,27 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 
 ---
 
+## 📈 Data Science & Spatial Rigor: Turning Heat Data into Real Signal
+*(Aligned with FortyGuard ML & Cloud Architecture Guidance - Session 7)*
+
+* **The "Fact vs. Finding" Principle:** Standard systems output static facts (e.g., *"Substation reached 42.7°C"*). Thermal Sentinel Grid couples FortyGuard 2m air temperature with IEEE ODEs to produce **comparative, defensible findings** (e.g., *"Asset #3 entered an 8.4h continuous thermal soak, accelerating Arrhenius aging by 58% and exhausting BESS cooling margins 3.1 hours before peak load"*).
+* **Multi-Modal Spatial & Temporal Coupling:** Vector asset locations are matched to FortyGuard 20m/60m raster cells. Multi-rate telemetry (15-minute load profiles vs. hourly microclimate forecasts) are coupled via continuous rolling integrals and UTC alignment, eliminating spurious spatial-temporal correlations.
+
+---
+
+## 💼 Commercial Validation & Product-Market Fit (PMF) Strategy
+*(Informed by the BreezoMeter $\to$ Google Acquisition & Cultivators Discovery Playbook - Session 8)*
+
+* **COCO Customer Discovery Alignment:**
+  * **Context:** Extreme summer heatwaves in Sunbelt (Phoenix, Texas) and MENA causing unmeasured 2-meter heat soak across urban infrastructure.
+  * **Outcomes:** Zero unforced transformer blowouts, avoiding $2.58M in outage losses, and extending capital asset life by 374+ equivalent hours.
+  * **Constraints:** Utilities currently operate reactively via coarse weather stations; switching to Thermal Sentinel Grid requires zero hardware retrofits (software-only API integration).
+* **Early Adopter Beachhead vs. Enterprise ICP:**
+  * **Phase 1 Beachhead (Immediate Revenue):** Private solar farm operators, BESS storage facilities, and mission-critical data center chiller operators in Sunbelt/MENA experiencing immediate thermal trip penalties.
+  * **Phase 2 Enterprise ICP (Scale):** Regulated investor-owned utilities (APS, ConEd, ERCOT, DEWA) and property casualty reinsurers.
+
+---
+
 ## 🔬 Four Asymmetric Scientific Moats & Deep Physics
 
 1. **IEC 60287 Underground Cable-Soil Moisture Dryout:**  

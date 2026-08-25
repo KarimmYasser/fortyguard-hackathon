@@ -166,7 +166,7 @@ fortyguard-hackathon/
 │   │   ├── ECONOMIC_MODEL_DASHBOARD_AND_PITCH_SCRIPT.md # Avoided loss ROI & 3-min video script
 │   │   ├── RESEARCH_AGENT_SYNTHESIS_AND_PHYSICAL_MODELS.md # 2m meteorological gap & standards
 │   │   └── MENTOR_INSIGHTS_AND_IDEA_FRAMEWORK.md # Mentorship keynote synthesis
-│   ├── sessions-dialogue/              # Full Webinar Transcripts (Fawad, Jordana, Ashan, Onboarding)
+│   ├── sessions-dialogue/              # Full Webinar Transcripts (Sessions 01-08: Fawad, Jordana, Ashan, Ahmed, Tarek, Mudethir, Thamir)
 │   ├── api-documentation/              # OpenAPI Schemas & FortyGuard Endpoint Guides
 │   ├── handbook/                       # Participant Handbook & Official Scoring Rubrics
 │   ├── project-registration/           # PyreShield Registration Pitch & Strategy History

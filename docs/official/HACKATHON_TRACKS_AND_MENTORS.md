@@ -49,7 +49,8 @@
 
 1. **Ahmed Abdelkhalek** - *Mentor + Judge · Head of Digital Natives, Startups & VCs, Google Cloud (MENA & Levant)*
  - **Keynote:** *"The Builder's Trap: Escaping the Hype to Build What Matters for Your First Paying Customer."*
- - **Core Advice:** Start from a painfully felt problem. Pragmatic engineering over hype. GTM validation before building.
+ - **Transcript & Notes:** [Escaping the Builder's Trap Dialogue](../sessions-dialogue/5-builders-trap-webinar-session.md)
+ - **Core Advice:** Start from a painfully felt problem. Pragmatic engineering over hype. Use the 15-min pre-build checklist (Hero, Pain, AI Justification, Kill Switch) and GTM validation before building.
 
 2. **Fawad Shah** - *Software Engineering Lead, FortyGuard*
  - **Keynote:** *"Building on the FortyGuard Temperature API."*
@@ -72,10 +73,22 @@
 6. **Aashan Javed** - *AI/ML Engineer, FortyGuard*
  - **Keynote:** *"Heat Intelligence Cloud: What You Can Build on the FortyGuard API."*
  - **Transcript & Notes:** [Heat Intelligence Cloud Webinar Dialogue](../sessions-dialogue/3-heat-cloud-webinar-session.md)
- - **Core Advice:** Live demo of real shipped products on the Temperature API.
+ - **Core Advice:** Live demo of real shipped products on the Temperature API across 6 major industry verticals.
 
 7. **Tarek Fouad** - *Mentor · Founder & CEO, Narrative One; Former CCO, Shorooq*
  - **Keynote:** *"From Headlines to Impact: How Startups Can Master PR & Media."*
+ - **Transcript & Notes:** [Headlines to Impact Dialogue](../sessions-dialogue/6-headlines-to-impact-session.md)
+ - **Core Advice:** Master the 3 P's Engine (Perception → Presence → Partnerships), 80/20 headline rule, and leading with mission in 3-minute video pitches.
+
+8. **Mudethir & Aamir** - *Lead ML Engineer & Cloud/Data Architect, FortyGuard*
+ - **Keynote:** *"From Heat Data to Real Signal: Data Correlation Analysis."*
+ - **Transcript & Notes:** [From Heat Data to Real Signal Dialogue](../sessions-dialogue/7-data-correlation-webinar-session.md)
+ - **Core Advice:** Space-time-variable resolution (Where, When, What), preventing spurious correlations, 2m air temp vs LST/ERA5, "Fact vs. Finding" rule, and cadence matching.
+
+9. **Thamir** - *Partner @ Cultivators; early operator at BreezoMeter $\to$ Google acquisition; Google Solar API*
+ - **Keynote:** *"Finding Product-Market Fit: How to Validate Your Idea, Your Customer, and Your Message."*
+ - **Transcript & Notes:** [Finding Product-Market Fit Dialogue](../sessions-dialogue/8-product-market-fit-webinar.md)
+ - **Core Advice:** Turning microclimate API data into enterprise SaaS, the COCO customer discovery framework, targeting agile early adopters before enterprise utility ICPs, and the space pen vs pencil test.
 
 ---
 

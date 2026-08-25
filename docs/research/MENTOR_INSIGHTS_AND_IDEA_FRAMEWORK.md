@@ -53,6 +53,36 @@
 
 ---
 
+### C. The Data Science & Spatial Rigor Playbook: "Fact vs. Finding"
+*(Mudethir - Lead ML Engineer & Aamir - Cloud/Data Architect, FortyGuard - Session 7)*
+
+1. **The "Fact vs. Finding" Doctrine:**
+   * Reporting *"Substation A hit 43°C on July 19"* is merely a static **fact**—it offers zero basis for an operational decision.
+   * A true **finding** provides context, comparison, and consequence: *"Substation A spent 3.2x more continuous hours above 40°C than ambient baseline due to 0% canopy and 72% asphalt cover, driving a 58% increase in transformer loss of life."*
+2. **Preventing Spurious Correlations (Where, When, What):**
+   * **Where (Geometry):** Explicitly match vector asset points/polygons to the 20m/60m raster grid cells without coordinate skew.
+   * **When (Cadence):** When fusing multi-rate datasets (e.g. 15-minute SCADA vs. hourly FortyGuard forecasts), match to the slower cadence or compute continuous moving integrations. Always align time zones (UTC vs local).
+   * **What (Physical Variable):** Distinguish 2-meter convective air temperature (what assets/humans experience) from satellite Land Surface Temperature (LST skin temperature) and coarse ERA5 reanalysis (25 km cells).
+
+---
+
+### D. Product-Market Fit & The BreezoMeter / Google Solar Precedent
+*(Thamir - Partner @ Cultivators; early operator at BreezoMeter $\to$ Google acquisition; Google Solar API validation lead - Session 8)*
+
+1. **The COCO Customer Discovery Framework:**
+   * **Context:** Deeply characterize the operational environment (e.g. extreme multi-day heatwaves in Sunbelt/MENA).
+   * **Outcomes:** Quantify how the buyer measures success ($0 unforced outages, extended equipment life, lower insurance premiums).
+   * **Constraints:** Understand inertia, legacy workarounds (e.g., reactive maintenance, coarse weather apps), and switching costs.
+   * **Options:** Validate willingness to pay via interactive mockups before building excessive features.
+2. **Early Adopters vs. Ideal Customer Profile (ICP):**
+   * Do not start by pitching conservative utilities with multi-year RFP cycles.
+   * Target agile **early adopters** who feel acute financial pain today (private solar operators, high-density data centers, cold storage managers). Use early wins as the bridge to enterprise utility ICPs.
+3. **The "Space Pen vs. Pencil" Test:**
+   * Avoid engineering 50 complex features nobody asked for. Focus relentlessly on the core catastrophic failure mechanism and its automated mitigation.
+
+---
+
+
 ## 2. ⚡ What FortyGuard's Temperature API Uniquely Offers
 
 Mentors repeatedly emphasized that conventional weather APIs (Apple Weather, OpenWeather, NOAA) and orbital satellites (MODIS/Landsat) fail during extreme urban heatwaves. FortyGuard provides 4 proprietary capabilities that must form the foundation of any submission:

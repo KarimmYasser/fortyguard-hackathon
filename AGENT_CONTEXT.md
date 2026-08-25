@@ -203,17 +203,30 @@ flowchart TD
  - *Speakers:* Jordana Rosa (Senior Technical Specialist, Autodesk Forma · 4x Hackathon Winner) & Jay (CEO).
  - *Mentorship Guidance:* Bringing FortyGuard 2m microclimate data into AEC design tools (Autodesk Forma, Revit, Civil 3D) for early-stage thermal performance modeling before breaking ground. Key winning strategies: team trust, leadership, rapid iteration, and pitching measurable real-world outcomes.
 
-5. **Ahmed Abdelkhalek (Google Cloud Digital Natives, Startups & VC Lead):**
- - *Keynote: "The Builder's Trap: Escaping the Hype to Build What Matters for Your First Paying Customer."*
- - *Lesson:* Avoid over-engineering toy chat agents. Start with a painfully felt, high-cost problem; ensure clear GTM and paying customer demand.
+5. **[05. Escaping the Builder's Trap: Building MLPs with Google Cloud](docs/sessions-dialogue/5-builders-trap-webinar-session.md):**
+ - *Speaker:* Ahmed Abdelkhalek (Head of Startups, Google Cloud & Hackathon Judge).
+ - *Keynote:* Avoid over-engineering toy chat agents. Start with a painfully felt, high-cost problem; ensure clear GTM, 15-min pre-build checklist (Hero, Pain, AI Justification, Kill Switch), and paying customer demand.
 
-6. **Karol Wiszowaty (Inspeerity COO):**
+6. **[06. Headlines to Impact: Mastering PR & Storytelling](docs/sessions-dialogue/6-headlines-to-impact-session.md):**
+ - *Speaker:* Tarek (Founder & CEO, Narrative One).
+ - *Keynote:* The 3 P's Engine (Perception → Presence → Partnerships), 80/20 headline rule, and leading with mission-driven *Why* in 3-minute video pitches.
+
+7. **[07. From Heat Data to Real Signal: Data Correlation Analysis](docs/sessions-dialogue/7-data-correlation-webinar-session.md):**
+ - *Speakers:* Mudethir (Machine Learning Lead) & Aamir (Cloud/Data Architect, FortyGuard).
+ - *Keynote:* Space-time-variable resolution (Where, When, What), preventing false/spurious correlations, 2m air temp vs LST/ERA5, "Fact vs. Finding" doctrine, and multi-rate data coupling (cadence matching).
+
+8. **[08. Finding Product-Market Fit: Validating Idea, Customer, and Message](docs/sessions-dialogue/8-product-market-fit-webinar.md):**
+ - *Speaker:* Thamir (Partner @ Cultivators; early operator at BreezoMeter through Google acquisition; Google Solar API validation lead).
+ - *Keynote:* Transforming environmental API data into enterprise SaaS via asset protection, COCO Discovery framework (Context, Outcomes, Constraints, Options), Early Adopters vs Enterprise ICP, and the Space Pen vs Pencil rule.
+
+9. **Karol Wiszowaty (Inspeerity COO):**
  - *Keynote: "Why Great Ideas Die on the Whiteboard (and How to Save Yours)."*
  - *Lesson:* Sell the **outcome**, not the tech stack. Judges care about tangible results and risk reduction.
 
-7. **Prof. Jonathan Reichental (Founder Human Future, former Palo Alto CIO):**
+10. **Prof. Jonathan Reichental (Founder Human Future, former Palo Alto CIO):**
  - *Keynote: "Physical AI in Local Government & Smart Cities."*
  - *Lesson:* Practical physical AI bridging sensor/environmental data with municipal and infrastructure resilience.
+
 
 
 ## 4.4 The 7 Official Tracks

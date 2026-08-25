@@ -20,6 +20,8 @@ This directory contains full verbatim transcripts, structured summaries, and act
 | **04** | **[Breaking Silos with Autodesk: Data to Design](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/4-autodesk-webinar-session.md)** | **Jordana Rosa** (Senior Technical Specialist, Autodesk)<br>**Jay** (FortyGuard) | 1h 00m<br>Aug 19, 2026 | AEC & Autodesk Forma integration, early-stage microclimate modeling, 4x hackathon winner framework, team communication, leadership, and pitching with clarity. |
 | **05** | **[Escaping the Builder's Trap: Building MLPs with Google Cloud](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/5-builders-trap-webinar-session.md)** | **Ahmed Abdelkhalek** (Head of Startups, Google Cloud)<br>**Nahil** (FortyGuard) | 45m<br>Aug 20, 2026 | Escaping the builder's trap, Google Cardboard speed lessons, critical AI evaluation vs deterministic code, 15-min pre-build checklist, Minimum Lovable Products (MLP), Google Cloud credits ($2k-$250k). |
 | **06** | **[Headlines to Impact: Mastering PR & Storytelling](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/6-headlines-to-impact-session.md)** | **Tarek** (Founder & CEO, Narrative One)<br>**Nahil** (FortyGuard) | 45m<br>Aug 20, 2026 | Strategic PR & founder storytelling, The 3 P's (Perception → Presence → Partnerships), 80/20 headline rule, Press release anatomy, Media pitch Venn diagram, 3-minute video pitch delivery. |
+| **07** | **[From Heat Data to Real Signal: Data Correlation Analysis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/7-data-correlation-webinar-session.md)** | **Mudethir** (Lead ML Engineer)<br>**Aamir** (Cloud & Data Architect, FortyGuard) | 45m<br>Aug 21, 2026 | Space-time-variable resolution (Where, When, What), preventing spurious correlations, 2m air temperature vs LST/ERA5, "Fact vs. Finding" rule, multi-modal data coupling and cadence alignment. |
+| **08** | **[Finding Product-Market Fit: Validating Idea, Customer, and Message](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/8-product-market-fit-webinar.md)** | **Thamir** (Partner @ Cultivators, ex-BreezoMeter $\to$ Google, Google Solar API) | 45m<br>Aug 22, 2026 | Fall in love with problem over solution, COCO Discovery framework (Context, Outcomes, Constraints, Options), Early Adopters vs Ideal Customer Profile (ICP), willingness to pay, space pen vs pencil. |
 
 ---
 
@@ -84,3 +86,24 @@ This directory contains full verbatim transcripts, structured summaries, and act
   * **The 80/20 Press Release Rule:** 90% read headlines; 2% absorb the core message. Spend 80% of your time refining the headline.
   * **The Media Pitch Venn Diagram:** Intersecting your milestone, the journalist's specific beat, and macro breaking news trends (heatwaves, energy security).
   * **Hackathon Pitching:** The 3-minute video pitch and project write-up are where storytelling wins judge evaluation. Always lead with your *Why* and mission.
+
+---
+
+### 7. [From Heat Data to Real Signal: Data Correlation Analysis](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/7-data-correlation-webinar-session.md)
+* **Objective:** Rigorous spatial and temporal data coupling methodology directly from FortyGuard's Machine Learning and Cloud Architecture leads.
+* **Speakers:** Mudethir (Machine Learning Lead) & Aamir (Cloud & Data Architect, FortyGuard).
+* **Core Takeaways:**
+  * **The Where, When, and What Triad:** Prevent spurious correlations by enforcing strict spatial agreement (20m grid vs point/polygon assets), temporal agreement (hourly/UTC alignment, cadence matching to the slower source), and measurement variable integrity (2m convective air temp vs satellite Land Surface Temperature LST vs ERA5 reanalysis).
+  * **The "Fact vs. Finding" Principle:** Never report raw temperatures (e.g. *"Substation hit 43°C"* is a dead-end fact). Transform data into actionable, defensible findings (e.g. *"Substation spends 3.2x more hours above 40°C than ambient baseline due to 0% shading, accelerating insulation loss of life by 58%"*).
+  * **Multi-Modal Data Coupling:** Best practices for joining FortyGuard 2m rasters with vector electrical grids, SCADA load profiles, building morphology, and urban tree canopy datasets.
+
+---
+
+### 8. [Finding Product-Market Fit: Validating Your Idea, Customer, and Message](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/8-product-market-fit-webinar.md)
+* **Objective:** Commercial validation, customer discovery, and enterprise positioning for climate & environmental intelligence startups.
+* **Speaker:** Thamir (Partner @ Cultivators; early operator at BreezoMeter through Google acquisition; Google Solar API validation lead).
+* **Core Takeaways:**
+  * **The BreezoMeter / Google Solar API Playbook:** Transforming environmental microclimate data into multi-million dollar enterprise SaaS by linking spatial hazard directly to capital asset preservation and downtime prevention.
+  * **The COCO Customer Discovery Framework:** Structure discovery around *Context* (the operational environment), *Outcomes* (how the buyer measures success), *Constraints* (current manual fixes, inertia, switching costs), and *Options* (rapid mockups and willingness-to-pay validation).
+  * **Early Adopter vs. Ideal Customer Profile (ICP):** Don't get stuck in 24-month utility committee cycles initially; target agile, pain-motivated early adopters (private solar operators, critical facility managers, high-density data centers) who are losing money to heat soak right now, using them as proxies to unlock the broader utility ICP.
+  * **The "Space Pen vs. Pencil" Rule:** Avoid building 50 complex features nobody asked for; focus obsessively on the core high-friction failure point.
