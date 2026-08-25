@@ -44,6 +44,7 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 ---
 
 ### 4. 🔬 [Research, Specifications & System Blueprints](research/README.md)
+* **[Technical & Scientific Glossary](GLOSSARY.md):** Authoritative, mathematically rigorous definitions for all physics, meteorology, IEEE/IEC standards, power flow, CBF safety filters, and economic reliability terms across the project.
 * **[Data Science, Engineering & ML Specification](research/DATA_SCIENCE_AND_ML_SPECIFICATION.md):** Complete IBM Data Science lifecycle specification covering Bronze→Silver→Gold ETL Medallion architecture (18 features), Ridge Physics Surrogate ($R^2=0.9987$), Isolation Forest anomaly detection, Weibull RUL survival analysis, and paired $t$-test hypothesis proofs.
 * **[Advanced Mathematical & Physical Moats](research/ADVANCED_PHYSICS_AND_MATHEMATICAL_PAPERS.md):** Academic monograph on Dynamic Line Rating (IEEE 738), BESS electro-thermal degradation (IEC 62619), Arrhenius-Weibull cascading risk, and the SOCP research basis for the prototype's analytical uncertainty screen.
 * **[Scientific Research & alphaXiv Academic Corpus Report](research/SCIENTIFIC_RESEARCH_REPORT.md):** 22-record production academic index grounding PINNs, cool pavements, urban microclimates, cable soil physics, and control-barrier-function research.

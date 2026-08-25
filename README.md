@@ -6,6 +6,7 @@
 [![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Future%20Buildings%20%26%20Energy-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Standards: IEEE & IEC](https://img.shields.io/badge/Standards-IEEE%20C57.91%20%7C%20IEC%2060076--7-blue?style=for-the-badge)](https://standards.ieee.org/)
 [![Safety: Deterministic Envelope](https://img.shields.io/badge/Safety%20Gate-Deterministic%20Envelope-success?style=for-the-badge)](https://github.com/KarimmYasser/fortyguard-hackathon)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-www.thermal--sentinel--grid.live-10b981?style=for-the-badge&logo=vercel)](https://www.thermal-sentinel-grid.live/)
 
 ---
@@ -443,4 +444,13 @@ If you reference or build upon **Thermal Sentinel Grid** in research, benchmarks
 ```text
 K. Y. Azab, "Thermal Sentinel Grid: Physics-Informed Microclimate AI for Urban Grid Resilience," FortyGuard Hackathon 2026. Available: https://github.com/KarimmYasser/fortyguard-hackathon
 ```
+
+---
+
+## 📄 License & Intellectual Property
+
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)** — see the [LICENSE](LICENSE) file for details.  
+Copyright © 2026 **Karim Y. Azab (Karim Yasser)**. All moral rights, author attributions, and copyleft protections are strictly reserved.
+
+
 
