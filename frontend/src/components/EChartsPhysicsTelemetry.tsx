@@ -375,7 +375,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
   return (
     <div id="tour-telemetry-charts" className="space-y-4">
       {/* Chart A: Boundary Forcing */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
+      <div id="tour-chart-boundary" className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-2">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
@@ -402,7 +402,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
       </div>
 
       {/* Chart B: IEEE/IEC Differential Thermal Trajectory */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
+      <div id="tour-chart-transformer" className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-2">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -429,7 +429,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
       </div>
 
       {/* Chart C: Arrhenius Aging & Grid Loading */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
+      <div id="tour-chart-aging" className="glass-panel rounded-3xl p-5 border border-slate-800/90 shadow-xl">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-2">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">

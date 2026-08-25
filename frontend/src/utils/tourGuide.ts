@@ -73,23 +73,30 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-operations-ranking', '📊 Transparent Risk Ranking', 'Rank registered assets using available environmental and registry evidence. Missing fields are excluded rather than silently imputed.', 'top'),
         step('#tour-worker-window', '👷 Candidate Intervention Window', 'Screen measured wet-bulb and 2 m air temperature against explicit thresholds. This is not presented as OSHA or WBGT certification.', 'top'),
         step('#tour-operations-evidence', '🔐 Content-Addressed Evidence', 'The operator API and MCP tools share one read-only deterministic core and return the same SHA-256 evidence identity.', 'top'),
+        step('#tour-coco-generator', '💼 COCO Customer Discovery Engine', 'Synthesize 4-pillar executive proposals (Context, Outcomes, Constraints, Options) across 4 commercial archetypes (Utility, Solar/BESS, Data Center, Hospital).', 'top'),
       ];
 
     case 'overview':
       return [
-        step('#tour-replay-bar', '⏱️ Synchronized Replay', 'Scrub the 12-hour scenario. All visible thermal and financial panels are derived from the active trajectory.'),
-        step('#tour-navbar-mode-toggle', '🛡️ Compare Operating Modes', 'Toggle baseline and mitigated states without changing the underlying scenario.'),
-        step('#tour-kpi-grid', '📊 Primary Telemetry', 'Read measured boundary conditions alongside modelled top-oil, hot-spot, aging, safety, and economics outputs.', 'top'),
-        step('#tour-telemetry-charts', '📈 Coupled Time Series', 'Inspect the shared timeline for ambient boundary, transformer state, and aging response.', 'top'),
-        step('#tour-safety-gate', '🛡️ Bounded-Trajectory Safety Gate', 'The deterministic validator checks the full candidate trajectory and bisects unsafe loading until constraints pass.', 'top'),
-        step('#tour-audit-ledger', '📜 Scenario Audit Trail', 'Review chronological ingest, model, safety, and dispatch events for the active run.', 'top'),
+        step('#tour-replay-bar', '⏱️ Synchronized 12h Replay', 'Scrub the 12-hour heatwave trajectory. All thermal, financial, and compliance panels update synchronously.'),
+        step('#tour-navbar-mode-toggle', '🛡️ Compare Operating Modes', 'Toggle between unmitigated baseline and bounded-action mitigated states without altering boundary conditions.'),
+        step('#tour-kpi-grid', '📊 Primary Telemetry Hub', 'High-level executive telemetry summarizing peak temperatures, microclimate offsets, persistence, and net avoided loss.'),
+        step('#tour-kpi-hotspot', '🔥 Winding Hot-Spot (T_hs)', 'Monitors transformer winding hot-spot against the IEEE C57.91 140°C emergency insulation breakdown limit.'),
+        step('#tour-kpi-microclimate', '🌡️ 2M Microclimate Parcel', 'FortyGuard hyperlocal measured 2m air temperature resolving the measured intra-corridor spread and asphalt heating.'),
+        step('#tour-kpi-persistence', '⏳ Thermal Soak Index (TSI)', 'Tracks cumulative hours above 40°C (P40) and degree-hours exceedance (H40) driving insulation loss-of-life.'),
+        step('#tour-kpi-roi', '💰 Net Avoided Loss ROI', 'DOE LBNL ICE certified financial model projecting net avoided losses and rate-basing investment returns.'),
+        step('#tour-chart-boundary', '📈 Boundary Forcing Chart', 'FortyGuard 2m convective air and solar flux time-series comparing AOI mean vs coolest parcel.'),
+        step('#tour-chart-transformer', '⚡ Differential Thermal ODEs', 'IEEE C57.91 / IEC 60076-7 state estimation tracking top-oil and hot-spot temperature evolution.'),
+        step('#tour-chart-aging', '📉 Arrhenius Loss-of-Life & BESS', 'Relative aging acceleration V(t) and synchronized BESS state of charge (SoC) peak-shaving dispatch.'),
+        step('#tour-safety-gate', '🛡️ Bounded-Trajectory Safety Gate', 'Deterministic mathematical gate verifying ANSI C84.1 voltage, thermal ceilings, and N-1 reliability.'),
+        step('#tour-audit-ledger', '📜 Scenario Audit Trail', 'Cryptographically hashed event ledger logging data ingestion, physics solves, and dispatch decisions.'),
       ];
 
     case 'sandbox':
       return [
-        step('#tour-sandbox-actions', '⚡ Scenario Presets', 'Apply a reproducible stress preset before fine-tuning individual assumptions.'),
-        step('#tour-sandbox-controls', '🎛️ Multi-Physics Controls', 'Change microclimate, duration, storage, transformer, canyon, and cooling inputs and solve the resulting trajectory.'),
-        step('#tour-bess-panel', '🔋 BESS Electro-Thermal Model', 'Inspect modelled cell core/surface temperatures, degradation cost, and thermal safety margin.', 'top'),
+        step('#tour-sandbox-actions', '⚡ Scenario Presets & Archetypes', 'Apply reproducible presets (Utility Substation, Solar Farm 25MVA, AI Data Center 75MVA, Hospital Feeder 15MVA, Weather Blindspot, Soil Desertification) before fine-tuning.'),
+        step('#tour-sandbox-controls', '🎛️ Multi-Physics Controls', 'Modulate boundary microclimate forcing, duration, storage reserves, transformer rating, canyon aspect ratio, and cooling derate (<15ms solve).'),
+        step('#tour-bess-panel', '🔋 BESS Electro-Thermal Model', 'Inspect modelled cell core/surface temperatures, degradation cost, and thermal safety margin.'),
         step('#tour-telemetry-charts', '📈 Rebased Output Trajectory', 'The shared telemetry charts update from the solved sandbox payload; identical full requests can replay from durable storage.', 'top'),
       ];
 
@@ -113,8 +120,10 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
 
     case 'ieee_annex_g':
       return [
-        step('#tour-ieee-header', '📜 IEEE C57.91 Annex G', 'Run the transformer model against the checked reference cases from Annex G.'),
-        step('#tour-ieee-table', '🔬 Numerical Comparison', 'Review calculated values, reference values, and explicit numerical error rather than relying on an unsupported certification claim.', 'top'),
+        step('#tour-ieee-header', '📜 IEEE C57.91 Annex G Validation', 'Exact numerical verification suite benchmarking the thermal ODE solver against published standard reference cases.'),
+        step('#tour-ieee-clauses', '📑 Standard Test Cases', 'Switch between Clause G.2 (Step Load Response) and Clause G.3 (Diurnal Ambient Cycle).'),
+        step('#tour-ieee-metrics', '🔬 Reference Error & Arrhenius', 'Demonstrates <0.0001°C error against standard tables and exact Arrhenius aging acceleration factor V = 1.00000x at 110°C.', 'top'),
+        step('#tour-ieee-table', '📊 Benchmark Differential Table', 'Detailed hour-by-hour side-by-side comparison between solver state output and IEEE Analytical benchmark values.', 'top'),
       ];
 
     case 'academic_provenance':
@@ -135,8 +144,12 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
 
     case 'physics_moats':
       return [
-        step('#tour-moats-header', '🔬 Four Scientific Models', 'Review the deterministic mechanisms that connect the environmental boundary to vulnerable grid assets.'),
-        step('#tour-moats-cards', '📐 Coupled Formulations', 'Explore cable-soil dryout, canyon cooling derate, virtual moisture state, and the bounded-trajectory safety filter.', 'top'),
+        step('#tour-moats-header', '🔬 Four Asymmetric Scientific Moats', 'Deterministic multi-physics coupling mechanisms that standard SCADA and generic LLMs cannot observe.'),
+        step('#tour-moats-tabs', '🧭 Moat Subsystem Selector', 'Select among cable-soil dryout, CBF-QP invariance, canyon aerodynamics, and virtual moisture desorption.'),
+        step('#tour-moat-1', '⚡ Moat 1: Buried Cable-Soil Dryout', 'IEC 60287 multi-physics modeling showing non-linear soil thermal resistivity surge (0.9 to 2.45 K·m/W) causing cable ampacity bottleneck.', 'top', 'center', click('#tour-moat-tab-1')),
+        step('#tour-moat-2', '🛡️ Moat 2: Provably Safe CBF-QP Gate', 'Control Barrier Function Quadratic Program enforcing forward invariance of safe thermal sets under FortyGuard uncertainty.', 'top', 'center', click('#tour-moat-tab-2')),
+        step('#tour-moat-3', '🏙️ Moat 3: Urban Canyon Aerodynamics', 'Oke canyon fluid dynamics calculating aerodynamic wind sheltering (H/W > 1.5) and 32% convective cooling derate.', 'top', 'center', click('#tour-moat-tab-3')),
+        step('#tour-moat-4', '💧 Moat 4: Virtual Moisture Sensor', 'Fickian paper-to-oil moisture desorption tracking dielectric arcing breakdown risk before thermal limits are reached.', 'top', 'center', click('#tour-moat-tab-4')),
       ];
 
     case 'agent_graph':

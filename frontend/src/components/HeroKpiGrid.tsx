@@ -41,6 +41,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
     <div id="tour-kpi-grid" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       {/* KPI 1: Winding Hot-Spot (T_hs) & Emergency Limit */}
       <div
+        id="tour-kpi-hotspot"
         className={`rounded-3xl p-5 border transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
           isBreached
             ? 'bg-gradient-to-br from-rose-950/80 via-slate-900 to-slate-950 border-rose-600/60 shadow-xl shadow-rose-950/40'
@@ -91,7 +92,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
       </div>
 
       {/* KPI 2: FortyGuard Hyperlocal 2m Microclimate Delta */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+      <div id="tour-kpi-microclimate" className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
         <div className="flex items-center justify-between">
           <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
             <Thermometer className="h-4 w-4 text-rose-400" />
@@ -124,7 +125,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
       </div>
 
       {/* KPI 3: Continuous Persistence & Thermal Soak (TSI) */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+      <div id="tour-kpi-persistence" className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
         <div className="flex items-center justify-between">
           <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
             <Clock className="h-4 w-4 text-amber-400" />
@@ -155,7 +156,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
       </div>
 
       {/* KPI 4: Investment-Grade Net Avoided Loss & ROI */}
-      <div className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+      <div id="tour-kpi-roi" className="glass-panel rounded-3xl p-5 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
         <div className="flex items-center justify-between">
           <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
             <DollarSign className="h-4 w-4 text-emerald-400" />

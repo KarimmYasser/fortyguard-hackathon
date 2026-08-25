@@ -51,8 +51,9 @@ export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
         </div>
 
         {/* Clause Switcher */}
-        <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+        <div id="tour-ieee-clauses" className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           <button
+            id="tour-ieee-tab-g2"
             onClick={() => setActiveClause('clause_g2')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               activeClause === 'clause_g2'
@@ -63,6 +64,7 @@ export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
             Clause G.2 (Step Load)
           </button>
           <button
+            id="tour-ieee-tab-g3"
             onClick={() => setActiveClause('clause_g3')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               activeClause === 'clause_g3'
@@ -76,7 +78,7 @@ export const IEEEAnnexGBenchmarkViewer: React.FC = () => {
       </div>
 
       {/* Benchmark Summary Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
+      <div id="tour-ieee-metrics" className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
         <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
           <div className="text-slate-400 text-[11px]">Max Top-Oil Deviation:</div>
           <div className="text-xl font-black text-emerald-400 mt-1">

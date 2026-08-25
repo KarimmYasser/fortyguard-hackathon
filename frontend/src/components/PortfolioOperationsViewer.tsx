@@ -143,7 +143,7 @@ export const PortfolioOperationsViewer: React.FC = () => {
       </div>
 
       {/* COCO Customer Discovery & Commercial Brief Generator Section */}
-      <section className="glass-panel rounded-3xl border border-purple-500/30 bg-gradient-to-r from-purple-950/40 via-slate-900/90 to-indigo-950/30 p-6 md:p-8 space-y-6">
+      <section id="tour-coco-generator" className="glass-panel rounded-3xl border border-purple-500/30 bg-gradient-to-r from-purple-950/40 via-slate-900/90 to-indigo-950/30 p-6 md:p-8 space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-400">

@@ -47,7 +47,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
         </div>
 
         {/* Moat Tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+        <div id="tour-moats-tabs" className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           {[
             { id: 1, label: '1. Cable Soil Dryout' },
             { id: 2, label: '2. CBF-QP Safety Gate' },
@@ -56,6 +56,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
           ].map((m) => (
             <button
               key={m.id}
+              id={`tour-moat-tab-${m.id}`}
               onClick={() => setActiveMoat(m.id)}
               className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
                 activeMoat === m.id
@@ -73,7 +74,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
       <div id="tour-moats-cards" className="glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl">
         {/* MOAT 1: Cable-Soil Dryout */}
         {activeMoat === 1 && (
-          <div className="space-y-6">
+          <div id="tour-moat-1" className="space-y-6">
             <div className="flex items-start justify-between border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-amber-400 font-bold mb-1">
@@ -130,7 +131,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
 
         {/* MOAT 2: CBF-QP Safety Gate */}
         {activeMoat === 2 && (
-          <div className="space-y-6">
+          <div id="tour-moat-2" className="space-y-6">
             <div className="flex items-start justify-between border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold mb-1">
@@ -187,7 +188,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
 
         {/* MOAT 3: Urban Canyon Aerodynamics */}
         {activeMoat === 3 && (
-          <div className="space-y-6">
+          <div id="tour-moat-3" className="space-y-6">
             <div className="flex items-start justify-between border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold mb-1">
@@ -243,7 +244,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
 
         {/* MOAT 4: Virtual Moisture Sensor */}
         {activeMoat === 4 && (
-          <div className="space-y-6">
+          <div id="tour-moat-4" className="space-y-6">
             <div className="flex items-start justify-between border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-purple-400 font-bold mb-1">
