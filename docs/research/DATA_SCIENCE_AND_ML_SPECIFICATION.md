@@ -68,7 +68,9 @@ Implemented in [`src/data_science/ml_models.py`](../../src/data_science/ml_model
 ### Model 1: Polynomial Ridge Physics-Surrogate Regressor
 - **Problem:** Full discrete-time ODE solvers (IEEE C57.91) require $\approx 5\text{ms}$ per asset. City-scale operations across 10,000+ distribution transformers demand sub-millisecond screening.
 - **Formulation:** Degree-2 Polynomial Feature Expansion + $\ell_2$-regularized Ridge Regression:
-  $$\min_w \| X_{\text{poly}} w - y \|_2^2 + \alpha \|w\|_2^2$$
+
+$$\min_w \left\Vert X_{\mathrm{poly}} w - y \right\Vert_2^2 + \alpha \left\Vert w \right\Vert_2^2$$
+
 - **Metrics:**
   - **$R^2$ Score:** **$0.9987$**
   - **Mean Absolute Error (MAE):** **$1.20^\circ\mathrm{C}$**
@@ -77,13 +79,14 @@ Implemented in [`src/data_science/ml_models.py`](../../src/data_science/ml_model
 
 ### Model 2: Sensor Drift & Thermal Anomaly Detector (Isolation Forest)
 - **Problem:** Detect hardware sensor drift, cooling fan failures, or microclimate anomalies where observed temperatures deviate from FortyGuard predictions.
-- **Formulation:** Unsupervised ensemble of isolation trees partitioning feature space $[T_{2\text{m}}, \Delta T_{\text{micro}}, K, \Delta\text{SoC}, S(t), T_{\text{hs}}]$ with an $8\%$ contamination boundary.
+- **Formulation:** Unsupervised ensemble of isolation trees partitioning feature space $[T_{2\mathrm{m}}, \Delta T_{\mathrm{micro}}, K, \Delta\mathrm{SoC}, S(t), T_{\mathrm{hs}}]$ with an $8\%$ contamination boundary.
 - **Output:** Flagged anomaly indicators with anomaly scores for SCADA triage.
 
 ### Model 3: Asset Reliability & Survival Analysis (Weibull Hazard)
 - **Problem:** Forecast remaining asset lifetime under sustained heatwave stress.
 - **Formulation:** Extreme value Weibull distribution fit on cumulative Arrhenius aging hours:
-  $$S(t) = \exp\left( -\left(\frac{t}{\lambda}\right)^k \right)$$
+
+$$S(t) = \exp\left( -\left(\frac{t}{\lambda}\right)^k \right)$$
 - **Results:**
   - **Weibull Shape ($k$):** $16.7582$
   - **Weibull Scale ($\lambda$):** $166,358.3\text{ hours}$
@@ -171,10 +174,14 @@ Following FortyGuard ML and Cloud Architecture guidance (Session 07), the data s
 
 ### 🗺️ B. Spatial Bivariate Regression Engine (`src/data_science/spatial_correlation.py`)
 - **Canopy vs. Persistence Model:** Quantifies the mitigation effect of urban tree canopy on continuous thermal soak:
-  $$P_{40, i} = \beta_0 + \beta_1 \cdot \text{CanopyPct}_i + \epsilon_i \quad (\beta_1 < 0, p < 0.01)$$
+
+$$P_{40, i} = \beta_0 + \beta_1 \cdot \mathrm{CanopyPct}_i + \epsilon_i \quad (\beta_1 < 0, p < 0.01)$$
+
 - **Asphalt vs. Microclimate Delta Model:** Quantifies convective air temperature rise over radiating impervious surfaces:
-  $$\Delta T_{2\text{m}, i} = \alpha_0 + \alpha_1 \cdot \text{AsphaltPct}_i + \epsilon_i$$
-- **Canyon Aspect vs. Aerodynamic Cooling Throttling:** Evaluates radiator fin convective derate ($\eta_{\text{cool}}$) against building canyon aspect ratios ($H/W$).
+
+$$\Delta T_{2\mathrm{m}, i} = \alpha_0 + \alpha_1 \cdot \mathrm{AsphaltPct}_i + \epsilon_i$$
+
+- **Canyon Aspect vs. Aerodynamic Cooling Throttling:** Evaluates radiator fin convective derate ($\eta_{\mathrm{cool}}$) against building canyon aspect ratios ($H/W$).
 - **Moran's I Spatial Autocorrelation:** Verifies that spatial clustering of heat vulnerability is statistically non-random ($z > 1.96, p < 0.05$).
 
 ### 🌐 C. Multi-Modal Environmental Coupling & REST API Boundaries

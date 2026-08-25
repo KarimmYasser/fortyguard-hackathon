@@ -64,8 +64,8 @@ flowchart LR
 
 ### Advanced Grid Physics & Heavy Computational Moats
 5. **Dynamic Line Rating & Catenary Sag (IEEE Std 738-2012):** Solves iterative Newton-Raphson convective, radiative, and solar heat equilibrium ($q_c + q_r = q_s + I^2R$) to unlock dynamic ampacity headroom (+22.5%) and prevent ground flashover sag ($S(T_c)$).
-6. **BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Fade:** Integrates 2-state lumped thermal differential equations ($T_{\text{core}}$, $T_{\text{surf}}$) with Arrhenius Solid Electrolyte Interphase (SEI) kinetics ($dQ_{\text{loss}}/dt$), calculating real-time battery degradation cost (\$/MWh) and enforcing the $55^\circ\text{C}$ thermal runaway safety ceiling.
-7. **Arrhenius-Weibull Grid Fragility & Cascading Outage Risk:** Non-homogeneous Poisson-Weibull hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to compute joint cascading blackout probability ($P_{\text{cascade}}$).
+6. **BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Fade:** Integrates 2-state lumped thermal differential equations ($T_{\mathrm{core}}$, $T_{\mathrm{surf}}$) with Arrhenius Solid Electrolyte Interphase (SEI) kinetics ($dQ_{\mathrm{loss}}/dt$), calculating real-time battery degradation cost (USD/MWh) and enforcing the $55^\circ\mathrm{C}$ thermal runaway safety ceiling.
+7. **Arrhenius-Weibull Grid Fragility & Cascading Outage Risk:** Non-homogeneous Poisson-Weibull hazard model $\lambda_i(t, T)$ with Arrhenius acceleration $A_F(T)$ integrated across substation assets to compute joint cascading blackout probability ($P_{\mathrm{cascade}}$).
 8. **Analytical Uncertainty-Bounded Dispatch Screen:** Applies Gaussian 90%/95%/99% quantiles to a simplified 4-bus feeder approximation, then selects BESS, OLTC, and shedding actions heuristically. This is not a numerical SOCP optimization solve.
 
 
@@ -125,9 +125,9 @@ Thermal Sentinel Grid computes non-overlapping, auditable avoided loss metrics:
 
 $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigated}}\right] \cdot C_{\text{consequence}} + \Delta PV_{\text{aging}} - C_{\text{mitigation}}}$$
 
-* **Avoided Outage Consequence ($C_{\text{consequence}}$):** Emergency replacement + customer interruption costs ($VoLL$ via LBNL ICE Calculator) + SAIDI/SAIFI reliability incentives.
-* **Capital Deferral ($\Delta PV_{\text{aging}}$):** Present value of deferred transformer capital replacement ($C_{\text{replace}}$ over 180,000-hour design life).
-* **Net Operational ROI:** The canonical replay computes **$2,576,849.10 net avoided loss per event** at **5,495.3× ROI**, using $2,576,590.38 avoided outage risk, $727.73 capital-aging deferral, and $469 mitigation cost.
+* **Avoided Outage Consequence ($C_{\mathrm{consequence}}$):** Emergency replacement + customer interruption costs ($\mathrm{VoLL}$ via LBNL ICE Calculator) + SAIDI/SAIFI reliability incentives.
+* **Capital Deferral ($\Delta PV_{\mathrm{aging}}$):** Present value of deferred transformer capital replacement ($C_{\mathrm{replace}}$ over 180,000-hour design life).
+* **Net Operational ROI:** The canonical replay computes **\$2,576,849.10 net avoided loss per event** at **5,495.3× ROI**, using \$2,576,590.38 avoided outage risk, \$727.73 capital-aging deferral, and \$469 mitigation cost.
 
 ---
 
@@ -255,7 +255,7 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | # | Table Name | Data Domain & Physical Source | Persistence Purpose |
 | :-: | :--- | :--- | :--- |
 | **1** | `api_call_cache` | FortyGuard responses (MD5 request identity) plus full deterministic simulation payloads (SHA-256 request identity) | Prevents duplicate API charges and replays identical solves across serverless cold starts; solve entries do not expire. |
-| **2** | `dispatch_work_orders` | Prototype dispatch work orders ($K_{\text{safe}}$, BESS, OLTC) | Traceable history of modelled control recommendations. |
+| **2** | `dispatch_work_orders` | Prototype dispatch work orders ($K_{\mathrm{safe}}$, BESS, OLTC) | Traceable history of modelled control recommendations. |
 | **3** | `credit_accounting_ledger` | Real-time FortyGuard credit deductions per activity | Verifiable API accounting and spend reconciliation. |
 | **4** | `academic_research_papers` | 22 indexed research records with LaTeX math & alphaXiv links | Scientific grounding and physical formulation lineage. |
 | **5** | `substation_telemetry_logs` | 12-hour modelled asset telemetry ($\theta_o, \theta_w, V(t)$) | Thermal-limit verification and scenario audit. |
@@ -263,10 +263,10 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | **7** | `multi_day_heatwave_logs` | Per-step 72h compounding audit records | Forensics for modelled soil dryout and cumulative aging; environmental forcing comes from the 72-row frozen live capture. |
 | **8** | `dlr_catenary_telemetry` | Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) & sag | Wildfire and flashover prevention compliance. |
 | **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, CBF proofs, and GPT tokens | Explainable AI (XAI) for control room operators. |
-| **10** | `financial_audit_snapshots` | ICE-informed calculations ($2.58M avoided loss, 5,495× ROI in the canonical scenario) | Reproducible financial-model snapshots and assumption review. |
+| **10** | `financial_audit_snapshots` | ICE-informed calculations (\$2.58M avoided loss, 5,495× ROI in the canonical scenario) | Reproducible financial-model snapshots and assumption review. |
 | **11** | `microclimate_parcel_store` | FortyGuard 2m parcel geometry, measured peak/spread, location and catalog date | Saved-scan selector in Cloud DB; operators can re-run calculations without creating a new scan. |
 | **12** | `bess_degradation_logs` | Coupled core/surface ODEs & Arrhenius SEI capacity fade | Protects million-dollar battery storage warranty limits. |
-| **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |
+| **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\mathrm{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |
 | **14** | `chance_constrained_opf_logs` | Analytical quantile-bounded dispatch results ($z_{1-\alpha}$) | Reviewable model output under forecast uncertainty. |
 | **15** | `cbf_safety_certificates` | Control Barrier Function slack ($\xi^*$) and model checks | Records whether proposed actions satisfy the configured safety envelope. |
 | **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
@@ -274,7 +274,6 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 * **Live Database Hub in UI:** Operators can click **`Cloud DB (16 Tables)`** to inspect health, records, credit deductions, and **Saved Scans**. Selecting a stored parcel runs—or replays from the permanent solve cache—the corresponding physics and rebases every dashboard tab.
 * **Read/write boundary:** The canonical `GET /api/v1/replay/phoenix-2023` is read-only and does not append duplicate telemetry or safety certificates when the dashboard is refreshed. Cache reads project only `response_payload`, and Cloud DB counts use exact PostgREST count headers with narrow primary-key projections.
 * **Performance analysis:** See [Database Query Performance & Replay Persistence](docs/research/DATABASE_QUERY_PERFORMANCE.md) for query ownership, remediation details, regression guards, and the production verification checklist.
-* **Setup Guide & SQL Migrations:** See [Supabase Setup & Enterprise Database Guide](scratch/SUPABASE_SETUP_GUIDE.md) for complete SQL scripts.
 
 
 ---

@@ -39,12 +39,18 @@ flowchart TD
 
 ### 1.2 Mathematical Formulation
 * **Cable Conductor Temperature ($T_c$):**
-  $$T_c(t) = T_{\text{soil},\infty}(t) + q_c(t) \cdot R_{\text{th,cable}}(\rho_{\text{soil}}(t))$$
-  $$q_c(t) = I(t)^2 R_{\text{ac}}(T_c(t)) + W_d(t) + W_s(t)$$
+
+$$T_c(t) = T_{\mathrm{soil},\infty}(t) + q_c(t) \cdot R_{\mathrm{th,cable}}(\rho_{\mathrm{soil}}(t))$$
+
+$$q_c(t) = I(t)^2 R_{\mathrm{ac}}(T_c(t)) + W_d(t) + W_s(t)$$
+
 * **Non-Linear Soil Resistivity Surge (Logistic State):**
-  $$\rho_{\text{soil}}(t) = \rho_{\text{wet}} + \frac{\rho_{\text{dry}} - \rho_{\text{wet}}}{1 + \exp[a(\theta_v(t) - \theta_{\text{crit}})]}$$
+
+$$\rho_{\mathrm{soil}}(t) = \rho_{\mathrm{wet}} + \frac{\rho_{\mathrm{dry}} - \rho_{\mathrm{wet}}}{1 + \exp[a(\theta_v(t) - \theta_{\mathrm{crit}})]}$$
+
 * **Shared Site-Risk Margin:**
-  $$M_{\text{site}}(t) = \min\left[T_{c,\max} - T_c(t), \; T_{o,\max} - T_o(t), \; T_{hs,\max} - T_{hs}(t)\right]$$
+
+$$M_{\mathrm{site}}(t) = \min\left[T_{c,\max} - T_c(t), \; T_{o,\max} - T_o(t), \; T_{hs,\max} - T_{hs}(t)\right]$$
 
 ### 1.3 Literature & Standards Basis
 * **IEC 60287-1-1 / IEC 60853:** Current rating equations and cyclic emergency loading for underground cables.
@@ -68,16 +74,24 @@ flowchart LR
 
 ### 2.2 Mathematical Formulation
 * **Safe Set Definition:**
-  $$\mathcal{C} = \left\{x \in \mathbb{R}^2 : h_o(x) = T_{o,\max} - T_o \ge 0, \; h_{hs}(x) = T_{hs,\max} - T_{hs} \ge 0\right\}$$
-* **Robust Worst-Case Boundary Condition:**
-  $$T_a^{\text{worst}}(t) = \widehat{T}_a(t) + \epsilon_a$$
-* **Discrete-Time Barrier Certificate:**
-  $$h_i\left(F(x_k, u_k, \widehat{T}_{a,k} + \epsilon_a)\right) \ge (1 - \gamma_i) h_i(x_k) \quad (0 < \gamma_i \le 1)$$
-* **Reference CBF-QP formulation from the literature (not the current implementation):**
-  $$u_k^* = \arg\min_{u, \delta} \|u - u_{\text{nom},k}\|_Q^2 + \lambda \|\delta\|_2^2$$
-  $$\text{s.t. } h_i(F(x_k, u, \widehat{T}_{a,k} + \epsilon_a)) \ge (1 - \gamma_i) h_i(x_k) - \delta_i, \quad u_{\min} \le u \le u_{\max}, \quad \delta_i \ge 0$$
 
-  The shipped gate instead performs forward simulation and bisection over the permissible load interval.
+$$\mathcal{C} = \left\{x \in \mathbb{R}^2 : h_o(x) = T_{o,\max} - T_o \ge 0, \; h_{hs}(x) = T_{hs,\max} - T_{hs} \ge 0\right\}$$
+
+* **Robust Worst-Case Boundary Condition:**
+
+$$T_a^{\mathrm{worst}}(t) = \widehat{T}_a(t) + \epsilon_a$$
+
+* **Discrete-Time Barrier Certificate:**
+
+$$h_i\left(F(x_k, u_k, \widehat{T}_{a,k} + \epsilon_a)\right) \ge (1 - \gamma_i) h_i(x_k) \quad (0 < \gamma_i \le 1)$$
+
+* **Reference CBF-QP formulation from the literature (not the current implementation):**
+
+$$u_k^* = \arg\min_{u, \delta} \left\Vert u - u_{\mathrm{nom},k} \right\Vert_Q^2 + \lambda \left\Vert \delta \right\Vert_2^2$$
+
+$$\text{s.t. } h_i(F(x_k, u, \widehat{T}_{a,k} + \epsilon_a)) \ge (1 - \gamma_i) h_i(x_k) - \delta_i, \quad u_{\min} \le u \le u_{\max}, \quad \delta_i \ge 0$$
+
+The shipped gate instead performs forward simulation and bisection over the permissible load interval.
 
 ### 2.3 Literature & Standards Basis
 * **Schneeberger, Dörfler & Mastellone (2024):** *"Advanced Safety Filter for Smooth Transient Operation of a Battery Energy Storage System"* (CBF forward invariance for energy storage converters).
@@ -102,11 +116,16 @@ flowchart TD
 
 ### 3.2 Mathematical Formulation
 * **Local Equipment Heat Balance:**
-  $$C_{\text{eq}} \frac{dT_s}{dt} = \dot{Q}_{\text{loss}} - h_c A_s (T_s - T_{\text{canyon}}) - \varepsilon \sigma A_s (T_s^4 - T_{\text{rad}}^4) - \dot{Q}_{\text{active}}$$
-* **Morphological Wind-Sheltering Factor ($\kappa_{\text{morph}}$):**
-  $$U_{\text{eff}} = U_{\text{ref}} \cdot \kappa_{\text{morph}} = U_{\text{ref}} \cdot \text{clip}\left[\exp(-\beta_1 H/W - \beta_2 \lambda_f + \beta_3 \phi_{\text{open}}), \kappa_{\min}, 1.0\right]$$
-* **Equipment Cooling Derate Factor ($\eta_{\text{cool}}$):**
-  $$\eta_{\text{cool}} = \frac{h_c A_s (T_s - T_{\text{canyon}}) + \varepsilon \sigma A_s (T_s^4 - T_{\text{rad}}^4)}{h_{c,\text{ref}} A_s (T_s - T_{2m,\text{ref}})}$$
+
+$$C_{\mathrm{eq}} \frac{dT_s}{dt} = \dot{Q}_{\mathrm{loss}} - h_c A_s (T_s - T_{\mathrm{canyon}}) - \varepsilon \sigma A_s (T_s^4 - T_{\mathrm{rad}}^4) - \dot{Q}_{\mathrm{active}}$$
+
+* **Morphological Wind-Sheltering Factor ($\kappa_{\mathrm{morph}}$):**
+
+$$U_{\mathrm{eff}} = U_{\mathrm{ref}} \cdot \kappa_{\mathrm{morph}} = U_{\mathrm{ref}} \cdot \text{clip}\left[\exp(-\beta_1 H/W - \beta_2 \lambda_f + \beta_3 \phi_{\mathrm{open}}), \kappa_{\min}, 1.0\right]$$
+
+* **Equipment Cooling Derate Factor ($\eta_{\mathrm{cool}}$):**
+
+$$\eta_{\mathrm{cool}} = \frac{h_c A_s (T_s - T_{\mathrm{canyon}}) + \varepsilon \sigma A_s (T_s^4 - T_{\mathrm{rad}}^4)}{h_{c,\mathrm{ref}} A_s (T_s - T_{2m,\mathrm{ref}})}$$
 
 ### 3.3 Literature & Standards Basis
 * **T. R. Oke (1981):** *"Canyon Geometry and the Nocturnal Urban Heat Island."*
@@ -130,11 +149,16 @@ flowchart TD
 
 ### 4.2 Mathematical Formulation
 * **Fickian Cellulose Moisture Diffusion:**
-  $$\frac{\partial w_p}{\partial t} = \nabla \cdot \left[D_p(T) \nabla w_p\right], \quad D_p(T) = D_{p,0} \exp\left(-\frac{E_a}{R_g T}\right)$$
+
+$$\frac{\partial w_p}{\partial t} = \nabla \cdot \left[D_p(T) \nabla w_p\right], \quad D_p(T) = D_{p,0} \exp\left(-\frac{E_a}{R_g T}\right)$$
+
 * **Two-Compartment Paper-Oil State Space:**
-  $$\begin{bmatrix} \dot{m}_p \\ \dot{m}_o \end{bmatrix} = \begin{bmatrix} -k_{po}(T) & k_{op}(T) \\ k_{po}(T) & -k_{op}(T) - k_{\text{dry}} \end{bmatrix} \begin{bmatrix} m_p \\ m_o \end{bmatrix} + \begin{bmatrix} g_{\text{age}} \\ 0 \end{bmatrix}$$
+
+$$\begin{bmatrix} \dot{m}_p \\ \dot{m}_o \end{bmatrix} = \begin{bmatrix} -k_{po}(T) & k_{op}(T) \\ k_{po}(T) & -k_{op}(T) - k_{\mathrm{dry}} \end{bmatrix} \begin{bmatrix} m_p \\ m_o \end{bmatrix} + \begin{bmatrix} g_{\mathrm{age}} \\ 0 \end{bmatrix}$$
+
 * **Virtual Dielectric Hazard Index:**
-  $$RS_o = \frac{w_o}{w_{\text{sat}}(T_o)}, \quad p_{\text{dielectric}} = \sigma(c_0 + c_1 RS_o + c_2 m_p + c_3 T_{hs} + c_4 \dot{T}_{hs} + c_5 \mathbf{1}_{P_\theta \ge 5\text{d}})$$
+
+$$RS_o = \frac{w_o}{w_{\mathrm{sat}}(T_o)}, \quad p_{\mathrm{dielectric}} = \sigma(c_0 + c_1 RS_o + c_2 m_p + c_3 T_{hs} + c_4 \dot{T}_{hs} + c_5 \mathbf{1}_{P_\theta \ge 5\mathrm{d}})$$
 
 ### 4.3 Literature & Standards Basis
 * **Zhou et al. (IET High Voltage 2024):** *"Model Moisture Transport in Oil-Paper Insulation of Transformer: Theory and Experiment."*

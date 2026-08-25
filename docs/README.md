@@ -90,8 +90,4 @@ Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
 * **[Compact JSONL Transcript](context/chat-transcripts/transcript.jsonl):** Fast token-efficient JSONL action log.
 * **[Full JSONL Transcript](context/chat-transcripts/transcript_full.jsonl):** Complete untruncated action log.
 
----
-
-### 8. 🗄️ [Database Architecture & Supabase Setup](../scratch/SUPABASE_SETUP_GUIDE.md)
-* **[Supabase Setup & Enterprise Database Guide](../scratch/SUPABASE_SETUP_GUIDE.md):** Step-by-step parallel configuration guide, Dual-Storage Hybrid Persistence (SQLite + PostgREST Supabase), complete SQL DDL schema for all 16 enterprise data tables, Row Level Security (RLS) policies, and live API cache verification.
 

@@ -64,7 +64,7 @@ $$R(T_s) = R_0 \cdot \left[1 + \alpha_0 \cdot (T_s - T_0)\right]$$
 
 Solving for the maximum continuous allowable ampacity $I_{\max}(t)$ such that $T_s \le T_{\text{max\_safe}}$ (e.g. 75°C for ACSR Drake/Hawk):
 
-$$I_{\max}(t) = \sqrt{ \frac{q_c(T_{\text{max\_safe}}, T_a, V_w, \phi) + q_r(T_{\text{max\_safe}}, T_a) - q_s(I_{\text{solar}}, \alpha)}{R(T_{\text{max\_safe}})} }$$
+$$I_{\max}(t) = \sqrt{ \frac{q_c(T_{\mathrm{safe,max}}, T_a, V_w, \phi) + q_r(T_{\mathrm{safe,max}}, T_a) - q_s(I_{\mathrm{solar}}, \alpha)}{R(T_{\mathrm{safe,max}})} }$$
 
 ### 1.5 Catenary Sag & Ground Clearance Mechanics
 Conductor thermal elongation $\Delta L = L_0 \cdot \alpha_{\text{exp}} \cdot (T_s - T_0)$ directly increases the catenary sag $S(T_s)$ over span length $L_{\text{span}}$ under horizontal tension $H$:
@@ -105,10 +105,10 @@ $$\frac{dQ_{\text{loss}}}{dt} = B_{\text{SEI}} \cdot \exp\left( -\frac{E_{a, \te
 ### 2.3 Real-Time Battery Degradation Cost & Thermal Runaway Barrier
 The real-time economic degradation cost rate (\$/hour) of battery dispatch is:
 
-$$C_{\text{deg}}(t) = \frac{dQ_{\text{loss}}}{dt} \cdot \frac{\text{CAPEX}_{\text{BESS\_stack}}}{\text{EOL\_Threshold}_{\text{loss}}}$$
+$$C_{\mathrm{deg}}(t) = \frac{dQ_{\mathrm{loss}}}{dt} \cdot \frac{\mathrm{CAPEX}_{\mathrm{BESS}}}{\mathrm{EOL}_{\mathrm{loss}}}$$
 
 **Safety Barrier Forward Invariance:**
-$$h_{\text{BESS}}(x) = T_{\text{runaway\_limit}} (55^\circ\text{C}) - T_{\text{core}}(t) \ge 0$$
+$$h_{\mathrm{BESS}}(x) = T_{\mathrm{runaway,limit}} (55^\circ\mathrm{C}) - T_{\mathrm{core}}(t) \ge 0$$
 
 Guarantees the autonomous multi-agent dispatcher never discharges battery cells past the exothermic SEI decomposition threshold.
 
@@ -130,7 +130,7 @@ Where:
 * $\beta$: Weibull shape parameter ($\beta = 1.8$ indicates accelerating wear-out aging)
 * $\eta$: Characteristic scale parameter (nominal life in hours, e.g. 180,000 hrs)
 * $A_F(T)$: Arrhenius thermal acceleration factor:
-  $$A_F(T) = \exp\left( \frac{E_a}{k_B} \cdot \left( \frac{1}{T_{\text{ref\_K}}} - \frac{1}{T_i(t) + 273.15} \right) \right) = 2^{(T_{\text{hot-spot}} - 110)/6}$$
+$$A_F(T) = \exp\left( \frac{E_a}{k_B} \cdot \left( \frac{1}{T_{\mathrm{ref,K}}} - \frac{1}{T_i(t) + 273.15} \right) \right) = 2^{(T_{\mathrm{hot-spot}} - 110)/6}$$
 
 ### 3.2 Cumulative Component Failure Probability ($P_{\text{fail}}$)
 Over any forecast horizon $[t_0, t_f]$ (e.g. 12-hour heatwave window):
