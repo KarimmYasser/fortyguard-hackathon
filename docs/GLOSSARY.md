@@ -12,7 +12,7 @@ This glossary provides authoritative, mathematically rigorous definitions for al
 2. [⚡ Transformer Thermal Physics & Insulation Degradation (IEEE / IEC)](#2-⚡-transformer-thermal-physics--insulation-degradation-ieee--iec)
 3. [🔌 Power Grid Operations, Dynamic Line Rating & Power Flow](#3-🔌-power-grid-operations-dynamic-line-rating--power-flow)
 4. [🔋 Battery Energy Storage Systems (BESS) & Electro-Thermal Mechanics](#4-🔋-battery-energy-storage-systems-bess--electro-thermal-mechanics)
-5. [🤖 Agentic AI, Control Barrier Functions (CBF-QP) & Machine Learning](#5-🤖-agentic-ai-control-barrier-functions-cbf-qp--machine-learning)
+5. [🤖 Agentic AI, Safety Filtering & Machine Learning](#5-🤖-agentic-ai-safety-filtering--machine-learning)
 6. [💰 Reliability Economics, Regulatory Indices & Valuation Metrics](#6-💰-reliability-economics-regulatory-indices--valuation-metrics)
 7. [📜 Mathematical Symbols & Units Nomenclature](#7-📜-mathematical-symbols--units-nomenclature)
 
@@ -139,12 +139,13 @@ $$q_c(T_c, T_a, V_w, \phi) + q_r(T_c, T_a, \epsilon) = q_s(\alpha, S, \theta) + 
   * **Forward Sweep:** Propagates voltage drops ($\mathbf{V}_j = \mathbf{V}_i - \mathbf{Z}_{ij} \mathbf{I}_{ij}$) from the slack bus outward to all feeder endpoints.
 
 ### Chance-Constrained Optimal Power Flow (CC-OPF)
-* **Definition:** An optimization formulation where thermal and voltage constraints are guaranteed to hold with a specified high confidence level ($1 - \epsilon$, e.g., $95\%$ or $99\%$) under stochastic microclimate and solar PV forecast uncertainty:
+* **Definition:** A reference optimization formulation that constrains the modeled probability of thermal or voltage violations to at most $\epsilon$ under an assumed uncertainty distribution:
 
 $$\mathbb{P}\left(V_i^{\min} \le |V_i| \le V_i^{\max}\right) \ge 1 - \epsilon$$
 
 ### Second-Order Cone Programming (SOCP)
-* **Definition:** A convex optimization framework that relaxes non-convex AC power flow equations ($W_{ij} = V_i V_j^*$) into rotated second-order cone constraints ($\Vert 2W_{ij} \Vert^2 \le (W_{ii} + W_{jj})^2$), guaranteeing global optimality in polynomial solve time.
+* **Definition:** A convex optimization framework that can relax non-convex AC power-flow equations ($W_{ij} = V_i V_j^*$) into second-order-cone constraints. Under the mathematical conditions of a particular relaxation, a solver can provide an optimum for the relaxed problem; this does not by itself guarantee exactness for the original non-convex problem.
+* **Prototype boundary:** Thermal Sentinel Grid documents CC-OPF/SOCP as research context. The shipped uncertainty endpoint performs an analytical Gaussian-quantile screen with heuristic control selection and does not run a numerical SOCP solver.
 
 ### Volt-VAR Control (VVC) & On-Load Tap Changers (OLTC)
 * **Definition:** Coordinated control of transformer winding tap steps (OLTC $\pm 16$ steps) and reactive power injection ($Q_{\mathrm{BESS}}$) to flatten voltage profiles within ANSI C84.1 Range A ($0.95 - 1.05\,\mathrm{pu}$).
@@ -183,15 +184,15 @@ $$\frac{dQ_{\mathrm{loss}}}{dt} = A_{\mathrm{SEI}} \cdot \exp\left(-\frac{E_{a,\
 
 ---
 
-## 5. 🤖 Agentic AI, Control Barrier Functions (CBF-QP) & Machine Learning
+## 5. 🤖 Agentic AI, Safety Filtering & Machine Learning
 
-### Control Barrier Function (CBF-QP) Safety Filter
-* **Definition:** A formal control-theoretic certificate that wraps arbitrary agentic or heuristic dispatch actions $\mathbf{u}_{\mathrm{nom}}$ with provable forward-invariance guarantees:
+### CBF-Inspired Deterministic Safety Filter
+* **Definition:** The shipped prototype simulates proposed dispatch actions over bounded trajectories, checks configured thermal, voltage, BESS, and N-1 limits, and uses scalar bisection to project excessive load back toward an admissible value. It is inspired by the safe-set concept $h(\mathbf{x}) \ge 0$ (for example, $140^\circ\mathrm{C} - T_{\mathrm{hs}} \ge 0$), but it does **not** solve the reference quadratic program
 
 $$\min_{\mathbf{u}} \frac{1}{2} \left\Vert \mathbf{u} - \mathbf{u}_{\mathrm{nom}} \right\Vert^2 \quad \text{s.t.} \quad \dot{h}(\mathbf{x}, \mathbf{u}) \ge -\alpha(h(\mathbf{x}))$$
 
-where $h(\mathbf{x}) \ge 0$ defines the safe operational set (e.g., $140^\circ\mathrm{C} - T_{\mathrm{hs}} \ge 0$).
-* **Significance:** Guarantees that even if an upstream LLM generates an aggressive or hallucinated dispatch, the physical state will never penetrate unsafe thermal/voltage boundaries.
+and does not establish formal forward invariance for physical equipment.
+* **Significance:** Provides a deterministic, auditable model check independent of the LLM. A production controller would still require calibrated equipment models, field validation, utility engineering approval, and certified control integration.
 
 ### LangGraph Multi-Agent StateGraph
 * **Definition:** A deterministic, cyclic graph-based agent orchestration harness where each node represents a specialized computational or reasoning actor (`ingest_node`, `physics_projection_node`, `planner_node`, `safety_gate_node`, `audit_dispatch_node`) operating on a typed, immutable state schema (`TransformerState`).
@@ -239,12 +240,13 @@ $$I = \frac{N}{\sum_i \sum_j w_{ij}} \frac{\sum_i \sum_j w_{ij} (T_i - \bar{T})(
 ### LBNL ICE Calculator (Interruption Cost Estimate)
 * **Definition:** The gold-standard statistical economic tool developed by the U.S. Department of Energy (DOE) and Lawrence Berkeley National Laboratory (LBNL) to estimate customer interruption costs based on customer class mix, outage duration, season, and time of day.
 
-### Net Avoided Loss Formula
-* **Definition:** The fundamental, auditable financial ROI equation computed in Thermal Sentinel Grid:
+### Modeled Avoided Exposure Formula
+* **Definition:** The assumption-based scenario equation computed in Thermal Sentinel Grid:
 
 $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\mathrm{base}} - p_{f,\mathrm{mitigated}}\right] \cdot C_{\mathrm{consequence}} + \Delta PV_{\mathrm{aging}} - C_{\mathrm{mitigation}}}$$
 
-* $p_{f,\mathrm{base}} - p_{f,\mathrm{mitigated}}$: Reduction in catastrophic failure probability.
+* $p_{f,\mathrm{base}} - p_{f,\mathrm{mitigated}}$: Change in an uncalibrated logistic scenario-risk score, not an actuarial failure probability.
+* **Interpretation boundary:** The result is a comparative modeled exposure estimate and cost ratio—not realized savings, a bankable ROI, or an actuarial forecast.
 * $C_{\mathrm{consequence}}$: Total consequence cost (asset replacement + VoLL customer interruption).
 * $\Delta PV_{\mathrm{aging}}$: Present value of deferred capital replacement derived from preserved insulation life.
 * $C_{\mathrm{mitigation}}$: Direct cost of mitigation dispatch (BESS cycling degradation + fan auxiliary energy).
@@ -293,7 +295,7 @@ $$\mathrm{SAIFI} = \frac{\sum N_i}{N_{\mathrm{total}}} \quad \left[\frac{\text{i
 | `S(t)` | Incident solar global horizontal irradiance | $\mathrm{W/m}^2$ |
 | `q_c, q_r, q_s` | Convective, radiative, and solar heat rates per unit length | $\mathrm{W/m}$ |
 | `SoC` | Battery Energy Storage State of Charge | $\%$ |
-| `h(x)` | Control Barrier Function safety certificate scalar | Dimensionless |
+| `h(x)` | Safe-set margin used by the CBF-inspired model check | Dimensionless |
 | `|V_i|` | Feeder bus voltage magnitude | $\mathrm{pu}$ ($0.95-1.05$) |
 | `lambda(t)` | Weibull failure hazard rate | $\mathrm{failures/year}$ |
 | `VoLL` | Value of Lost Load | $\mathrm{USD}/\mathrm{MWh}$ |

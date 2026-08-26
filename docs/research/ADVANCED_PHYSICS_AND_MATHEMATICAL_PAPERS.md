@@ -107,10 +107,10 @@ The real-time economic degradation cost rate (\$/hour) of battery dispatch is:
 
 $$C_{\mathrm{deg}}(t) = \frac{dQ_{\mathrm{loss}}}{dt} \cdot \frac{\mathrm{CAPEX}_{\mathrm{BESS}}}{\mathrm{EOL}_{\mathrm{loss}}}$$
 
-**Safety Barrier Forward Invariance:**
+**Prototype thermal safety margin:**
 $$h_{\mathrm{BESS}}(x) = T_{\mathrm{runaway,limit}} (55^\circ\mathrm{C}) - T_{\mathrm{core}}(t) \ge 0$$
 
-Guarantees the autonomous multi-agent dispatcher never discharges battery cells past the exothermic SEI decomposition threshold.
+The shipped model rejects or modifies recommendations whose simulated BESS trajectory crosses this configured threshold. This is a bounded model check, not a formal forward-invariance or field-safety guarantee.
 
 ---
 
@@ -142,7 +142,7 @@ For an $M$-asset interconnected distribution feeder (transformers, underground c
 
 $$P_{\text{cascade}}(t) = 1 - \prod_{i=1}^M \left( 1 - P_{\text{fail}, i}(t) \right)$$
 
-This provides the quantitative threshold justifying autonomous load shedding when $P_{\text{cascade}} > 15\%$.
+This provides a scenario threshold for recommending operator-reviewed load shedding when $P_{\text{cascade}} > 15\%$. The uncalibrated risk score is not a field failure probability.
 
 ---
 

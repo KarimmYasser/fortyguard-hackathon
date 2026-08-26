@@ -14,7 +14,7 @@
 │   0:30 - 1:00 (30s)  ──► The Solution: FortyGuard 2m AI + IEEE Differential Physical Engine      │
 │   1:00 - 1:30 (30s)  ──► Agentic Stack: LangGraph + Deterministic Safety-Envelope Gate          │
 │   1:30 - 2:15 (45s)  ──► Live Demo: What-If Studio, 72h Compounding & AC Power Flow Network      │
-│   2:15 - 2:45 (30s)  ──► Auditable Financial Value: $2.58M Net Avoided Loss (5,495x ROI)         │
+│   2:15 - 2:45 (30s)  ──► Scenario Financial Value: ~$2.57M Avoided Exposure (assumption-based)   │
 │   2:45 - 3:00 (15s)  ──► Call to Action & Conclusion                                             │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -31,7 +31,7 @@
 * **Visual:** Architecture diagram showing FortyGuard 2m Layer $\to$ IEEE C57.91 Thermal ODE Solver $\to$ 4 Scientific Moats.
 * **Voiceover:**
   > *"Introducing Thermal Sentinel Grid: a physics-constrained agentic resilience engine for urban energy infrastructure.*
-  > *We combine FortyGuard's 2-meter Temperature AI with exact IEEE C57.91 and IEC 60287 differential thermal equations. We model four latent physical cascades standard SCADA misses: underground soil moisture dryout, building canyon wind throttling, virtual paper-oil moisture desorption, and exact winding hot-spots."*
+  > *We combine FortyGuard's 2-meter Temperature AI with transparent, standards-based IEEE C57.91 and IEC 60287 thermal models. We model four latent physical cascades standard SCADA misses: underground soil moisture dryout, building-canyon wind throttling, virtual paper-oil moisture desorption, and winding hot-spot evolution."*
 
 ---
 
@@ -46,16 +46,16 @@
 ### 🎬 Scene 4: Live Dashboard Demo (1:30 - 2:15)
 * **Visual:** Screen capture of `https://www.thermal-sentinel-grid.live`. Show scrubber moving through 12-hour timeline, switch to **⚡ What-If Studio** dragging sliders, and show the **⚡ AC Power Flow** single-line diagram.
 * **Voiceover:**
-  > *"In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM. Thermal Sentinel Grid engages 12 hours ahead, pre-cooling radiators at 8:00 AM off-peak and discharging 5 MW of BESS to cap the hot-spot at 109.43°C while the baseline reaches 159.53°C.*
+  > *"In our Mission Control benchmark, the baseline controller breaches the 140°C hot-spot limit. Thermal Sentinel Grid recommends pre-cooling and BESS support, reducing the modeled peak to 122.53°C from 159.53°C.*
   > *In our What-If Studio, judges can modulate microclimate deltas, multi-day heatwaves, and battery sizes in real time with sub-15 millisecond ODE re-solving, while our AC power flow solver evaluates On-Load Tap Changers and BESS Volt/VAR support for the modelled hospital feeder."*
 
 ---
 
 ### 🎬 Scene 5: Auditable ROI & Impact (2:15 - 2:45)
-* **Visual:** Avoided Loss Financial Audit tab showing the LBNL ICE Calculator breakdown and $5,495.3\text{x}$ ROI badge.
+* **Visual:** Scenario Economic Audit tab showing the disclosed VoLL assumptions and 5,472.6× modeled ratio.
 * **Voiceover:**
   > *"Our economic engine uses an LBNL ICE-informed value-of-lost-load assumption: we model avoided outage risk, capital asset life extension, and mitigation energy costs.*
-  > *For a single heatwave event, Thermal Sentinel Grid delivers $2.58 million in net avoided loss at a 5,495x ROI, avoiding 374.3 equivalent aging hours and protecting critical medical feeders."*
+  > *Under the benchmark assumptions, Thermal Sentinel Grid estimates roughly $2.57 million in avoided exposure and avoids 365.4 equivalent aging hours. These are modeled outcomes, not realized savings."*
 
 ---
 
@@ -96,8 +96,8 @@
 * **Key Takeaway:** The same deterministic service ranks registered assets, screens candidate field-work windows, and emits content-addressed mitigation evidence for both the dashboard and MCP clients.
 * **Talking Points:** The score is transparent triage rather than failure probability; missing registry fields are excluded instead of invented. The worker window uses measured wet-bulb and 2m air temperature but is explicitly not an OSHA/WBGT certification. The current demo applies one common Phoenix scenario to the portfolio rather than claiming a separate scan for every asset.
 
-### Slide 6: Investment-Grade Avoided Loss (LBNL ICE)
-* **Key Takeaway:** $\$2,576,849$ Net Avoided Loss; $5,495\text{x}$ ROI; $\$12.50/\text{kWh}$ VoLL.
+### Slide 6: Assumption-Based Avoided Exposure (VoLL-Informed)
+* **Key Takeaway:** approximately $\$2,566,193$ modeled avoided exposure; 5,472.6× assumption-based ratio; $\$12.50/\text{kWh}$ VoLL assumption.
 
 ### Slide 7: Durable Hybrid Persistence Architecture (17 Tables)
 * **Key Takeaway:** 17-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Supabase as the durable source of truth, SQLite as an offline fallback, and request-addressed API/solve caching.
@@ -113,7 +113,7 @@
 
 | Likely Judge Question | Winning Technical Defense |
 | :--- | :--- |
-| **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging are governed by exact physical ODEs (IEEE Std C57.91). Rather than replacing exact physics, we built a Physics-Surrogate ML Regressor ($R^2 > 0.98$) that accelerates the ODE solver by $5000\times$ for city-scale screening of 10,000+ assets."* |
+| **"Why didn't you train an ML model to predict temperature?"** | *"FortyGuard already provides state-of-the-art 2m Temperature AI and 12h forecasts. Furthermore, transformer heat rise and Arrhenius aging have transparent standards-based formulations in IEEE Std C57.91. Rather than replacing an inspectable physical model, we built a Physics-Surrogate ML Regressor ($R^2 > 0.98$) that accelerates the ODE solver by $5000\times$ for city-scale screening of 10,000+ assets."* |
 | **"What data science and engineering principles did you apply?"** | *"We implemented the complete IBM Data Science Lifecycle: a Bronze→Silver→Gold medallion architecture extracting 18 engineered features, rigorous hypothesis testing (paired $t$-test on the measured urban-vs-natural land-cover delta, $+1.1^\circ\mathrm{C}$), Isolation Forest unsupervised anomaly detection for sensor drift, and Weibull survival analysis for asset RUL forecasting."* |
 | **"How is this different from existing utility SCADA alarms?"** | *"SCADA alarms are reactive - they trip 5 minutes before failure when equipment is already overheated. Thermal Sentinel Grid ingests FortyGuard's 12-hour forecast to proactively pre-cool radiators at 8:00 AM off-peak and schedule BESS peak shaving hours in advance."* |
 | **"Why is AI justified here versus simple threshold scripts?"** | *"Deterministic scripts cannot orchestrate multi-asset, cross-feeder trade-offs (e.g. balancing BESS State of Charge, transformer top-oil time constants, and hospital feeder voltage constraints). LangGraph acts as the cognitive planner that evaluates complex multi-step mitigation paths, while the deterministic safety filter checks proposals against the configured model envelope."* |

@@ -138,7 +138,7 @@ The test suite now verifies the relevant contracts:
 Validation at implementation time:
 
 ```text
-Backend test suite:       161 passed, 3 opt-in live tests skipped
+Backend test suite:       168 passed, 3 opt-in live tests skipped
 Frontend production build: passed
 Git whitespace check:      passed
 ```

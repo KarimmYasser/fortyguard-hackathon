@@ -17,7 +17,7 @@ During extreme urban heatwaves, standard meteorological forecasts report broad r
 
 This microclimate heat trap creates massive **cumulative thermal soak**, pushing transformer top-oil and winding hot-spot temperatures past critical limits, accelerating insulation aging by orders of magnitude, and driving catastrophic substation blowouts and grid outages.
 
-**Thermal Sentinel Grid** bridges this critical gap by fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential equations** and a **LangGraph multi-agent harness guarded by a deterministic, CBF-inspired safety-envelope filter**.
+**Thermal Sentinel Grid** bridges this critical gap by fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential equations** and a **LangGraph multi-agent harness guarded by a deterministic, CBF-inspired safety-envelope filter**. It is a decision-support prototype: grid, asset, reliability, and economic outputs are modeled, no physical equipment is actuated, and operational deployment requires calibration and utility approval. See the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md).
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -111,15 +111,15 @@ To validate real-world performance, Thermal Sentinel Grid is benchmarked against
 ├───────────────────────────────────────────────┼───────────────────────────────────────────────┤
 │ • No proactive response to the measured soak │ • Uses measured parcel 2m ambient (42.74°C)    │
 │ • Blind to 12h continuous persistence         │ • Persistence triggers proactive pre-cooling   │
-│ • Hot-spot reaches 159.53°C                   │ • Mitigated hot-spot held to 109.43°C          │
-│ • 377.77 equivalent aging hours               │ • 374.3 equivalent aging hours avoided        │
+│ • Hot-spot reaches 159.53°C                   │ • Mitigated hot-spot held to 122.53°C          │
+│ • 377.77 equivalent aging hours               │ • 365.4 equivalent aging hours avoided        │
 │ • Unplanned emergency load shedding           │ • Zero voltage (0.95-1.05pu) & N-1 violations │
 └───────────────────────────────────────────────┴───────────────────────────────────────────────┘
 ```
 
 ---
 
-## 💰 Investment-Grade Economic Model
+## 💰 Assumption-Based Scenario Economic Model
 
 Thermal Sentinel Grid computes non-overlapping, auditable avoided loss metrics:
 
@@ -127,7 +127,7 @@ $$\boxed{\text{Net Avoided Loss} = \left[p_{f,\text{base}} - p_{f,\text{mitigate
 
 * **Avoided Outage Consequence ($C_{\mathrm{consequence}}$):** Emergency replacement + customer interruption costs ($\mathrm{VoLL}$ via LBNL ICE Calculator) + SAIDI/SAIFI reliability incentives.
 * **Capital Deferral ($\Delta PV_{\mathrm{aging}}$):** Present value of deferred transformer capital replacement ($C_{\mathrm{replace}}$ over 180,000-hour design life).
-* **Net Operational ROI:** The canonical replay computes **\$2,576,849.10 net avoided loss per event** at **5,495.3× ROI**, using \$2,576,590.38 avoided outage risk, \$727.73 capital-aging deferral, and \$469 mitigation cost.
+* **Scenario Economics:** The canonical replay currently estimates **\$2,566,192.66 avoided loss per event** at an assumption-based **5,472.6× ratio**, using \$2,565,951.22 avoided consequence exposure, \$710.44 capital-aging deferral, and \$469 mitigation cost. These are not realized savings or actuarially calibrated probabilities.
 
 ---
 
@@ -183,7 +183,7 @@ fortyguard-hackathon/
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
 │       └── routes/                     # Modular API Routers (Replay, Live Scan, Research/alphaXiv)
-└── tests/                              # Automated Pytest Physics, API, validation & persistence suite (161 passed, 3 live skipped)
+└── tests/                              # Automated Pytest Physics, API, validation & persistence suite (168 passed, 3 live skipped)
 ```
 
 ---
@@ -196,7 +196,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (161 Passed, 3 Opt-In Live Tests Skipped)
+### 2. Run Automated Pytest Suite (168 Passed, 3 Opt-In Live Tests Skipped)
 ```bash
 pytest tests/ -v
 ```
@@ -262,11 +262,11 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | **6** | `simulation_runs` | What-If input and scalar-output audit summaries | Searchable audit history; full replayable trajectories are persisted in `api_call_cache`. |
 | **7** | `multi_day_heatwave_logs` | Per-step 72h compounding audit records | Forensics for modelled soil dryout and cumulative aging; environmental forcing comes from the 72-row frozen live capture. |
 | **8** | `dlr_catenary_telemetry` | Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) & sag | Wildfire and flashover prevention compliance. |
-| **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, CBF proofs, and GPT tokens | Explainable AI (XAI) for control room operators. |
-| **10** | `financial_audit_snapshots` | ICE-informed calculations (\$2.58M avoided loss, 5,495× ROI in the canonical scenario) | Reproducible financial-model snapshots and assumption review. |
+| **9** | `agent_execution_traces` | Multi-agent LangGraph DAG logs, model-check evidence, and GPT tokens | Explainable AI (XAI) for control room operators. |
+| **10** | `financial_audit_snapshots` | VoLL-informed scenario calculations (~\$2.57M avoided exposure, ~5,473× assumption-based ratio) | Reproducible financial-model snapshots and assumption review; not realized savings. |
 | **11** | `microclimate_parcel_store` | FortyGuard 2m parcel geometry, measured peak/spread, location and catalog date | Saved-scan selector in Cloud DB; operators can re-run calculations without creating a new scan. |
 | **12** | `bess_degradation_logs` | Coupled core/surface ODEs & Arrhenius SEI capacity fade | Protects million-dollar battery storage warranty limits. |
-| **13** | `cascading_risk_snapshots` | Poisson-Weibull cascading failure probability ($P_{\mathrm{cascade}}$) | ISO/RTO control room bulk-power reliability monitoring. |
+| **13** | `cascading_risk_snapshots` | Uncalibrated Poisson-Weibull cascading-risk scenario score ($P_{\mathrm{cascade}}$) | Comparative model analysis; not an operational ISO/RTO forecast. |
 | **14** | `chance_constrained_opf_logs` | Analytical quantile-bounded dispatch results ($z_{1-\alpha}$) | Reviewable model output under forecast uncertainty. |
 | **15** | `cbf_safety_certificates` | Control Barrier Function slack ($\xi^*$) and model checks | Records whether proposed actions satisfy the configured safety envelope. |
 | **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
@@ -337,7 +337,7 @@ To ensure full transparency with the judging committee, here are current prototy
 * **Hyperlocal 2-Meter GIS Viewer:** Parcel-level convective heat tiles ($60\text{m}$ resolution) and interactive asset inspector.
 * **Four Scientific Moats Viewer:** Deep dives into cable-soil dryout, the CBF-inspired safety filter, canyon aerodynamics, and the virtual moisture sensor.
 * **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation.
-* **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+* **Scenario Economic Audit:** VoLL-informed, assumption-based avoided-exposure model and side-by-side comparison tables; not realized savings.
 
 
 ---
@@ -456,7 +456,7 @@ FortyGuard is an environmental API and exposes no SCADA telemetry.
 
 Thermal Sentinel Grid is mathematically and physically grounded in peer-reviewed scientific literature and international engineering standards across six key domains:
 
-### 1. Control Barrier Functions (CBF-QP) & Provably Safe Autonomous Control
+### 1. CBF-Inspired Bounded-Trajectory Safety Checks
 1. **R. Nellikkath and S. Chatzivasileiadis**, *"Physics-Informed Neural Networks for Minimising Worst-Case Violations in DC Optimal Power Flow,"* *IEEE Transactions on Power Systems*, vol. 37, no. 5, pp. 3702–3713, 2022. [arXiv:2107.00465](https://arxiv.org/abs/2107.00465)
 2. **A. Robey, H. Hu, L. Lindemann, et al.**, *"Control Barrier Functions for Verifiable Safety in Machine Learning-Based Control,"* *IEEE Transactions on Automatic Control*, vol. 66, no. 11, pp. 5214–5229, 2021. [arXiv:1903.04715](https://arxiv.org/abs/1903.04715)
 3. **L. Schneeberger, F. Dörfler, and E. Mastellone**, *"Advanced Safety Filter for Smooth Transient Operation of Battery Energy Storage Systems,"* *IEEE Transactions on Control Systems Technology*, 2024. [arXiv:2402.18520](https://arxiv.org/abs/2402.18520)

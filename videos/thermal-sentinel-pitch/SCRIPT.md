@@ -30,8 +30,8 @@ the duration.
 Introducing Thermal Sentinel Grid: a physics-constrained agentic resilience
 engine for urban energy infrastructure.
 
-We pair FortyGuard's 2-meter Temperature AI with exact IEEE C57.91 and
-IEC 60287 differential thermal equations — and critically, with FortyGuard's
+We pair FortyGuard's 2-meter Temperature AI with transparent, standards-based
+IEEE C57.91 and IEC 60287 thermal models — and critically, with FortyGuard's
 *persistence* and *exceedance* analytics, which measure how long a parcel stays
 above a damage threshold.
 
@@ -46,11 +46,11 @@ exact winding hot-spots.
 Rather than train a black-box neural net that hallucinates, we built a hybrid
 Physical-AI architecture with a strict division of labour.
 
-Exact physics ODEs do the thermal math. FortyGuard supplies the measured
-environmental boundary. LangGraph coordinates autonomous multi-agent dispatch
-planning. And a deterministic Control Barrier Function safety gate — not a
-language model — rejects or modifies actions outside the configured voltage and
-temperature envelope before a command can be proposed.
+Transparent standards-based ODEs do the thermal math. FortyGuard supplies the measured
+environmental boundary. LangGraph coordinates multi-agent recommendation
+planning. And a deterministic, CBF-inspired safety gate — not a language model —
+rejects or modifies proposals outside the configured modelled voltage and
+temperature envelope before a work order can be proposed.
 
 The LLM writes the explanation. It never touches the safety decision.
 
@@ -65,27 +65,27 @@ degrees past the IEEE emergency ceiling — driving peak aging acceleration to
 
 Thermal Sentinel Grid sees it twelve hours ahead. It pre-cools radiators at
 8 AM while power is cheap, then discharges five megawatts of storage across the
-afternoon, capping the hot-spot at **109.4 degrees** — a **50.1-degree** reduction,
-held safely inside the limit.
+afternoon, reducing the modelled hot-spot to **122.5 degrees** — a **37-degree**
+reduction, held inside the configured limit.
 
 In the What-If Studio, judges can modulate the microclimate delta, heatwave
 duration and battery size, with sub-15-millisecond ODE re-solving. Our AC power
-flow solver simultaneously steps tap changers and dispatches Volt/VAR support to
-hold hospital feeders at a hundred percent uptime.
+flow solver simultaneously evaluates tap changers and Volt/VAR support on the
+modelled four-bus hospital feeder while checking its configured limits.
 
 ---
 
-## Scene 5: Auditable ROI & Impact (2:15 – 2:45, 30s)
+## Scene 5: Auditable Scenario Economics & Impact (2:15 – 2:45, 30s)
 
-Our economic engine uses the Department of Energy's LBNL ICE standard, so the
-numbers are auditable rather than asserted. We quantify avoided outage risk,
-capital life extension, and the exact energy cost of mitigating.
+Our scenario economic engine uses a disclosed value-of-lost-load assumption
+informed by LBNL interruption-cost research. It separates avoided consequence
+exposure, capital-aging deferral, and assumed mitigation cost.
 
-For a single heatwave event: **2.58 million dollars** in net avoided loss, an ROI
-of roughly **5,500 to one**, and **374 equivalent aging hours** returned to the
-asset — while keeping critical medical feeders energised.
+For this benchmark: approximately **2.57 million dollars** in modeled avoided
+exposure, a **5,472.6-to-one** assumption-based cost ratio, and **365.4 equivalent
+aging hours** avoided. These are scenario outputs, not realized savings.
 
-Modelled failure probability drops from **90.8 percent to 0.75 percent**.
+The uncalibrated scenario risk score drops from **90.84 percent to 1.13 percent**.
 
 ---
 
@@ -96,7 +96,7 @@ the grid, asset, dispatch, and financial values were derived by our documented
 models. We publish the field notes — including where early assumptions were
 wrong.
 
-Physics you can verify. Safety you can prove. Thermal Sentinel Grid.
+Physics you can inspect. Decisions you can audit. Thermal Sentinel Grid.
 
 ---
 
@@ -111,14 +111,14 @@ Physics you can verify. Safety you can prove. Thermal Sentinel Grid.
 | Exceedance $H_{40}$ | 17.48 °C·h | Integrated from measured curve |
 | Thermal Soak Index | 3.68 | Computed |
 | Baseline hot-spot | 159.5 °C | IEEE C57.91 solver |
-| Mitigated hot-spot | 109.4 °C | IEEE C57.91 solver |
-| Hot-spot reduction | −50.1 °C | Derived |
+| Mitigated hot-spot | 122.5 °C | IEEE C57.91-based solver |
+| Hot-spot reduction | −37.0 °C | Derived |
 | Baseline aging acceleration | 88.4× | Arrhenius |
-| Mitigated aging acceleration | 0.94× | Arrhenius |
-| Avoided aging hours | 374.3 h | Derived |
-| Net avoided loss | $2,576,849 | LBNL ICE |
-| ROI | 5,495× | LBNL ICE |
-| Failure probability | 90.8% → 0.75% | Weibull RUL |
+| Mitigated aging acceleration | 3.45× | Arrhenius |
+| Avoided aging hours | 365.4 h | Derived |
+| Modeled avoided exposure | $2,566,192.66 | VoLL-informed scenario model |
+| Assumption-based cost ratio | 5,472.6× | Scenario model |
+| Scenario risk score | 90.84% → 1.13% | Uncalibrated logistic model |
 
 ### Deliberately NOT claimed
 

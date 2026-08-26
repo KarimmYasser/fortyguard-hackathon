@@ -21,13 +21,13 @@ Official 3-Minute Video Pitch & Product Demo for FortyGuard Hackathon '26 (Track
 - `assets/scene2.jpg` - 4 Asymmetric Scientific Moats technical schematic (Soil dryout, Canyon aerodynamics, Virtual moisture sensor, Winding hot-spot).
 - `assets/scene3.jpg` - 4-Layer Agentic Architecture & Deterministic Safety-Envelope Shield.
 - `assets/scene4.jpg` - Mission Control UI with 12h synchronized telemetry scrubber, What-If Studio, and 4-bus AC power flow.
-- `assets/scene5.jpg` - Investment-Grade Financial ROI Audit (LBNL ICE Standard, $2.58M Net Avoided Loss, 5,495x ROI).
+- `assets/scene5.jpg` - Assumption-based scenario economic audit (~$2.57M modeled avoided exposure, 5,472.6x cost ratio, clearly labelled as not realized savings).
 - `assets/scene6.jpg` - Hackathon Tracks 06 & 02 lockup, IEEE compliance seals, author credits, and live platform URL.
 
 ## Customizations
 
 - Full 180.0s timeline with 6 choreographed scenes.
-- Dynamic animated number counters ($2.8M, P40 = 12.0h, +1.1°C, 5,495x ROI, $2,576,849 Net Avoided Loss).
+- Dynamic animated number counters (P40 = 12.0h, +1.1°C, 159.5°C → 122.5°C, 365.4 aging hours avoided, ~$2.57M modeled avoided exposure, 5,472.6x assumption-based cost ratio).
 - Glowing HUD overlays, pulse rings, and progress indicators.
 - Synchronized subtitles and kinetic callouts for key technical takeaways.
 

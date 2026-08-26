@@ -89,7 +89,7 @@ Power grids, substations, water valves, and chemical reactors cannot depend on p
 | **Risk Forecaster** | Trajectory & Uncertainty Tubes | ❌ **No** | Numerical calculation of upper thermal bounds. |
 | **Mitigation Planner** | Candidate Action Generator | ❌ **No** | Synthesizes candidate actions (Cooling Stage 2, BESS Shaving). |
 | **Safety Gate Filter** | CBF-inspired bounded-trajectory validator | ❌ **No** | Simulates worst-case ambient forcing, checks thermal/voltage/BESS/N-1 limits, and uses bisection to compute a safe maximum load. The current code does not solve a QP. |
-| **Audit & Advisory Node** | Narrative Synthesis | ⚠️ **Yes (Optional)** | Calls **GPT-5.4** via Siemens SDC Gateway **solely to generate human-readable citizen early-warning advisories** and plain-English summaries. Offline fallback to deterministic templates is guaranteed. |
+| **Audit & Advisory Node** | Narrative Synthesis | ⚠️ **Yes (Optional)** | Calls **GPT-5.4** via Siemens SDC Gateway **solely to generate human-readable citizen early-warning advisories** and plain-English summaries. A deterministic template fallback is used when the gateway is unavailable. |
 
 ---
 

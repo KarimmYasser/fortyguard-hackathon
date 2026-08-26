@@ -34,7 +34,7 @@ During extreme heatwaves, electrical utilities manage power distribution using r
 
 During the historic Phoenix July 2023 heatwave, the regional record reached $119^\circ\mathrm{F}$, while the pinned FortyGuard parcel capture measured $42.74^\circ\mathrm{C}$ and remained above $40^\circ\mathrm{C}$ for all 12 sampled hours. Direct probing showed Sky Harbor slightly *warmer* than downtown, so the product does not claim an airport-to-asset delta; it leads on measured duration and parcel conditions.
 
-**Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, an autonomous **LangGraph multi-agent workflow**, and a **non-LLM deterministic, CBF-inspired safety-envelope filter**. Its Portfolio Ops module ranks registered assets, screens candidate crew-intervention windows, and exposes content-addressed evidence through both the dashboard and an MCP-compatible tool interface. See the [as-built operations and MCP specification](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md).
+**Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, a **LangGraph multi-agent recommendation workflow**, and a **non-LLM deterministic, CBF-inspired safety-envelope filter**. Its Portfolio Ops module ranks registered assets, screens candidate crew-intervention windows, and exposes content-addressed evidence through both the dashboard and an MCP-compatible tool interface. It is a decision-support prototype with no physical actuation; see the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md) and [as-built operations and MCP specification](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md).
 
 ---
 
@@ -55,8 +55,8 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 
 | Weight | Official Criterion | What Judges Look For | Thermal Sentinel Grid Moat & Evidence |
 | :---: | :--- | :--- | :--- |
-| **40%** | **Impact & Relevance** | Real-world problem, client benefit, commercial viability over toy demos. | **$2.58M avoided catastrophic loss per heat event**; solves the 2-meter asphalt heat-soak blind spot for utilities (APS, ConEd, PG&E) and mission-critical facilities. |
-| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **161 automated pytest tests passing (plus 3 opt-in live checks skipped by default)**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
+| **40%** | **Impact & Relevance** | Real-world problem, client benefit, commercial viability over toy demos. | **~$2.57M modeled avoided exposure in the canonical scenario** under disclosed assumptions; addresses the 2-meter asphalt heat-soak blind spot for utilities and mission-critical facilities. |
+| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **168 automated pytest tests passing (plus 3 opt-in live checks skipped by default)**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
 | **15%** | **Innovation** | Novel concepts, multi-source coupling, Physical-AI hybrid synthesis. | **Physical-AI Hybrid Stack (Prof. Reichental Model):** Perception (FortyGuard 2m AI) $\to$ Physics Truth (IEEE C57.91 / IEC 60287) $\to$ Cognitive Planner (LangGraph) $\to$ Deterministic Safety Guardrail. |
 | **10%** | **Communication** | Pitch clarity, video quality, documentation, conveying the core "Why". | **3-minute high-velocity screen demo** of the working software UI, second-by-second narrative script, 22 academic citations with LaTeX proofs, and full webinar alignment. |
 
@@ -76,7 +76,7 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 │   Reaction Time        Reactive: Trips alarm at 135°C (5m left)  Proactive: Dispatches 12h ahead       │
 │   Physical Cascades    Blind to soil dryout & canyon winds       4 Deep Physics & Aerodynamic Moats    │
 │   Safety Screening     Rule-based / human operator triage        Deterministic Model-Envelope Filter   │
-│   Financial Value      Incurs emergency blackout replacement     $2.58M Net Avoided Loss (5,495x ROI)  │
+│   Financial Value      Retains modeled consequence exposure      ~$2.57M scenario avoided exposure     │
 └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -86,7 +86,7 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 *(For the complete strategy and mathematical justification, see **[Value Proposition & AI Philosophy](docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
 
 1. **FortyGuard Already Solved the Microclimate ML Layer:** FortyGuard’s proprietary AI models already compute the 2-meter convective boundary layer, land-cover computer vision segmentation, and 12-hour forward forecasts.
-2. **Thermodynamic Truth is Exact:** Transformer heat dissipation, top-oil convection, and Arrhenius cellulose degradation are governed by exact physical differential equations (ODEs) from **IEEE Std C57.91-2011** and **IEC 60076-7**. Replacing exact physics with an approximate black-box neural net introduces unforced hallucinations and out-of-distribution failure.
+2. **Use Transparent Standards-Based Physics:** Transformer heat dissipation, top-oil convection, and Arrhenius cellulose degradation can be represented with physical differential equations from **IEEE Std C57.91-2011** and **IEC 60076-7**. The prototype favors inspectable first-principles calculations over an unvalidated black-box surrogate; deployment still requires asset-specific calibration.
 3. **Mission-Critical Safety Demands Deterministic Validation:** A black-box LLM must not directly control breakers or batteries. The prototype therefore checks candidate actions against bounded thermal, voltage, BESS, and N-1 trajectories before they can proceed.
 4. **The Hybrid Physical-AI Stack:** Perception (FortyGuard AI) $\to$ Physical Model (IEEE-based ODEs) $\to$ Agentic Planner (LangGraph StateGraph) $\to$ Deterministic Safety Envelope.
 
@@ -105,7 +105,7 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 
 * **COCO Customer Discovery Alignment:**
   * **Context:** Extreme summer heatwaves in Sunbelt (Phoenix, Texas) and MENA causing unmeasured 2-meter heat soak across urban infrastructure.
-  * **Outcomes:** Zero unforced transformer blowouts, avoiding $2.58M in outage losses, and extending capital asset life by 374+ equivalent hours.
+  * **Modeled outcomes:** Reduce thermal-limit excursions, estimate ~$2.57M in avoided exposure under disclosed assumptions, and avoid 365.4 equivalent aging hours. These are scenario outputs, not field guarantees or realized savings.
   * **Constraints:** Utilities currently operate reactively via coarse weather stations; switching to Thermal Sentinel Grid requires zero hardware retrofits (software-only API integration).
 * **Early Adopter Beachhead vs. Enterprise ICP:**
   * **Phase 1 Beachhead (Immediate Revenue):** Private solar farm operators, BESS storage facilities, and mission-critical data center chiller operators in Sunbelt/MENA experiencing immediate thermal trip penalties.
@@ -147,9 +147,9 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 | :--- | :--- | :--- | :--- |
 | **Ambient Boundary Input** | Natural-terrain reference ($41.6^\circ\mathrm{C}$, South Mountain) | Parcel 2m Convective Air ($42.7^\circ\mathrm{C}$, downtown core) | $+1.1^\circ\mathrm{C}$ measured land-cover delta |
 | **Heatwave Persistence** | Blind to $12\text{h}$ continuous $>40^\circ\mathrm{C}$ | Tracks $P_{40}$ & Thermal Soak Index ($3.68$) | Proactive pre-cooling 12h ahead |
-| **Peak Winding Hot-Spot ($T_{hs}$)** | **$159.53^\circ\mathrm{C}$** *(breaches limit)* | **$109.43^\circ\mathrm{C}$** | **$-50.10^\circ\mathrm{C}$ peak reduction** |
-| **Insulation Aging** | $88.36\times$ peak acceleration; $377.77\text{ h}$ equivalent loss | $0.94\times$ peak; $3.51\text{ h}$ loss | **$374.3\text{ hours}$ avoided** |
-| **Net Avoided Loss (LBNL ICE)** | $\$0$ *(Incurs catastrophic blowout)* | **$\$162,088$ to $\$2,576,849$** | **$24.3\times$ to $5,495\times$ ROI** |
+| **Peak Winding Hot-Spot ($T_{hs}$)** | **$159.53^\circ\mathrm{C}$** *(breaches limit)* | **$122.53^\circ\mathrm{C}$** | **$-37.00^\circ\mathrm{C}$ peak reduction** |
+| **Insulation Aging** | $88.36\times$ peak acceleration; $377.77\text{ h}$ equivalent loss | $3.45\times$ peak; $12.40\text{ h}$ loss | **$365.4\text{ hours}$ avoided** |
+| **Scenario avoided exposure (VoLL-informed)** | Retains modeled consequence exposure | **approximately $\$2,566,193$** | **5,472.6× assumption-based ratio; not realized savings** |
 
 ---
 
@@ -193,12 +193,12 @@ Thermal Sentinel Grid incorporates a **Graceful Dual-Storage Persistence Layer**
 7. **`multi_day_heatwave_logs`:** Per-step audit records for modelled 72h soil and aging progression; the environmental boundary is the separate frozen 72-row live capture.
 8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
 9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
-10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations (\$2.58M net avoided loss, 5,495× ROI).
+10. **`financial_audit_snapshots`:** Assumption-based avoided-loss scenario snapshots (about \$2.57M and 5,473× after the cooling-consistency correction); these are not realized savings or actuarial forecasts.
 11. **`microclimate_parcel_store`:** Saved FortyGuard parcel geometry, measured peak/spread, coordinates, city, and catalog date; these rows are selectable from Cloud DB to run or replay dashboard calculations.
 12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (USD/hr).
-13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\mathrm{cascade}}$) & $\mathrm{VoLL}$ at risk.
+13. **`cascading_risk_snapshots`:** Uncalibrated Poisson-Weibull cascading-risk scenario score ($P_{\mathrm{cascade}}$) and modeled $\mathrm{VoLL}$ exposure.
 14. **`chance_constrained_opf_logs`:** Analytical quantile-bounded dispatch results under Gaussian uncertainty ($z_{1-\alpha}$).
-15. **`cbf_safety_certificates`:** Control Barrier Function QP slack ($\xi^*$) & forward invariance proofs.
+15. **`cbf_safety_certificates`:** CBF-inspired safety-envelope margins, bounded-trajectory checks, and pass/modify/reject verdicts; not QP or formal forward-invariance proofs.
 16. **`grid_assets_registry`:** Digital twin asset catalog (transformers, substations, BESS units, health scores).
 17. **`validation_runs`:** Immutable, content-addressed external-validation reports with provider/evidence class, baseline/reference identities, configuration, and metrics. Existing Supabase deployments apply [`docs/supabase_validation_migration.sql`](docs/supabase_validation_migration.sql).
 
@@ -212,7 +212,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (161 Passed, 3 Opt-In Live Tests Skipped)
+### 2. Run Automated Pytest Suite (168 Passed, 3 Opt-In Live Tests Skipped)
 ```bash
 pytest tests/ -v
 ```
@@ -236,7 +236,7 @@ Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-gri
 10. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
 11. **4 Scientific Moats:** Deep-dive physical formulations.
 12. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and optional `gpt-5.4` narrative synthesis plus deterministic fallback.
-13. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+13. **Scenario Economic Audit:** VoLL-informed, assumption-based avoided-exposure model and side-by-side comparison tables; not realized savings.
 14. **Data Science Studio:** ETL diagnostics, empirical correlation analysis, surrogate metrics, anomaly detection, and Weibull RUL.
 
 

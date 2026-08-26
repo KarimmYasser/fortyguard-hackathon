@@ -1,8 +1,8 @@
 # Thermal Sentinel Grid
 
-> An agentic decision system that forecasts hyperlocal urban heat, propagates it
-> through IEEE C57.91 transformer thermal physics, and gates dispatch actions
-> behind a Control Barrier Function safety filter.
+> An agentic decision-support system that forecasts hyperlocal urban heat,
+> propagates it through an IEEE C57.91-based transformer thermal model, and
+> checks dispatch recommendations with a CBF-inspired deterministic safety filter.
 
 Built for the FortyGuard Hackathon '26. Live at https://www.thermal-sentinel-grid.live
 
@@ -12,8 +12,10 @@ Phoenix, 19 July 2023 is replayed from measured FortyGuard 2-metre air temperatu
 tiles. Peak 2m air temperature reaches 42.7 C against a 41.6 C natural-desert
 reference, and the asset sits above 40 C for 12 hours. That soak - not the peak -
 is what drives the damage: baseline hot-spot 159.5 C, 88x accelerated ageing,
-377.8 hours of insulation life lost. The mitigated path holds 109.4 C and 3.5
-hours, for $2,576,849 in avoided loss.
+377.8 equivalent aging hours. The modeled mitigated path peaks at 122.5 C and
+12.4 hours, yielding 365.4 avoided aging hours. Under disclosed assumptions,
+the scenario estimates $2,566,192.66 of avoided exposure at a 5,472.6x cost
+ratio; these are not realized savings or calibrated failure forecasts.
 
 ## Data provenance
 
@@ -27,7 +29,7 @@ hours, for $2,576,849 in avoided loss.
 - /api/v1/replay/72h-compounding - frozen live 72-hour environmental capture driving modelled compounding physics
 - /api/v1/sandbox/simulate - deterministic what-if solve; identical requests replay a non-expiring full payload from Supabase
 - /api/v1/scan/parcels - persisted parcel scans selectable in Cloud DB
-- /api/v1/db/status - persistence status across 16 tables
+- /api/v1/db/status - persistence status across 17 application tables
 
 ## Notes for language models
 

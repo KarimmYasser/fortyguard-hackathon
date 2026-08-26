@@ -17,7 +17,7 @@ mode: autonomous
 - voiceover: "During extreme heatwaves, electrical utilities manage hundreds of millions of dollars in power infrastructure using airport weather stations 10 miles away..."
 - src: index.html#scene-1
 
-Open on a stark split-screen contrast: natural desert terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $41.6^\circ\mathrm{C}$ vs $42.7^\circ\mathrm{C}$, the $+1.1^\circ\mathrm{C}$ land-cover delta, and the figure that actually matters — $P_{40}=12.0\text{h}$ above $40^\circ\mathrm{C}$. Under the benchmark load profile, the model reaches $88.4\times$ peak aging acceleration and $2.58M net avoided loss after mitigation.
+Open on a stark split-screen contrast: natural desert terrain on the left vs radiating asphalt street canyon on the right. Kinetic data badges illuminate showing $41.6^\circ\mathrm{C}$ vs $42.7^\circ\mathrm{C}$, the $+1.1^\circ\mathrm{C}$ land-cover delta, and the figure that actually matters — $P_{40}=12.0\text{h}$ above $40^\circ\mathrm{C}$. Under the benchmark load profile, the baseline model reaches $88.4\times$ peak aging acceleration; the mitigation scenario estimates about $2.57M in avoided exposure under disclosed assumptions.
 
 ## Frame 2 - The Solution: FortyGuard 2m AI + IEEE Differential Engine
 
@@ -29,7 +29,7 @@ Open on a stark split-screen contrast: natural desert terrain on the left vs rad
 - voiceover: "Introducing Thermal Sentinel Grid: a physics-constrained agentic resilience engine for urban energy infrastructure..."
 - src: index.html#scene-2
 
-Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\text{soil}} = 0.90 \to 2.48\text{ K}\cdot\text{m/W}$), 2. Canyon Aerodynamics ($-32\%$ cooling fin derate), 3. Virtual Paper-to-Oil Moisture Desorption ($RS_o = 42\%$), and 4. Exact IEEE Winding Hot-Spot Differential Equations ($T_{hs} \le 140^\circ\mathrm{C}$).
+Display the 4-Moat engineering matrix: 1. Cable-Soil Moisture Dryout ($\rho_{\text{soil}} = 0.90 \to 2.48\text{ K}\cdot\text{m/W}$), 2. Canyon Aerodynamics ($-32\%$ cooling fin derate), 3. Virtual Paper-to-Oil Moisture Desorption ($RS_o = 42\%$), and 4. IEEE-Based Winding Hot-Spot Differential Model ($T_{hs} \le 140^\circ\mathrm{C}$).
 
 ## Frame 3 - Why Agentic Physical AI (LangGraph + Deterministic Safety Gate)
 
@@ -53,11 +53,11 @@ Multi-agent pipeline animation: FortyGuard 2m Forecast $\to$ IEEE-based ODE Solv
 - voiceover: "In our live Mission Control dashboard, the baseline controller breaches the 140°C hot-spot limit at 1:00 PM..."
 - src: index.html#scene-4
 
-High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, capping hot-spot safely at $109.4^\circ\mathrm{C}$. Live What-If Studio sliders dynamically modulate with sub-15ms benchmark solver speed, and the 4-bus AC Power Flow demonstrates constraint-aware support for the modelled hospital feeder.
+High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^\circ\mathrm{C}$ (red blowout), while Thermal Sentinel Grid engages 12h ahead to pre-cool at 8:00 AM and discharge 5 MW BESS, reducing the modelled hot-spot to $122.5^\circ\mathrm{C}$, inside the configured limit. Live What-If Studio sliders dynamically modulate with sub-15ms benchmark solver speed, and the 4-bus AC Power Flow demonstrates constraint-aware support for the modelled hospital feeder.
 
-## Frame 5 - Auditable ROI & Financial Impact (LBNL ICE Standard)
+## Frame 5 - Assumption-Based Scenario Economics (VoLL-Informed)
 
-- scene: Investment-grade financial audit with LBNL ICE Standard, 5,495x ROI badge, and $2.58M avoided loss breakdown
+- scene: Assumption-based scenario economic audit with a 5,472.6x cost-ratio badge and ~$2.57M modeled avoided-exposure breakdown
 - duration: 30s
 - poster: 145s
 - transition_in: rack-focus
@@ -65,11 +65,11 @@ High-fidelity Mission Control view. Baseline temperature curve spikes to $159.5^
 - voiceover: "Our economic engine uses the Department of Energy's LBNL ICE standard: we quantify avoided catastrophic outage risk, capital asset life extension, and exact mitigation power costs..."
 - src: index.html#scene-5
 
-Prominent gold and emerald financial audit card: $5,495.3\text{x}$ ROI hero badge, $\$2,576,849$ Net Avoided Loss, $374.3$ equivalent transformer aging hours saved, $\$469$ mitigation dispatch cost, and protected critical-load service in the benchmark scenario.
+Prominent gold and emerald scenario economics card: $5,472.6\text{x}$ assumption-based cost-ratio badge, approximately $\$2,566,193$ modeled avoided exposure, $365.4$ equivalent transformer aging hours avoided, $\$469$ assumed mitigation cost, and a visible “scenario—not realized savings” qualifier.
 
 ## Frame 6 - Outro & Official Submission Lockup
 
-- scene: Track 06 & Track 02 badges, IEEE C57.91 & IEC 60076 certification seals, author credits, and live platform link
+- scene: Track 06 & Track 02 badges, IEEE C57.91 & IEC 60076 standards-reference labels (not certifications), author credits, and live platform link
 - duration: 15s
 - poster: 172s
 - transition_in: crossfade

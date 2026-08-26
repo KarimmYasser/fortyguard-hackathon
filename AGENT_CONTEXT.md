@@ -62,7 +62,7 @@ FortyGuard provides 4 proprietary capabilities that directly solve this blind sp
 ## 1.5 Why Physics-Constrained Agentic AI (Track 06) Over Black-Box ML Training
 *(For the full deep-dive, see **[Value Proposition & AI Philosophy](docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
 - **FortyGuard Already Solved Microclimate ML:** 2m convective air, land-cover morphology, and 12h forecasts are directly provided by FortyGuard's AI.
-- **Physical Differential ODEs are Exact:** Transformer heat rises and Arrhenius cellulose degradation are governed by exact physical ODEs (IEEE Std C57.91 / IEC 60076-7). Replacing exact physics with an approximate neural net introduces hallucinations and out-of-distribution failure.
+- **Use Standards-Based Physical ODEs:** Transformer heat rise and Arrhenius cellulose degradation can be represented with IEEE Std C57.91 / IEC 60076-7 models. The prototype favors transparent first-principles calculations over an unvalidated black-box surrogate; operational use still requires asset-specific calibration.
 - **Mission-Critical Safety Demands Deterministic Validation:** A black-box LLM must not directly control breakers or BESS. The prototype evaluates proposed actions against bounded thermal, voltage, reserve, and state-of-charge trajectories.
 - **The 4-Layer Stack:** Perception (FortyGuard AI) $\to$ Physical Model (IEEE-based ODEs) $\to$ Agentic Planner (LangGraph StateGraph) $\to$ Deterministic Safety Envelope.
 
@@ -82,7 +82,7 @@ flowchart TD
     
     RiskGate -->|Level 1: Safe| AuditLog[Normal Audit & Telemetry Logging]
     RiskGate -->|Level 2: Elevated| WarningPlanner[Generate Advisory Warnings]
-    RiskGate -->|Level 3: Critical / Imminent| MitigationPlanner[Autonomous Mitigation Planner\nLoad Shedding & Duty-Cycle Scheduler]
+    RiskGate -->|Level 3: Critical / Imminent| MitigationPlanner[Mitigation Recommendation Planner\nLoad Shedding & Duty-Cycle Proposal]
     
     WarningPlanner --> Dispatcher[Multi-Channel Dispatcher]
     MitigationPlanner --> Dispatcher
@@ -254,7 +254,7 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (161 passed, 3 opt-in live tests skipped by default)
+## 6.1 Core Tested Architecture (168 passed, 3 opt-in live tests skipped by default)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, durable request caching, and explicit fixture replay paths. Live scan failures surface as errors rather than silently switching locations.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
@@ -262,7 +262,7 @@ flowchart TD
   2. *CBF-Inspired Deterministic Safety Envelope (`src/safety/cbf_gate.py`)*
   3. *Urban Canyon Aerodynamic Throttling (`src/physics/urban_canyon.py`)*
   4. *Virtual Paper-to-Oil Moisture Desorption (`src/physics/virtual_moisture.py`)*
-* **Investment-Grade Economic Engine (`src/physics/economic_model.py`):** LBNL ICE Calculator integration calculating Net Avoided Loss ($175k to $2.58M) and dynamic ROI.
+* **Scenario Economic Engine (`src/physics/economic_model.py`):** VoLL-informed, assumption-based avoided-exposure and cost-ratio calculations. Outputs are not realized savings or actuarially calibrated forecasts.
 * **IEEE Std C57.91-2011 Annex G Benchmark Engine (`src/physics/ieee_annex_g_benchmark.py`):** Verified against Clause G.2 (Step Load) & Clause G.3 (Diurnal Ambient Ramp) with $<0.0001^\circ\mathrm{C}$ error.
 * **72-Hour Multi-Day Compounding Simulation (`src/physics/multi_day_heatwave.py`):** Frozen live FortyGuard boundaries for every hour of July 24–26, 2023, with modelled continuous overnight heat soak and soil dryout (end-of-day $\rho_{\text{soil}} = 1.52 \to 2.13 \to 2.41\text{ K}\cdot\text{m/W}$).
 * **AC Distribution Feeder Power Flow Engine (`src/physics/power_flow.py`):** 4-Bus radial grid solver with On-Load Tap Changer (OLTC $\pm 10\%$) and 4-quadrant BESS Volt/VAR support under ANSI C84.1 Range A envelope.
@@ -287,6 +287,6 @@ flowchart TD
   10. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
   11. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
   12. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
-  13. 💰 Avoided Loss Financial Audit (DOE LBNL ICE-informed ROI calculator)
+  13. 💰 Scenario Economic Audit (VoLL-informed assumptions; not realized savings)
   14. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
 

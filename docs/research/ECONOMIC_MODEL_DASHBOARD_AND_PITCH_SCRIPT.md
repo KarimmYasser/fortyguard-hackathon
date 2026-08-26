@@ -1,6 +1,6 @@
 # 💰 Economic Model, Operator UI Architecture & 3-Minute Pitch Script
 > **FortyGuard Hackathon '26 - Thermal Sentinel Grid**  
-> Complete investment-grade avoided loss formulation, React/Vite operator dashboard layout, and second-by-second video pitch script.
+> Assumption-based avoided-exposure formulation, React/Vite operator dashboard layout, and second-by-second video pitch script.
 
 ---
 
@@ -18,7 +18,7 @@ Separate thermal risk into two mutually exclusive, non-overlapping cost buckets:
 │   Net Avoided Loss = [p_{f,base} - p_{f,mitigated}] · C_{consequence} + ΔPV_{aging} - C_{mitigation}     │
 │                                                                                                          │
 │   Where:                                                                                                 │
-│   • p_f: Logistic failure probability under thermal soak & hot-spot trajectory                          │
+│   • p_f: Uncalibrated logistic scenario-risk score from the modelled trajectory                         │
 │   • C_{consequence}: Emergency replacement + Interruption (VoLL) + Crew + Reliability penalties         │
 │   • ΔPV_{aging}: Present value of deferred capital replacement from avoided loss-of-life (ΔL_{eq})      │
 │   • C_{mitigation}: BESS dispatch degradation + Fan/pump cooling energy + Load shift inconvenience      │
@@ -39,7 +39,7 @@ Separate thermal risk into two mutually exclusive, non-overlapping cost buckets:
 
 ### 1.3 Failure Probability & Consequence Formulation
 
-#### A. Calibrated Logistic Failure Model
+#### A. Scenario Logistic Risk Model (Uncalibrated)
 $$p_f = \sigma(z) = \frac{1}{1 + e^{-z}}$$
 $$z = \beta_0 + \beta_1 \max(0, T_{hs}^U - T_{hs,\text{warn}}) + \beta_2 \max(0, T_o^U - T_{o,\text{warn}}) + \beta_3 \mathrm{TSI} + \beta_4 L_{\text{used}}^{*} + \beta_5 A_{\text{cooling}}$$
 
@@ -67,28 +67,28 @@ $$C_{\text{mitigation}} = C_{\text{BESS}} + C_{\text{curtailment}} + C_{\text{co
 ├───────────────────────────────┬─────────────────────────────────────────────┤
 │                               │  Risk Command Panel                         │
 │  Geospatial Microclimate Map  │  • Risk Tier: OPERATOR ACTION REQUIRED      │
-│  Deck.gl / MapLibre GL        │  • Baseline / mitigated: 159.53 / 109.43°C   │
+│  Deck.gl / MapLibre GL        │  • Baseline / mitigated: 159.53 / 122.53°C   │
 │  • FortyGuard 2m Heat Raster  │  • Continuous Persistence: 12.0h > 40°C     │
-│  • Substation & BESS Glyphs   │  • Failure Risk: 90.84% → 0.75%             │
-│  • Land-Cover Segmentation    │  • Net Avoided Loss: $2,576,849             │
+│  • Substation & BESS Glyphs   │  • Scenario risk: 90.84% → 1.13%            │
+│  • Land-Cover Segmentation    │  • Modeled avoided exposure: $2,566,193     │
 │  • Coolest in-AOI Tile        │  • Action: Enable Stage 2 Cooling + BESS    │
 ├───────────────────────────────┴─────────────────────────────────────────────┤
 │ Physics Telemetry (Apache ECharts 3-Axis Synchronized Timeline):            │
 │ Chart A: Boundary Temp (Natural 41.6°C vs FortyGuard 2m 42.7°C [+1.1°C])   │
-│ Chart B: Baseline hot-spot 159.53°C vs mitigated hot-spot 109.43°C          │
-│ Chart C: Aging Factor V(t) (88.36x baseline vs 0.94x mitigated peak)        │
+│ Chart B: Baseline hot-spot 159.53°C vs mitigated hot-spot 122.53°C          │
+│ Chart C: Aging Factor V(t) (88.36x baseline vs 3.45x mitigated peak)        │
 ├───────────────────────────────────────────────┬─────────────────────────────┤
 │ Deterministic Safety Gate Preflight           │ Audit & Action Ledger       │
 │ [✓ ACCEPT]  [△ MODIFY]  [✕ REJECT]            │ 14:05 Ingest 7h persistence │
 │ ✓ IEEE C57.91 Hot-Spot Envelope               │ 14:06 Baseline hot-spot 143C│
 │ ✓ Voltage Envelope (0.963 - 1.032 pu)         │ 14:07 Safety Gate modifies  │
 │ ✓ N-1 Feeder & Inverter Contingency           │ 14:08 Operator approval     │
-│ ✓ BESS Reserve (SOC 38% > 30% min)            │ 14:30 Hotspot held 109.43C │
+│ ✓ BESS Reserve (SOC 38% > 30% min)            │ 14:30 Hotspot held 122.53C │
 └───────────────────────────────────────────────┴─────────────────────────────┘
 ```
 
-### 2.2 13-Module Operational Suite
-The platform is organized into 13 dedicated tabs:
+### 2.2 14-Module Operational Suite
+The platform is organized into 14 dedicated tabs:
 1. **Home:** Interactive pitch, live demo video player, and operational launchpad.
 2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 3. **Portfolio Ops:** Deterministic asset ranking, explicit worker-intervention screening, evidence coverage, SHA-256 JSON export, and MCP-compatible tool invocation. The current demo applies one common Phoenix scenario and does not claim per-asset scans or occupational-safety certification.
@@ -96,12 +96,13 @@ The platform is organized into 13 dedicated tabs:
 5. **🔥 72h Compounding:** Frozen live FortyGuard 24×3 weather capture driving modelled soil dryout and continuous thermal accumulation.
 6. **⚡ AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
 7. **📜 IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-8. **📚 Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
-9. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
-10. **4 Scientific Moats:** Deep-dive physical formulations.
-11. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and gateway-configured GPT-5.4 work-order synthesis with deterministic fallback.
-12. **Avoided Loss Financial Audit:** LBNL ICE-informed scenario ROI model and side-by-side comparison tables.
-13. **Data Science Studio:** Bronze→Silver→Gold ETL diagnostics, empirical correlations with tautology filtering, ML surrogate metrics, anomaly detection, and Weibull RUL.
+8. **🌡️ Independent Ground Truth:** Frozen or live PHX ASOS comparison with aligned error, correlation, and persistence metrics plus explicit representativeness limits.
+9. **📚 Scientific Provenance:** 22 indexed research records with rendered equations and alphaXiv links.
+10. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+11. **4 Scientific Moats:** Deep-dive physical formulations.
+12. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable recommendation workflow and gateway-configured GPT-5.4 work-order narrative synthesis with deterministic fallback.
+13. **Scenario Economic Audit:** VoLL-informed avoided-exposure model with disclosed assumptions; not realized savings.
+14. **Data Science Studio:** Bronze→Silver→Gold ETL diagnostics, empirical correlations with tautology filtering, ML surrogate metrics, anomaly detection, and Weibull RUL.
 
 ### 2.3 Technology Stack
 * **Framework:** React 19 + Vite + TypeScript
@@ -145,18 +146,18 @@ The platform is organized into 13 dedicated tabs:
 
 ### ⏱️ 1:15-1:30 - FortyGuard Early Warning & Autonomous Planning
 * **Visual:** FortyGuard layer activated. Dashboard displays `P₄₀: 12.0h` for the canonical July 19 replay. LangGraph StateGraph nodes light up: `Thermal Forecast -> Physics Simulation -> Mitigation Planner`.
-* **Voiceover:** *"Thermal Sentinel detects twelve sampled hours of extreme persistence. Twelve hours ahead of peak, our LangGraph agent synthesizes an autonomous mitigation package: activate forced cooling, dispatch the battery, and shift flexible EV load."*
+* **Voiceover:** *"Thermal Sentinel detects twelve sampled hours of extreme persistence. Twelve hours ahead of peak, our LangGraph agent synthesizes an operator-reviewable mitigation package: activate forced cooling, dispatch the battery, and shift flexible EV load."*
 
 ### ⏱️ 1:30-1:45 - Deterministic Safety Gate
 * **Visual:** Full-screen zoom into the Safety Gate panel. Checklist items animate green: `IEEE C57.91 Envelope [PASS]`, `Voltage 0.963-1.032 pu [PASS]`, `N-1 Contingency [PASS]`, `BESS Reserve 38% > 30% [PASS]`.
 * **Voiceover:** *"Crucially, the LLM never controls equipment directly. Every action enters a deterministic Safety Gate that mathematically validates transformer limits, grid voltage, N-1 redundancy, and battery reserves."*
 
 ### ⏱️ 1:45-2:15 - Technical Defensibility & Avoided Aging
-* **Visual:** Side-by-side comparison table showing Baseline vs. Thermal Sentinel Grid. Hot-spot held to $109.43^\circ\mathrm{C}$ versus a $159.53^\circ\mathrm{C}$ baseline, avoiding $374.3\text{ hours}$ of equivalent insulation aging.
+* **Visual:** Side-by-side comparison table showing Baseline vs. Thermal Sentinel Grid. The modelled hot-spot peaks at $122.53^\circ\mathrm{C}$ versus a $159.53^\circ\mathrm{C}$ baseline, avoiding $365.4\text{ hours}$ of equivalent insulation aging.
 * **Voiceover:** *"Under the hood, we integrate IEEE C57.91 and IEC 60076-7 thermal differential equations with power-flow validation. The agent keeps the hot-spot safely below limits and preserves critical hospital supply."*
 
 ### ⏱️ 2:15-2:45 - Commercial ROI & Avoided Loss
-* **Visual:** Net Avoided Loss ROI card highlighting: `Avoided Outage Risk: $2,576,590`, `Avoided Aging: $728`, `Net Avoided Loss: $2,576,849`, `ROI: 5,495.3x`.
+* **Visual:** Scenario economics card highlighting: `Avoided Consequence Exposure: $2,565,951`, `Capital-Aging Deferral: $710`, `Modeled Avoided Exposure: $2,566,193`, `Cost Ratio: 5,472.6x`, with an assumption-based/not-realized label.
 * **Voiceover:** *"For utilities, this prevents multi-million dollar transformer blowouts and SAIDI penalties. For property and fire insurers, it provides an auditable risk-reduction ledger."*
 
 ### ⏱️ 2:45-3:00 - Final Closing Hook

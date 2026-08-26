@@ -264,10 +264,10 @@ Thermal Sentinel Grid incorporates a **Dual-Storage Persistence Engine** (Local 
 7. **`multi_day_heatwave_logs`:** Per-step model audit records for 72h soil and aging progression; environmental forcing is the frozen 72-row live capture.
 8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
 9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
-10. **`financial_audit_snapshots`:** ICE-informed avoided-loss model snapshots ($2.58M net avoided loss, 5,495× ROI in the canonical scenario).
+10. **`financial_audit_snapshots`:** VoLL-informed scenario snapshots (~$2.57M modeled avoided exposure and a 5,472.6× assumption-based cost ratio in the canonical replay); not realized savings or actuarially calibrated forecasts.
 11. **`microclimate_parcel_store`:** Saved parcel geometry and measured peak/spread with city, coordinates, and catalog date in GeoJSON properties. Cloud DB can select a row and rebase the dashboard onto its persisted or newly computed solve.
 12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (\$/hr).
-13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) & $VoLL$ at risk.
+13. **`cascading_risk_snapshots`:** Uncalibrated Poisson-Weibull cascading-risk scenario score ($P_{\text{cascade}}$) and modeled $VoLL$ exposure.
 14. **`chance_constrained_opf_logs`:** Analytical quantile-bounded dispatch results under Gaussian uncertainty ($z_{1-\alpha}$).
 15. **`cbf_safety_certificates`:** Deterministic safety-envelope checks, slack, and pass/modify/reject verdicts.
 16. **`grid_assets_registry`:** Digital twin asset catalog (transformers, substations, BESS units, health scores).

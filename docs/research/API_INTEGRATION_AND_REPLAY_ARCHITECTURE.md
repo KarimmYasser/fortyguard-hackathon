@@ -116,7 +116,7 @@ A common question is whether the simulated elements should be connected to "live
 
 ### 1. Phoenix July 2023 Dataset (`phoenix_heatwave_2023.json`)
 * **Sub-10ms UI Responsiveness:** Scrubbing the 12-hour replay timeline or adjusting the **What-If Studio** sliders requires instantaneous ODE recalculation ($<10\text{ ms}$). Waiting 30–90 seconds for a cloud API roundtrip on every tick would destroy real-time operator usability.
-* **Scientific Ground Truth & IEEE Annex G Reproducibility:** Evaluating transformer hot-spot change ($159.53^\circ\mathrm{C} \to 109.43^\circ\mathrm{C}$) and Arrhenius life extension ($374.3\text{ h saved}$) requires an **immutable, standardized weather boundary condition** that judges and automated test suites (`pytest tests/`) can verify identically every time.
+* **Scientific Ground Truth & IEEE Annex G Reproducibility:** Evaluating transformer hot-spot change ($159.53^\circ\mathrm{C} \to 122.53^\circ\mathrm{C}$) and Arrhenius life extension ($365.4\text{ h saved}$) requires an **immutable, standardized weather boundary condition** that judges and automated test suites (`pytest tests/`) can verify identically every time.
 * **Credit Conservation:** Running continuous automated integration tests or live presentations against FortyGuard's billing endpoints on every page reload would rapidly exhaust the 2,000,000 credit quota.
 
 ### 2. Utility Substation Assets (`assets.py`)
