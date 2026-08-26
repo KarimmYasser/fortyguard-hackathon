@@ -79,9 +79,10 @@ async def main() -> int:
     meta = existing["scenario_metadata"]
     meta["name"] = "Phoenix July 2023 Extreme Heatwave Replay (live FortyGuard capture)"
     meta["date_range"] = {
-        "start_date": f"{BENCHMARK_ANALYSIS_DATE}T06:00:00Z",
-        "end_date": f"{BENCHMARK_ANALYSIS_DATE}T18:00:00Z",
+        "start_date": forecast[0]["timestamp"],
+        "end_date": forecast[-1]["timestamp"],
         "filter_type": 2,
+        "clock_basis": "local civil time with explicit UTC offset",
     }
     meta["persistence_metrics"] = {
         "threshold_c": persistence["threshold_c"],

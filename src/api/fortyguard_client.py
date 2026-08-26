@@ -686,7 +686,10 @@ class AsyncFortyGuardClient:
             forecast.append(
                 {
                     "hour_index": idx,
-                    "timestamp": f"{analysis_date}T{hour:02d}:00:00Z",
+                    # The heatmap request hour is local civil time. Preserve an
+                    # offset-aware timestamp; appending Z here falsely labelled
+                    # Phoenix 06:00 MST as 06:00 UTC and corrupted external joins.
+                    "timestamp": f"{analysis_date}T{hour:02d}:00:00{self._timezone_offset(env_payload)}",
                     "time_label": datetime.strptime(f"{hour:02d}:00", "%H:%M").strftime("%I:%M %p"),
                     # --- measured by FortyGuard ---
                     "fortyguard_2m_ambient_c": ambient,
@@ -715,6 +718,19 @@ class AsyncFortyGuardClient:
             row["hour_index"] = i
         logger.info("Live 12h forecast built from %d FortyGuard tcm hours.", len(forecast))
         return forecast
+
+    @staticmethod
+    def _timezone_offset(env_payload: Dict[str, Any]) -> str:
+        """Return an ISO-8601 offset from env_params metadata, defaulting to UTC."""
+        metadata = env_payload.get("metadata") if isinstance(env_payload, dict) else None
+        raw = metadata.get("timezone_offset_hours") if isinstance(metadata, dict) else None
+        try:
+            hours = float(raw)
+        except (TypeError, ValueError):
+            return "Z"
+        sign = "+" if hours >= 0 else "-"
+        absolute_minutes = round(abs(hours) * 60)
+        return f"{sign}{absolute_minutes // 60:02d}:{absolute_minutes % 60:02d}"
 
     async def get_persistence_and_exceedance(
         self,

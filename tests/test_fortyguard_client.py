@@ -53,6 +53,13 @@ async def test_async_fortyguard_client_mock():
     assert persist["thermal_soak_index_tsi"] > 0
 
 
+def test_timezone_offset_uses_env_metadata_and_never_forges_utc():
+    client = AsyncFortyGuardClient(mock_mode=True)
+    assert client._timezone_offset({"metadata": {"timezone_offset_hours": -7}}) == "-07:00"
+    assert client._timezone_offset({"metadata": {"timezone_offset_hours": 5.5}}) == "+05:30"
+    assert client._timezone_offset({}) == "Z"
+
+
 def test_sync_fortyguard_client_mock():
     client = FortyGuardClient(mock_mode=True)
     forecast = client.get_12h_forecast()
