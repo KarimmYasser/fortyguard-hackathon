@@ -1,7 +1,7 @@
 """
 Safety Gate Node
-Executes deterministic Control Barrier Function (CBF-QP) constraint checks,
-performs K_safe projection if needed, and computes investment-grade Net Avoided Loss ROI.
+Executes deterministic bounded-trajectory constraint checks, performs K_safe
+projection if needed, and computes an assumption-based avoided-loss scenario.
 """
 
 from __future__ import annotations
@@ -62,8 +62,12 @@ async def safety_gate_node(state: ThermalSentinelState) -> Dict[str, Any]:
         asset_id=asset_id,
         hourly_forecast=forecast,
         load_k_series=mitigated_load_curve,
-        cooling_derate=eta_cool * (1.35 if forced_cooling else 1.0),
+        # Pass the passive canyon derate only; simulate_trajectory applies the
+        # active-cooling boost exactly once when the flag is enabled.
+        cooling_derate=eta_cool,
         forced_cooling_active=forced_cooling,
+        persistence_hours_p40=persist.get("persistence_hours_p40"),
+        exceedance_degree_hours_h40=persist.get("exceedance_degree_hours_h40"),
     )
 
     # Economic ROI calculation

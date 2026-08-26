@@ -1,8 +1,8 @@
 """
-Chance-Constrained AC Optimal Power Flow (CC-OPF) & Convex SOCP Engine
-Implements convex Second-Order Cone Programming (SOCP) branch flow relaxations for radial distribution
-feeders, guaranteeing high-probability thermal and ANSI C84.1 voltage satisfaction (95% / 99% confidence)
-under FortyGuard 2-meter microclimate forecast uncertainty.
+Analytical Uncertainty-Bounded Dispatch Screen
+Applies Gaussian quantile margins to a simplified radial-feeder approximation and
+screens BESS, OLTC, curtailment, thermal, and ANSI C84.1 voltage decisions under
+FortyGuard 2-meter microclimate forecast uncertainty. This is not a numerical SOCP solve.
 """
 
 from __future__ import annotations
@@ -49,7 +49,7 @@ class BranchProbabilisticFlow(BaseModel):
 
 
 class CC_OPF_Solution(BaseModel):
-    """Complete Chance-Constrained Optimal Power Flow solution."""
+    """Complete analytical uncertainty-bounded dispatch-screen result."""
     converged: bool
     confidence_level_pct: float
     quantile_z_score: float
@@ -65,12 +65,15 @@ class CC_OPF_Solution(BaseModel):
     max_voltage_upper_bound_pu: float
     buses: List[BusProbabilisticState]
     branches: List[BranchProbabilisticFlow]
-    robustness_status: str  # "CERTIFIED_ROBUST", "MARGINAL_SATISFACTION", "INFEASIBLE_DERATE"
+    robustness_status: str  # "SCREEN_PASS", "MARGINAL_SATISFACTION", "INFEASIBLE_DERATE"
 
 
 class ChanceConstrainedOPFEngine:
-    """
-    Solves Chance-Constrained AC Optimal Power Flow under microclimate uncertainty.
+    """Screens simplified feeder dispatch under microclimate uncertainty.
+
+    The historical class name is retained for API compatibility. The
+    implementation is closed-form/heuristic and must not be represented as a
+    numerical AC-OPF or SOCP optimizer.
     """
 
     def __init__(self) -> None:
@@ -89,7 +92,7 @@ class ChanceConstrainedOPFEngine:
 
     def solve_cc_opf(self, req: CC_OPF_Request) -> CC_OPF_Solution:
         """
-        Solves convex Second-Order Cone optimal power flow with analytical chance constraints.
+        Applies deterministic dispatch rules with analytical Gaussian bounds.
         """
         z_score = self.get_quantile_z_score(req.confidence_level_pct)
         # Worst-case robust temperature envelope
@@ -233,7 +236,7 @@ class ChanceConstrainedOPFEngine:
         max_v_ub = max(b.voltage_upper_bound_pu for b in buses)
 
         if min_v_lb >= 0.95 and max_v_ub <= 1.05 and all(br.thermal_compliant for br in branches):
-            status = "CERTIFIED_ROBUST"
+            status = "SCREEN_PASS"
         elif min_v_lb >= 0.94:
             status = "MARGINAL_SATISFACTION"
         else:

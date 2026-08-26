@@ -1,7 +1,7 @@
 """
 LangGraph Multi-Agent StateGraph
 Assembles the complete compiled Thermal Sentinel Grid workflow:
-Forecast Ingest -> Physics Estimation -> Mitigation Planner -> CBF-QP Safety Gate -> Audit & Dispatch
+Forecast Ingest -> Physics Estimation -> Mitigation Planner -> Deterministic Safety Gate -> Audit & Work Order
 """
 
 from __future__ import annotations

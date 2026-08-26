@@ -13,6 +13,7 @@ from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 
 from src.models.thermal import TransformerThermalParams
+from src.models.provenance import canonical_provenance
 from src.physics.transformer_thermal import TransformerThermalEngine
 from src.physics.soil_cable import SoilCableEngine, SoilCableParameters
 from src.physics.urban_canyon import UrbanCanyonEngine
@@ -48,6 +49,7 @@ class MultiDaySimulationResult(BaseModel):
     cumulative_net_avoided_loss_usd: float
     compounding_soil_dryout_factor: float
     scenario_metadata: Dict[str, Any]
+    provenance: Dict[str, Any]
 
 
 class MultiDayHeatwaveEngine:
@@ -213,6 +215,8 @@ class MultiDayHeatwaveEngine:
             elif 0 <= h_day < 6:
                 bess_soc = min(85.0, bess_soc + 8.0)
 
+            # step_discrete has no active-cooling flag, so apply the 35% boost
+            # once here (unlike simulate_trajectory, which applies it itself).
             effective_cooling = eta_cool * (1.35 if forced_cooling else 1.0)
             curr_theta_o_mit, curr_theta_w_mit, t_eff_mit, t_o_mit, t_hs_mit = self.thermal_engine.step_discrete(
                 theta_o_prev=curr_theta_o_mit,
@@ -296,4 +300,10 @@ class MultiDayHeatwaveEngine:
                 final_soil_resistivity / initial_soil_resistivity, 2
             ),
             scenario_metadata=self._load_capture()["scenario_metadata"],
+            provenance=canonical_provenance(
+                scenario_id="phoenix_heatwave_2023_72h",
+                boundary_source="fortyguard_live_capture",
+                operating_mode="demo",
+                solar_kind="derived",
+            ),
         )

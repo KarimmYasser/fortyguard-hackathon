@@ -1,7 +1,8 @@
 """
-Robust Control Barrier Function (CBF-QP) Deterministic Safety Gate
-Guarantees forward invariance of transformer thermal states, grid voltage stability,
-N-1 contingency reserve, and BESS energy envelopes under bounded forecast uncertainty.
+CBF-Inspired Deterministic Trajectory Safety Gate
+Checks modelled transformer, voltage, reserve, and BESS constraints under bounded
+forecast uncertainty and projects load by bisection. It is not a general QP solver
+or a field-certified guarantee for an unmodelled physical grid.
 """
 
 from __future__ import annotations
@@ -23,8 +24,8 @@ logger = logging.getLogger(__name__)
 
 class CBFSafetyGate:
     """
-    Non-LLM hard constraint validator and quadratic constraint projection filter.
-    Never allows LLM suggestions to violate physical safety boundaries.
+    Non-LLM model constraint validator and scalar load-projection filter.
+    It prevents accepted recommendations from violating the configured model limits.
     """
 
     def __init__(
@@ -77,8 +78,8 @@ class CBFSafetyGate:
         solar_irradiance: float,
         theta_o_prev: float,
         theta_w_prev: float,
-        target_t_hs_max: float = 136.8,
-        target_t_o_max: float = 108.0,
+        target_t_hs_max: Optional[float] = None,
+        target_t_o_max: Optional[float] = None,
         cooling_derate: float = 1.0,
         k_min: float = 0.30,
         k_max: float = 1.40,
@@ -89,7 +90,9 @@ class CBFSafetyGate:
         ambient boundary (T_a + epsilon), T_hs <= target_t_hs_max and T_o <= target_t_o_max.
         """
         worst_t_a = t_ambient_2m + self.epsilon_c
-        
+        hs_limit = self.params.t_hs_max_c if target_t_hs_max is None else target_t_hs_max
+        oil_limit = self.params.t_o_max_c if target_t_o_max is None else target_t_o_max
+
         # Bisection search over permissible continuous loading interval
         low = k_min
         high = k_max
@@ -109,7 +112,7 @@ class CBFSafetyGate:
             v_pu = self.evaluate_grid_voltage_pu(mid_k)
 
             # Check all physical boundaries
-            if t_hs <= target_t_hs_max and t_o <= target_t_o_max and 0.95 <= v_pu <= 1.05:
+            if t_hs <= hs_limit and t_o <= oil_limit and 0.95 <= v_pu <= 1.05:
                 best_k = mid_k
                 low = mid_k  # Can load more
             else:
@@ -182,8 +185,11 @@ class CBFSafetyGate:
             asset_id=asset_id,
             hourly_forecast=worst_case_forecast,
             load_k_series=load_curve,
+            # simulate_trajectory applies its own 1.35 active-cooling boost.
+            # The action factor is passed as the passive multiplier and the
+            # active flag is disabled here to avoid applying cooling twice.
             cooling_derate=cooling_derate * cooling_boost,
-            forced_cooling_active=forced_cooling,
+            forced_cooling_active=False,
         )
 
         # 1. Thermal Violations Check
@@ -266,8 +272,10 @@ class CBFSafetyGate:
                 qp_slack_xi=0.0 if is_fully_safe else max(0.0, -barrier_slack),
                 is_safe_invariant=is_fully_safe,
                 mathematical_proof=(
-                    f"Control Barrier Function dot_h(x,u) + gamma*h(x) >= 0 evaluated at "
-                    f"peak T_hs={trajectory.peak_hot_spot_c:.1f}C under K_safe={safe_max_k:.3f} pu."
+                    f"CBF-inspired bounded-trajectory check: configured thermal, voltage, "
+                    f"reserve and energy constraints evaluated at peak T_hs="
+                    f"{trajectory.peak_hot_spot_c:.1f}C; scalar load projection "
+                    f"K_safe={safe_max_k:.3f} pu. Not a field certification or QP proof."
                 ),
             )
         )

@@ -1,7 +1,7 @@
 """
 Phoenix July 2023 Heatwave Historical Replay Engine
 Provides benchmark simulation comparing Baseline Controller (Airport weather + Static Rating)
-versus Thermal Sentinel Grid (FortyGuard 2-meter Microclimate + IEEE/IEC Physics + CBF-QP Safety Gate).
+versus Thermal Sentinel Grid (FortyGuard 2-meter Microclimate + IEEE/IEC Physics + deterministic safety gate).
 """
 
 from __future__ import annotations
@@ -13,8 +13,11 @@ from src.physics.soil_cable import SoilCableEngine
 from src.physics.urban_canyon import UrbanCanyonEngine
 from src.physics.virtual_moisture import VirtualMoistureEngine
 from src.physics.economic_model import EconomicEngine
+from src.physics.integrated_scenario import evaluate_integrated_scenario
+from src.physics.sensitivity import transformer_sensitivity_envelope
 from src.safety.cbf_gate import CBFSafetyGate
 from src.models.safety import ActionType, MitigationAction
+from src.models.provenance import canonical_provenance
 
 
 class PhoenixHeatwaveReplayEngine:
@@ -88,7 +91,9 @@ class PhoenixHeatwaveReplayEngine:
             asset_id="SUB-PHX-DOWNTOWN-04",
             hourly_forecast=forecast,
             load_k_series=mitigated_load,
-            cooling_derate=eta_cool * 1.35,  # Forced cooling engaged
+            # Pass the passive canyon derate only. The thermal engine applies
+            # the forced-cooling boost exactly once when this flag is true.
+            cooling_derate=eta_cool,
             forced_cooling_active=True,
             persistence_hours_p40=p40,
             exceedance_degree_hours_h40=h40,
@@ -203,8 +208,27 @@ class PhoenixHeatwaveReplayEngine:
             dt_hours=1.0,
         )
 
+        sensitivity = transformer_sensitivity_envelope(
+            self.thermal_engine, forecast, baseline_load, eta_cool
+        )
+        integrated = evaluate_integrated_scenario(
+            forecast=forecast,
+            baseline_hotspots_c=[s.t_hot_spot_c for s in baseline_traj.steps],
+            mitigated_hotspots_c=[s.t_hot_spot_c for s in mitigated_traj.steps],
+            baseline_loads_k=baseline_load,
+            mitigated_loads_k=mitigated_load,
+            soil_resistivity_rho=soil_eval["soil_thermal_resistivity_rho_soil"],
+        )
+
         return {
             "scenario_metadata": meta,
+            "provenance": canonical_provenance(
+                scenario_id=meta.get("scenario_id", "phoenix_heatwave_july_2023"),
+                boundary_source=meta.get("provenance", {}).get("data_source", "fortyguard_live_capture"),
+                operating_mode="demo",
+                # The 12h fixture records this field as modelled.
+                solar_kind="externally_modelled",
+            ),
             "timeline_steps": timeline_steps,
             "baseline_summary": {
                 "peak_top_oil_c": baseline_traj.peak_top_oil_c,
@@ -226,5 +250,7 @@ class PhoenixHeatwaveReplayEngine:
             "soil_cable_state": soil_eval,
             "virtual_moisture_state": moisture_eval,
             "urban_canyon_state": canyon_res,
+            "sensitivity_analysis": sensitivity,
+            "integrated_grid_evaluation": integrated,
             "heatmap_geojson_tiles": tiles,
         }

@@ -39,7 +39,7 @@ class MitigationAction(BaseModel):
 
 
 class SafetyGateVerdict(BaseModel):
-    """Complete mathematical preflight verdict from non-LLM CBF-QP gate."""
+    """Complete model preflight verdict from the non-LLM trajectory gate."""
     status: SafetyStatus
     is_safe: bool
     hot_spot_compliant: bool
@@ -57,7 +57,7 @@ class SafetyGateVerdict(BaseModel):
     nominal_load_k: float
     safe_max_load_k: float = Field(
         ...,
-        description="Projected maximum permissible load ratio K_safe ensuring forward invariance"
+        description="Projected maximum permissible load ratio under configured model constraints"
     )
     violations: List[str] = Field(default_factory=list)
     mitigation_adjustments: List[str] = Field(default_factory=list)

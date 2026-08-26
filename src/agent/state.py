@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Optional, TypedDict
 
 class ThermalSentinelState(TypedDict, total=False):
     """
-    Unified LangGraph state schema for physical state estimation and autonomous dispatch.
+    Unified LangGraph state schema for physical state estimation and operator-reviewed dispatch recommendations.
     """
     target_city: str
     asset_id: str

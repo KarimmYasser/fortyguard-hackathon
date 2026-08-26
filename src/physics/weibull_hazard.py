@@ -1,8 +1,8 @@
 """
-Time-Dependent Arrhenius-Weibull Grid Fragility & Cascading Outage Engine
-Implements non-homogeneous Poisson-Weibull hazard models coupled with Arrhenius
-thermal acceleration to compute instantaneous failure hazard rates λ(t, T),
-cumulative component failure probabilities P_fail(t), and system-wide cascading blackout risk.
+Time-Dependent Arrhenius-Weibull Grid Fragility Scenario Engine
+Implements an uncalibrated Poisson-Weibull model coupled with Arrhenius thermal
+acceleration to produce comparative component and system risk scores. Outputs are
+scenario estimates, not empirical failure forecasts.
 """
 
 from __future__ import annotations

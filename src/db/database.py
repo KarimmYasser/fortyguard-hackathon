@@ -323,7 +323,7 @@ class HybridDatabaseManager:
                 """
             )
 
-            # 14. Chance-Constrained SOCP OPF Dispatch Logs
+            # 14. Analytical uncertainty-bounded dispatch logs
             cursor.execute(
                 """
                 CREATE TABLE IF NOT EXISTS chance_constrained_opf_logs (
@@ -1119,7 +1119,7 @@ class HybridDatabaseManager:
         if self.is_supabase_enabled:
             await self._supabase_insert("cascading_risk_snapshots", record.model_dump())
 
-    # --- 14. Chance-Constrained SOCP OPF Logs ---
+    # --- 14. Analytical uncertainty-bounded dispatch logs ---
     async def log_chance_constrained_opf(self, record: ChanceConstrainedOPFRecord) -> None:
         with self._get_connection() as conn:
             cursor = conn.cursor()

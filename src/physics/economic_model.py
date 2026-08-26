@@ -1,5 +1,5 @@
 """
-Investment-Grade Economic Model & Avoided Loss Quantifier
+Scenario Economic Model & Avoided Loss Quantifier
 Computes non-overlapping, auditable avoided loss metrics:
 Net Avoided Loss = [p_f,base - p_f,mitigated] * C_consequence + Delta PV_aging - C_mitigation
 """
@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 
 
 class EconomicParameters(BaseModel):
-    """Financial parameters for utility avoided loss and insurance risk reduction."""
+    """Assumed financial parameters for scenario analysis."""
     transformer_replacement_cost_usd: float = Field(default=350000.0, description="Cost of new distribution transformer")
     emergency_procurement_premium_pct: float = Field(default=40.0, description="Expedited delivery & crane staging (+40%)")
     design_life_equivalent_hours: float = Field(default=180000.0, description="20-year IEEE design life at reference 110°C")
@@ -31,8 +31,9 @@ class EconomicParameters(BaseModel):
 
 
 class EconomicEngine:
-    """
-    Computes rigorous, investment-grade ROI and avoided failure cost metrics.
+    """Computes transparent scenario ROI and avoided-consequence estimates.
+
+    Results are not realized savings or actuarially calibrated forecasts.
     """
 
     def __init__(self, params: Optional[EconomicParameters] = None) -> None:
@@ -110,7 +111,7 @@ class EconomicEngine:
         cooling_runtime_hours: float = 8.0,
     ) -> Dict[str, Any]:
         """
-        Full investment-grade evaluation comparing baseline vs. Thermal Sentinel Grid.
+        Scenario evaluation comparing baseline vs. Thermal Sentinel Grid.
         """
         c_consequence = self.calculate_outage_consequence_cost()
 
@@ -136,8 +137,12 @@ class EconomicEngine:
 
         return {
             "total_outage_consequence_usd": round(c_consequence, 2),
+            # Retain historical keys for API compatibility. These are
+            # uncalibrated scenario risk scores, not empirical probabilities.
             "baseline_failure_probability_pct": round(p_f_base * 100.0, 2),
             "mitigated_failure_probability_pct": round(p_f_mitigated * 100.0, 2),
+            "risk_metric_status": "uncalibrated_scenario_score",
+            "economic_result_status": "assumption_based_not_realized",
             "avoided_outage_risk_usd": round(avoided_outage_risk_usd, 2),
             "avoided_aging_hours": round(baseline_loss_of_life_hours - mitigated_loss_of_life_hours, 1),
             "capital_aging_deferral_usd": round(delta_pv_aging_usd, 2),

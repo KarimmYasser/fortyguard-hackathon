@@ -1,6 +1,6 @@
 """
 Agentic Dispatch & Economic ROI Router
-Triggers the full LangGraph agent pipeline and evaluates investment-grade avoided loss.
+Triggers the LangGraph recommendation pipeline and evaluates scenario avoided loss.
 """
 
 from __future__ import annotations
@@ -84,7 +84,7 @@ async def run_mitigation_pipeline(req: MitigationTriggerRequest) -> Dict[str, An
             oltc_tap_step=-1,
             forced_cooling_active=cooling_active,
             gpt_narrative=narrative,
-            safety_status="AUTHORIZED" if safety_verdict.get("status") == "ACCEPT" else "BLOCKED",
+            safety_status="PREFLIGHT_PASSED" if safety_verdict.get("status") == "ACCEPT" else "OPERATOR_REVIEW",
             cbf_barrier_compliant=is_safe,
         )
         await db_manager.save_dispatch_work_order(order_record)
@@ -126,7 +126,7 @@ async def run_mitigation_pipeline(req: MitigationTriggerRequest) -> Dict[str, An
 @router.get("/economic-roi")
 async def get_economic_roi_metrics() -> Dict[str, Any]:
     """
-    Returns current investment-grade Net Avoided Loss and ROI breakdown, persisting audit snapshot.
+    Returns the current assumption-based avoided-loss and ROI breakdown and persists it.
     """
     # Evaluate the canonical Phoenix benchmark rather than the engine's bare
     # defaults. Calling it with no arguments returned a generic ~$917k / 1578x

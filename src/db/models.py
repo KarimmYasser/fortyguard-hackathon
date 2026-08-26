@@ -196,9 +196,9 @@ class CascadingRiskRecord(BaseModel):
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
-# 14. Chance-Constrained SOCP OPF Dispatch Logs
+# 14. Analytical uncertainty-bounded dispatch logs (legacy table name retained)
 class ChanceConstrainedOPFRecord(BaseModel):
-    """Second-Order Cone Optimal Power Flow solution under forecast variance."""
+    """Analytical quantile-bounded dispatch result under forecast variance."""
     solve_id: str
     confidence_level_pct: float
     total_generation_mw: float
@@ -209,9 +209,9 @@ class ChanceConstrainedOPFRecord(BaseModel):
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
-# 15. CBF Control Barrier Function Safety Proof Certificates
+# 15. CBF-inspired bounded-trajectory safety records (legacy table name retained)
 class CBFSafetyCertificateRecord(BaseModel):
-    """Control Barrier Function forward invariance mathematical certificate."""
+    """Deterministic model-constraint preflight record; not field certification."""
     certificate_id: str
     asset_id: str
     nominal_k_load: float

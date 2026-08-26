@@ -9,6 +9,8 @@ def test_phoenix_replay_engine():
     data = engine.generate_replay_dataset()
 
     assert "scenario_metadata" in data
+    assert "provenance" in data
+    assert "integrated_grid_evaluation" in data
     assert "timeline_steps" in data
     assert len(data["timeline_steps"]) == 12
 

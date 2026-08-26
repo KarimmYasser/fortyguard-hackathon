@@ -32,13 +32,13 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
         "work_order_id": f"WO-TSG-{asset_id}-{int(time.time())}",
         "target_substation": asset_name,
         "location": city,
-        "dispatch_status": "AUTOMATED_APPROVED_BY_SAFETY_GATE" if verdict.get("is_safe") else "OPERATOR_OVERRIDE_REQUIRED",
+        "dispatch_status": "MODEL_PREFLIGHT_PASSED_AWAITING_OPERATOR" if verdict.get("is_safe") else "OPERATOR_REVIEW_REQUIRED",
         "authorized_mitigations": actions,
         "target_peak_hot_spot_c": mitigated.get("peak_hot_spot_c"),
         "hot_spot_safety_margin_c": round(140.0 - (mitigated.get("peak_hot_spot_c") or 0.0), 1),
         "avoided_outage_risk_usd": eco.get("avoided_outage_risk_usd"),
         "net_avoided_loss_usd": eco.get("net_avoided_loss_usd"),
-        "regulatory_compliance": "IEEE Std C57.91 & ANSI C84.1 Compliant",
+        "regulatory_compliance": "MODEL_LIMIT_CHECK_ONLY_NOT_FIELD_CERTIFICATION",
     }
 
     # 2. Live LLM Synthesis for Citizen Advisory
@@ -55,7 +55,7 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     default_guidance = (
         f"Hyperlocal air temperatures surrounding street-level electrical infrastructure "
         f"are projected to hit {peak_2m_label}°C between 11:00 AM and 05:00 PM. Automated grid cooling "
-        f"and battery peak shaving are actively engaged to prevent power interruptions. "
+        f"and battery peak shaving are recommended for operator approval to reduce interruption risk. "
         f"Residents are advised to schedule EV charging after 07:00 PM."
     )
 
@@ -102,9 +102,9 @@ async def audit_dispatch_node(state: ThermalSentinelState) -> Dict[str, Any]:
     persist_meta = state.get("persistence_metrics", {})
     persistence_hours = float(persist_meta.get("persistence_hours_p40") or persist_meta.get("continuous_hours_above_40", 12.0))
     hot_spot = float(baseline.get("peak_hot_spot_c", 159.53) if "baseline_trajectory" in state else 159.53)
-    af_peak = float(baseline.get("peak_aging_acceleration_factor", 88.36) if "baseline_trajectory" in state else 88.36)
-    aging_hours = float(baseline.get("total_equivalent_aging_hours", 377.77) if "baseline_trajectory" in state else 377.77)
-    mitigated_hs = float(mitigated.get("peak_hot_spot_c", 109.43) if "mitigated_trajectory" in state else 109.43)
+    af_peak = float(baseline.get("peak_aging_acceleration_v", 0.0))
+    aging_hours = float(baseline.get("total_loss_of_life_hours", 0.0))
+    mitigated_hs = float(mitigated.get("peak_hot_spot_c", 0.0))
 
     canyon = state.get("urban_canyon_metrics", {})
     derate_loss_pct = float(canyon.get("cooling_capacity_loss_pct", 32.0))

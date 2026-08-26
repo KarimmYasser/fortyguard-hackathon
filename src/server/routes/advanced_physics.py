@@ -3,8 +3,8 @@ FastAPI Route for Advanced Mathematical Physics & Grid Reliability Suite
 Exposes endpoints for:
 1. Dynamic Line Rating & Catenary Sag (IEEE Std 738-2012)
 2. BESS Coupled Electro-Thermal ODEs & Arrhenius SEI Capacity Fade
-3. Arrhenius-Weibull Asset Fragility & Cascading Outage Probability
-4. Chance-Constrained AC Optimal Power Flow (CC-OPF) with SOCP Bounds
+3. Arrhenius-Weibull Scenario Fragility & Cascading-Risk Score
+4. Analytical uncertainty-bounded dispatch screening
 """
 
 from __future__ import annotations
@@ -56,17 +56,18 @@ async def solve_dynamic_line_rating(req: DLRSolveRequest) -> DLRSolution:
             ambient_c=req.t_ambient_c,
             wind_speed_ms=req.wind_speed_m_per_s,
             conductor_temp_c=sol.conductor_temp_c,
-            dynamic_ampacity_a=sol.dynamic_ampacity_amps,
-            ampacity_headroom_pct=sol.ampacity_headroom_pct,
+            dynamic_ampacity_a=sol.max_dynamic_ampacity_amps,
+            ampacity_headroom_pct=sol.capacity_margin_pct,
             catenary_sag_m=sol.catenary_sag_m,
-            clearance_margin_m=sol.ground_clearance_margin_m,
+            clearance_margin_m=round(
+                sol.ground_clearance_m - engine.spec.min_ground_clearance_m, 2
+            ),
         )
         await db_manager.log_dlr_telemetry(record)
     except Exception as exc:
         logger.warning("Failed to persist DLR telemetry: %s", exc, exc_info=True)
 
     return sol
-
 
 
 # --- 2. BESS Electro-Thermal Endpoint ---
@@ -124,16 +125,16 @@ async def simulate_bess_thermal_trajectory(req: BESSSimulateRequest) -> List[BES
 @router.get("/cascading-hazard", response_model=CascadingOutageRiskReport)
 async def get_grid_cascading_hazard(is_mitigated: bool = False) -> CascadingOutageRiskReport:
     """
-    Computes time-dependent Poisson-Weibull hazard rates and grid-wide cascading blackout probability.
+    Computes an uncalibrated Poisson-Weibull scenario risk score for the demo feeder.
     """
     engine = ArrheniusWeibullHazardEngine()
     if is_mitigated:
-        tx_traj = [94.0, 106.0, 120.0, 134.0, 148.0, 158.0, 163.0, 159.5, 164.0, 158.0, 148.0, 136.0]
+        tx_traj = [94.0, 102.0, 110.0, 118.0, 126.0, 132.0, 136.0, 134.0, 130.0, 122.0, 114.0, 106.0]
         cable_traj = [65.0, 70.0, 76.0, 82.0, 86.0, 84.0, 80.0, 75.0, 70.0, 66.0, 62.0, 58.0]
         line_traj = [52.0, 58.0, 64.0, 70.0, 73.5, 71.0, 66.0, 60.0, 55.0, 50.0, 46.0, 42.0]
         ambient_peak = 42.74
     else:
-        tx_traj = [98.0, 110.0, 124.0, 138.0, 151.2, 148.0, 137.0, 126.0, 115.0, 105.0, 96.0, 89.0]
+        tx_traj = [98.0, 110.0, 124.0, 138.0, 151.2, 158.0, 163.0, 159.5, 154.0, 145.0, 132.0, 118.0]
         cable_traj = [70.0, 78.0, 88.0, 98.0, 106.0, 102.0, 94.0, 86.0, 79.0, 73.0, 68.0, 63.0]
         line_traj = [56.0, 64.0, 72.0, 81.0, 86.4, 83.0, 76.0, 68.0, 61.0, 55.0, 50.0, 45.0]
         ambient_peak = 42.74
@@ -152,12 +153,18 @@ async def get_grid_cascading_hazard(is_mitigated: bool = False) -> CascadingOuta
         from src.db.models import CascadingRiskRecord
         snap = CascadingRiskRecord(
             snapshot_id=f"RISK-{uuid.uuid4().hex[:8].upper()}",
-            heatwave_severity=report.heatwave_severity,
-            n1_reserve_margin_mw=report.n_1_reserve_margin_mw,
-            n1_compliant=report.n_1_security_compliant,
-            cascade_outage_probability=report.system_cascading_blackout_prob_pct / 100.0,
+            heatwave_severity=(
+                "CRITICAL" if report.system_cascading_risk_pct > 12.0
+                else "ELEVATED" if report.system_cascading_risk_pct > 4.0
+                else "LOW"
+            ),
+            # The risk model exposes a percentage reserve margin; retain that
+            # value in the legacy database column rather than fabricating MW.
+            n1_reserve_margin_mw=report.n_minus_1_reserve_margin_pct,
+            n1_compliant=report.n_minus_1_reserve_margin_pct >= 10.0,
+            cascade_outage_probability=report.system_cascading_risk_pct / 100.0,
             expected_unserved_energy_mwh=report.expected_unserved_energy_mwh,
-            total_voll_risk_usd=report.total_voll_financial_risk_usd,
+            total_voll_risk_usd=report.economic_loss_risk_usd,
         )
         await db_manager.save_cascading_risk_snapshot(snap)
     except Exception as exc:
@@ -170,7 +177,7 @@ async def get_grid_cascading_hazard(is_mitigated: bool = False) -> CascadingOuta
 @router.post("/cc-opf-solve", response_model=CC_OPF_Solution)
 async def solve_chance_constrained_opf(req: CC_OPF_Request) -> CC_OPF_Solution:
     """
-    Solves Chance-Constrained Second-Order Cone AC-OPF with Gaussian forecast variance quantile bounds.
+    Runs an analytical uncertainty-bounded dispatch screen with Gaussian quantile bounds.
     """
     import time
     engine = ChanceConstrainedOPFEngine()

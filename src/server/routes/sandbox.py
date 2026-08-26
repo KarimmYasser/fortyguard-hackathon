@@ -1,7 +1,7 @@
 """
 FastAPI Route for Live What-If Stress Studio (Interactive Physics Sandbox)
 Allows judges & operators to dynamically modulate boundary conditions, multi-day persistence,
-BESS capacity, and asset ratings, recalculating IEEE C57.91 & CBF-QP trajectories in real-time.
+BESS capacity, and asset ratings, recalculating IEEE C57.91 and bounded model trajectories.
 """
 
 from __future__ import annotations
@@ -15,11 +15,14 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from src.models.thermal import TransformerThermalParams
+from src.models.provenance import canonical_provenance
 from src.physics.transformer_thermal import TransformerThermalEngine
 from src.physics.soil_cable import SoilCableEngine
 from src.physics.urban_canyon import UrbanCanyonEngine, UrbanCanyonParameters
 from src.physics.virtual_moisture import VirtualMoistureEngine
 from src.physics.economic_model import EconomicEngine
+from src.physics.integrated_scenario import evaluate_integrated_scenario
+from src.physics.sensitivity import transformer_sensitivity_envelope
 from src.safety.cbf_gate import CBFSafetyGate, ActionType, MitigationAction
 from src.db.database import db_manager
 from datetime import datetime, timezone
@@ -62,7 +65,7 @@ def _simulation_cache_key(req: SandboxSimulationRequest) -> str:
 @router.post("/simulate")
 async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any]:
     """
-    Executes live multi-physics simulation and CBF-QP safety gate under customized parameters.
+    Executes multi-physics simulation and deterministic safety preflight under customized parameters.
 
     Results are content-addressed and persisted, so re-opening the same stored
     scan returns the solved trajectory it produced before instead of paying for
@@ -191,13 +194,15 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
 
     # 3. Build Forecast Stream with user's microclimate delta
     forecast_dicts: List[Dict[str, Any]] = []
-    for h, time_lbl, t_air, s_w in zip(range(6, 18), time_labels, coolest_tile_temps, solar_fluxes):
+    for idx, (time_lbl, t_air, s_w) in enumerate(zip(time_labels, coolest_tile_temps, solar_fluxes)):
+        hour_of_day = 6 + idx
         t_2m = t_air + spread_c
+        source_row = usable[idx] if req.latitude is not None and req.longitude is not None else {}
         forecast_dicts.append(
             {
-                "hour_index": h,
+                "hour_index": idx,
                 "time_label": time_lbl,
-                "timestamp": f"2023-07-19T{h:02d}:00:00Z",
+                "timestamp": source_row.get("timestamp") or f"2023-07-19T{hour_of_day:02d}:00:00-07:00",
                 "fortyguard_2m_ambient_c": t_2m,
                 "solar_irradiance_w_m2": s_w,
             }
@@ -215,7 +220,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     sandbox_tsi = round((sandbox_p40 / 3.5) + 0.5 * (sandbox_h40 / (3.5 * 10.0)), 2)
 
     # 4. Baseline Simulation (nominal load 1.18 pu peak)
-    base_loads = [0.85, 0.92, 1.02, 1.12, 1.18, 1.16, 1.10, 1.05, 0.98, 0.90, 0.82, 0.75]
+    load_template = [0.85, 0.92, 1.02, 1.12, 1.18, 1.16, 1.10, 1.05, 0.98, 0.90, 0.82, 0.75]
+    base_loads = [load_template[min(i, len(load_template) - 1)] for i in range(len(forecast_dicts))]
     baseline_traj = thermal_solver.simulate_trajectory(
         asset_id="SUB-PHX-DOWNTOWN-04",
         hourly_forecast=forecast_dicts,
@@ -338,7 +344,20 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
             }
         )
 
-    # Asynchronously persist simulation run snapshot
+    sensitivity = transformer_sensitivity_envelope(
+        thermal_solver, forecast_dicts, base_loads, eta_cool
+    )
+    integrated = evaluate_integrated_scenario(
+        forecast=forecast_dicts,
+        baseline_hotspots_c=[s.t_hot_spot_c for s in baseline_traj.steps],
+        mitigated_hotspots_c=[s.t_hot_spot_c for s in mitigated_traj.steps],
+        baseline_loads_k=base_loads,
+        mitigated_loads_k=mit_loads,
+        transformer_rating_mva=req.transformer_mva,
+        soil_resistivity_rho=soil_eval["soil_thermal_resistivity_rho_soil"],
+    )
+
+    # Persist simulation run snapshot
     try:
         import uuid
         sim_id = f"SIM-{uuid.uuid4().hex[:8].upper()}"
@@ -361,8 +380,19 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     except Exception as exc:
         logger.warning("Failed to persist sandbox simulation run: %s", exc, exc_info=True)
 
+    boundary_source = str(scan_binding.get("data_source") or "phoenix_fixture")
     result: Dict[str, Any] = {
         "status": "success",
+        "provenance": canonical_provenance(
+            scenario_id=(
+                f"live_scan:{req.latitude}:{req.longitude}:{req.analysis_date}"
+                if scan_binding["mode"] == "live_scan"
+                else "phoenix_2023_what_if"
+            ),
+            boundary_source=boundary_source,
+            operating_mode="hybrid" if scan_binding["mode"] == "live_scan" else "demo",
+            solar_kind="externally_modelled",
+        ),
         # Says plainly whether these numbers came from a live scan of the
         # requested coordinates or from the frozen Phoenix benchmark curve.
         "scan_binding": scan_binding,
@@ -390,6 +420,8 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         "soil_cable_state": soil_eval,
         "virtual_moisture_state": moisture_eval,
         "urban_canyon_state": canyon_res,
+        "sensitivity_analysis": sensitivity,
+        "integrated_grid_evaluation": integrated,
     }
 
     stored_at = datetime.now(timezone.utc).isoformat()
