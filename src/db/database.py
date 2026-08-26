@@ -1,7 +1,7 @@
 """
 Thermal Sentinel Grid: Hybrid Database Manager (SQLite + Supabase Cloud Adapter)
 Provides seamless local persistence with automatic cloud mirroring when Supabase keys are configured.
-Covers all 16 enterprise data tables guaranteeing 100% zero data loss.
+Covers all 17 application data tables with SQLite fallback and optional Supabase persistence.
 """
 
 from __future__ import annotations
@@ -32,6 +32,7 @@ from src.db.models import (
     ChanceConstrainedOPFRecord,
     CBFSafetyCertificateRecord,
     GridAssetRegistryRecord,
+    ValidationRunRecord,
 )
 
 logger = logging.getLogger("thermal_sentinel.db")
@@ -85,7 +86,7 @@ class HybridDatabaseManager:
         return conn
 
     def _init_sqlite_schema(self) -> None:
-        """Initializes all 16 SQLite database tables and indexes."""
+        """Initializes all 17 SQLite database tables and indexes."""
         with self._get_connection() as conn:
             cursor = conn.cursor()
 
@@ -373,6 +374,24 @@ class HybridDatabaseManager:
                 """
             )
 
+            # External validation audit records (additive schema extension).
+            cursor.execute(
+                """
+                CREATE TABLE IF NOT EXISTS validation_runs (
+                    validation_id TEXT PRIMARY KEY,
+                    scenario_id TEXT NOT NULL,
+                    provider TEXT NOT NULL,
+                    evidence_class TEXT NOT NULL,
+                    baseline_identity TEXT NOT NULL,
+                    reference_identity TEXT NOT NULL,
+                    configuration TEXT NOT NULL,
+                    report TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+                """
+            )
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_validation_scenario ON validation_runs(scenario_id, created_at);")
+
             conn.commit()
 
     @staticmethod
@@ -459,6 +478,43 @@ class HybridDatabaseManager:
 
         if self.is_supabase_enabled:
             await self._supabase_insert("api_call_cache", record.model_dump())
+
+    async def save_validation_run(self, record: ValidationRunRecord) -> None:
+        with self._get_connection() as conn:
+            conn.execute(
+                """INSERT OR IGNORE INTO validation_runs (
+                    validation_id, scenario_id, provider, evidence_class,
+                    baseline_identity, reference_identity, configuration, report, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    record.validation_id, record.scenario_id, record.provider, record.evidence_class,
+                    record.baseline_identity, record.reference_identity,
+                    json.dumps(record.configuration, sort_keys=True),
+                    json.dumps(record.report, sort_keys=True), record.created_at,
+                ),
+            )
+            conn.commit()
+        if self.is_supabase_enabled:
+            await self._supabase_insert("validation_runs", record.model_dump())
+
+    async def get_validation_runs(self, scenario_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            if scenario_id:
+                rows = conn.execute(
+                    "SELECT * FROM validation_runs WHERE scenario_id = ? ORDER BY created_at DESC LIMIT ?",
+                    (scenario_id, limit),
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    "SELECT * FROM validation_runs ORDER BY created_at DESC LIMIT ?", (limit,)
+                ).fetchall()
+        results = []
+        for row in rows:
+            item = dict(row)
+            item["configuration"] = json.loads(item["configuration"])
+            item["report"] = json.loads(item["report"])
+            results.append(item)
+        return results
 
     # --- 2. Dispatch Work Order Operations ---
     async def save_dispatch_work_order(self, record: DispatchWorkOrderRecord) -> None:
@@ -1411,7 +1467,7 @@ class HybridDatabaseManager:
         return combined[:limit] if limit else combined
 
     async def get_database_status(self) -> Dict[str, Any]:
-        """Returns database health, active mode, and item counts across all 16 tables.
+        """Returns database health, active mode, and item counts across all 17 tables.
         When Supabase is enabled, its counts are authoritative (durable across cold
         starts); local SQLite counts are also reported since that store is ephemeral
         per-invocation on serverless deployments."""
@@ -1432,6 +1488,7 @@ class HybridDatabaseManager:
             "chance_constrained_opf_logs": "solve_id",
             "cbf_safety_certificates": "certificate_id",
             "grid_assets_registry": "asset_id",
+            "validation_runs": "validation_id",
         }
         tables = list(table_primary_keys)
         sqlite_counts: Dict[str, int] = {}

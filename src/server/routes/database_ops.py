@@ -29,6 +29,15 @@ async def get_credit_ledger_entries(limit: int = Query(default=50, ge=1, le=500)
     return await db_manager.get_credit_ledger(limit=limit)
 
 
+@router.get("/validation-runs")
+async def get_validation_run_entries(
+    scenario_id: Optional[str] = None,
+    limit: int = Query(default=50, ge=1, le=500),
+) -> List[Dict[str, Any]]:
+    """Returns immutable external-evidence validation reports."""
+    return await db_manager.get_validation_runs(scenario_id=scenario_id, limit=limit)
+
+
 @router.get("/dispatch-history")
 async def get_dispatch_history_entries(
     asset_id: Optional[str] = None,

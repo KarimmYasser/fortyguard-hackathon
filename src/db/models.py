@@ -1,7 +1,7 @@
 """
 Database Models & Schemas for Thermal Sentinel Grid Persistence Layer
 Supports dual persistence in Local SQLite (Zero-config) and Supabase PostgreSQL.
-Covers all 16 enterprise data tables guaranteeing 100% zero data loss.
+Defines records for all 17 application tables and their audit payloads.
 """
 
 from __future__ import annotations
@@ -224,6 +224,19 @@ class CBFSafetyCertificateRecord(BaseModel):
 
 
 # 16. Dynamic Grid Asset Digital Twin Registry
+class ValidationRunRecord(BaseModel):
+    """Immutable external-evidence validation report."""
+    validation_id: str
+    scenario_id: str
+    provider: str
+    evidence_class: str
+    baseline_identity: str
+    reference_identity: str
+    configuration: Dict[str, Any]
+    report: Dict[str, Any]
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+
 class GridAssetRegistryRecord(BaseModel):
     """Physical grid asset metadata and health state."""
     asset_id: str

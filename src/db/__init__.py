@@ -1,6 +1,6 @@
 """
 Database module for Thermal Sentinel Grid.
-Exports Hybrid Database Manager, all 16 models, and singleton instance.
+Exports the hybrid database manager and singleton instance for all 17 application tables.
 """
 
 from src.db.models import (

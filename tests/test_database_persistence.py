@@ -380,7 +380,7 @@ async def test_supabase_count_uses_narrow_primary_key_projection(temp_db, monkey
     assert status["counts"]["api_call_cache"] == 7
     assert ("api_call_cache", "query_hash") in requested
     assert ("substation_telemetry_logs", "id") in requested
-    assert len(requested) == 16
+    assert len(requested) == 17
 
 
 def test_database_fastapi_endpoints():
