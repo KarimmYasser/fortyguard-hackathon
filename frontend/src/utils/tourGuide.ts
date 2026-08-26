@@ -44,7 +44,7 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
   switch (tab) {
     case 'home':
       return [
-        step('#tour-navbar-tour-btn', '🧭 Tour Guide', 'This target-aware guide covers all 13 tabs. It waits for lazy modules and API-backed panels before showing a step, so every popover remains anchored.', 'bottom', 'end'),
+        step('#tour-navbar-tour-btn', '🧭 Tour Guide', 'This target-aware guide covers all 14 tabs. It waits for lazy modules and API-backed panels before showing a step, so every popover remains anchored.', 'bottom', 'end'),
         step('#tour-hero-header', '🌟 Mission & Architecture', 'Thermal Sentinel Grid couples measured FortyGuard 2-meter environmental boundaries with deterministic grid-asset physics, bounded dispatch, and auditable economics.'),
         step('#tour-video-showcase', '🎬 Pitch & Product Walkthrough', 'Watch the motion-graphics pitch or the recorded live product walkthrough, then use chapter markers to jump to the relevant capability.', 'top'),
         step('#tour-navbar-live-scan', '📡 Live FortyGuard Ingestion', 'Open an on-demand scan for a chosen corridor and catalog date. The live result can then drive the complete physics and economics stack.'),

@@ -32,6 +32,7 @@ const WhatIfSandboxPanel = lazy(() => import('./components/WhatIfSandboxPanel').
 const MultiDay72hHeatwaveViewer = lazy(() => import('./components/MultiDay72hHeatwaveViewer').then(named('MultiDay72hHeatwaveViewer')));
 const ACPowerFlowSingleLineViewer = lazy(() => import('./components/ACPowerFlowSingleLineViewer').then(named('ACPowerFlowSingleLineViewer')));
 const IEEEAnnexGBenchmarkViewer = lazy(() => import('./components/IEEEAnnexGBenchmarkViewer').then(named('IEEEAnnexGBenchmarkViewer')));
+const GroundTruthComparisonViewer = lazy(() => import('./components/GroundTruthComparisonViewer').then(named('GroundTruthComparisonViewer')));
 const AcademicProvenanceViewer = lazy(() => import('./components/AcademicProvenanceViewer').then(named('AcademicProvenanceViewer')));
 const SafetyGateCard = lazy(() => import('./components/SafetyGateCard').then(named('SafetyGateCard')));
 const AuditLedger = lazy(() => import('./components/AuditLedger').then(named('AuditLedger')));
@@ -329,6 +330,11 @@ export const App: React.FC = () => {
           {/* TAB 5: IEEE Annex G Standards Benchmark */}
           {activeTab === 'ieee_annex_g' && (
             <IEEEAnnexGBenchmarkViewer />
+          )}
+
+          {/* Independent station validation */}
+          {activeTab === 'ground_truth' && (
+            <GroundTruthComparisonViewer />
           )}
 
           {/* TAB 6: Academic Provenance & alphaXiv Literature */}

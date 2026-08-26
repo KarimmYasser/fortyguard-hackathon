@@ -237,6 +237,11 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
       description: 'Transformer, substation, feeder line, and BESS digital twin catalog',
       category: 'Spatial Intelligence',
     },
+    validation_runs: {
+      label: 'External Validation Runs',
+      description: 'Content-addressed station, gridded, and calibrated field-sensor evidence reports',
+      category: 'Science & Provenance',
+    },
     agent_execution_traces: {
       label: 'LangGraph Agent Traces',
       description: 'StateGraph multi-agent DAG logs, token usage, and GPT narratives',
@@ -273,7 +278,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
                 </span>
               </div>
               <p className="text-xs text-slate-400 font-mono mt-0.5">
-                16 Tables · Full Physical Telemetry, SCADA Orders, CBF Certificates & API Cache
+                17 Tables · Physical Telemetry, Validation Evidence, SCADA Orders, CBF Certificates & API Cache
               </p>
             </div>
           </div>
@@ -319,7 +324,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
               <span>Active Tables</span>
             </div>
             <div className="font-bold text-white text-sm">
-              {dbStatus?.counts ? Object.keys(dbStatus.counts).length : 16} / 16 Tables
+              {dbStatus?.counts ? Object.keys(dbStatus.counts).length : 17} / 17 Tables
             </div>
             <div className="text-[10px] text-purple-400 mt-0.5">100% RLS Protected</div>
           </div>
@@ -411,7 +416,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
 
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {/* TAB 1: 16 Tables Grid */}
+          {/* TAB 1: 17 Tables Grid */}
           {activeSubTab === 'tables' && (
             <div id="tour-db-tables" className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {Object.entries(tableMetadata).map(([key, info]) => {
@@ -654,7 +659,7 @@ export const DatabaseAuditModal: React.FC<DatabaseAuditModalProps> = ({ isOpen, 
                     </div>
                     <ul className="text-slate-400 list-disc list-inside space-y-1 text-[11px]">
                       <li>URL: <code>https://dlptkkiofqybgkqpvqya.supabase.co</code></li>
-                      <li>Row Level Security (RLS) active on all 16 tables</li>
+                      <li>Row Level Security (RLS) active on all 17 tables</li>
                       <li>Real-time dashboard synchronization across users</li>
                       <li>Long-term audit trail for IEEE utility compliance</li>
                     </ul>

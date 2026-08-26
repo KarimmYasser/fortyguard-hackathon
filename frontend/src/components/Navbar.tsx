@@ -32,6 +32,7 @@ export type ActiveTab =
   | 'multi_day_72h'
   | 'power_flow'
   | 'ieee_annex_g'
+  | 'ground_truth'
   | 'academic_provenance'
   | 'gis_map'
   | 'physics_moats'
@@ -106,6 +107,13 @@ const TAB_PREVIEWS: Record<ActiveTab, TabPreviewInfo> = {
     tagline: '4-Bus Forward-Backward Sweep',
     summary: 'Full AC power flow solver calculating line thermal I²R losses, OLTC transformer tap changes, and BESS Volt/VAR reactive support.',
     highlights: ['4-Bus Radial Distribution', 'ANSI C84.1 Voltage Envelope', 'BESS Volt/VAR Injection'],
+  },
+  ground_truth: {
+    badge: 'INDEPENDENT VALIDATION',
+    badgeColor: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+    tagline: 'Station Ground Truth vs FortyGuard',
+    summary: 'Timestamp-aligned PHX ASOS observations quantify the urban microclimate delta and correlation against FortyGuard 2m telemetry.',
+    highlights: ['Independent In-Situ Station', 'Hourly ΔT & Correlation', 'Explicit UHI Guardrails'],
   },
   ieee_annex_g: {
     badge: 'STANDARDS BENCHMARK',
@@ -202,6 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'multi_day_72h', label: '72h Compounding', icon: Flame },
     { id: 'power_flow', label: 'AC Power Flow', icon: Network },
     { id: 'ieee_annex_g', label: 'IEEE Annex G', icon: Award },
+    { id: 'ground_truth', label: 'Ground Truth', icon: Thermometer },
     { id: 'academic_provenance', label: 'Academic Provenance', icon: BookOpen },
     { id: 'gis_map', label: 'Hyperlocal 2m GIS', icon: MapPin },
     { id: 'physics_moats', label: '4 Scientific Moats', icon: Layers },
@@ -331,7 +340,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               title="Open Supabase & SQLite Enterprise 16-Table Database Hub"
             >
               <Database className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-              <span className="hidden sm:inline">Cloud DB (16 Tables)</span>
+              <span className="hidden sm:inline">Cloud DB (17 Tables)</span>
             </button>
           )}
 
@@ -348,8 +357,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Dedicated Expanded Navigation Bar (Directly Under Header) */}
-      <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner relative">
-        <nav id="tour-navbar-tabs" className="max-w-[1600px] mx-auto flex items-center justify-between gap-1 sm:gap-1.5 overflow-x-auto lg:overflow-x-visible no-scrollbar w-full">
+      <div className="w-full border-t border-slate-800/80 bg-[#060a12]/95 px-3 md:px-6 py-2 shadow-inner relative overflow-x-auto no-scrollbar">
+        <nav id="tour-navbar-tabs" className="max-w-[1600px] min-w-[980px] lg:min-w-0 mx-auto grid grid-cols-7 gap-1.5 w-full">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -357,7 +366,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             return (
               <div
                 key={tab.id}
-                className="relative flex-1 min-w-max lg:min-w-0"
+                className="relative min-w-0"
                 onMouseEnter={(event) => showTabPreview(tab.id as ActiveTab, event.currentTarget)}
                 onMouseLeave={hideTabPreview}
               >

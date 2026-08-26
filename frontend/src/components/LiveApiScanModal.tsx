@@ -14,8 +14,11 @@ import {
   Flame,
   Sun,
   Activity,
+  Database,
+  AlertTriangle,
 } from 'lucide-react';
 import { API_BASE } from '../utils/api';
+import { DataProvenanceBadge } from './DataProvenanceBadge';
 
 interface LiveApiScanModalProps {
   isOpen: boolean;
@@ -348,13 +351,52 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
           </div>
 
           {/* Results Box */}
-          {scanResult && (
-            <div id="tour-live-scan-result" className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 text-xs font-mono space-y-2 animate-in fade-in">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold">
-                <CheckCircle2 className="h-4 w-4" />
-                Live FortyGuard Cloud Ingestion Succeeded!
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-emerald-500/20 text-[11px]">
+          {scanResult && (() => {
+            const sourceTag = scanResult?.metrics?.data_source;
+            const isFallback = sourceTag === 'phoenix_fixture';
+            const isPartial = sourceTag === 'fortyguard_live_partial';
+            const boxStyle = isFallback
+              ? 'bg-sky-950/30 border-sky-500/40'
+              : isPartial
+              ? 'bg-amber-950/30 border-amber-500/40'
+              : 'bg-emerald-950/30 border-emerald-500/40';
+
+            return (
+              <div id="tour-live-scan-result" className={`p-4 rounded-2xl border text-xs font-mono space-y-2.5 animate-in fade-in ${boxStyle}`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 font-bold">
+                    {isFallback ? (
+                      <>
+                        <Database className="h-4 w-4 text-sky-400 flex-shrink-0" />
+                        <span className="text-sky-300">Fallback Active: Replaying Cached Phoenix Benchmark</span>
+                      </>
+                    ) : isPartial ? (
+                      <>
+                        <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                        <span className="text-amber-300">Partial Live Ingestion Succeeded</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                        <span className="text-emerald-300">Live FortyGuard Cloud Ingestion Succeeded!</span>
+                      </>
+                    )}
+                  </div>
+                  <DataProvenanceBadge
+                    source={sourceTag}
+                    analysisDate={scanResult?.metrics?.analysis_date}
+                  />
+                </div>
+
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  {isFallback
+                    ? 'Live API request was unavailable or mock mode is active. Real-time telemetry was not received; numbers below are served from the cached Phoenix benchmark replay.'
+                    : isPartial
+                    ? '2m air temperature was ingested live from FortyGuard; humidity and solar arrays fell back to benchmark defaults.'
+                    : 'Full real-time 2m temperature profile, solar irradiance, and persistence ingested from FortyGuard API.'}
+                </p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-800 text-[11px]">
                 <div className="p-2 rounded-xl bg-slate-950/80">
                   <div className="text-slate-500">Peak 2m Air:</div>
                   <div className="text-sm font-bold text-rose-400">
@@ -442,11 +484,12 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                     >
                       Close and view across every dashboard tab →
                     </button>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Error Box */}
           {scanError && (
