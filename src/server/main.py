@@ -29,6 +29,7 @@ from src.server.routes import (
     database_router,
     analytics_router,
     operations_router,
+    validation_router,
 )
 
 app = FastAPI(
@@ -86,6 +87,7 @@ app.include_router(advanced_physics_router, prefix="/api/v1")
 app.include_router(database_router, prefix="/api/v1")
 app.include_router(analytics_router, prefix="/api/v1")
 app.include_router(operations_router, prefix="/api/v1")
+app.include_router(validation_router, prefix="/api/v1")
 
 
 
