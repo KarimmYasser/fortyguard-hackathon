@@ -1,0 +1,265 @@
+{
+  "series": [
+    {
+      "timestamp": "2023-07-19T00:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": null,
+      "wind_direction_deg": 273.3333,
+      "wind_speed_10m_m_s": 5.7446,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": null
+    },
+    {
+      "timestamp": "2023-07-19T01:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 46.6667,
+      "wind_direction_deg": 265.3846,
+      "wind_speed_10m_m_s": 5.5797,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 11.28
+    },
+    {
+      "timestamp": "2023-07-19T02:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 45.7778,
+      "wind_direction_deg": 281.5385,
+      "wind_speed_10m_m_s": 5.2236,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 11.865
+    },
+    {
+      "timestamp": "2023-07-19T03:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 45.0,
+      "wind_direction_deg": 288.4615,
+      "wind_speed_10m_m_s": 5.5006,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 13.24
+    },
+    {
+      "timestamp": "2023-07-19T04:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 44.4444,
+      "wind_direction_deg": 279.2308,
+      "wind_speed_10m_m_s": 5.6193,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 14.14
+    },
+    {
+      "timestamp": "2023-07-19T05:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 42.7778,
+      "wind_direction_deg": 257.2727,
+      "wind_speed_10m_m_s": 3.7882,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 14.86
+    },
+    {
+      "timestamp": "2023-07-19T06:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 40.5556,
+      "wind_direction_deg": 247.6923,
+      "wind_speed_10m_m_s": 2.6514,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 17.35
+    },
+    {
+      "timestamp": "2023-07-19T07:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 39.4444,
+      "wind_direction_deg": 261.5385,
+      "wind_speed_10m_m_s": 3.2054,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 19.1
+    },
+    {
+      "timestamp": "2023-07-19T08:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 40.0,
+      "wind_direction_deg": 276.6667,
+      "wind_speed_10m_m_s": 3.8583,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 17.87
+    },
+    {
+      "timestamp": "2023-07-19T09:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 39.4444,
+      "wind_direction_deg": 277.1429,
+      "wind_speed_10m_m_s": 3.9686,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 19.1
+    },
+    {
+      "timestamp": "2023-07-19T10:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 38.8889,
+      "wind_direction_deg": 262.0,
+      "wind_speed_10m_m_s": 4.4757,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 19.68
+    },
+    {
+      "timestamp": "2023-07-19T11:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 37.7778,
+      "wind_direction_deg": 145.3846,
+      "wind_speed_10m_m_s": 1.8203,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 22.49
+    },
+    {
+      "timestamp": "2023-07-19T12:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 36.6667,
+      "wind_direction_deg": 230.7692,
+      "wind_speed_10m_m_s": 2.2556,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 24.78
+    },
+    {
+      "timestamp": "2023-07-19T13:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 36.6667,
+      "wind_direction_deg": 226.1538,
+      "wind_speed_10m_m_s": 1.7412,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 24.78
+    },
+    {
+      "timestamp": "2023-07-19T14:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 36.1111,
+      "wind_direction_deg": 111.5385,
+      "wind_speed_10m_m_s": 1.5433,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 28.46
+    },
+    {
+      "timestamp": "2023-07-19T15:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 37.7778,
+      "wind_direction_deg": 86.1538,
+      "wind_speed_10m_m_s": 1.7808,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 25.06
+    },
+    {
+      "timestamp": "2023-07-19T16:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 38.8889,
+      "wind_direction_deg": 69.2308,
+      "wind_speed_10m_m_s": 1.7412,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 21.96
+    },
+    {
+      "timestamp": "2023-07-19T17:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 41.6667,
+      "wind_direction_deg": 85.8333,
+      "wind_speed_10m_m_s": 0.7915,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 18.93
+    },
+    {
+      "timestamp": "2023-07-19T18:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 42.7778,
+      "wind_direction_deg": 224.1667,
+      "wind_speed_10m_m_s": 1.5005,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 16.6
+    },
+    {
+      "timestamp": "2023-07-19T19:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 45.0,
+      "wind_direction_deg": 165.4545,
+      "wind_speed_10m_m_s": 1.2004,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 14.25
+    },
+    {
+      "timestamp": "2023-07-19T20:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 46.6667,
+      "wind_direction_deg": 260.8333,
+      "wind_speed_10m_m_s": 3.2153,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 12.15
+    },
+    {
+      "timestamp": "2023-07-19T21:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 46.6667,
+      "wind_direction_deg": 269.0,
+      "wind_speed_10m_m_s": 3.3439,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 11.28
+    },
+    {
+      "timestamp": "2023-07-19T22:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 47.2222,
+      "wind_direction_deg": 261.8182,
+      "wind_speed_10m_m_s": 4.3026,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 10.56
+    },
+    {
+      "timestamp": "2023-07-19T23:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 47.2222,
+      "wind_direction_deg": 284.1667,
+      "wind_speed_10m_m_s": 5.1444,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 10.17
+    },
+    {
+      "timestamp": "2023-07-20T00:00:00Z",
+      "solar_ghi_w_m2": null,
+      "temperature_2m_c": 47.7778,
+      "wind_direction_deg": 276.6667,
+      "wind_speed_10m_m_s": 4.4585,
+      "surface_temperature_c": null,
+      "relative_humidity_2m_pct": 10.66
+    }
+  ],
+  "provider": "iem_asos",
+  "provenance": {
+    "station": "PHX",
+    "endpoint": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py",
+    "provider": "Iowa Environmental Mesonet ASOS archive",
+    "timezone": "UTC",
+    "cache_key": "b9a94e66f53a74bef1b7cd404dee5a06",
+    "data_source": "ground_truth_replay",
+    "retrieved_at": "2026-08-26T04:13:37.965824+00:00",
+    "credits_spent": 0.0,
+    "evidence_class": "in-situ station observation",
+    "hourly_alignment": "METAR observations rounded to nearest UTC hour; multiple reports averaged",
+    "station_latitude": 33.4343,
+    "upstream_network": "ASOS/AWOS/METAR physical station",
+    "station_longitude": -112.0116,
+    "unavailable_fields": [
+      "solar_ghi_w_m2",
+      "surface_temperature_c"
+    ],
+    "frozen_for": "deterministic multi-station validation",
+    "fortyguard_comparison_note": "FortyGuard fixture hours are Phoenix local civil time and must be shifted +7h for UTC alignment with this station series",
+    "series_sha256": "c0d98ced49355110d04809c4a55ce261b018b8de00bca9dcba99fccd36a0bf5b",
+    "source_terms_url": "https://mesonet.agron.iastate.edu/disclaimer.php",
+    "request_parameters": {
+      "station": "PHX",
+      "date": "2023-07-19",
+      "timezone": "UTC",
+      "variables": [
+        "tmpf",
+        "relh",
+        "sknt",
+        "drct"
+      ]
+    }
+  },
+  "data_source": "ground_truth_replay"
+}

@@ -9,8 +9,13 @@ langchain-core>=0.3.0
 openai>=1.40.0
 numpy>=1.26.0
 pandas>=2.0.0
+# Required by spatial OLS/Moran analytics and cadence interpolation. Keep it
+# explicit: importing src.data_science loads spatial_correlation at startup.
+scipy>=1.14.0
 # Verified deployable on Vercel: the installed bundle measures ~435 MB and
 # the function builds and runs. The 250 MB figure quoted for serverless
 # functions did not apply here - trained-model metrics are served live.
 scikit-learn>=1.5.0
 python-dotenv>=1.0.0
+planetary-computer>=1.0,<2
+rasterio>=1.4,<2
