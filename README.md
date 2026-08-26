@@ -183,7 +183,7 @@ fortyguard-hackathon/
 │   ├── agent/                          # LangGraph StateGraph, Evaluators & Planners
 │   └── server/                         # FastAPI Application & Operator Dashboard API
 │       └── routes/                     # Modular API Routers (Replay, Live Scan, Research/alphaXiv)
-└── tests/                              # Automated Pytest Physics, API & Persistence Suite (97 Tests)
+└── tests/                              # Automated Pytest Physics, API, validation & persistence suite (161 passed, 3 live skipped)
 ```
 
 ---
@@ -196,7 +196,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (97 Tests Passing)
+### 2. Run Automated Pytest Suite (161 Passed, 3 Opt-In Live Tests Skipped)
 ```bash
 pytest tests/ -v
 ```
@@ -227,10 +227,10 @@ npx hyperframes render videos/thermal-sentinel-pitch --quality high --output vid
 
 ---
 
-## 🗄️ Durable Hybrid Database Architecture (16 Tables)
+## 🗄️ Durable Hybrid Database Architecture (17 Tables)
 
 Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
-* **Without Supabase Keys:** Uses local **SQLite** (`data/thermal_sentinel.db`) for offline development and deterministic fixture-based tests; external live-data and cloud-persistence features remain unavailable.
+* **Without Supabase Keys:** Uses local **SQLite** (`data/thermal_sentinel.db`) for development, deterministic fixtures, and cache-first public validation; durable cross-instance cloud persistence is unavailable. Key-free IEM/Open-Meteo calls still work when network access is available.
 * **With Supabase Keys:** Automatically syncs and queries **Supabase PostgreSQL** via PostgREST, providing durable multi-client synchronization and PostgREST-backed audit records. Supabase—not Vercel's ephemeral filesystem—is the production source of truth.
 
 ```
@@ -250,7 +250,7 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
                        └───────────────────────┘  └───────────────────────┘
 ```
 
-### Complete 16-Table Application Schema Matrix
+### Complete 17-Table Application Schema Matrix
 
 | # | Table Name | Data Domain & Physical Source | Persistence Purpose |
 | :-: | :--- | :--- | :--- |
@@ -270,8 +270,9 @@ Thermal Sentinel Grid implements a **Graceful Dual-Storage Persistence Layer**:
 | **14** | `chance_constrained_opf_logs` | Analytical quantile-bounded dispatch results ($z_{1-\alpha}$) | Reviewable model output under forecast uncertainty. |
 | **15** | `cbf_safety_certificates` | Control Barrier Function slack ($\xi^*$) and model checks | Records whether proposed actions satisfy the configured safety envelope. |
 | **16** | `grid_assets_registry` | Substation, transformer, feeder & BESS digital twins | Dynamic multi-city asset registration without code changes. |
+| **17** | `validation_runs` | Content-addressed external evidence reports, provider identity, evidence class, configuration and full metrics | Immutable audit trail for accepted station, gridded and calibrated field-sensor comparisons. Existing Supabase projects must apply [`docs/supabase_validation_migration.sql`](docs/supabase_validation_migration.sql). |
 
-* **Live Database Hub in UI:** Operators can click **`Cloud DB (16 Tables)`** to inspect health, records, credit deductions, and **Saved Scans**. Selecting a stored parcel runs—or replays from the permanent solve cache—the corresponding physics and rebases every dashboard tab.
+* **Live Database Hub in UI:** Operators can click **`Cloud DB (17 Tables)`** to inspect health, records, credit deductions, and **Saved Scans**. Selecting a stored parcel runs—or replays from the permanent solve cache—the corresponding physics and rebases every dashboard tab.
 * **Read/write boundary:** The canonical `GET /api/v1/replay/phoenix-2023` is read-only and does not append duplicate telemetry or safety certificates when the dashboard is refreshed. Cache reads project only `response_payload`, and Cloud DB counts use exact PostgREST count headers with narrow primary-key projections.
 * **Performance analysis:** See [Database Query Performance & Replay Persistence](docs/research/DATABASE_QUERY_PERFORMANCE.md) for query ownership, remediation details, regression guards, and the production verification checklist.
 
@@ -362,6 +363,9 @@ can be consumed without knowing where it came from:
 | `fortyguard_live` | 2m temperature, persistence, exceedance and hourly humidity all returned by the live API. |
 | `fortyguard_live_partial` | Live 2m temperature and persistence; `env_params` was unavailable, so humidity/solar fell back to the benchmark. |
 | `phoenix_fixture` | Fully offline, explicitly labelled replay of the bundled July 2023 fixture. |
+| `ground_truth_live` | Fresh public reference observation: IEM/ASOS in-situ by default, or explicitly identified Open-Meteo gridded data. |
+| `ground_truth_cached` | Zero-credit replay of a previously fetched public reference response. |
+| `ground_truth_replay` | Frozen public-reference observation used for deterministic judge/CI comparisons. |
 
 Live results for the pinned benchmark date (`2023-07-19`), reproducible by
 replaying the same request:
@@ -370,6 +374,70 @@ replaying the same request:
 | :--- | ---: | ---: | ---: | ---: |
 | Phoenix, AZ | 42.74 °C | 12.00 h | 17.48 °C·h | 3.68 |
 | Seattle, WA | 30.41 °C | 0.00 h | 0.00 °C·h | 0.00 |
+
+For reproducible external validation, run `python scripts/validate_ground_truth.py`.
+The default adapter (`src/api/iem_ground_truth_client.py`) uses key-free physical
+ASOS/AWOS observations for the strongest available 2 m temperature evidence.
+Use `--source open-meteo` when gridded GHI or surface-temperature context is
+needed; that adapter identifies its ERA5/ERA5-Land-derived values as gridded,
+not in-situ. Both paths are cache-first, align exact UTC hours, report MAE,
+RMSE, bias and peak deltas, and assign zero credits to cached replays. The
+Phoenix FortyGuard capture uses local heatmap request hours and stores an
+explicit MST offset (UTC−07:00); timestamps are canonicalized to UTC before
+station joins. The dashboard reports a
+positive difference as an **urban–station anomaly**, not as proof of UHI:
+Sky Harbor is itself an urban airport, and causal UHI verification requires a
+defensible same-time urban/rural reference design. Optional
+NSRDB solar validation uses `NREL_API_KEY` plus `NREL_EMAIL`; credentials are
+never persisted in cache keys or request audit payloads.
+
+Useful validation commands:
+
+```bash
+# Deterministic frozen ASOS comparison (safe for demos and CI)
+curl http://localhost:8000/api/v1/benchmark/ground-truth-comparison
+
+# Live single-station and three-station Phoenix checks
+python scripts/validate_ground_truth.py --source iem --station PHX
+python scripts/validate_ground_truth.py --source iem-metro --metro phoenix
+curl http://localhost:8000/api/v1/validation/metro/phoenix
+
+# Opt-in upstream contract tests (excluded from the normal suite)
+RUN_LIVE_GROUND_TRUTH_TESTS=1 python -m pytest -m live tests/test_ground_truth_live.py
+
+# Credentialed NSRDB solar benchmark
+NREL_API_KEY=... NREL_EMAIL=... python scripts/validate_ground_truth.py --source nsrdb
+
+# Multi-provider catalog + IEEE solver report (fully offline and deterministic)
+python scripts/fetch_ground_truth_comparison.py --offline \
+  --start 2024-07-01 --end 2024-07-02 \
+  --output data/ground_truth_comparison.json
+
+# Strict live run: no mock fallback is permitted
+SYNOPTIC_TOKEN=... NREL_API_KEY=... NREL_EMAIL=... EIA_API_KEY=... \
+  python scripts/fetch_ground_truth_comparison.py --strict \
+  --start 2024-07-01 --end 2024-07-02
+```
+
+The multi-provider report treats Landsat/ECOSTRESS LST as **surface context
+only**. EIA/CAISO balancing-authority demand is **regional context**, not asset
+SCADA: its hourly shape is normalized and its peak is explicitly mapped to the
+`--regional-peak-load-ratio` scenario value (default 1.0 pu). Only an input
+explicitly classified as `asset_scada` may be divided by transformer nameplate
+MW. `temperature_validation_eligible` is true only when the selected weather
+source is live in-situ Synoptic data; live NSRDB remains valid modeled-solar
+context but does not become 2 m sensor ground truth. Strict mode forbids mock
+substitution but records an unavailable optional provider and continues when a
+semantically valid live alternative exists.
+
+The complete evidence taxonomy, request contracts, acceptance gates, and route
+examples are documented in the [Ground-Truth Validation Contract](docs/research/GROUND_TRUTH_VALIDATION_CONTRACT.md).
+
+Airport ASOS observations are sparse regional references in exposed airport
+settings. They test temporal agreement but cannot prove accuracy for a downtown
+street canyon, facade, or individual 20 m parcel. Satellite/reanalysis surface
+temperature likewise cannot substitute for the 2 m ambient boundary consumed
+by the electrical-asset physics.
 
 Grid-side quantities (`wind_speed_m_s`, `baseline_load_ratio_k`,
 `hospital_critical_load_mw`, `bess_soc_pct`) are **modelled**, not measured —

@@ -214,7 +214,7 @@ During the technical webinars, FortyGuard demonstrated 6 production-grade web ap
 | Weight | Official Criterion | What Judges Evaluate | Thermal Sentinel Grid Alignment |
 | :-: | :--- | :--- | :--- |
 | **40%** | **Impact & Relevance** | Does the project solve a real-world, high-stakes urban heat problem with measurable, defensible outcomes? Is it a production-grade utility rather than a toy demo? | **$2.58M net avoided loss** (LBNL ICE), 374h transformer life saved, prevents catastrophic substation fires for utilities and data centers. |
-| **35%** | **Technical Execution** | Architectural rigor, robust utilization of FortyGuard API data, code quality, security, and live deployment stability. | **97 passing pytest tests**, IEEE Std C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error), dual-storage Supabase persistence, deterministic safety filter. |
+| **35%** | **Technical Execution** | Architectural rigor, robust utilization of FortyGuard API data, code quality, security, and live deployment stability. | **161 passing pytest tests plus 3 opt-in live checks skipped by default**, IEEE Std C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error), dual-storage Supabase persistence, deterministic safety filter. |
 | **15%** | **Innovation** | Novel concept, non-obvious multi-source data coupling, creative synthesis across tracks. | **Physical-AI Hybrid Stack:** FortyGuard 2m microclimate coupled with IEEE ODEs, IEC 60287 soil dryout physics, and LangGraph StateGraph. |
 | **10%** | **Communication** | Clarity of demo pitch, written documentation, value proposition, and communicating the core "Why". | **3-minute screen demo** of live UI, second-by-second pitch script, complete academic documentation suite. |
 

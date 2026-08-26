@@ -56,7 +56,7 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 | Weight | Official Criterion | What Judges Look For | Thermal Sentinel Grid Moat & Evidence |
 | :---: | :--- | :--- | :--- |
 | **40%** | **Impact & Relevance** | Real-world problem, client benefit, commercial viability over toy demos. | **$2.58M avoided catastrophic loss per heat event**; solves the 2-meter asphalt heat-soak blind spot for utilities (APS, ConEd, PG&E) and mission-critical facilities. |
-| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **97 automated pytest tests passing**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
+| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **161 automated pytest tests passing (plus 3 opt-in live checks skipped by default)**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
 | **15%** | **Innovation** | Novel concepts, multi-source coupling, Physical-AI hybrid synthesis. | **Physical-AI Hybrid Stack (Prof. Reichental Model):** Perception (FortyGuard 2m AI) $\to$ Physics Truth (IEEE C57.91 / IEC 60287) $\to$ Cognitive Planner (LangGraph) $\to$ Deterministic Safety Guardrail. |
 | **10%** | **Communication** | Pitch clarity, video quality, documentation, conveying the core "Why". | **3-minute high-velocity screen demo** of the working software UI, second-by-second narrative script, 22 academic citations with LaTeX proofs, and full webinar alignment. |
 
@@ -175,31 +175,32 @@ Thermal Sentinel Grid implements a production-grade **Dual-Mode Microclimate Ing
 
 * **Backend & Physics:** Python 3.13, FastAPI, NumPy, pandas, Pydantic v2, Uvicorn (scikit-learn optional, lazily imported for the ML surrogates)
 * **Agentic Architecture:** LangGraph, LangChain, StateGraph, Siemens SDC Gateway (`gpt-5.4` default, environment-configurable), plus read-only MCP-compatible deterministic operations tools
-* **Enterprise Persistence:** Supabase PostgreSQL is the durable source of truth; SQLite is the local/offline fallback. PostgREST spans 16 application tables, with stored scans and full deterministic solves replayable across serverless cold starts.
+* **Enterprise Persistence:** Supabase PostgreSQL is the durable source of truth; SQLite is the local/offline fallback. PostgREST spans 17 application tables, with stored scans and full deterministic solves replayable across serverless cold starts.
 * **Standards & Formulations:** IEEE Std C57.91-2011, IEEE Std 738-2012, IEC 60076-7, IEC 60287-1-1, ANSI C84.1, LBNL ICE Calculator
 * **Frontend Dashboard:** React 19, TypeScript, Vite, Tailwind CSS v4, Apache ECharts, Lucide Icons
 
 ---
 
-## 🗄️ Durable Hybrid Database Layer (16 Tables)
+## 🗄️ Durable Hybrid Database Layer (17 Tables)
 
-Thermal Sentinel Grid incorporates a **Graceful Dual-Storage Persistence Layer** (Local SQLite + PostgREST Live Supabase Cloud PostgreSQL) across 16 application tables. Supabase is authoritative in production; SQLite is an ephemeral serverless fallback:
+Thermal Sentinel Grid incorporates a **Graceful Dual-Storage Persistence Layer** (Local SQLite + PostgREST Live Supabase Cloud PostgreSQL) across 17 application tables. Supabase is authoritative in production; SQLite is an ephemeral serverless fallback:
 1. **`api_call_cache`:** Stores raw FortyGuard responses under MD5 request identities and full deterministic solves under SHA-256 request identities. The Supabase-backed entries prevent duplicate credit billing and replay identical simulations across cold starts without expiry.
-2. **`dispatch_work_orders`:** Historical record of authorized B2B SCADA mitigation orders ($K_{\text{safe}}$, BESS MW, OLTC tap steps).
+2. **`dispatch_work_orders`:** Historical record of authorized B2B SCADA mitigation orders ($K_{\mathrm{safe}}$, BESS MW, OLTC tap steps).
 3. **`credit_accounting_ledger`:** Audit trail of FortyGuard credit deductions per activity and remaining balances.
 4. **`academic_research_papers`:** 22 indexed research records with LaTeX equations and alphaXiv links.
-5. **`substation_telemetry_logs`:** 12-hour modelled asset telemetry steps ($\theta_o, \theta_w, V(t)$, MVA load).
+5. **`substation_telemetry_logs`:** 12-hour modelled asset telemetry steps ($\theta_o$, $\theta_w$, $V(t)$, MVA load).
 6. **`simulation_runs`:** What-If inputs and scalar-output audit summaries; complete trajectories live in `api_call_cache`.
 7. **`multi_day_heatwave_logs`:** Per-step audit records for modelled 72h soil and aging progression; the environmental boundary is the separate frozen 72-row live capture.
 8. **`dlr_catenary_telemetry`:** Dynamic Line Rating heat balance ($q_c, q_r, q_s, I^2R$) and catenary sag.
 9. **`agent_execution_traces`:** Multi-agent LangGraph StateGraph DAG execution logs and GPT narratives.
-10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations ($2.58M net avoided loss, 5,495× ROI).
+10. **`financial_audit_snapshots`:** LBNL ICE investment-grade avoided loss calculations (\$2.58M net avoided loss, 5,495× ROI).
 11. **`microclimate_parcel_store`:** Saved FortyGuard parcel geometry, measured peak/spread, coordinates, city, and catalog date; these rows are selectable from Cloud DB to run or replay dashboard calculations.
-12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (\$/hr).
-13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\text{cascade}}$) & $VoLL$ at risk.
+12. **`bess_degradation_logs`:** 2-state core/surface thermal ODEs & continuous Arrhenius SEI capacity fade (USD/hr).
+13. **`cascading_risk_snapshots`:** Poisson-Weibull cascading failure probability ($P_{\mathrm{cascade}}$) & $\mathrm{VoLL}$ at risk.
 14. **`chance_constrained_opf_logs`:** Analytical quantile-bounded dispatch results under Gaussian uncertainty ($z_{1-\alpha}$).
 15. **`cbf_safety_certificates`:** Control Barrier Function QP slack ($\xi^*$) & forward invariance proofs.
 16. **`grid_assets_registry`:** Digital twin asset catalog (transformers, substations, BESS units, health scores).
+17. **`validation_runs`:** Immutable, content-addressed external-validation reports with provider/evidence class, baseline/reference identities, configuration, and metrics. Existing Supabase deployments apply [`docs/supabase_validation_migration.sql`](docs/supabase_validation_migration.sql).
 
 ---
 
@@ -211,7 +212,7 @@ pip install -r requirements.txt
 cd frontend && npm install && cd ..
 ```
 
-### 2. Run Automated Pytest Suite (97 Tests Passing)
+### 2. Run Automated Pytest Suite (161 Passed, 3 Opt-In Live Tests Skipped)
 ```bash
 pytest tests/ -v
 ```
@@ -222,7 +223,7 @@ pytest tests/ -v
 python3 -m uvicorn src.server.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 13 dashboard tabs:
+Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (or local **[http://localhost:8000](http://localhost:8000)**) in your browser to interact with all 14 dashboard tabs:
 1. **Home:** Interactive pitch, live demo video player, and operational launchpad.
 2. **Mission Control Overview:** 12-hour synchronized replay scrubber with Apache ECharts 3-axis physics telemetry.
 3. **Portfolio Ops:** Deterministic fleet ranking, configurable candidate crew windows, SHA-256 evidence export, and MCP call generation. The current view applies one common Phoenix boundary to the registry and does not claim per-asset scans or occupational-safety certification.
@@ -230,12 +231,13 @@ Open **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-gri
 5. **72h Compounding:** Continuous 3-day simulation showing progressive soil moisture desertification.
 6. **AC Power Flow & DLR:** 4-bus single-line diagram, IEEE 738 Dynamic Line Rating, Arrhenius-Weibull cascading risk, and analytical uncertainty-bounded dispatch.
 7. **IEEE Annex G:** Numerical comparison against official IEEE C57.91 standard tables ($<0.0001^\circ\mathrm{C}$ error).
-8. **Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
-9. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
-10. **4 Scientific Moats:** Deep-dive physical formulations.
-11. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and optional `gpt-5.4` narrative synthesis plus deterministic fallback.
-12. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
-13. **Data Science Studio:** ETL diagnostics, empirical correlation analysis, surrogate metrics, anomaly detection, and Weibull RUL.
+8. **Independent Ground Truth:** Frozen or live PHX ASOS comparison with exact UTC-hour alignment, MAE/RMSE/bias/correlation, persistence metrics, and explicit UHI claim guardrails.
+9. **Scientific Provenance:** 22 indexed papers with LaTeX proofs and alphaXiv live search engine.
+10. **Hyperlocal 2m GIS:** Parcel-level heat tiles & asset inspector with live FortyGuard cloud scan.
+11. **4 Scientific Moats:** Deep-dive physical formulations.
+12. **LangGraph Engine:** Visual StateGraph execution inspector with triggerable live mitigation and optional `gpt-5.4` narrative synthesis plus deterministic fallback.
+13. **Avoided Loss Financial Audit:** Investment-grade LBNL ICE Calculator ROI model and side-by-side comparison tables.
+14. **Data Science Studio:** ETL diagnostics, empirical correlation analysis, surrogate metrics, anomaly detection, and Weibull RUL.
 
 
 ### 4. Launch 3-Minute Video Pitch (HyperFrames Studio Timeline)
@@ -268,6 +270,15 @@ the same request. Responses carry an explicit `data_source` field:
 | `fortyguard_live` | 2m temperature, persistence, exceedance and hourly humidity all returned by the API. |
 | `fortyguard_live_partial` | Live 2m temperature and persistence; `env_params` was unavailable, so humidity/solar fell back to the benchmark. |
 | `phoenix_fixture` | Fully offline replay of the bundled July 2023 fixture. |
+| `ground_truth_live` | Fresh IEM/ASOS station data or explicitly labelled gridded/modelled reference data. |
+| `ground_truth_cached` | Zero-credit replay of a cached public-reference response. |
+| `ground_truth_replay` | Frozen public-reference observations for deterministic judging and CI. |
+
+The independent validation path preserves Phoenix local civil timestamps with an
+explicit MST offset, canonicalizes them to UTC before exact-hour joins, and
+reports MAE, RMSE, bias, Pearson/Spearman correlation, coverage, and threshold
+exposure. Its PHX airport result is an urban–station comparison—not causal UHI
+proof. See the [Ground-Truth Validation Contract](docs/research/GROUND_TRUTH_VALIDATION_CONTRACT.md).
 
 Two measurement caveats we think are worth stating plainly:
 

@@ -254,7 +254,7 @@ flowchart TD
 
 # SECTION 6: IMPLEMENTATION STATUS & PRODUCTION CAPABILITIES
 
-## 6.1 Core Tested Architecture (97/97 Pytest Tests Passing)
+## 6.1 Core Tested Architecture (161 passed, 3 opt-in live tests skipped by default)
 * **FortyGuard Async Client (`src/api/fortyguard_client.py`):** Submit-and-poll lifecycle, 404 retry resilience, durable request caching, and explicit fixture replay paths. Live scan failures surface as errors rather than silently switching locations.
 * **IEEE Differential Thermal Engine (`src/physics/transformer_thermal.py`):** Exact discrete-time exponential updates for top-oil ($\theta_o$) and hot-spot ($\theta_w$) temperatures with Arrhenius aging integration.
 * **4 Asymmetric Physical Moats:**
@@ -273,7 +273,8 @@ flowchart TD
   4. *Analytical Uncertainty-Bounded Dispatch Screen (`src/physics/chance_constrained_opf.py`)*
 * **LangGraph Multi-Agent Workflow (`src/agent/graph.py`):** Deterministic state graph (`forecast_node` $\to$ `physics_node` $\to$ `planner_node` $\to$ `safety_gate_node` $\to$ `audit_dispatch_node`).
 * **Portfolio Operations (`src/operations/portfolio.py`):** Read-only deterministic fleet triage, explicit wet-bulb/2m-air intervention screening, evidence-coverage reporting, and SHA-256 mitigation evidence. The same service is available through REST and an MCP-compatible JSON-RPC tool subset. The current view applies one common Phoenix stress profile and does not claim per-asset measurement or occupational-safety certification.
-* **Operator Dashboard (13-Tab React 19 / TypeScript / Apache ECharts):**
+* **Independent Ground-Truth Validation (`src/api/iem_ground_truth_client.py`, `src/api/ground_truth_client.py`, `src/api/nsrdb_ground_truth_client.py`):** Cache-first IEM/ASOS physical-station validation, Open-Meteo gridded fallback, optional NSRDB solar benchmark, exact UTC-hour metrics, frozen Phoenix multi-station replay, explicit representativeness limits, and zero-credit replay provenance. FortyGuard's Phoenix local request hours retain an explicit MST offset (UTC−07:00) and are canonicalized to UTC before station joins. Positive $\Delta T$ is an urban–station anomaly—not causal UHI proof—unless a defensible same-time urban/rural reference design is supplied.
+* **Operator Dashboard (14-Tab React 19 / TypeScript / Apache ECharts):**
   1. 🎬 Executive Pitch & Video Showcase (Home launchpad with video + interactive slide deck)
   2. ⚡ Mission Control Overview (12h synchronized replay scrubber & 3-axis telemetry)
   3. 🧭 Portfolio Operations (Fleet ranking, worker screen, evidence export, MCP invocation)
@@ -281,10 +282,11 @@ flowchart TD
   5. 🔥 72-Hour Compounding Heatwave Viewer (Continuous 3-day thermal accumulation)
   6. ⚡ AC Distribution Power Flow & Single-Line Diagram (DLR ampacity + Volt/VAR control)
   7. 🏆 IEEE Annex G Standard Benchmark Suite (Clause G.2 & G.3 numerical proof)
-  8. 📚 Academic Provenance & alphaXiv Corpus (22 indexed papers with LaTeX proofs)
-  9. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
-  10. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
-  11. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
-  12. 💰 Avoided Loss Financial Audit (DOE LBNL ICE-informed ROI calculator)
-  13. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
+  8. 🌡️ Independent Ground Truth (PHX ASOS comparison, aligned errors, correlation, and persistence)
+  9. 📚 Academic Provenance & alphaXiv Corpus (22 indexed papers with LaTeX proofs)
+  10. 🗺️ Hyperlocal 2m GIS Viewer (60m urban parcel microclimate tiles)
+  11. 🛡️ Scientific Moats Deep-Dive (Physical equations & barrier invariance)
+  12. 🤖 LangGraph Multi-Agent Engine Visualizer (StateGraph execution & audit ledger)
+  13. 💰 Avoided Loss Financial Audit (DOE LBNL ICE-informed ROI calculator)
+  14. 📊 Data Science Studio (ETL, empirical correlations, ML surrogate, anomaly and RUL analysis)
 

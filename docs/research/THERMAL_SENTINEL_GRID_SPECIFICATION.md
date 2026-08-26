@@ -251,9 +251,9 @@ For complete mathematical monographs, LaTeX formulations, and standards proofs, 
 
 ---
 
-## 8. 🗄️ Durable Hybrid Database Layer (16 Tables)
+## 8. 🗄️ Durable Hybrid Database Layer (17 Tables)
 
-Thermal Sentinel Grid incorporates a **Dual-Storage Persistence Engine** (Local SQLite + PostgREST Supabase Cloud PostgreSQL) across 16 application tables. Supabase is authoritative in production; SQLite is a local/offline fallback and is ephemeral on Vercel:
+Thermal Sentinel Grid incorporates a **Dual-Storage Persistence Engine** (Local SQLite + PostgREST Supabase Cloud PostgreSQL) across 17 application tables. Supabase is authoritative in production; SQLite is a local/offline fallback and is ephemeral on Vercel:
 
 1. **`api_call_cache`:** Raw FortyGuard responses indexed by MD5 request identity plus full simulation results indexed by `sim:` SHA-256 identity. Prevents duplicate billing and replays identical solves without expiry.
 2. **`dispatch_work_orders`:** Historical prototype dispatch recommendations ($K_{\text{safe}}$, BESS MW, OLTC tap steps).
@@ -271,5 +271,10 @@ Thermal Sentinel Grid incorporates a **Dual-Storage Persistence Engine** (Local 
 14. **`chance_constrained_opf_logs`:** Analytical quantile-bounded dispatch results under Gaussian uncertainty ($z_{1-\alpha}$).
 15. **`cbf_safety_certificates`:** Deterministic safety-envelope checks, slack, and pass/modify/reject verdicts.
 16. **`grid_assets_registry`:** Digital twin asset catalog (transformers, substations, BESS units, health scores).
+17. **`validation_runs`:** Content-addressed external-validation reports with immutable baseline/reference identities, evidence class, configuration, and complete metrics. SQLite creates this table automatically; existing Supabase deployments apply [`../supabase_validation_migration.sql`](../supabase_validation_migration.sql).
+
+External air validation prefers physical IEM/ASOS observations, explicitly falls
+back to Open-Meteo gridded meteorology only in `auto` mode, and keeps Landsat LST
+as surface context. See the [Ground-Truth Validation Contract](GROUND_TRUTH_VALIDATION_CONTRACT.md).
 
 

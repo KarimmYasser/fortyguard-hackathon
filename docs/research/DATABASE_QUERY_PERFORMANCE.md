@@ -91,7 +91,7 @@ select=<primary-key>&limit=1
 ```
 
 PostgREST reports the exact total in `Content-Range`; the response body is not
-materialized. `get_database_status()` maps each of the 16 application tables to
+materialized. `get_database_status()` maps each of the 17 application tables to
 its primary key, including:
 
 | Table | Count projection |
@@ -102,7 +102,7 @@ its primary key, including:
 | `microclimate_parcel_store` | `parcel_id` |
 | `simulation_runs` | `simulation_id` |
 
-The implementation contains the complete 16-table mapping. Supabase counts remain
+The implementation contains the complete 17-table mapping, including `validation_runs` projected by `validation_id`. Supabase counts remain
 authoritative when configured; SQLite counts are still reported as local fallback
 state.
 
@@ -118,6 +118,7 @@ frozen replay from creating new operational evidence.
 | Run a new What-If solve | Persist the complete result and compact simulation audit according to the simulation route contract |
 | Complete a live FortyGuard scan | Persist measured parcel/provenance data and reusable API responses |
 | Execute mutation-oriented safety/dispatch workflow | Persist the workflow's trace, work order, or certificate at its owning write boundary |
+| Accept a live external-validation report | Insert the content-addressed report into `validation_runs`; duplicate identities are ignored |
 | Open Cloud DB status | Read exact counts using primary-key projections |
 
 Historical duplicate rows are not deleted by this change. Production deletion
@@ -129,7 +130,7 @@ approval.
 The test suite now verifies the relevant contracts:
 
 - cache lookup requests only `response_payload` from Supabase;
-- database status supplies a narrow primary-key projection for all 16 tables;
+- database status supplies a narrow primary-key projection for all 17 tables;
 - the replay route AST contains no database or safety-certificate persistence
   call; and
 - replay execution emits no swallowed persistence warnings.
@@ -137,7 +138,7 @@ The test suite now verifies the relevant contracts:
 Validation at implementation time:
 
 ```text
-Backend test suite:       89 passed
+Backend test suite:       161 passed, 3 opt-in live tests skipped
 Frontend production build: passed
 Git whitespace check:      passed
 ```
@@ -166,7 +167,7 @@ them as application regressions.
 ### Application queries
 
 Application traffic generally appears as PostgREST-generated SQL against one of
-the 16 documented tables. Investigate:
+the 17 documented tables. Investigate:
 
 - repeated inserts with identical business meaning;
 - `select *` against JSON-heavy tables;
@@ -188,7 +189,7 @@ After deployment, verify behavior without deleting records:
 2. Request `GET /api/v1/replay/phoenix-2023` several times.
 3. Confirm the response remains HTTP 200 and contains the expected 12-step replay.
 4. Re-read both table counts and confirm they are unchanged.
-5. Open **Cloud DB (16 Tables)** and confirm all counts load.
+5. Open **Cloud DB (17 Tables)** and confirm all counts load.
 6. Inspect network requests or PostgREST logs and confirm cache hits project
    `response_payload`, while count requests project each table's identifier.
 7. Compare a fresh Supabase performance window after normal application traffic;
