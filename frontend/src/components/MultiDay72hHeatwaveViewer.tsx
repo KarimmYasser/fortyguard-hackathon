@@ -120,7 +120,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
         })}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-cyan-900/60 bg-cyan-950/20 px-4 py-2 text-[10px] font-mono text-cyan-200">
+      <div id="tour-72h-provenance" className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-cyan-900/60 bg-cyan-950/20 px-4 py-2 text-[10px] font-mono text-cyan-200">
         <span className="font-bold">ENVIRONMENT: {provenance?.data_source ?? '—'}</span>
         <span>72 hourly tcm rows</span>
         <span>Solar: live GHI/cloud + geometry</span>
@@ -128,7 +128,7 @@ export const MultiDay72hHeatwaveViewer: React.FC = () => {
       </div>
 
       {/* 24-Hour Timeline of Selected Day */}
-      <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 font-mono text-xs">
+      <div id="tour-72h-timeline" className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 font-mono text-xs">
         <div className="flex items-center justify-between text-xs text-slate-300 font-bold border-b border-slate-800 pb-2">
           <span>Day {selectedDay} Hourly Progression (24 Steps)</span>
           <span className="text-amber-400">Underground Cable + Transformer Co-Simulation</span>

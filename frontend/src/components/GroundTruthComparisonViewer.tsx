@@ -54,8 +54,8 @@ export const GroundTruthComparisonViewer: React.FC = () => {
     ],
   }), [series]);
 
-  if (loading) return <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-16 text-center text-slate-400"><RefreshCw className="inline h-6 w-6 animate-spin mr-2" />Loading independent station evidence…</div>;
-  if (error || !metrics) return <div className="rounded-2xl border border-red-900 bg-red-950/20 p-8 text-red-300">Ground-truth comparison failed: {error}</div>;
+  if (loading) return <div id="tour-ground-truth-header" className="rounded-2xl border border-slate-800 bg-slate-900/40 p-16 text-center text-slate-400"><RefreshCw className="inline h-6 w-6 animate-spin mr-2" />Loading independent station evidence…</div>;
+  if (error || !metrics) return <div id="tour-ground-truth-header" className="rounded-2xl border border-red-900 bg-red-950/20 p-8 text-red-300">Ground-truth comparison failed: {error}</div>;
 
   const anomaly = metrics.urban_station_anomaly;
   const cards = [
@@ -66,7 +66,7 @@ export const GroundTruthComparisonViewer: React.FC = () => {
   ];
 
   return <div className="space-y-5">
-    <div className="flex flex-wrap items-center gap-4">
+    <div id="tour-ground-truth-header" className="flex flex-wrap items-center gap-4">
       <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-500 to-violet-600 flex items-center justify-center"><Thermometer /></div>
       <div>
         <h2 className="text-xl font-bold">Ground Truth vs FortyGuard</h2>
@@ -81,21 +81,21 @@ export const GroundTruthComparisonViewer: React.FC = () => {
       </div>
     </div>
 
-    <div className={`rounded-xl border p-4 flex gap-3 ${anomaly?.observed ? 'border-cyan-500/40 bg-cyan-500/10' : 'border-slate-700 bg-slate-900/40'}`}>
+    <div id="tour-ground-truth-interpretation" className={`rounded-xl border p-4 flex gap-3 ${anomaly?.observed ? 'border-cyan-500/40 bg-cyan-500/10' : 'border-slate-700 bg-slate-900/40'}`}>
       {anomaly?.observed ? <CheckCircle2 className="text-cyan-400 shrink-0" /> : <AlertTriangle className="text-amber-400 shrink-0" />}
       <div><div className="font-bold">{anomaly?.interpretation}</div><div className="text-xs text-slate-400 mt-1">Observed comparison result—not a causal UHI claim. Phoenix Sky Harbor is an urban airport, not a rural control.</div></div>
     </div>
 
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">{cards.map(([label, value]) => <div key={label} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><div className="text-[10px] uppercase tracking-wider text-slate-500">{label}</div><div className="text-xl font-bold text-white mt-1">{value}</div></div>)}</div>
+    <div id="tour-ground-truth-metrics" className="grid grid-cols-2 lg:grid-cols-4 gap-3">{cards.map(([label, value]) => <div key={label} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><div className="text-[10px] uppercase tracking-wider text-slate-500">{label}</div><div className="text-xl font-bold text-white mt-1">{value}</div></div>)}</div>
 
-    <div className="rounded-2xl border border-slate-800 bg-[#0b1220] p-4"><ReactECharts option={chart} style={{ height: 430 }} notMerge /></div>
+    <div id="tour-ground-truth-chart" className="rounded-2xl border border-slate-800 bg-[#0b1220] p-4"><ReactECharts option={chart} style={{ height: 430 }} notMerge /></div>
 
-    <div className="rounded-xl border border-amber-800/50 bg-amber-950/10 p-4 flex gap-3 text-xs text-amber-100">
+    <div id="tour-ground-truth-uhi" className="rounded-xl border border-amber-800/50 bg-amber-950/10 p-4 flex gap-3 text-xs text-amber-100">
       <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
       <div><strong>UHI status: not established by this comparison.</strong><p className="text-slate-400 mt-1">{metrics.urban_heat_island.criterion} This chart tests temporal agreement and quantifies a location-specific contrast.</p></div>
     </div>
 
-    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-xs text-slate-400 grid md:grid-cols-3 gap-3">
+    <div id="tour-ground-truth-provenance" className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-xs text-slate-400 grid md:grid-cols-3 gap-3">
       <div><span className="text-slate-500">Evidence</span><br/><strong className="text-cyan-300">{report.provenance.evidence_class}</strong></div>
       <div><span className="text-slate-500">Station / separation</span><br/><strong className="text-white">{report.provenance.station} · {report.provenance.distance_to_aoi_km} km</strong></div>
       <div><span className="text-slate-500">Mode / coverage</span><br/><strong className="text-violet-300">{report.selection.selected_source} · {metrics.coverage_pct}%</strong></div>

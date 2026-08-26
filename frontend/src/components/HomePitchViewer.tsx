@@ -21,6 +21,7 @@ import {
   Compass,
   Activity,
   BookOpen,
+  Thermometer,
   Film,
   BriefcaseBusiness,
   BarChart3,
@@ -82,9 +83,9 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   const chapters: ChapterMarker[] = [
     { time: 0, label: '0:00 Market Blindspot', desc: 'Phoenix 12h Thermal Soak ($2.58M Risk)', icon: Flame },
     { time: 30, label: '0:30 4 Scientific Moats', desc: 'Soil Dryout & IEEE Physics ODEs', icon: Layers },
-    { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + CBF-QP Safety Barrier', icon: Cpu },
+    { time: 60, label: '1:00 Hybrid Physical-AI', desc: 'LangGraph + Deterministic Safety Gate', icon: Cpu },
     { time: 90, label: '1:30 Live Mission Control', desc: '12h Proactive Dispatch & What-If Studio', icon: Sliders },
-    { time: 135, label: '2:15 Auditable ROI', desc: 'LBNL ICE Model ($2.58M Net Savings)', icon: Calculator },
+    { time: 135, label: '2:15 Auditable ROI', desc: 'VoLL Scenario Model ($2.58M Exposure)' , icon: Calculator },
     { time: 165, label: '2:45 Verification & Outro', desc: 'Tracks 06 & 02 Compliance Seals', icon: Award },
   ];
 
@@ -136,7 +137,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               Coupling <span className="text-amber-400 font-semibold">FortyGuard 2-Meter Microclimate AI</span> with{' '}
               <span className="text-cyan-400 font-semibold">IEEE C57.91 Differential Equations</span>,{' '}
               <span className="text-purple-400 font-semibold">LangGraph Multi-Agent Dispatch</span>, and a deterministic{' '}
-              <span className="text-emerald-400 font-semibold">Control Barrier Function (CBF-QP)</span> safety gate.
+              <span className="text-emerald-400 font-semibold">CBF-inspired deterministic trajectory</span> safety gate.
             </p>
 
             {/* Action Buttons */}
@@ -187,11 +188,11 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             <div className="space-y-2 divide-y divide-slate-800/60">
               <div className="flex items-center justify-between pt-1">
                 <span className="text-slate-400">Net Avoided Loss:</span>
-                <span className="text-emerald-400 font-bold">$2,576,849 / event</span>
+                <span className="text-emerald-400 font-bold">$2.57M scenario estimate</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Economic ROI:</span>
-                <span className="text-amber-400 font-bold">5,495.3x (LBNL ICE)</span>
+                <span className="text-amber-400 font-bold">5,472.6x assumption-based</span>
               </div>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-slate-400">Microclimate Trap:</span>
@@ -480,7 +481,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 AC Power Flow & Dynamic Line Rating
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                4-bus single-line diagram, IEEE 738 DLR ampacity headroom (+22.5%), catenary sag, and Chance-Constrained SOCP OPF.
+                4-bus single-line diagram, IEEE 738-inspired DLR and catenary estimates, plus analytical uncertainty-bounded dispatch screening.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold pt-4">
@@ -511,6 +512,32 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 font-bold pt-4">
               <span>Inspect IEEE Standards</span>
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Independent Ground Truth */}
+          <div
+            id="tour-card-ground-truth"
+            onClick={() => onNavigateTab('ground_truth')}
+            className="glass-panel p-6 rounded-3xl border border-slate-800 hover:border-cyan-500/40 bg-slate-950/70 hover:bg-slate-900/80 transition-all cursor-pointer group shadow-xl hover:shadow-cyan-500/10 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-110 transition-transform">
+                  <Thermometer className="h-5 w-5" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-500">VALIDATION</span>
+              </div>
+              <h3 className="text-base font-bold text-white font-heading group-hover:text-cyan-400 transition-colors">
+                Independent Ground Truth Comparison
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Timestamp-aligned PHX ASOS observations versus FortyGuard 2m values, with correlation, RMSE, coverage, and explicit UHI limitations.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-cyan-400 font-bold pt-4">
+              <span>Inspect Ground Truth</span>
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -567,7 +594,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             </div>
           </div>
 
-          {/* Card 8: 4 Scientific Moats & CBF-QP */}
+          {/* Card 8: 4 Scientific Moats and safety filtering */}
           <div
             id="tour-card-moats"
             onClick={() => onNavigateTab('physics_moats')}
@@ -584,7 +611,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 4 Asymmetric Scientific Moats
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Underground cable-soil dryout, urban canyon aerodynamic throttling, virtual paper-oil moisture, and CBF-QP barrier.
+                Underground cable-soil dryout, urban canyon aerodynamic throttling, virtual paper-oil moisture, and deterministic model preflight.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold pt-4">
@@ -610,7 +637,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 LangGraph Multi-Agent Stack
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Autonomous 5-node cognitive pipeline synthesizing multi-asset dispatch schedules with live LLM-synthesized work orders.
+                Five-node orchestration pipeline synthesizing operator-reviewed mitigation recommendations, work orders, and advisories.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-bold pt-4">
@@ -633,10 +660,10 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 <span className="text-[11px] font-mono text-slate-500">TAB 11</span>
               </div>
               <h3 className="text-base font-bold text-white font-heading group-hover:text-amber-400 transition-colors">
-                Investment-Grade Avoided Loss ROI
+                Scenario Avoided-Loss Economics
               </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Department of Energy LBNL ICE certified model: $2.58M net avoided loss and 5,495.3x ROI for utility rate basing.
+                VoLL-informed scenario model: approximately $2.57M avoided exposure and a 5,472.6x assumption-based ratio; not realized savings or certification.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-bold pt-4">
@@ -675,7 +702,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
 
       {/* 4. Verification & Submission Standard Strip */}
-      <section className="glass-panel rounded-3xl p-6 border border-slate-800 bg-[#070b14] space-y-4">
+      <section id="tour-disclosure-strip" className="glass-panel rounded-3xl p-6 border border-slate-800 bg-[#070b14] space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
           <div className="flex items-center gap-2">
             <Award className="h-5 w-5 text-amber-400" />
@@ -685,7 +712,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
-            <span>111 Automated Pytests Passing (pytest tests/ -q)</span>
+            <span>Automated regression suite available (pytest tests/ -q)</span>
           </div>
         </div>
 

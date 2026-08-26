@@ -176,7 +176,7 @@ export const ACPowerFlowSingleLineViewer: React.FC = () => {
                     : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
-                Chance-Constrained SOCP OPF
+                Uncertainty-Bounded Dispatch Screen
               </button>
             </div>
 

@@ -83,7 +83,7 @@ export const BESSDegradationViewer: React.FC = () => {
       </div>
 
       {/* Sliders */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/60 p-4 rounded-2xl border border-slate-800/80">
+      <div id="tour-bess-controls" className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/60 p-4 rounded-2xl border border-slate-800/80">
         <div>
           <div className="flex justify-between text-xs font-mono mb-1">
             <span className="text-slate-400">Peak BESS Discharge Power:</span>
@@ -118,7 +118,7 @@ export const BESSDegradationViewer: React.FC = () => {
       </div>
 
       {/* Real-time KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div id="tour-bess-results" className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
           <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
             Peak Core Temperature (Tc)

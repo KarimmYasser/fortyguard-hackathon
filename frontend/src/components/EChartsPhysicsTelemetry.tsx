@@ -413,7 +413,7 @@ export const EChartsPhysicsTelemetry: React.FC<EChartsPhysicsTelemetryProps> = (
                 B. Internal Physical State Estimation (IEEE Std C57.91 & IEC 60076-7)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Baseline hot-spot breaches 140°C limit; Thermal Sentinel safely caps at 109.4°C
+                Baseline hot-spot breaches 140°C; the current mitigation scenario remains within the configured model limit
               </p>
             </div>
           </div>

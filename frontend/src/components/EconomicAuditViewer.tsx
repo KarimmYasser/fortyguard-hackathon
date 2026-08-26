@@ -31,7 +31,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
   // Derived from the props, not transcribed. The transcribed version drifted
   // badly: it claimed a 6.4 C hot-spot reduction against a 50.1 C actual, a
   // 2.1x mitigated aging factor against 0.94x, and a $175,276 / 24.3x ROI
-  // against the $2,576,849 / 5495x the same page reports elsewhere.
+  // against the values the same page reported elsewhere.
   const n = (v: number | null | undefined, d = 1) =>
     v === null || v === undefined || Number.isNaN(v) ? '—' : v.toFixed(d);
   const usd = (v: number | null | undefined) =>
@@ -69,16 +69,16 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
           </div>
           <div>
             <h2 className="text-base font-extrabold text-white uppercase tracking-wide font-heading">
-              Investment-Grade Economic Avoided Loss Model
+              Scenario Economic Avoided-Loss Model
             </h2>
             <p className="text-xs text-slate-400 font-mono">
-              Auditable Financial Quantification for Utilities (Rate Basing) & Property/Fire Insurers
+              Transparent assumption-based estimate · not realized savings or actuarial certification
             </p>
           </div>
         </div>
 
         <span className="px-3.5 py-1.5 rounded-2xl text-xs font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
-          <Award className="h-4 w-4" /> LBNL ICE CALCULATOR CERTIFIED
+          <Award className="h-4 w-4" /> VoLL ASSUMPTIONS DOCUMENTED
         </span>
       </div>
 
@@ -93,7 +93,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               ${economic.net_avoided_loss_usd.toLocaleString()}
             </div>
             <div className="text-xs text-slate-400 mt-1 font-mono">
-              Per extreme heatwave incident
+              Model estimate under benchmark assumptions
             </div>
           </div>
 
@@ -117,7 +117,7 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               ${economic.avoided_outage_risk_usd.toLocaleString()}
             </div>
             <div className="text-xs text-slate-400 mt-1 font-mono">
-              Δp_f: -{(economic.baseline_failure_probability_pct - economic.mitigated_failure_probability_pct).toFixed(1)} pp
+              Scenario risk score change: −{(economic.baseline_failure_probability_pct - economic.mitigated_failure_probability_pct).toFixed(1)} pp
             </div>
           </div>
 
@@ -193,15 +193,15 @@ export const EconomicAuditViewer: React.FC<EconomicAuditViewerProps> = ({
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">5. Voltage Stability & N-1</td>
-                <td className="py-3 px-4 text-rose-300">Uncontrolled emergency feeder tripping</td>
-                <td className="py-3 px-4 text-emerald-300 font-bold">Zero ANSI C84.1 voltage breaches</td>
-                <td className="py-3 pl-4 text-amber-300">Preserved hospital priority feeder</td>
+                <td className="py-3 px-4 text-rose-300">No modeled corrective action</td>
+                <td className="py-3 px-4 text-emerald-300 font-bold">Configured voltage checks pass</td>
+                <td className="py-3 pl-4 text-amber-300">Modelled feeder service preserved</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-bold text-white">6. Net Avoided Loss ROI</td>
-                <td className="py-3 px-4 text-rose-300">$0 (Incurs catastrophic blowout risk)</td>
-                <td className="py-3 px-4 text-emerald-400 font-bold">{usd(economic?.net_avoided_loss_usd)} Net Avoided Loss</td>
-                <td className="py-3 pl-4 text-amber-300 font-black">{n(economic?.roi_multiple)}x ROI Multiplier</td>
+                <td className="py-3 px-4 text-rose-300">No mitigation cost; retains modeled consequence exposure</td>
+                <td className="py-3 px-4 text-emerald-400 font-bold">{usd(economic?.net_avoided_loss_usd)} scenario estimate</td>
+                <td className="py-3 pl-4 text-amber-300 font-black">{n(economic?.roi_multiple)}x assumption-based ratio</td>
               </tr>
             </tbody>
           </table>

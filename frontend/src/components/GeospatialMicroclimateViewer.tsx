@@ -72,7 +72,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
           )}
 
           {/* GIS Layer Switcher Pills */}
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+          <div id="tour-gis-layers" className="flex items-center gap-2 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           <button
             onClick={() => setActiveLayer('2m_ambient')}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
@@ -214,7 +214,7 @@ export const GeospatialMicroclimateViewer: React.FC<GeospatialMicroclimateViewer
         </div>
 
         {/* Right: Selected Parcel Deep-Dive Inspector */}
-        <div className="lg:col-span-4 glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl flex flex-col justify-between">
+        <div id="tour-gis-inspector" className="lg:col-span-4 glass-panel rounded-3xl p-6 border border-slate-800/90 shadow-2xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
               <div>

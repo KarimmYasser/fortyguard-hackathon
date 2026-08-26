@@ -50,7 +50,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
         <div id="tour-moats-tabs" className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
           {[
             { id: 1, label: '1. Cable Soil Dryout' },
-            { id: 2, label: '2. CBF-QP Safety Gate' },
+            { id: 2, label: '2. Trajectory Safety Gate' },
             { id: 3, label: '3. Canyon Aerodynamics' },
             { id: 4, label: '4. Virtual Moisture' },
           ].map((m) => (
@@ -129,7 +129,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
           </div>
         )}
 
-        {/* MOAT 2: CBF-QP Safety Gate */}
+        {/* MOAT 2: deterministic trajectory safety gate */}
         {activeMoat === 2 && (
           <div id="tour-moat-2" className="space-y-6">
             <div className="flex items-start justify-between border-b border-slate-800 pb-4">
@@ -137,25 +137,25 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
                 <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold mb-1">
                   <span>IEEE TAC (Ames et al., 2017) & Schneeberger et al. (2024)</span>
                   <span>•</span>
-                  <span>Forward Invariance Filter</span>
+                  <span>Bounded-Trajectory Filter</span>
                 </div>
                 <h3 className="text-lg font-black text-white font-heading">
-                  2. Provably Safe Control Barrier Functions (CBF-QP)
+                  2. CBF-Inspired Deterministic Trajectory Safety Gate
                 </h3>
                 <p className="text-xs text-slate-300 mt-1 max-w-4xl leading-relaxed">
-                  Rather than relying on uncertified LLM decisions or static thresholds, Thermal Sentinel passes all candidate actions through a deterministic <strong>Quadratic Program (CBF-QP)</strong> that guarantees forward-invariance of safe thermal and voltage sets under FortyGuard forecast uncertainty.
+                  Rather than relying on LLM decisions, Thermal Sentinel checks candidate actions over a deterministic worst-case trajectory and projects loading by bisection. It enforces configured thermal, voltage, reserve and energy limits inside the model; it is not a QP solver or field-safety certification.
                 </p>
               </div>
               <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                FORMAL PROOF
+                MODEL PREFLIGHT
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-between">
-                <div className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Quadratic Program Formulation</div>
+                <div className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Scalar Constraint Projection</div>
                 <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/80 text-emerald-200 text-center overflow-hidden flex items-center justify-center min-h-[64px] w-full">
-                  <MathView math="\mathbf{u}^* = \arg\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" scale="sm" />
+                  <MathView math="K_{\text{safe}} = \max\{K : T_o(K) \le T_{o,\max},\; T_{hs}(K) \le T_{hs,\max},\; 0.95 \le V(K) \le 1.05\}" scale="sm" />
                 </div>
                 <div className="text-slate-400 text-[11px] space-y-1.5">
                   <div>• Safe Set: <MathView math="\mathcal{C} = \{\mathbf{x} : T_o \le 110^\circ\text{C}, T_{\text{hs}} \le 140^\circ\text{C}\}" displayMode={false} className="text-slate-200" /></div>
@@ -170,7 +170,7 @@ export const ScientificMoatsViewer: React.FC<ScientificMoatsViewerProps> = ({
                 <div className="space-y-2">
                   <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Safety Gate Status:</span>
-                    <span className="text-emerald-400 font-bold">{verdict.status} [PROVABLY SAFE]</span>
+                    <span className="text-emerald-400 font-bold">{verdict.status} [MODEL LIMITS]</span>
                   </div>
                   <div className="flex justify-between p-2.5 rounded-lg bg-slate-900/60">
                     <span className="text-slate-400">Projected Safe Load (K_safe):</span>

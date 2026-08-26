@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { TabErrorBoundary } from './components/TabErrorBoundary';
 import { DataProvenanceBadge } from './components/DataProvenanceBadge';
+import { SimulationProvenancePanel } from './components/SimulationProvenancePanel';
 import { HomePitchViewer } from './components/HomePitchViewer';
 import { ReplayDataset, TimelineStep } from './types';
 import { startTourGuide } from './utils/tourGuide';
@@ -115,6 +116,7 @@ export const App: React.FC = () => {
       setData({
         ...data,
         scenario_metadata: mergedMetadata,
+        provenance: simResult.provenance ?? data.provenance,
         timeline_steps: simResult.timeline_steps,
         baseline_summary: simResult.baseline_summary,
         mitigated_summary: simResult.mitigated_summary,
@@ -123,6 +125,8 @@ export const App: React.FC = () => {
         soil_cable_state: simResult.soil_cable_state,
         virtual_moisture_state: simResult.virtual_moisture_state,
         urban_canyon_state: simResult.urban_canyon_state,
+        sensitivity_analysis: simResult.sensitivity_analysis,
+        integrated_grid_evaluation: simResult.integrated_grid_evaluation,
       });
     }
   };
@@ -208,6 +212,9 @@ export const App: React.FC = () => {
               Reset to Phoenix benchmark
             </button>
           </div>
+        )}
+        {dataset?.provenance && activeTab !== 'home' && (
+          <SimulationProvenancePanel provenance={dataset.provenance} />
         )}
         <TabErrorBoundary name={activeTab}>
           {/* TAB 0: Executive Home & Video Pitch Showcase - renders instantly */}

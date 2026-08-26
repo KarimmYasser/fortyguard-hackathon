@@ -12,6 +12,18 @@ export interface ScenarioLocation {
  * every analytics response so the UI can never present fixture data as live.
  */
 export type DataSourceTag = 'fortyguard_live' | 'fortyguard_live_partial' | 'phoenix_fixture';
+export type EvidenceKind = 'measured' | 'externally_modelled' | 'derived' | 'assumed' | 'simulated' | 'validated' | 'unvalidated';
+
+export interface SimulationProvenance {
+  schema_version: string;
+  model_version: string;
+  operating_mode: 'demo' | 'hybrid' | 'operational';
+  scenario_id: string;
+  boundary_source: string;
+  evidence: Array<{ field: string; kind: EvidenceKind; source: string; note?: string }>;
+  validation_status: 'environment_only' | 'partially_validated' | 'unvalidated';
+  limitations: string[];
+}
 
 export interface PersistenceMetrics {
   threshold_c: number;
@@ -187,6 +199,7 @@ export interface HeatmapCollection {
 
 export interface ReplayDataset {
   scenario_metadata: ScenarioMetadata;
+  provenance: SimulationProvenance;
   timeline_steps: TimelineStep[];
   baseline_summary: TrajectorySummary;
   mitigated_summary: TrajectorySummary;
@@ -195,5 +208,7 @@ export interface ReplayDataset {
   soil_cable_state: SoilCableState;
   virtual_moisture_state: VirtualMoistureState;
   urban_canyon_state: Record<string, any>;
+  sensitivity_analysis?: Record<string, any>;
+  integrated_grid_evaluation?: Record<string, any>;
   heatmap_geojson_tiles: HeatmapCollection;
 }

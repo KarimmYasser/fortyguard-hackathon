@@ -68,21 +68,21 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
     },
     {
       id: 'safety_gate_node',
-      name: '4. CBF-QP Safety Gate Node',
-      role: 'Non-LLM Formal Constraint Filter',
-      type: 'Quadratic Program Barrier Gate',
+      name: '4. Trajectory Safety Gate Node',
+      role: 'Non-LLM Model Constraint Filter',
+      type: 'Deterministic Load Projection',
       inputs: ['Candidate Action Vector u_nom', 'Forecast Uncertainty Bound ε = ±1.5°C', 'ANSI C84.1 Voltage Envelope'],
       outputs: ['Decision: ACCEPT (Safe)', 'Max Safe Load: K_safe = 1.252 pu', 'Projected Peak Hot-Spot: 115.96°C'],
-      reasoning: 'Evaluated Control Barrier Function h(x) >= 0; candidate plan maintains positive safety margin (delta = +24.0°C below 140°C ceiling).',
+      reasoning: 'Evaluated the candidate trajectory against configured thermal, voltage, reserve and energy limits under a +1.5°C uncertainty margin.',
     },
     {
       id: 'audit_dispatch_node',
       name: '5. Audit & Dispatch Node',
-      role: 'SCADA Work Order & Public Advisory',
+      role: 'Operator Work Order & Public Advisory',
       type: 'Downstream Integration',
       inputs: ['Approved Actions', 'Safety Gate Certificate', 'Economic ROI Evaluation'],
-      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Financial Ledger ($2.58M Saved)'],
-      reasoning: 'Dispatched automated SCADA commands to substation pumps and BESS inverters; logged $2.58M net avoided loss to utility reliability ledger.',
+      outputs: ['B2B Utility Work Order (WO-TSG-04)', 'B2C Citizen Advisory (ADV-HEAT)', 'Scenario Economic Ledger'],
+      reasoning: 'Generated an operator-review work order and recorded an assumption-based avoided-loss estimate; no physical equipment is actuated.',
     },
   ];
 
@@ -110,7 +110,7 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
       if (resp.ok) {
         const json = await resp.json();
         setLiveGraphData(json.data);
-        setExecutionStatus(`StateGraph Execution Succeeded · 5 Nodes Traversed in ${elapsed}ms · Verdict: ACCEPT [PROVABLY SAFE]`);
+        setExecutionStatus(`StateGraph Execution Succeeded · 5 Nodes Traversed in ${elapsed}ms · Verdict: ACCEPT [MODEL LIMITS]`);
       } else {
         setExecutionStatus(`Execution Completed with Local Replay in ${elapsed}ms`);
       }
@@ -275,7 +275,7 @@ export const AgentGraphViewer: React.FC<AgentGraphViewerProps> = ({ verdict, eco
               </p>
             </div>
             <div className="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500">
-              Deterministic Invariance Certified by CBF-QP Safety Gate
+              Deterministic model preflight · not field certification
             </div>
           </div>
         </div>

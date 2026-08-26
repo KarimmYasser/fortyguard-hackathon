@@ -70,7 +70,7 @@ export const CommandPanel: React.FC<CommandPanelProps> = ({
             >
               {isBreached
                 ? 'CRITICAL THERMAL CEILING BREACH DETECTED'
-                : 'FORWARD-INVARIANT SAFE OPERATION ENFORCED'}
+                : 'WITHIN CONFIGURED MODEL LIMITS'}
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ export const CommandPanel: React.FC<CommandPanelProps> = ({
               : 'bg-rose-500/15 text-rose-300 border-rose-500/30'
           }`}
         >
-          {isMitigated ? 'SAFETY GATE ACTIVE [CBF-QP]' : 'UNGUARDED BASELINE'}
+          {isMitigated ? 'MODEL PREFLIGHT ACTIVE' : 'UNMITIGATED BASELINE'}
         </span>
       </div>
 

@@ -53,18 +53,18 @@ export const MoatsCard: React.FC<MoatsCardProps> = ({ soilState, moistureState }
         <div className="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-[11px] font-mono text-emerald-400 mb-1">
-              <span className="font-bold">2. CBF-QP Safety Filter</span>
+              <span className="font-bold">2. Trajectory Safety Filter</span>
               <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20">
                 IEEE TAC
               </span>
             </div>
             <p className="text-xs text-slate-300 font-medium">
-              Provably safe forward-invariance under 12h forecast error (Ta ± ε)
+              Bounded model check under 12h forecast uncertainty (Ta + ε)
             </p>
           </div>
           <div className="mt-3 pt-2 border-t border-slate-800/60 font-mono text-xs flex items-baseline justify-between">
             <span className="text-slate-400 text-[11px]">Safe Set:</span>
-            <span className="text-emerald-300 font-bold">h(x) ≥ 0 Invariant</span>
+            <span className="text-emerald-300 font-bold">Configured limits pass</span>
           </div>
         </div>
 

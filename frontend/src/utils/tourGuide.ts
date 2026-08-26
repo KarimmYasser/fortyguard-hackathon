@@ -17,12 +17,13 @@ type PreparedStep = DriveStep & {
   element: string;
   data?: {
     action?: TourAction;
+    navigateTab?: ActiveTab;
     timeoutMs?: number;
   };
 };
 
-const TARGET_TIMEOUT_MS = 12_000;
-const CONDITIONAL_TIMEOUT_MS = 35_000;
+const TARGET_TIMEOUT_MS = 30_000;
+const CONDITIONAL_TIMEOUT_MS = 60_000;
 
 const step = (
   element: string,
@@ -40,7 +41,7 @@ const step = (
 
 const click = (selector: string): TourAction => ({ type: 'click', selector });
 
-const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
+const getContentStepsForTab = (tab: ActiveTab): PreparedStep[] => {
   switch (tab) {
     case 'home':
       return [
@@ -50,6 +51,7 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-navbar-live-scan', '📡 Live FortyGuard Ingestion', 'Open an on-demand scan for a chosen corridor and catalog date. The live result can then drive the complete physics and economics stack.'),
         step('#tour-navbar-db-modal', '🗄️ Durable Cloud Database', 'Inspect Supabase-backed records, saved scans, deterministic solve replays, credit accounting, and dispatch history.'),
         step('#tour-navbar-mode-toggle', '🛡️ Baseline vs Mitigated', 'Switch the shared dashboard between unmitigated and bounded-action trajectories.'),
+        step('#tour-navbar-tabs', '🗂️ Fourteen Platform Views', 'Use the two-row module navigation to open operations, simulation, validation, scientific evidence, orchestration, economics, and analytics views.'),
         step('#tour-launchpad-header', '🚀 Operational Modules', 'The launchpad and navigation expose the grid physics, operations, evidence, and analytics modules.', 'top'),
         step('#tour-card-overview', '⚡ Mission Control', 'Scrub the 12-hour trajectory and compare synchronized thermal, safety, and audit telemetry.', 'top', 'start'),
         step('#tour-card-operations', '🧭 Portfolio Operations', 'Rank registered assets, find candidate crew windows, and retrieve the same deterministic evidence exposed through MCP.', 'top', 'start'),
@@ -57,13 +59,14 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-card-72h', '🔥 72h Compounding', 'Inspect three consecutive days from a frozen 72-row live FortyGuard capture driving modelled compounding physics.', 'top', 'start'),
         step('#tour-card-powerflow', '⚡ AC Power Flow', 'Explore the 4-bus forward-backward-sweep model, analytical uncertainty screen, DLR, and cascading hazard views.', 'top', 'start'),
         step('#tour-card-ieee', '🏆 IEEE Annex G', 'Review numerical benchmark comparisons against the published Annex G reference cases.', 'top', 'start'),
+        step('#tour-card-ground-truth', '🌡️ Independent Ground Truth', 'Compare timestamp-aligned FortyGuard 2m values with PHX ASOS station observations, including explicit limits on what the comparison establishes.', 'top', 'start'),
         step('#tour-card-academic', '📚 Academic Provenance', 'Inspect the production-indexed research corpus, formulas, filters, and live literature search.', 'top', 'start'),
         step('#tour-card-gis', '🗺️ Hyperlocal 2m GIS', 'View the measured 2m thermal parcel inputs and their spatial spread over the target corridor.', 'top', 'start'),
         step('#tour-card-moats', '🔬 Scientific Moats', 'Review cable-soil, canyon, moisture, and bounded-trajectory safety models.', 'top', 'start'),
         step('#tour-card-agent', '🤖 LangGraph Engine', 'Inspect the five-node orchestration pipeline and optionally execute it to reveal live result panels.', 'top', 'start'),
         step('#tour-card-roi', '💰 Avoided Loss ROI', 'Audit the scenario-modelled loss components, mitigation costs, and ROI assumptions.', 'top', 'start'),
         step('#tour-card-datascience', '📊 Data Science Studio', 'Inspect the Medallion ETL pipeline, polynomial Ridge physics surrogate, spatial OLS regression, anomaly detection, and Weibull survival analysis.', 'top', 'start'),
-        ...getModalSteps(),
+        step('#tour-disclosure-strip', '✅ Verification & Disclosure', 'Finish the landing page with the automated checks, reproducibility notes, and explicit boundary between measured evidence and modelled outputs.', 'top'),
       ];
 
     case 'portfolio_operations':
@@ -78,13 +81,14 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
 
     case 'overview':
       return [
-        step('#tour-replay-bar', '⏱️ Synchronized 12h Replay', 'Scrub the 12-hour heatwave trajectory. All thermal, financial, and compliance panels update synchronously.'),
+        step('#tour-replay-bar', '⏱️ Synchronized 12h Replay', 'Scrub or play the 12-hour heatwave trajectory, step hour by hour, and change playback speed. All thermal, financial, and compliance panels update synchronously.'),
+        step('#tour-provenance-panel', '🧾 Evidence Contract', 'Expand this panel to distinguish measured, externally modelled, derived, assumed, simulated, validated, and unvalidated fields—and read the model limitations.', 'bottom'),
         step('#tour-navbar-mode-toggle', '🛡️ Compare Operating Modes', 'Toggle between unmitigated baseline and bounded-action mitigated states without altering boundary conditions.'),
         step('#tour-kpi-grid', '📊 Primary Telemetry Hub', 'High-level executive telemetry summarizing peak temperatures, microclimate offsets, persistence, and net avoided loss.'),
         step('#tour-kpi-hotspot', '🔥 Winding Hot-Spot (T_hs)', 'Monitors transformer winding hot-spot against the IEEE C57.91 140°C emergency insulation breakdown limit.'),
         step('#tour-kpi-microclimate', '🌡️ 2M Microclimate Parcel', 'FortyGuard hyperlocal measured 2m air temperature resolving the measured intra-corridor spread and asphalt heating.'),
         step('#tour-kpi-persistence', '⏳ Thermal Soak Index (TSI)', 'Tracks cumulative hours above 40°C (P40) and degree-hours exceedance (H40) driving insulation loss-of-life.'),
-        step('#tour-kpi-roi', '💰 Net Avoided Loss ROI', 'DOE LBNL ICE certified financial model projecting net avoided losses and rate-basing investment returns.'),
+        step('#tour-kpi-roi', '💰 Scenario Economics', 'Review the VoLL-informed avoided-exposure estimate and assumption-based ratio. These are model outputs, not realized savings or certification.'),
         step('#tour-chart-boundary', '📈 Boundary Forcing Chart', 'FortyGuard 2m convective air and solar flux time-series comparing AOI mean vs coolest parcel.'),
         step('#tour-chart-transformer', '⚡ Differential Thermal ODEs', 'IEEE C57.91 / IEC 60076-7 state estimation tracking top-oil and hot-spot temperature evolution.'),
         step('#tour-chart-aging', '📉 Arrhenius Loss-of-Life & BESS', 'Relative aging acceleration V(t) and synchronized BESS state of charge (SoC) peak-shaving dispatch.'),
@@ -94,9 +98,11 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
 
     case 'sandbox':
       return [
-        step('#tour-sandbox-actions', '⚡ Scenario Presets & Archetypes', 'Apply reproducible presets (Utility Substation, Solar Farm 25MVA, AI Data Center 75MVA, Hospital Feeder 15MVA, Weather Blindspot, Soil Desertification) before fine-tuning.'),
-        step('#tour-sandbox-controls', '🎛️ Multi-Physics Controls', 'Modulate boundary microclimate forcing, duration, storage reserves, transformer rating, canyon aspect ratio, and cooling derate (<15ms solve).'),
-        step('#tour-bess-panel', '🔋 BESS Electro-Thermal Model', 'Inspect modelled cell core/surface temperatures, degradation cost, and thermal safety margin.'),
+        step('#tour-sandbox-header', '🎛️ Live What-If Studio', 'Build a deterministic scenario from explicit environmental, asset, storage, geometry, and cooling assumptions.'),
+        step('#tour-sandbox-actions', '⚡ Scenario Presets & Archetypes', 'Apply reproducible presets (Utility Substation, Solar Farm 25MVA, AI Data Center 75MVA, Hospital Feeder 15MVA, Weather Blindspot, Soil Desertification, or Zero-BESS Stress) before fine-tuning.'),
+        step('#tour-sandbox-controls', '🎚️ Six Multi-Physics Controls', 'Modulate microclimate spread, heatwave day, BESS capacity, transformer rating, canyon aspect ratio, and forced-cooling state. Each change launches a new solve.'),
+        step('#tour-bess-controls', '🔋 BESS Dispatch Inputs', 'Adjust peak discharge power and initial state of charge for the separate two-state battery thermal trajectory.'),
+        step('#tour-bess-results', '🌡️ BESS Thermal & Aging Results', 'Inspect core temperature, state of health, SEI degradation, degradation cost, and the 12-hour trajectory.'),
         step('#tour-telemetry-charts', '📈 Rebased Output Trajectory', 'The shared telemetry charts update from the solved sandbox payload; identical full requests can replay from durable storage.', 'top'),
       ];
 
@@ -104,7 +110,9 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
       return [
         step('#tour-72h-header', '🔥 72-Hour Live-Capture Replay', 'Three complete consecutive days of frozen live FortyGuard hourly rows provide the environmental boundary for modelled compounding physics.'),
         step('#tour-72h-day-selector', '📅 Day Selector', 'Move between each 24-hour slice while preserving the continuous 72-hour state history.'),
-        step('#tour-72h-metrics', '📉 Compounding Effects', 'Compare measured daily extrema with modelled soil dryout, retained heat, and cumulative asset aging.', 'top'),
+        step('#tour-72h-metrics', '📉 Compounding Effects', 'Compare measured daily extrema with modelled soil dryout, cable temperature, baseline hot spot, and mitigated hot spot.', 'top'),
+        step('#tour-72h-provenance', '🧾 72-Hour Evidence Split', 'This strip identifies which 72-hour values came from the frozen FortyGuard capture and which load, soil, and dispatch values are modelled.', 'top'),
+        step('#tour-72h-timeline', '🕐 Selected-Day Timeline', 'Inspect all 24 hourly boundary and soil-resistivity steps for the selected day while preserving continuous state across all three days.', 'top'),
       ];
 
     case 'power_flow':
@@ -118,11 +126,21 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
         step('#tour-hazard-gauge', '⚠️ Cascading Hazard', 'The hazard view translates the current operating state into modelled time-dependent cascading-risk indicators.', 'top', 'center', click('#tour-powerflow-tab-hazard')),
       ];
 
+    case 'ground_truth':
+      return [
+        step('#tour-ground-truth-header', '🌡️ Independent Station Comparison', 'Compare timestamp-aligned FortyGuard urban 2m values against PHX ASOS station observations. Choose the frozen replay or explicitly request an IEM refresh.', 'bottom', 'center', undefined, CONDITIONAL_TIMEOUT_MS),
+        { ...step('#tour-ground-truth-interpretation', '🧭 Interpretation Guardrail', 'The observed urban-minus-station contrast is reported descriptively and is not presented as a causal urban heat-island result.'), skipMissingElement: true },
+        { ...step('#tour-ground-truth-metrics', '📊 Agreement Metrics', 'Review mean ΔT, Pearson correlation, RMSE, positive-delta hours, pair count, and coverage.'), skipMissingElement: true },
+        { ...step('#tour-ground-truth-chart', '📈 Timestamp-Aligned Series', 'Inspect both temperature series and the hourly ΔT bars on one aligned Phoenix-local-time axis.', 'top'), skipMissingElement: true },
+        { ...step('#tour-ground-truth-uhi', '⚠️ UHI Limitation', 'Sky Harbor is an urban airport rather than a rural control, so this comparison alone cannot establish an urban heat-island effect.', 'top'), skipMissingElement: true },
+        { ...step('#tour-ground-truth-provenance', '🔎 Source & Coverage', 'Confirm evidence class, station distance, selected source, time-zone conversion, coverage, and the environmental-only validation scope.', 'top'), skipMissingElement: true },
+      ];
+
     case 'ieee_annex_g':
       return [
-        step('#tour-ieee-header', '📜 IEEE C57.91 Annex G Validation', 'Exact numerical verification suite benchmarking the thermal ODE solver against published standard reference cases.'),
+        step('#tour-ieee-header', '📜 IEEE C57.91 Annex G Benchmark', 'Review the repository’s numerical comparison cases and their stated reference tolerances; this is solver regression evidence, not third-party certification.'),
         step('#tour-ieee-clauses', '📑 Standard Test Cases', 'Switch between Clause G.2 (Step Load Response) and Clause G.3 (Diurnal Ambient Cycle).'),
-        step('#tour-ieee-metrics', '🔬 Reference Error & Arrhenius', 'Demonstrates <0.0001°C error against standard tables and exact Arrhenius aging acceleration factor V = 1.00000x at 110°C.', 'top'),
+        step('#tour-ieee-metrics', '🔬 Reference Error & Arrhenius', 'Inspect the reported top-oil and hot-spot deviations and the Arrhenius reference value at 110°C.', 'top'),
         step('#tour-ieee-table', '📊 Benchmark Differential Table', 'Detailed hour-by-hour side-by-side comparison between solver state output and IEEE Analytical benchmark values.', 'top'),
       ];
 
@@ -138,16 +156,19 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
     case 'gis_map':
       return [
         step('#tour-gis-header', '🗺️ Hyperlocal 2m GIS', 'The map displays FortyGuard-derived 2m boundary data and clearly separates it from downstream model outputs.'),
-        step('#tour-gis-map', '🌡️ Spatial Thermal Parcel', 'Inspect same-hour spatial variation over the area of interest; the spread never subtracts extrema from different hours.', 'top'),
+        step('#tour-gis-layers', '🧭 Map Layers', 'Switch each parcel between 2m ambient temperature, P40 persistence, and land-cover albedo.', 'bottom'),
+        step('#tour-gis-map', '🌡️ Spatial Thermal Parcel', 'Select parcels and inspect same-hour spatial variation over the area of interest; the spread never subtracts extrema from different hours.', 'top'),
+        step('#tour-gis-inspector', '🔬 Parcel Physics Inspector', 'Review the selected parcel’s ambient temperature, persistence, degree-hours, albedo, morphology, and interpretation.', 'left'),
         step('#tour-gis-scan-btn', '📡 Open Live Scan', 'Launch a fresh paid/cached FortyGuard scan for a selected corridor.', 'top'),
       ];
 
     case 'physics_moats':
       return [
         step('#tour-moats-header', '🔬 Four Asymmetric Scientific Moats', 'Deterministic multi-physics coupling mechanisms that standard SCADA and generic LLMs cannot observe.'),
-        step('#tour-moats-tabs', '🧭 Moat Subsystem Selector', 'Select among cable-soil dryout, CBF-QP invariance, canyon aerodynamics, and virtual moisture desorption.'),
+        step('#tour-moats-tabs', '🧭 Moat Subsystem Selector', 'Select among cable-soil dryout, bounded trajectory checks, canyon aerodynamics, and virtual moisture desorption.'),
+        step('#tour-moats-cards', '📐 Formula & Telemetry Workspace', 'Each subsystem pairs its explicit mathematical formulation and assumptions with the current scenario output.'),
         step('#tour-moat-1', '⚡ Moat 1: Buried Cable-Soil Dryout', 'IEC 60287 multi-physics modeling showing non-linear soil thermal resistivity surge (0.9 to 2.45 K·m/W) causing cable ampacity bottleneck.', 'top', 'center', click('#tour-moat-tab-1')),
-        step('#tour-moat-2', '🛡️ Moat 2: Provably Safe CBF-QP Gate', 'Control Barrier Function Quadratic Program enforcing forward invariance of safe thermal sets under FortyGuard uncertainty.', 'top', 'center', click('#tour-moat-tab-2')),
+        step('#tour-moat-2', '🛡️ Moat 2: Deterministic Safety Gate', 'A bounded-trajectory model preflight checks thermal, voltage, reserve, and energy limits under forecast uncertainty.', 'top', 'center', click('#tour-moat-tab-2')),
         step('#tour-moat-3', '🏙️ Moat 3: Urban Canyon Aerodynamics', 'Oke canyon fluid dynamics calculating aerodynamic wind sheltering (H/W > 1.5) and 32% convective cooling derate.', 'top', 'center', click('#tour-moat-tab-3')),
         step('#tour-moat-4', '💧 Moat 4: Virtual Moisture Sensor', 'Fickian paper-to-oil moisture desorption tracking dielectric arcing breakdown risk before thermal limits are reached.', 'top', 'center', click('#tour-moat-tab-4')),
       ];
@@ -156,8 +177,8 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
       return [
         step('#tour-agent-header', '🤖 Five-Node Orchestration', 'The compiled pipeline coordinates forecast ingest, physical projection, planning, deterministic safety validation, and audit/dispatch.'),
         step('#tour-agent-trigger-btn', '⚡ Execute the Pipeline', 'The tour can execute this action automatically before it visits result-only panels. No popover is shown until the execution completes.'),
-        step('#tour-agent-dag', '🔄 Pipeline DAG', 'Select any node to inspect its declared inputs, outputs, and role.', 'top'),
-        step('#tour-agent-state', '📦 Node Inspector', 'Review the currently selected node’s state contract and explanatory model rationale.', 'top'),
+        step('#tour-agent-dag', '🔄 Pipeline DAG', 'Select any of the five nodes to inspect forecast ingest, physical projection, planning, deterministic safety validation, or audit/dispatch.', 'top'),
+        step('#tour-agent-state', '📦 Node Inspector', 'Review the selected node’s declared inputs, emitted outputs, deterministic or LLM role, and explanatory rationale.', 'top'),
         step('#tour-agent-execution-status', '✅ Live Execution Status', 'This conditional panel appears only after execution starts; the guide triggers the run and waits for it.', 'top', 'center', click('#tour-agent-trigger-btn'), CONDITIONAL_TIMEOUT_MS),
         { ...step('#tour-agent-work-order', '📋 Work Order & Advisory', 'When the API returns dispatch artifacts, inspect the utility work order and citizen advisory here.', 'top', 'center', undefined, CONDITIONAL_TIMEOUT_MS), skipMissingElement: true },
         { ...step('#tour-agent-audit-trail', '📜 Node Transition Trail', 'Inspect the returned node-by-node execution trace and timestamps.', 'top', 'center', undefined, CONDITIONAL_TIMEOUT_MS), skipMissingElement: true },
@@ -166,7 +187,7 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
     case 'financial_roi':
       return [
         step('#tour-financial-header', '💰 Scenario Economics', 'These are model outputs for the active scenario—not booked savings or a regulatory guarantee.'),
-        step('#tour-financial-breakdown', '💵 Loss Components', 'Audit customer interruption cost, equipment consequences, aging deferral, and mitigation expense.', 'top'),
+        step('#tour-financial-breakdown', '💵 Economic Components', 'Audit modeled avoided consequence exposure, capital-aging deferral, mitigation expense, and the resulting assumption-based ratio.', 'top'),
         step('#tour-financial-matrix', '📊 Comparative Matrix', 'Compare alternatives and inspect how active scenario inputs change avoided loss and ROI.', 'top'),
       ];
 
@@ -187,17 +208,57 @@ const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
   }
 };
 
+const DATA_TABS: ActiveTab[] = [
+  'overview',
+  'portfolio_operations',
+  'sandbox',
+  'multi_day_72h',
+  'power_flow',
+  'ieee_annex_g',
+  'ground_truth',
+  'academic_provenance',
+  'gis_map',
+  'physics_moats',
+  'agent_graph',
+  'financial_roi',
+  'data_science',
+];
+
+const commonDataSteps = (): PreparedStep[] => [
+  step('#tour-replay-bar', '⏱️ Shared Scenario Timeline', 'This replay controller remains synchronized across data-backed modules. Play, pause, step, scrub, reset, or change speed without changing the underlying evidence.', 'bottom'),
+  step('#tour-provenance-panel', '🧾 Shared Evidence Contract', 'Open this disclosure to separate measured and external inputs from assumptions, derived values, simulations, validation status, and known limitations.', 'bottom'),
+];
+
+const stepsForSingleTab = (tab: ActiveTab): PreparedStep[] => {
+  const content = getContentStepsForTab(tab);
+  if (tab === 'home' || tab === 'portfolio_operations' || tab === 'overview') return content;
+  return [...commonDataSteps(), ...content];
+};
+
+const withNavigation = (tab: ActiveTab, steps: PreparedStep[]): PreparedStep[] =>
+  steps.map((item) => ({ ...item, data: { ...item.data, navigateTab: tab } }));
+
+/** Home launches the complete cross-tab walkthrough; other tabs stay focused. */
+const getStepsForTab = (tab: ActiveTab): PreparedStep[] => {
+  if (tab !== 'home') return stepsForSingleTab(tab);
+  return [
+    ...withNavigation('home', getContentStepsForTab('home')),
+    ...DATA_TABS.flatMap((targetTab) => withNavigation(targetTab, getContentStepsForTab(targetTab))),
+    ...getModalSteps(),
+  ];
+};
+
 const getModalSteps = (): PreparedStep[] => [
   step('#tour-live-scan-modal', '📡 Live Cloud Scan Hub', 'Choose a corridor and catalog date, inspect usage, and execute a genuine FortyGuard request.', 'bottom', 'center', { type: 'open-live-scan' }),
-  step('#tour-live-scan-usage', '🪙 API Usage & Cache', 'Review the account response and available credits. Cached requests avoid repeating identical vendor work.', 'bottom'),
-  step('#tour-live-scan-presets', '🌍 Preset Corridors', 'Use a known demo corridor or enter custom coordinates and a valid catalog date.', 'bottom'),
-  step('#tour-live-scan-coordinates', '📍 Scan Boundary', 'Latitude, longitude, city label, and date become part of the persisted scan and deterministic solve identity.', 'top'),
-  step('#tour-live-scan-analytic', '🌡️ Analytic & Threshold', 'Select the requested FortyGuard analytic and heat threshold. Missing vendor data is surfaced as an error rather than replaced with Phoenix values.', 'top'),
-  step('#tour-live-scan-execute', '⚡ Execute Live Scan', 'This action can consume credits when no durable cache entry exists. Results are persisted for later Saved Scan replay.', 'top'),
+  step('#tour-live-scan-usage', '🪙 API Usage & Cache', 'Review the account response and available credits. Cached requests avoid repeating identical vendor work.', 'bottom', 'center', { type: 'open-live-scan' }),
+  step('#tour-live-scan-presets', '🌍 Preset Corridors', 'Use a known demo corridor or enter custom coordinates and a valid catalog date.', 'bottom', 'center', { type: 'open-live-scan' }),
+  step('#tour-live-scan-coordinates', '📍 Scan Boundary', 'Latitude, longitude, city label, and date become part of the persisted scan and deterministic solve identity.', 'top', 'center', { type: 'open-live-scan' }),
+  step('#tour-live-scan-analytic', '🌡️ Analytic & Threshold', 'Select the requested FortyGuard analytic and heat threshold. Missing vendor data is surfaced as an error rather than replaced with Phoenix values.', 'top', 'center', { type: 'open-live-scan' }),
+  step('#tour-live-scan-execute', '⚡ Execute Live Scan', 'This action can consume credits when no durable cache entry exists. Results are persisted for later Saved Scan replay.', 'top', 'center', { type: 'open-live-scan' }),
   step('#tour-db-modal', '🗄️ Database Audit Hub', 'The guide now switches to durable persistence, saved scans, ledgers, and architecture.', 'bottom', 'center', { type: 'open-database' }),
-  step('#tour-db-summary', '📊 Storage Summary', 'Supabase is authoritative in production; local SQLite is a local or warm-container fallback.', 'bottom'),
-  step('#tour-db-tabs', '🧭 Database Views', 'Move among table counts, saved scans, credit entries, dispatch orders, and storage architecture.', 'bottom'),
-  step('#tour-db-tables', '🗂️ Persisted Domains', 'Inspect the application’s 16 logical tables and current row counts.', 'top', 'center', click('#tour-db-tab-tables')),
+  step('#tour-db-summary', '📊 Storage Summary', 'Supabase is authoritative in production; local SQLite is a local or warm-container fallback.', 'bottom', 'center', { type: 'open-database' }),
+  step('#tour-db-tabs', '🧭 Database Views', 'Move among table counts, saved scans, credit entries, dispatch orders, and storage architecture.', 'bottom', 'center', { type: 'open-database' }),
+  step('#tour-db-tables', '🗂️ Persisted Domains', 'Inspect the application’s logical tables and current row counts.', 'top', 'center', click('#tour-db-tab-tables')),
   step('#tour-db-scans', '💾 Saved Scans', 'Select a persisted scan and rerun calculations from its cached hourly evidence without rescanning.', 'top', 'center', click('#tour-db-tab-scans')),
   step('#tour-db-ledger', '🪙 Credit Ledger', 'Review recorded vendor-credit deductions and cache-aware request accounting.', 'top', 'center', click('#tour-db-tab-ledger')),
   step('#tour-db-dispatch', '🛡️ Dispatch History', 'Inspect persisted work orders and their bounded-trajectory safety fields.', 'top', 'center', click('#tour-db-tab-dispatch')),
@@ -214,12 +275,12 @@ const isVisible = (element: Element | null): element is HTMLElement => {
 const waitForVisibleTarget = (selector: string, timeoutMs: number): Promise<HTMLElement> =>
   new Promise((resolve, reject) => {
     let observer: MutationObserver | null = null;
-    let frame = 0;
     let timer = 0;
+    let poller = 0;
 
     const cleanup = () => {
       observer?.disconnect();
-      window.cancelAnimationFrame(frame);
+      window.clearInterval(poller);
       window.clearTimeout(timer);
     };
 
@@ -238,7 +299,9 @@ const waitForVisibleTarget = (selector: string, timeoutMs: number): Promise<HTML
       attributes: true,
       attributeFilter: ['class', 'style', 'hidden'],
     });
-    frame = window.requestAnimationFrame(check);
+    // Network-backed panels can resolve without a useful DOM mutation in the
+    // exact frame we observe. Poll as a fallback for the full timeout window.
+    poller = window.setInterval(check, 100);
     timer = window.setTimeout(() => {
       cleanup();
       reject(new Error(`Tour target did not become visible: ${selector}`));
@@ -344,7 +407,24 @@ export const startTourGuide = ({
     const targetStep = steps[index];
 
     try {
+      // Every step knows its owning tab, so forward and backward navigation
+      // both work across section boundaries. Reveal actions (sub-tabs/modals)
+      // remain independent and run only when their target is hidden.
+      if (targetStep.data?.navigateTab) {
+        if (!onNavigateTab) throw new Error('Tab navigation is unavailable.');
+        onNavigateTab(targetStep.data.navigateTab);
+        // React may not have committed the destination view yet. Waiting for
+        // the requested target below is the synchronization point.
+      }
       if (!isVisible(document.querySelector(targetStep.element))) {
+        // A cross-tab step may also need to reveal a nested subview. Wait for
+        // its control to mount after navigation before clicking it.
+        if (targetStep.data?.navigateTab && targetStep.data.action?.type === 'click') {
+          await waitForVisibleTarget(
+            targetStep.data.action.selector,
+            targetStep.data?.timeoutMs ?? TARGET_TIMEOUT_MS,
+          );
+        }
         runAction(targetStep.data?.action);
       }
       await waitForVisibleTarget(targetStep.element, targetStep.data?.timeoutMs ?? TARGET_TIMEOUT_MS);

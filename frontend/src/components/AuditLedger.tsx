@@ -31,7 +31,7 @@ const DEFAULT_AUDIT_LOG: AuditLogEntry[] = [
   {
     timestamp: '14:05:22 UTC',
     category: 'SAFETY_GATE',
-    message: 'Non-LLM CBF-QP Gate: Filtered candidate plan, solved safe maximum load K_safe = 0.98 pu, capped hot-spot at 109.4°C.',
+    message: 'Non-LLM trajectory gate: checked candidate plan and projected a safe maximum load against configured model limits.',
     status: 'SUCCESS',
   },
   {

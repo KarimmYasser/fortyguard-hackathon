@@ -140,7 +140,7 @@ const TAB_PREVIEWS: Record<ActiveTab, TabPreviewInfo> = {
     badge: 'ASYMMETRIC IP',
     badgeColor: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
     tagline: 'First-Principles Physics Engines',
-    summary: 'Deep dives into Cable-Soil Dryout (IEC 60287), CBF-QP Safety Gate, Canyon Aerodynamics, and Virtual Moisture Sensor.',
+    summary: 'Deep dives into Cable-Soil Dryout (IEC 60287), deterministic trajectory safety checks, Canyon Aerodynamics, and Virtual Moisture Sensor.',
     highlights: ['Non-Linear Soil Resistivity', 'Control Barrier Functions', 'Fickian Paper-Oil Diffusion'],
   },
   agent_graph: {
@@ -229,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            SYSTEM OPERATIONAL · CBF-QP SAFETY GATE ARMED
+            DEMO SYSTEM · MODEL SAFETY PREFLIGHT ACTIVE
           </span>
           <span className="text-slate-600">|</span>
           <span className="text-slate-400 hidden sm:inline">

@@ -86,7 +86,7 @@ export const HeroKpiGrid: React.FC<HeroKpiGridProps> = ({
         <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
           <span className="text-slate-400">IEEE Envelope:</span>
           <span className={`font-bold font-mono ${isBreached ? 'text-rose-400' : 'text-emerald-400'}`}>
-            {isBreached ? '❌ CRITICAL BREACH (+3.2°C)' : '✓ PROVABLY SAFE (109.4°C)'}
+            {isBreached ? '❌ MODEL LIMIT BREACH' : '✓ WITHIN MODEL LIMIT'}
           </span>
         </div>
       </div>

@@ -23,7 +23,7 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
                 Deterministic Safety Gate (Non-LLM Preflight)
               </h3>
               <p className="text-[11px] text-slate-400 font-mono">
-                Control Barrier Function (CBF-QP) Forward-Invariance Certificate
+                CBF-inspired bounded-trajectory model check · no field certification
               </p>
             </div>
           </div>
@@ -36,7 +36,7 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
           >
             {isAccept ? (
               <>
-                <CheckCircle2 className="h-4 w-4" /> ACCEPT [PROVABLY SAFE]
+                <CheckCircle2 className="h-4 w-4" /> ACCEPT [MODEL LIMITS]
               </>
             ) : (
               <>
@@ -106,7 +106,7 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
 
       </div>
 
-      {/* Projection & Mathematical Guarantee Box */}
+      {/* Projection and model-constraint box */}
       <div className="p-3 rounded-xl bg-slate-950 border border-amber-500/20 text-xs space-y-2 font-mono">
         <div className="flex items-center justify-between text-slate-400 text-[11px]">
           <span className="flex items-center gap-1.5 text-amber-400 font-bold">
@@ -118,7 +118,7 @@ export const SafetyGateCard: React.FC<SafetyGateCardProps> = ({ verdict, isMitig
         </div>
         
         <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/80 text-center overflow-hidden text-amber-200 flex items-center justify-center min-h-[48px] w-full">
-          <MathView math="\min_{\mathbf{u}} \|\mathbf{u} - \mathbf{u}_{\text{nom}}\|^2 \quad \text{s.t.} \quad h_i(F(\mathbf{x}, \mathbf{u}, T_a + \varepsilon)) \ge (1 - \gamma) h_i(\mathbf{x})" scale="sm" />
+          <MathView math="K_{\text{safe}} = \max\{K : T_o(K) \le T_{o,\max},\; T_{hs}(K) \le T_{hs,\max},\; 0.95 \le V(K) \le 1.05\}" scale="sm" />
         </div>
 
 

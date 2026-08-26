@@ -142,7 +142,7 @@ export const WhatIfSandboxPanel: React.FC<WhatIfSandboxPanelProps> = ({
   return (
     <div className="glass-panel rounded-3xl p-6 border border-amber-500/30 bg-gradient-to-b from-[#0F172A] via-[#090E17] to-[#040810] shadow-2xl space-y-6">
       {/* Top Header & Presets */}
-      <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div id="tour-sandbox-header" className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div className="flex items-center gap-3">
           <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 p-[1px] shadow-lg shadow-amber-500/20">
             <div className="h-full w-full bg-slate-950 rounded-[15px] flex items-center justify-center">
