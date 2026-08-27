@@ -74,23 +74,23 @@ FortyGuard provides 4 proprietary capabilities that directly solve this blind sp
 
 ```mermaid
 flowchart TD
-    Start([Scheduled / On-Demand Trigger]) --> ScanNode[Spatial Thermal Scan Node\nFortyGuard API 2m & 12h Forecast]
-    ScanNode --> IngestLayer[Asset Registry Matching\nTransformers, HVAC, Batteries, Panels]
-    IngestLayer --> SoakEval[Thermal Soak & Exceedance Evaluator\nPersistence x Delta-T Analysis]
+    Start(["Scheduled / On-Demand Trigger"]) --> ScanNode["Spatial Thermal Scan Node<br>FortyGuard API 2m & 12h Forecast"]
+    ScanNode --> IngestLayer["Asset Registry Matching<br>Transformers, HVAC, Batteries, Panels"]
+    IngestLayer --> SoakEval["Thermal Soak & Exceedance Evaluator<br>Persistence x Delta-T Analysis"]
     
-    SoakEval --> RiskGate{3-Level Risk Preflight Gate}
+    SoakEval --> RiskGate{"3-Level Risk Preflight Gate"}
     
-    RiskGate -->|Level 1: Safe| AuditLog[Normal Audit & Telemetry Logging]
-    RiskGate -->|Level 2: Elevated| WarningPlanner[Generate Advisory Warnings]
-    RiskGate -->|Level 3: Critical / Imminent| MitigationPlanner[Mitigation Recommendation Planner\nLoad Shedding & Duty-Cycle Proposal]
+    RiskGate -->|Level 1: Safe| AuditLog["Normal Audit & Telemetry Logging"]
+    RiskGate -->|Level 2: Elevated| WarningPlanner["Generate Advisory Warnings"]
+    RiskGate -->|Level 3: Critical / Imminent| MitigationPlanner["Mitigation Recommendation Planner<br>Load Shedding & Duty-Cycle Proposal"]
     
-    WarningPlanner --> Dispatcher[Multi-Channel Dispatcher]
+    WarningPlanner --> Dispatcher["Multi-Channel Dispatcher"]
     MitigationPlanner --> Dispatcher
     
-    Dispatcher --> B2BHook[B2B Facility Management Webhook & Report]
-    Dispatcher --> B2CAlert[B2C Resident Early-Warning SMS/Push]
+    Dispatcher --> B2BHook["B2B Facility Management Webhook & Report"]
+    Dispatcher --> B2CAlert["B2C Resident Early-Warning SMS/Push"]
     
-    AuditLog --> End([Safe State Exit])
+    AuditLog --> End(["Safe State Exit"])
     B2BHook --> End
     B2CAlert --> End
 ```

@@ -30,11 +30,11 @@ During multi-day heatwaves ($P_\theta \ge 5\text{ days}$), intense surface heat 
 
 ```mermaid
 flowchart TD
-    Heatwave[Multi-Day Heat Persistence P_theta >= 5d] --> Evap[Evaporative Forcing & Zero Rain]
-    Evap --> MoistureDrop[Volumetric Soil Moisture theta_v Drops Below Critical]
-    MoistureDrop --> RhoSurge[Soil Thermal Resistivity rho_soil Surges > 2.5 K·m/W]
-    RhoSurge --> CableHeat[Underground Cable Conductor Temp T_c Spikes]
-    CableHeat --> CompoundRisk[Compound Margin Breach: Cable Ampacity + Transformer Shared Thermal Bottleneck]
+    Heatwave["Multi-Day Heat Persistence P_theta >= 5d"] --> Evap["Evaporative Forcing & Zero Rain"]
+    Evap --> MoistureDrop["Volumetric Soil Moisture theta_v Drops Below Critical"]
+    MoistureDrop --> RhoSurge["Soil Thermal Resistivity rho_soil Surges > 2.5 K·m/W"]
+    RhoSurge --> CableHeat["Underground Cable Conductor Temp T_c Spikes"]
+    CableHeat --> CompoundRisk["Compound Margin Breach: Cable Ampacity + Transformer Shared Thermal Bottleneck"]
 ```
 
 ### 1.2 Mathematical Formulation
@@ -67,9 +67,9 @@ Thermal Sentinel Grid uses a deterministic **Control Barrier Function-inspired s
 
 ```mermaid
 flowchart LR
-    Nominal[LLM / Multi-Agent Planner\nProposes Nominal Action u_nom] --> CBF[Deterministic CBF Safety Filter\nValidate / modify u_nom]
-    FortyGuard[FortyGuard 12h Forecast\nT_a ± eps_a Bound] --> CBF
-    CBF --> Output[Model-Checked Dispatch u*\nWithin Configured Envelope]
+    Nominal["LLM / Multi-Agent Planner<br>Proposes Nominal Action u_nom"] --> CBF["Deterministic CBF Safety Filter<br>Validate / modify u_nom"]
+    FortyGuard["FortyGuard 12h Forecast<br>T_a ± eps_a Bound"] --> CBF
+    CBF --> Output["Model-Checked Dispatch u*<br>Within Configured Envelope"]
 ```
 
 ### 2.2 Mathematical Formulation
@@ -106,12 +106,12 @@ IEEE transformer standards assume standard free-convective airflow ($h_c \approx
 
 ```mermaid
 flowchart TD
-    Morphology[Urban Canyon Geometry H/W + High Facade Reflectance] --> Stagnation[Wind-Sheltering & Air Recirculation U_eff << U_ref]
-    Stagnation --> HcDrop[Convective Heat Transfer Coeff h_c Drops 40%]
-    Morphology --> ReflectedSolar[Reflected Shortwave Irradiance Hits Radiator Fins]
-    HcDrop --> Derate[Equipment Cooling Derate Factor eta_cool < 0.70]
+    Morphology["Urban Canyon Geometry H/W + High Facade Reflectance"] --> Stagnation["Wind-Sheltering & Air Recirculation U_eff << U_ref"]
+    Stagnation --> HcDrop["Convective Heat Transfer Coeff h_c Drops 40%"]
+    Morphology --> ReflectedSolar["Reflected Shortwave Irradiance Hits Radiator Fins"]
+    HcDrop --> Derate["Equipment Cooling Derate Factor eta_cool < 0.70"]
     ReflectedSolar --> Derate
-    Derate --> EarlyThrottling[Proactive Thermal Derating Triggered 8h Ahead]
+    Derate --> EarlyThrottling["Proactive Thermal Derating Triggered 8h Ahead"]
 ```
 
 ### 3.2 Mathematical Formulation
@@ -141,10 +141,10 @@ Distribution transformers lack internal fiber-optic sensors or real-time Dissolv
 
 ```mermaid
 flowchart TD
-    ExternalSoak[FortyGuard Multi-Hour Persistence P_theta + Load Heating] --> PaperHeat[Cellulose Paper Insulation Temp Rises]
-    PaperHeat --> FickDiffusion[Fickian Arrhenius Moisture Desorption into Oil J_p->o]
-    FickDiffusion --> SaturationSpike[Relative Oil Saturation RS_o Spikes > 50%]
-    SaturationSpike --> DielectricAlarm[Virtual Dielectric Breakdown Alert Dispatched Before Hot-Spot Trips]
+    ExternalSoak["FortyGuard Multi-Hour Persistence P_theta + Load Heating"] --> PaperHeat["Cellulose Paper Insulation Temp Rises"]
+    PaperHeat --> FickDiffusion["Fickian Arrhenius Moisture Desorption into Oil J_p->o"]
+    FickDiffusion --> SaturationSpike["Relative Oil Saturation RS_o Spikes > 50%"]
+    SaturationSpike --> DielectricAlarm["Virtual Dielectric Breakdown Alert Dispatched Before Hot-Spot Trips"]
 ```
 
 ### 4.2 Mathematical Formulation

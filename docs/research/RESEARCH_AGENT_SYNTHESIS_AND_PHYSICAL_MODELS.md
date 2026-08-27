@@ -40,17 +40,17 @@ Standard meteorological services (NOAA, OpenWeather) often report modeled 2-mete
 
 ```mermaid
 flowchart LR
-    A[FortyGuard Forecast & Persistence] --> B[Feature & Asset Mapper]
-    C[SCADA / BMS / Telemetry] --> B
-    D[OSM / EIA / Building Footprints] --> B
-    B --> E[Physics Model & Uncertainty Estimator]
-    E --> F{Deterministic Safety Gate}
-    F -->|Pass| G[Optimizer / Mitigation Planner]
-    F -->|Fail| H[Conservative Fallback]
-    G --> I[Human Approval / Control API]
+    A["FortyGuard Forecast & Persistence"] --> B["Feature & Asset Mapper"]
+    C["SCADA / BMS / Telemetry"] --> B
+    D["OSM / EIA / Building Footprints"] --> B
+    B --> E["Physics Model & Uncertainty Estimator"]
+    E --> F{"Deterministic Safety Gate"}
+    F -->|Pass| G["Optimizer / Mitigation Planner"]
+    F -->|Fail| H["Conservative Fallback"]
+    G --> I["Human Approval / Control API"]
     H --> I
-    I --> J[Actuator / Dispatch / Alert / Work Order]
-    J --> K[Outcome & Recalibration]
+    I --> J["Actuator / Dispatch / Alert / Work Order"]
+    J --> K["Outcome & Recalibration"]
     K --> A
 ```
 

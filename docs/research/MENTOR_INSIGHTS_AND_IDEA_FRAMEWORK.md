@@ -125,6 +125,47 @@
 
 ---
 
+### G. Bridging Engineering to Business Value & Multi-Stakeholder Influence
+*(Karel Wiszowaty - Partner @ developX, ex-COO & Delivery Director @ Inspirity - Session 11)*
+
+1. **The Whiteboard Trap:**
+   * The whiteboard is the safest place in the world for an idea because it faces zero user resistance or economic friction. Ideas die when leaving the whiteboard not from being technically wrong, but from failing to make stakeholders care.
+2. **Builders Are in Sales:**
+   * Engineering leadership is influencing without authority, translating technical choices into business value, and aligning architecture with strategic goals.
+3. **The Multi-Stakeholder Currency Matrix:**
+   * Never pitch a single technical message to an entire room. Match the message to each stakeholder's native currency:
+     - **Executives:** ROI, capital preservation, risk mitigation, and top-line growth.
+     - **Product Owners:** Sprint velocity, rapid iteration, and low coordination overhead.
+     - **Developers:** Tooling autonomy, modular independence, and developer experience.
+     - **Judges (40% Impact Score):** Measurable real-world consequence averted (e.g. cutting emergency heat response from days to hours).
+     - **Investors:** TAM expansion potential and scalable unit economics.
+4. **Selling the "Quarter-Inch Hole" (Theodore Levitt):**
+   * Buyers don't buy database queries or raster grids; they buy the equipment saved from thermal explosion, the blackout prevented, or the regulatory fine avoided.
+5. **Evolutionary Architecture vs. Day-1 Over-Engineering:**
+   * Stage 1 (MVP / Hackathon $\to$ Validate speed/value) $\longrightarrow$ Stage 2 (PMF $\to$ Modular reliability) $\longrightarrow$ Stage 3 (Scale $\to$ Microservices & cost optimization) $\longrightarrow$ Stage 4 (Enterprise $\to$ SOC2/ISO compliance & governance).
+6. **Pain is the Ultimate Salesman (Amazon / Netflix / Twitter Lessons):**
+   * Frame technical investments around risk mitigation before catastrophic failure forces reactive, expensive refactors.
+
+---
+
+### H. Inside the VC Decision: Commercial Moats, Painkillers & Compounding Defensibility
+*(Vikram - Principal @ Kota Capital, ex-Rocketship.vc, Jump Capital, BCG, Hackathon Judge - Session 12)*
+
+1. **The Core VC & Judge Evaluation Filter:**
+   * When founders leave the room, investors evaluate: *Burning Problem $\to$ Market Size & Expansion $\to$ Defensible Product Moat $\to$ Founder-Market Fit $\to$ Stickiness & Real Traction*.
+2. **The "Painkiller vs. Vitamin" Test:**
+   * Vitamins offer optional convenience; painkillers eliminate acute, intolerable bleeding. In climate tech, position microclimate intelligence as a catastrophic failure prevention engine rather than a passive weather map.
+3. **Market Expansion & Customer Concentration:**
+   * Seek ideas that expand the total addressable market (similar to how AI coding agents democratized software creation). Avoid reliance on 3–5 dominant enterprise buyers where customer bargaining power destroys pricing leverage.
+4. **Defensibility: Why Execution is Never a Moat:**
+   * GTM speed, marketing, and pricing advantages are easily copied. True defensibility comes from:
+     - **Proprietary sensor/telemetry ingress** (FortyGuard 2m ground truth).
+     - **Domain-specific physical modeling** (IEEE ODEs, IEC soil dynamics).
+     - **Compounding data flywheels** (systems where operational telemetry and user interactions make the AI continuously more accurate and sticky).
+5. **Founder-Market Fit & Self-Awareness:**
+   * Show deep domain credibility and articulate exactly why your team has the right to win in this specific vertical, while demonstrating self-awareness of organizational and technical gaps.
+
+---
 
 ## 2. ⚡ What FortyGuard's Temperature API Uniquely Offers
 

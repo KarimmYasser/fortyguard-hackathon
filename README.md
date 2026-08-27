@@ -31,29 +31,50 @@ This microclimate heat trap creates massive **cumulative thermal soak**, pushing
 
 ---
 
+## 🪙 Multi-Stakeholder Value Translation: "Selling the Quarter-Inch Hole"
+*(Informed by Karel Wiszowaty - Partner @ developX, ex-COO Inspirity - Session 11)*
+
+```
+┌───────────────────────────┬──────────────────────────────────┬────────────────────────────────────────────────────────────────────────┐
+│ Stakeholder               │ Primary Currency / Priority      │ How Thermal Sentinel Grid Delivers Value                              │
+├───────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ Hackathon Judges (40% pts)│ Measurable Real-World Impact     │ ~$2.57M scenario avoided failure exposure & 365.4 aging hours saved.   │
+├───────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ Substation Reliability Eng│ Asset Life & IEEE Compliance     │ Enforces IEEE C57.91 140°C hot-spot ceiling & 12h BESS pre-cooling.    │
+├───────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ Utility Executives / CFO  │ Risk Mitigation & Opex Control   │ Prevents $2.8M transformer blowout replacements & regulatory outage fines│
+├───────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ Developers & Data Science │ Modularity, DX & Test Rigor      │ Medallion ETL (Bronze→Gold), 168 passing pytests, sub-15ms simulation. │
+├───────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ Venture Capitalists / VCs │ TAM Expansion & Defensible Moats │ Acute Painkiller riding FERC 881 tailwinds; compounding physical AI moat.│
+└───────────────────────────┴──────────────────────────────────┴────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## 🛡️ Four Asymmetric Scientific Moats
 
 Generic hackathon entries rely on simple threshold rules (*"if temp > 40°C, shed load"*). **Thermal Sentinel Grid** models four unmeasured physical cascades that utility SCADA and generic AI miss:
 
 ```mermaid
 flowchart LR
-    A[FortyGuard 2m Microclimate\n12h Forecast, P_theta, H_theta] --> D[Physics Model]
-    B[Urban Morphology\nH/W, Imperviousness %, Albedo] --> D
-    C[SCADA / Smart-Meter Feeder Load\nAsset Metadata] --> D
+    A["FortyGuard 2m Microclimate<br>12h Forecast, P_theta, H_theta"] --> D["Physics Model"]
+    B["Urban Morphology<br>H/W, Imperviousness Ratio, Albedo"] --> D
+    C["SCADA / Smart-Meter Feeder Load<br>Asset Metadata"] --> D
     
-    D --> E1[1. Cable-Soil Dryout\nSurging rho_soil > 2.5 K·m/W]
-    D --> E2[2. Canyon Aerodynamics\nCooling Fin Derate eta_cool]
-    D --> E3[3. IEEE Winding Hot-Spot\nTransient Rise T_o & T_hs]
-    D --> E4[4. Virtual Paper Moisture\nFickian Dielectric Breakdown]
+    D --> E1["1. Cable-Soil Dryout<br>Surging rho_soil > 2.5 K·m/W"]
+    D --> E2["2. Canyon Aerodynamics<br>Cooling Fin Derate eta_cool"]
+    D --> E3["3. IEEE Winding Hot-Spot<br>Transient Rise T_o & T_hs"]
+    D --> E4["4. Virtual Paper Moisture<br>Fickian Dielectric Breakdown"]
     
-    E1 --> F[Risk Forecaster\n12h Uncertainty Tube]
+    E1 --> F["Risk Forecaster<br>12h Uncertainty Tube"]
     E2 --> F
     E3 --> F
     E4 --> F
     
-    G[Multi-Agent Planner\nBESS, Cooling, EV Shift] --> H{Safety Envelope Gate\nNon-LLM Deterministic Filter}
+    G["Multi-Agent Planner<br>BESS, Cooling, EV Shift"] --> H{"Safety Envelope Gate<br>Non-LLM Deterministic Filter"}
     F --> H
-    H -->|Within Model Envelope| I[Dispatch Recommendation / Work Order]
+    H -->|Within Model Envelope| I["Dispatch Recommendation / Work Order"]
 ```
 
 ### Core Substation & Microclimate Moats

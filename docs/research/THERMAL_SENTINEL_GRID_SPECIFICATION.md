@@ -141,17 +141,17 @@ out center tags;
 
 ```mermaid
 flowchart TD
-    Candidate[Candidate Mitigation Action] --> Gate{Deterministic Safety Gate\nNon-LLM Code}
+    Candidate["Candidate Mitigation Action"] --> Gate{"Deterministic Safety Gate<br>Non-LLM Code"}
     
-    Gate --> C1[Check 1: Thermal Ceilings\nTop-Oil < 110C, Hotspot < 140C]
-    C1 -->|Pass| C2[Check 2: Grid Voltage\n0.95 <= V_pu <= 1.05]
-    C2 -->|Pass| C3[Check 3: N-1 Redundancy\nFeeder & Tie Reserve]
-    C3 -->|Pass| C4[Check 4: BESS Energy Reserve\nSOC >= SOC_min + SOC_reserve]
+    Gate --> C1["Check 1: Thermal Ceilings<br>Top-Oil < 110C, Hotspot < 140C"]
+    C1 -->|Pass| C2["Check 2: Grid Voltage<br>0.95 <= V_pu <= 1.05"]
+    C2 -->|Pass| C3["Check 3: N-1 Redundancy<br>Feeder & Tie Reserve"]
+    C3 -->|Pass| C4["Check 4: BESS Energy Reserve<br>SOC >= SOC_min + SOC_reserve"]
     
-    C4 -->|All Pass| Accept[ACCEPT: Automated Dispatch]
-    C1 -->|Violation| Modify[MODIFY: Project onto Safe Envelope K_safe]
+    C4 -->|All Pass| Accept["ACCEPT: Automated Dispatch"]
+    C1 -->|Violation| Modify["MODIFY: Project onto Safe Envelope K_safe"]
     C2 -->|Violation| Modify
-    C3 -->|Violation| Reject[REJECT: Escalate to Operator]
+    C3 -->|Violation| Reject["REJECT: Escalate to Operator"]
     C4 -->|Violation| Modify
 ```
 
