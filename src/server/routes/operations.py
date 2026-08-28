@@ -137,8 +137,119 @@ async def create_coco_brief(req: COCOBriefRequest) -> Dict[str, Any]:
     brief = generate_coco_executive_brief(sector_id=req.sector_id, prepared_for=req.prepared_for)
     return {"status": "success", "brief": brief}
 
+@router.get("/operations/urban-priority/default")
+async def get_default_urban_priority() -> Dict[str, Any]:
+    """
+    Returns default urban cooling priority analysis using Mike Stelfox's 5-Layer Multiplicative Model
+    on the canonical Walker Jones vs Vacant Lot benchmark.
+    """
+    from src.operations.urban_priority import UrbanParcel, UrbanPriorityEngine
 
-@router.get("/mcp")
+    engine = UrbanPriorityEngine()
+    benchmark_parcels = [
+        UrbanParcel(
+            parcel_id="DC_WALKER_JONES",
+            name="Walker Jones Education Campus",
+            latitude=38.9032,
+            longitude=-77.0162,
+            area_sq_meters=178061.0,
+            land_use="school_campus",
+            fortyguard_2m_ambient_c=40.8,
+            persistence_hours_p_theta=7.5,
+            exceedance_degree_hours=32.0,
+            impervious_surface_ratio=0.79,
+            tree_canopy_ratio=0.08,
+            surface_albedo=0.18,
+            canyon_height_to_width_hw=1.4,
+            pedestrian_daily_traffic=1200,
+            transit_bus_stops_count=5,
+            vulnerable_occupants_count=418,
+            critical_grid_assets_count=2,
+            asthma_prevalence_percent=18.5,
+            poverty_rate_percent=31.0,
+            overnight_residential_soak=True,
+            cdc_social_vulnerability_index_svi=0.88,
+            plantable_ground_ratio=0.20,
+            public_right_of_way=True,
+        ),
+        UrbanParcel(
+            parcel_id="DC_SHAW_TRANSIT",
+            name="Shaw-Howard Transit Substation Hub",
+            latitude=38.9150,
+            longitude=-77.0220,
+            area_sq_meters=45000.0,
+            land_use="transit_substation",
+            fortyguard_2m_ambient_c=41.5,
+            persistence_hours_p_theta=8.0,
+            exceedance_degree_hours=36.0,
+            impervious_surface_ratio=0.85,
+            tree_canopy_ratio=0.05,
+            surface_albedo=0.15,
+            canyon_height_to_width_hw=1.8,
+            pedestrian_daily_traffic=3500,
+            transit_bus_stops_count=6,
+            vulnerable_occupants_count=150,
+            critical_grid_assets_count=4,
+            asthma_prevalence_percent=16.0,
+            poverty_rate_percent=24.0,
+            overnight_residential_soak=True,
+            cdc_social_vulnerability_index_svi=0.76,
+            plantable_ground_ratio=0.15,
+            public_right_of_way=True,
+        ),
+        UrbanParcel(
+            parcel_id="DC_VACANT_ASPHALT",
+            name="Vacant Industrial Storage Yard",
+            latitude=38.9180,
+            longitude=-76.9950,
+            area_sq_meters=20000.0,
+            land_use="vacant_parking_lot",
+            fortyguard_2m_ambient_c=44.2,
+            persistence_hours_p_theta=9.0,
+            exceedance_degree_hours=42.0,
+            impervious_surface_ratio=0.98,
+            tree_canopy_ratio=0.01,
+            surface_albedo=0.12,
+            canyon_height_to_width_hw=0.2,
+            pedestrian_daily_traffic=10,
+            transit_bus_stops_count=0,
+            vulnerable_occupants_count=0,
+            critical_grid_assets_count=0,
+            asthma_prevalence_percent=5.0,
+            poverty_rate_percent=5.0,
+            overnight_residential_soak=False,
+            cdc_social_vulnerability_index_svi=0.20,
+            plantable_ground_ratio=0.02,
+            public_right_of_way=False,
+        ),
+    ]
+
+    rankings = engine.rank_parcels(benchmark_parcels)
+    return {
+        "status": "success",
+        "methodology": "5_layer_multiplicative_model_v1",
+        "doctrine": "Hazard * Causes * Exposure * Vulnerability * Opportunity",
+        "parcels_evaluated": len(rankings),
+        "rankings": [r.model_dump() for r in rankings],
+    }
+
+
+@router.post("/operations/urban-priority/rank")
+async def rank_custom_urban_parcels(parcels: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Evaluates and ranks caller-provided urban parcels using the 5-Layer Multiplicative Model.
+    """
+    from src.operations.urban_priority import UrbanParcel, UrbanPriorityEngine
+
+    engine = UrbanPriorityEngine()
+    parsed_parcels = [UrbanParcel(**p) for p in parcels]
+    rankings = engine.rank_parcels(parsed_parcels)
+    return {
+        "status": "success",
+        "parcels_evaluated": len(rankings),
+        "rankings": [r.model_dump() for r in rankings],
+    }
+
 
 async def describe_mcp_server() -> Dict[str, Any]:
     return {

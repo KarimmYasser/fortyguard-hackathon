@@ -87,14 +87,15 @@
   6. Coupled 2-State BESS Thermal ODEs & Arrhenius SEI Capacity Fade ($55^\circ\mathrm{C}$ runaway ceiling)
   7. Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk ($\lambda_i(t,T)$, joint $P_{\text{cascade}}$)
   8. Analytical Uncertainty-Bounded Dispatch (Gaussian quantile bounds)
+  9. 5-Layer Multiplicative Urban Priority Engine ($\text{Hazard} \times \text{Morphology} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$)
 
 ### Slide 4: Multi-Day Compounding & AC Distribution Feeder Network
 * **Key Takeaway:** A frozen live FortyGuard 24×3 capture drives the 72-hour continuous model (daily 2m peaks 42.44/42.76/42.52°C), alongside a 4-bus distribution feeder with OLTC and analytical uncertainty-bounded dispatch.
 
 
-### Slide 5: Portfolio Operations & Worker Intervention Screening
-* **Key Takeaway:** The same deterministic service ranks registered assets, screens candidate field-work windows, and emits content-addressed mitigation evidence for both the dashboard and MCP clients.
-* **Talking Points:** The score is transparent triage rather than failure probability; missing registry fields are excluded instead of invented. The worker window uses measured wet-bulb and 2m air temperature but is explicitly not an OSHA/WBGT certification. The current demo applies one common Phoenix scenario to the portfolio rather than claiming a separate scan for every asset.
+### Slide 5: Portfolio Operations, Urban Priority & Worker Intervention Screening
+* **Key Takeaway:** The deterministic service ranks registered grid assets and urban parcels (resolving the *Empty Parking Lot vs. School Bus Stop* paradox via Mike Stelfox's 5-layer model), screens candidate field-work windows, and emits content-addressed mitigation evidence for both the dashboard and MCP clients (`/api/v1/operations/urban-priority/default`).
+* **Talking Points:** The score is transparent triage rather than failure probability; missing registry fields are excluded instead of invented. The worker window uses measured wet-bulb and 2m air temperature but is explicitly not an OSHA/WBGT certification. Tested on Walker Jones Education Campus (88.2/100 Critical vs 24.5/100 Vacant Lot).
 
 ### Slide 6: Assumption-Based Avoided Exposure (VoLL-Informed)
 * **Key Takeaway:** approximately $\$2,566,193$ modeled avoided exposure; 5,472.6× assumption-based ratio; $\$12.50/\text{kWh}$ VoLL assumption.
@@ -128,3 +129,4 @@
 | **"What is your defensibility moat against incumbents like Siemens or Schneider? (Vikram - Kota Capital VC)"** | *"Execution speed and GTM pricing are temporary advantages. Our defensibility is a 4-layer physical-AI moat: (1) Exclusive 2m convective parcel microclimate ingress via FortyGuard, (2) Deep standards-based physics (IEEE C57.91 Annex G, IEC 60287 cable-soil dryout, Oke aerodynamic wind-throttling), (3) Deterministic non-LLM safety validation, and (4) A compounding data flywheel where every asset simulation strengthens the underlying survival calibration."* |
 | **"Why not build a massive microservices architecture on Day 1? (Karel - developX / Inspirity)"** | *"As Karel emphasized, Day 1 over-engineering kills startup velocity and inflates coordination costs. We follow an evolutionary architecture: Phase 1 (Hackathon MVP) delivers an in-memory sub-15ms simulation engine and LangGraph cognitive planner; modular boundaries allow seamless evolution into microservices, DNP3/IEC 61850 protocol adapters, and SOC2 enterprise governance in Phases 2-4."* |
 | **"How does this project address different stakeholder currencies? (Karel - developX)"** | *"We pitch using each stakeholder's native currency: **Judges** see ~$2.57M in modeled avoided exposure (40% Impact score); **Reliability Engineers** get IEEE C57.91 compliance and 12h BESS pre-cooling; **Utility C-Suite** gets capital risk reduction; **Data Scientists** get 168 passing pytests and a clean Medallion pipeline; **VCs** see a software-only API model riding FERC 881 tailwinds."* |
+| **"How do you account for human-scale microclimate and field crew safety? (Mike Stelfox - Stelfox Design Studio)"** | *"Following Mike Stelfox's 5-layer cooling priority model and multiplicative vulnerability doctrine ($\text{Hazard} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$), our Portfolio Operations module couples 2m air temperature with solar irradiance and wet-bulb temperature ($T_{\text{wb}}$) to screen safe candidate maintenance windows for utility field crews, while our urban canyon physics models reflected facade irradiance on physical equipment."* |

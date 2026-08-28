@@ -200,3 +200,65 @@ async def solve_chance_constrained_opf(req: CC_OPF_Request) -> CC_OPF_Solution:
         logger.warning("Failed to persist chance-constrained OPF log: %s", exc, exc_info=True)
 
     return solution
+
+
+# --- 5. Human Thermal Comfort & Mean Radiant Temperature (MRT) Endpoints ---
+@router.post("/human-comfort")
+async def evaluate_human_comfort(req: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Computes Mean Radiant Temperature (MRT), Universal Thermal Climate Index (UTCI),
+    and safe outdoor exertion limits.
+    """
+    from src.physics.human_comfort import HumanComfortEngine, MicroclimateInput
+
+    engine = HumanComfortEngine()
+    inp = MicroclimateInput(**req)
+    metrics = engine.evaluate_comfort(inp)
+    return {
+        "status": "success",
+        "inputs": inp.model_dump(),
+        "comfort_metrics": metrics.model_dump(),
+    }
+
+
+@router.post("/shading-simulation")
+async def simulate_shading_and_albedo_retrofit(
+    req: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """
+    Simulates urban tree canopy, transit shade sails, and cool pavement albedo retrofits.
+    Demonstrates that while 2m dry-bulb air temperature drops marginally (-0.35°C),
+    Mean Radiant Temperature (MRT) drops by 15-22°C and UTCI drops by 5-8°C.
+    """
+    from src.physics.human_comfort import HumanComfortEngine, MicroclimateInput
+
+    engine = HumanComfortEngine()
+    req = req or {}
+    baseline_data = req.get("baseline", {
+        "fortyguard_2m_ambient_c": 41.5,
+        "relative_humidity_pct": 25.0,
+        "wind_speed_2m_m_s": 1.5,
+        "solar_irradiance_w_m2": 850.0,
+        "surface_albedo": 0.15,
+        "tree_canopy_cover_pct": 8.0,
+        "artificial_shade_fraction": 0.0,
+        "canyon_height_to_width_hw": 1.4,
+    })
+    baseline = MicroclimateInput(**baseline_data)
+    added_canopy = req.get("added_canopy_pct", 30.0)
+    added_shade = req.get("added_shade_fraction", 0.50)
+    cool_albedo = req.get("cool_pavement_albedo", 0.45)
+
+    comp = engine.simulate_cooling_intervention(
+        baseline=baseline,
+        added_canopy_pct=added_canopy,
+        added_shade_fraction=added_shade,
+        cool_pavement_albedo=cool_albedo,
+    )
+
+    return {
+        "status": "success",
+        "simulation": comp.model_dump(),
+    }
+
+

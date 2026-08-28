@@ -167,6 +167,28 @@
 
 ---
 
+### I. Human-Centric Urban Design & The Multiplicative Vulnerability Rule
+*(Mike Stelfox - Founder @ Stelfox Design Studio, Virginia Sea Grant Fellow, Hackathon Mentor - Session 13)*
+
+1. **The 5-Layer Cooling Priority Model:**
+   * Systematically prioritize microclimate interventions across:
+     - **Conditions:** 2m ambient temperature, duration/persistence, diurnal peaks.
+     - **Causes:** Impervious ratio, surface albedo, canyon wind-sheltering.
+     - **Exposure:** Pedestrian foot traffic, transit waiting times, bus stops, school zones.
+     - **Vulnerability:** Demographic sensitivity (asthma rates, elderly, poverty, night-time heat).
+     - **Opportunity:** Plantable ground area %, right-of-way permissions, municipal budget feasibility.
+2. **The "Empty Parking Lot vs. School Bus Stop" Paradox:**
+   * Never chase raw temperature peaks on heat maps without human context. An empty asphalt parking lot may be the hottest pixel, but has zero human exposure. 
+   * True intervention priority is multiplicative: $\text{Priority} = \text{Hazard} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$.
+3. **Convective 2m Air Temp vs. Mean Radiant Temperature (MRT):**
+   * While FortyGuard measures 2m ambient air temperature, human physiological thermal strain (and outdoor worker safety) is dominated by Mean Radiant Temperature (MRT) and solar irradiance ($W/m^2$). Adding tree canopy or shade structures cuts radiant heat flux by hundreds of watts per square meter, slashing perceived thermal strain (UTCI / WBGT / PET) by multiple degrees.
+4. **Historic Hydrology & Nocturnal Thermal Drainage:**
+   * Buried 1861 streams and paved-over storm sewer channels continue to act as natural cold-air pooling conduits at 3:00 AM due to low-lying topography. Planners can exploit historic hydrology to identify natural urban cooling corridors.
+5. **Actionable Microclimate UX for Decision-Makers:**
+   * Translate complex spatial data into intuitive trade-off models and parcel-level opportunity screening rather than raw raster maps.
+
+---
+
 ## 2. ⚡ What FortyGuard's Temperature API Uniquely Offers
 
 Mentors repeatedly emphasized that conventional weather APIs (Apple Weather, OpenWeather, NOAA) and orbital satellites (MODIS/Landsat) fail during extreme urban heatwaves. FortyGuard provides 4 proprietary capabilities that must form the foundation of any submission:
