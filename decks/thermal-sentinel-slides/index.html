@@ -29,6 +29,16 @@
       height: 1080px;
       overflow: hidden;
       background: #070a11;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+      z-index: 1;
+    }
+
+    .slide-scene.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
     }
 
     .slide-bg {
@@ -1048,6 +1058,45 @@
       tl.fromTo(`#${id} .slide-layout`, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.2);
       window.__timelines[id] = tl;
     });
+
+    let currentSlideIndex = 0;
+    const allSlideScenes = Array.from(document.querySelectorAll('.slide-scene'));
+
+    window.goToSlide = function(target) {
+      let nextIndex = 0;
+      if (typeof target === 'number') {
+        nextIndex = Math.max(0, Math.min(allSlideScenes.length - 1, target));
+      } else if (typeof target === 'string') {
+        const found = allSlideScenes.findIndex((s) => s.id === target);
+        if (found !== -1) nextIndex = found;
+      }
+      currentSlideIndex = nextIndex;
+      allSlideScenes.forEach((s, idx) => {
+        if (idx === nextIndex) {
+          s.classList.add('active');
+          const id = s.id;
+          if (window.__timelines && window.__timelines[id]) {
+            window.__timelines[id].restart();
+          }
+        } else {
+          s.classList.remove('active');
+        }
+      });
+    };
+
+    window.nextSlide = () => window.goToSlide(currentSlideIndex + 1);
+    window.prevSlide = () => window.goToSlide(currentSlideIndex - 1);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        window.nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        window.prevSlide();
+      }
+    });
+
+    // Initialize first slide
+    window.goToSlide(0);
   </script>
 </body>
 </html>
