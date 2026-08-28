@@ -27,6 +27,7 @@ This directory contains full verbatim transcripts, structured summaries, and act
 | **11** | **[Why Great Ideas Die on the Whiteboard](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/11-why-great-ideas-die-on-whiteboard-session.md)** | **Karel Wiszowaty** (Partner @ developX, ex-COO & Delivery Director @ Inspirity)<br>**Snehil Ahuja** (FortyGuard) | 51m<br>Aug 26, 2026 | Bridging product strategy & engineering execution to business value, Stakeholder Currencies matrix (executives vs POs vs developers vs judges vs VCs), Theodore Levitt's "quarter-inch hole" axiom, evolutionary architecture from MVP to enterprise, and architectural case studies (Amazon, Netflix Chaos Monkey, Twitter Fail Whale). |
 | **12** | **[Inside the VC Decision](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/12-inside-the-vc-decision-session.md)** | **Vikram** (Principal @ Kota Capital, ex-Rocketship.vc, Jump Capital, BCG)<br>**Snehil Ahuja** (FortyGuard) | 39m<br>Aug 26, 2026 | What VCs & judges discuss behind closed doors, Painkiller vs Vitamin test, market creation vs market size tailwinds, why execution is never a defensibility moat (proprietary data, compounding AI flywheels), founder-market fit, and diligence across stages (Pre-seed/Seed/Series A), sectors, and geographies. |
 | **13** | **[Informing the Data: What Temperature Means for Human Experience](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/13-informing-the-data-human-experience-session.md)** | **Mike Stelfox** (Founder @ Stelfox Design Studio, Virginia Sea Grant Fellow)<br>**Snehil Ahuja** (FortyGuard) | 35m<br>Aug 27, 2026 | 5-layer cooling priority model (conditions, causes, exposure, vulnerability, opportunity), Empty Parking Lot vs School Bus Stop paradox, convective 2m air temp vs Mean Radiant Temperature (MRT) and perceived strain (UTCI/WBGT), historic 1861 hydrology and nocturnal cold-air drainage, and actionable urban design interventions. |
+| **14** | **[AI for Science: Supercharging Applications with CUDA-X](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/14-ai4science-cuda-x-session.md)** | **Constantine** (Solutions Architect & AI for Science Lead @ NVIDIA, Judge)<br>**Snehil Ahuja** (FortyGuard) | 58m<br>Aug 28, 2026 | NVIDIA software-first stack, CUDA-X drop-in acceleration (cuDF, cuOpt, cuML, NIMs), AI for Science & digital twins (NVIDIA Earth-2, FourCastNet, CorrDiff), 4 waves of AI (Perception $\to$ Generative $\to$ Agentic $\to$ Physical), and winning judge criteria (explaining deep technical complexity in intuitive terms, solving real-world infrastructure crises, and proven methodology). |
 
 ---
 
@@ -177,6 +178,19 @@ This directory contains full verbatim transcripts, structured summaries, and act
   * **2m Convective Air vs. Mean Radiant Temperature (MRT):** While FortyGuard measures 2m ambient air temperature, perceived thermal strain (UTCI, WBGT, PET) is governed by radiant heat flux and solar irradiance ($W/m^2$). Tree canopies and shade structures cut radiant strain by multiple degrees even if dry-bulb air temperature shifts marginally.
   * **Historic Hydrology & Nocturnal Thermal Drainage:** Buried 1861 streams and storm sewers act as natural cold-air pooling conduits at 3:00 AM due to low-lying topography. Planners must leverage historic drainage valleys for urban ventilation.
   * **Actionable UX for Decision-Makers:** Non-technical city officials, facility directors, and school boards require clear parcel-level opportunity screening and risk indices rather than raw temperature maps.
+
+---
+
+### 14. [AI for Science: Supercharging Applications with CUDA-X](file:///Users/karim/Development/projects/fortyguard-hackathon/docs/sessions-dialogue/14-ai4science-cuda-x-session.md)
+* **Objective:** Inside NVIDIA's accelerated computing architecture, CUDA-X domain libraries, digital twins for climate science (Earth-2), and judging criteria for hackathon builders.
+* **Speakers:** Constantine (Senior Solutions Architect & AI for Science Lead @ NVIDIA, Hackathon Judge) & Snehil Ahuja (FortyGuard).
+* **Core Takeaways:**
+  * **Software-First Acceleration:** Performance gains ($10\times$ to $100\times$) are driven by algorithmic co-design, specialized core execution (Tensor Cores), and CUDA-X libraries rather than classical Moore's Law CPU scaling.
+  * **CUDA-X Ecosystem:** Drop-in accelerated libraries like **cuDF** ($150\times$ faster data ingestion than Pandas), **cuOpt** (combinatorial grid dispatch/routing), and **NVIDIA NIMs** (containerized inference with OpenAI-compatible API schemas).
+  * **Digital Twins & NVIDIA Earth-2:** Physics-informed climate models (**FourCastNet** for global weather in seconds, **CorrDiff** for generative downscaling to 25m street microclimates) proving the power of digital twins in energy grid and extreme heat prediction.
+  * **The 4 Waves of AI:** Perception (2012) $\to$ Generative (2022) $\to$ Agentic (2024+) $\to$ Physical AI (2026+ robotics and real-world infrastructure actuation).
+  * **The Winning Judge Rule ("Simplicity of Explanation"):** No matter how mathematically sophisticated the underlying physics (IEEE ODEs, Weibull survival), the system must be explainable in clear, intuitive terms where the judge's *"lightbulb immediately goes on"*, proving real-world problem-solving over marketing buzzwords.
+
 
 
 
