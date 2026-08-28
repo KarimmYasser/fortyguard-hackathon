@@ -47,7 +47,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   onOpenLiveScan,
   onOpenDatabaseModal,
 }) => {
-  const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo'>('pitch');
+  const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo' | 'business_demo'>('business_demo');
   const [currentTime, setCurrentTime] = useState<number>(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -62,6 +62,15 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   };
 
   const videoSources = {
+    business_demo: {
+      bundled: true,
+      url: '/videos/business_value_demo.mp4',
+      subtitledUrl: '/videos/business_value_demo_subtitled.mp4',
+      youtubeUrl: undefined,
+      title: '⚡ 4-Min Business Value & Customer Discovery Demo',
+      badge: 'Judges Choice · Subtitled',
+      description: 'Unhurried 1080p full interaction focused on commercial ROI, COCO customer discovery, OSHA worker safety shifts, and deterministic safety gates.',
+    },
     pitch: {
       bundled: true,
       url: '/videos/video.mp4',
@@ -235,6 +244,17 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             {/* Video Mode Switcher Pills */}
             <div className="flex items-center bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
               <button
+                onClick={() => setActiveVideoSource('business_demo')}
+                className={`px-3.5 py-1.5 rounded-xl font-bold transition-all flex items-center gap-2 ${
+                  activeVideoSource === 'business_demo'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 shadow-md shadow-emerald-500/25'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <Zap className="h-3.5 w-3.5" />
+                <span>Business Value Demo (Subtitled)</span>
+              </button>
+              <button
                 onClick={() => setActiveVideoSource('pitch')}
                 className={`px-3.5 py-1.5 rounded-xl font-bold transition-all flex items-center gap-2 ${
                   activeVideoSource === 'pitch'
@@ -243,7 +263,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 }`}
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>Motion Illustration Pitch</span>
+                <span className="hidden sm:inline">Motion Pitch</span>
               </button>
               <button
                 onClick={() => setActiveVideoSource('live_demo')}
@@ -254,7 +274,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
                 }`}
               >
                 <Cpu className="h-3.5 w-3.5" />
-                <span>Live UI Product Demo</span>
+                <span className="hidden sm:inline">Product Demo</span>
               </button>
             </div>
 
@@ -294,7 +314,15 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               playsInline
               preload="metadata"
               className="w-full aspect-video rounded-2xl bg-black shadow-inner"
-            />
+            >
+              <track
+                src="/videos/business_value_demo.vtt"
+                kind="subtitles"
+                srcLang="en"
+                label="English Subtitles"
+                default
+              />
+            </video>
           )}
         </div>
 
