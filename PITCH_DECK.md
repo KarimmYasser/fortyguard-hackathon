@@ -1,5 +1,5 @@
 # 🎙️ Thermal Sentinel Grid - Official Pitch Deck & Presentation Guide
-> **Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy) - FortyGuard Hackathon '26**  
+> **Track 03 (Industrial & Enterprise) · Synthesis with Track 06 (Agentic AI) & Track 02 (Energy) - FortyGuard Hackathon '26**  
 > *Author:* Karim Y. Azab (Karim Yasser) · *Live Demo:* **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (Zero install, no login, full incognito compatibility)
 
 ---

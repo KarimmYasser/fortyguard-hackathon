@@ -2,8 +2,9 @@
 > **Physical-AI Digital Twin & Autonomous Agentic Dispatch Engine for Grid Infrastructure & Distribution Transformers**  
 > *Building the World's Temperature AI · Global AI Hackathon (August 18-30, 2026)*
 
-[![Track: Agentic AI](https://img.shields.io/badge/Track%2006-Agentic%20AI-0e9ec4?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
-[![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Future%20Buildings%20%26%20Energy-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
+[![Track: Industrial & Enterprise](https://img.shields.io/badge/Primary%20Track%2003-Industrial%20%26%20Enterprise-0ea5e9?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
+[![Track: Agentic AI](https://img.shields.io/badge/Track%2006-Agentic%20AI-8b5cf6?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
+[![Track: Future Buildings & Energy](https://img.shields.io/badge/Track%2002-Energy%20Systems-e8762d?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
 [![Standards: IEEE & IEC](https://img.shields.io/badge/Standards-IEEE%20C57.91%20%7C%20IEC%2060076--7-blue?style=for-the-badge)](https://standards.ieee.org/)
 [![Safety: Deterministic Envelope](https://img.shields.io/badge/Safety%20Gate-Deterministic%20Envelope-success?style=for-the-badge)](https://github.com/KarimmYasser/fortyguard-hackathon)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](LICENSE)

@@ -1,5 +1,5 @@
 # 🛡️ Thermal Sentinel Grid - Asymmetric Innovation & Advanced Physical Mechanisms
-> **FortyGuard Hackathon '26 - Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
+> **FortyGuard Hackathon '26 - Track 03 (Industrial & Enterprise), Track 06 (Agentic AI) & Track 02 (Energy)**  
 > Four Non-Obvious, Cross-Disciplinary Literature Intersections: Cable-Soil Dry-Out, Robust Control Barrier Functions (CBFs), Urban Canyon Aerodynamic Throttling, and Virtual Paper-Oil Moisture Diffusion.
 
 ---

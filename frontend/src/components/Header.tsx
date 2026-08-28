@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
               </h1>
             </div>
             <p className="text-xs text-slate-400 font-medium">
-              Physics-Constrained Agentic Thermal Resilience Engine · FortyGuard Hackathon '26 (Tracks 06 & 02)
+              Physics-Constrained Industrial Thermal Resilience Engine · Track 03: Industrial & Enterprise (Tracks 06 & 02)
             </p>
           </div>
         </div>
@@ -45,10 +45,13 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Middle Track / Standards Badges */}
         <div className="hidden lg:flex items-center gap-2">
           <span className="text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 text-cyan-400 border border-cyan-800/50 font-medium flex items-center gap-1.5">
-            <Layers className="h-3 w-3" /> Track 06: Agentic AI
+            <Layers className="h-3 w-3" /> Track 03: Industrial & Enterprise
+          </span>
+          <span className="text-[11px] px-2.5 py-1 rounded-md bg-purple-950/60 text-purple-400 border border-purple-800/50 font-medium flex items-center gap-1.5">
+            <Activity className="h-3 w-3" /> Track 06: Agentic AI
           </span>
           <span className="text-[11px] px-2.5 py-1 rounded-md bg-orange-950/60 text-orange-400 border border-orange-800/50 font-medium flex items-center gap-1.5">
-            <Thermometer className="h-3 w-3" /> Track 02: Future Buildings & Energy
+            <Thermometer className="h-3 w-3" /> Track 02: Energy
           </span>
           <span className="text-[11px] px-2.5 py-1 rounded-md bg-blue-950/60 text-blue-400 border border-blue-800/50 font-mono">
             IEEE C57.91 | IEC 60076-7

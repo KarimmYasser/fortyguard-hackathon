@@ -112,14 +112,14 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
           <div className="space-y-4 max-w-3xl">
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                <Sparkles className="h-3.5 w-3.5" /> FortyGuard Hackathon '26
-              </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                <ShieldCheck className="h-3.5 w-3.5" /> Track 03: Industrial & Enterprise
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
                 <Cpu className="h-3.5 w-3.5" /> Track 06: Agentic AI
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/15 text-orange-300 border border-orange-500/30">
-                <Zap className="h-3.5 w-3.5" /> Track 02: Future Buildings & Energy
+                <Zap className="h-3.5 w-3.5" /> Track 02: Energy Systems
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
                 <ShieldCheck className="h-3.5 w-3.5" /> IEEE C57.91 & ANSI C84.1 Verified

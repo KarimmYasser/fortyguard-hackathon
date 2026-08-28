@@ -1,7 +1,7 @@
 # 🔌 FortyGuard API Integration, Live Ingestion & Simulation Architecture Specification
 > **Architecture Decision Record (ADR): Dual-Mode Microclimate Ingestion & System Boundary Specification**  
 > **Status:** Accepted & Implemented — *revised after live integration*  
-> **Applicable Tracks:** Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)
+> **Applicable Tracks:** Track 03 (Industrial & Enterprise), Track 06 (Agentic AI) & Track 02 (Energy)
 
 ---
 

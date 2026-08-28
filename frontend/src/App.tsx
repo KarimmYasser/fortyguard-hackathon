@@ -424,7 +424,7 @@ export const App: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-[#050810] py-4 px-6 text-center text-xs text-slate-500 font-mono flex items-center justify-between max-w-[1600px] mx-auto w-full">
         <span>⚡ Thermal Sentinel Grid · FortyGuard Hackathon '26</span>
-        <span>Building the World's Temperature AI · Tracks 06 & 02</span>
+        <span>Building the World's Temperature AI · Track 03: Industrial & Enterprise (Tracks 06 & 02)</span>
         <span>IEEE Std C57.91 & ANSI C84.1 Compliant</span>
       </footer>
 

@@ -59,7 +59,7 @@ FortyGuard provides 4 proprietary capabilities that directly solve this blind sp
 - **Pain Point:** Lack of visibility into whether their specific balcony or unshaded facade is entering an explosive thermal trap.
 - **Agent Deliverable:** Real-time push alerts ("Your facade will hit 49°C persistence between 1 PM-4 PM: run AC on moderate eco-cycle and avoid simultaneous high-draw appliances to prevent circuit breaker fires").
 
-## 1.5 Why Physics-Constrained Agentic AI (Track 06) Over Black-Box ML Training
+## 1.5 Why Physics-Constrained Industrial AI (Track 03 & Track 06) Over Black-Box ML Training
 *(For the full deep-dive, see **[Value Proposition & AI Philosophy](docs/research/VALUE_PROPOSITION_AND_AI_PHILOSOPHY.md)**)*
 - **FortyGuard Already Solved Microclimate ML:** 2m convective air, land-cover morphology, and 12h forecasts are directly provided by FortyGuard's AI.
 - **Use Standards-Based Physical ODEs:** Transformer heat rise and Arrhenius cellulose degradation can be represented with IEEE Std C57.91 / IEC 60076-7 models. The prototype favors transparent first-principles calculations over an unvalidated black-box surrogate; operational use still requires asset-specific calibration.

@@ -1,5 +1,5 @@
 # ⚡ Thermal Sentinel Grid - Full Implementation Specification
-> **FortyGuard Hackathon '26 - Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)**  
+> **FortyGuard Hackathon '26 - Track 03 (Industrial & Enterprise), Track 06 (Agentic AI) & Track 02 (Energy)**  
 > Physics-Constrained Multi-Agent Decision-Support & Dispatch Engine for Distribution Transformers and Outdoor Energy Assets.
 
 ---

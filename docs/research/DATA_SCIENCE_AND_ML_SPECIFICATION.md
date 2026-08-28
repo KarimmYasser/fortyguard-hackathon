@@ -1,6 +1,6 @@
 # 📊 Data Science, Engineering & Machine Learning Architecture Specification
 > **Thermal Sentinel Grid — IBM Data Science Professional Methodology Specification**  
-> *Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy) — FortyGuard Hackathon '26*
+> *Track 03 (Industrial & Enterprise), Track 06 (Agentic AI) & Track 02 (Energy) — FortyGuard Hackathon '26*
 
 ---
 

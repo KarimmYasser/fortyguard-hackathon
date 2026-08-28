@@ -54,8 +54,8 @@ My motivation stems from wanting to turn cutting-edge thermal AI into a life-sav
 | :--- | :--- | :--- |
 | **1. Project Title** | Title of the project | `PyreShield AI - Autonomous Microclimate Thermal Runaway & Electrical Fire Prevention Agent` |
 | **2. One-Line Pitch** | Clear, catchy one-line summary | `Autonomous LangGraph agent utilizing FortyGuard 2m persistence layers to predict and prevent heat-induced building fires, transformer blowouts, and HVAC thermal runaway.` |
-| **3. Primary Track** | Main track evaluated for judging | `Track 6 - Agentic Track (API + Agentic AI)` |
-| **4. Secondary Tracks** | Up to 2 optional tags | `Track 2 - Future Buildings & Energy`, `Track 3 - Industrial & Enterprise` |
+| **3. Primary Track** | Main track evaluated for judging | `Track 3 - Industrial & Enterprise` |
+| **4. Secondary Tracks** | Up to 2 optional tags | `Track 6 - Agentic AI`, `Track 2 - Future Buildings & Energy` |
 | **5. Target User & Problem** | Who benefits & pain point solved | Facility managers, municipal grid operators, EV charging network engineers, and property insurers facing heat-induced equipment explosions and electrical fires caused by microclimate boundary-layer thermal soak. |
 | **6. Geography & Dates** | US location & date range analyzed | U.S. dense urban heat islands (e.g., Phoenix, AZ / Las Vegas, NV / Houston, TX) across summer 2024-2026 + 12-hour predictive forecast windows. |
 | **7. FortyGuard API Usage** | How FortyGuard endpoints were used | Polling `/v1/heatmap` with `analytic_type="persistence"` & `"exceedance"` to measure cumulative asset thermal soak past 40°C/45°C; `/v1/env_params` for point solar irradiance/heat index; `/v1/satellite` for surface reflectivity. |

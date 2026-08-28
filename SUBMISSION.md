@@ -1,6 +1,6 @@
 # ⚡ Thermal Sentinel Grid
 > **Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Distribution Transformers & Urban Energy Infrastructure**  
-> **FortyGuard Hackathon '26** - *Track 06 (Agentic AI) & Track 02 (Future Buildings & Energy)*
+> **FortyGuard Hackathon '26** - *Track 03 (Industrial & Enterprise) · Synthesis with Track 06 (Agentic AI) & Track 02 (Energy)*
 
 ---
 
@@ -13,8 +13,8 @@
 | :--- | :--- |
 | **Project Title** | **Thermal Sentinel Grid** |
 | **One-Line Pitch** | **Physical-AI Digital Twin & Autonomous Agentic Dispatch Engine for Substation Transformers & Urban Grid Resilience** |
-| **Primary Track** | **Track 06 - Agentic AI** |
-| **Secondary Track Tags** | **Track 02 (Future Buildings & Energy)** & **Track 03 (Industrial & Enterprise / Critical Assets)** |
+| **Primary Track** | **Track 03 - Industrial & Enterprise** |
+| **Secondary Track Tags** | **Track 06 (Agentic AI)** & **Track 02 (Future Buildings & Energy)** |
 | **Target Audience (Who It's For)** | Substation Reliability Engineers & Grid Operators at Electric Utilities (APS, ConEd, ERCOT, PG&E) and Mission-Critical Facility Managers (Data Centers, Hospitals, Military Bases). |
 | **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** — canonical FortyGuard capture on **2023-07-19** ($42.74^\circ\mathrm{C}$ parcel peak, 12 sampled hours above $40^\circ\mathrm{C}$), plus a complete 72-hour live capture for **2023-07-24 through 2023-07-26** (daily peaks $42.44/42.76/42.52^\circ\mathrm{C}$). The historical regional record reached $119^\circ\mathrm{F}$; it is context, not the API boundary. |
 | **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 12.0\text{h}$), Exceedance Degree-Hours ($H_{40} = 17.48\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($3.68$), driving proactive 12-hour BESS and transformer cooling dispatch. |

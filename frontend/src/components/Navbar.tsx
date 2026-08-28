@@ -243,10 +243,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
           <span className="text-slate-600">|</span>
           <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-medium">
+            Track 03: Industrial & Enterprise
+          </span>
+          <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-medium hidden md:inline">
             Track 06: Agentic AI
           </span>
-          <span className="px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 font-medium hidden md:inline">
-            Track 02: Future Buildings
+          <span className="px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 font-medium hidden lg:inline">
+            Track 02: Energy
           </span>
         </div>
       </div>

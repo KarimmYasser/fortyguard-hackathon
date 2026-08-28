@@ -1,6 +1,7 @@
 # 📚 Documentation & Reference Hub
 
-Welcome to the PyreShield AI / FortyGuard Hackathon documentation hub.
+> 📖 **Zero-Duplicate Reading Roadmap:**  
+> To understand the entire project efficiently without reading repetitive documents, see the **[Master Reading Order & Roadmap](READING_ORDER.md)** (~25 min core foundation).
 
 ---
 
