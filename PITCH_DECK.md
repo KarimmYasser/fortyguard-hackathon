@@ -73,12 +73,12 @@
 * **Key Takeaway:** Station weather is blind to *duration*. The measured land-cover delta is $+1.1^\circ\mathrm{C}$, but it is held for $12$ unbroken hours above $40^\circ\mathrm{C}$ — and thermal damage integrates over time.
 * **Talking Points:** Phoenix July 2023 case study; $119^\circ\mathrm{F}$ peak; 31 consecutive days $\ge 110^\circ\mathrm{F}$; why SCADA fails without $2\text{m}$ boundary layer data.
 
-### Slide 2: The Physical-AI Architecture
-* **Key Takeaway:** 4-Layer Hybrid Stack (Perception $\to$ Physical Truth $\to$ Agentic Planner $\to$ Safety Barrier).
-* **Talking Points:** Why we do NOT use black-box ML; IEEE C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error); LangGraph StateGraph decision flow.
+### Slide 2: Wave 4 — Physical-AI Digital Twin Architecture
+* **Key Takeaway:** Moving beyond chatbots into Wave 4 Physical AI (Perception $\to$ Digital Twin Physics $\to$ Agentic Cognitive Planner $\to$ Deterministic Safety Gate).
+* **Talking Points:** Why we do NOT use black-box neural networks for grid control; IEEE C57.91 Annex G verification ($<0.0001^\circ\mathrm{C}$ error against published benchmark tables); LangGraph StateGraph decision flow orchestrating BESS, OLTC, and radiator fans.
 
-### Slide 3: Eight Asymmetric Scientific & Heavy Computational Moats
-* **Key Takeaway:** Unmeasured physical cascades and convex optimization:
+### Slide 3: Ten Asymmetric Scientific & Physical Digital Twin Moats
+* **Key Takeaway:** Unmeasured physical cascades and physical asset digital twins:
   1. IEC 60287 Cable-Soil Dryout (72h end-of-day $\rho_{\text{soil}} = 1.52 \to 2.13 \to 2.41\text{ K}\cdot\text{m/W}$)
   2. Oke/Evola Canyon Aerodynamics ($-32\%$ cooling derate)
   3. Fickian Virtual Moisture Sensor ($RS_o = 42\%$ arcing warning)
@@ -87,7 +87,8 @@
   6. Coupled 2-State BESS Thermal ODEs & Arrhenius SEI Capacity Fade ($55^\circ\mathrm{C}$ runaway ceiling)
   7. Arrhenius-Weibull Grid Fragility & Cascading Blackout Risk ($\lambda_i(t,T)$, joint $P_{\text{cascade}}$)
   8. Analytical Uncertainty-Bounded Dispatch (Gaussian quantile bounds)
-  9. 5-Layer Multiplicative Urban Priority Engine ($\text{Hazard} \times \text{Morphology} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$)
+  9. Mike Stelfox 5-Layer Multiplicative Urban Priority Engine ($\text{Hazard} \times \text{Morphology} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$)
+  10. Mean Radiant Temperature (MRT) & UTCI Human Comfort Suite ($\Delta T_{\text{mrt}} = -19.2^\circ\mathrm{C}$ under shading)
 
 ### Slide 4: Multi-Day Compounding & AC Distribution Feeder Network
 * **Key Takeaway:** A frozen live FortyGuard 24×3 capture drives the 72-hour continuous model (daily 2m peaks 42.44/42.76/42.52°C), alongside a 4-bus distribution feeder with OLTC and analytical uncertainty-bounded dispatch.
@@ -104,9 +105,10 @@
 * **Key Takeaway:** 17-table dual-storage persistence (Local SQLite + PostgREST Supabase PostgreSQL) with Supabase as the durable source of truth, SQLite as an offline fallback, and request-addressed API/solve caching.
 * **Talking Points:** MD5-addressed FortyGuard responses save paid credits; SHA-256-addressed, non-expiring full solve payloads let saved parcels replay across serverless cold starts; work orders, safety certificates, financial snapshots, and content-addressed external-validation reports remain separately auditable.
 
-### Slide 8: Data Science, Analytics & ML Intelligence (IBM-Style Lifecycle)
-* **Key Takeaway:** End-to-end data lifecycle: Bronze→Silver→Gold ETL Medallion pipeline (18 engineered features), fast Ridge Physics-Surrogate ($R^2 > 0.98, 5000\times$ speedup), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival analysis.
-* **Talking Points:** Standalone Jupyter Notebook (`notebooks/Thermal_Sentinel_DataScience.ipynb`) + interactive in-app Data Science Studio tab; paired $t$-test is statistically significant ($p=1.74\times10^{-5}$) but the effect is negligible (Cohen's $d=0.024$), so the product correctly leads on duration rather than spatial spread.
+### Slide 8: Software-First Acceleration, Analytics & ML Intelligence (NVIDIA CUDA-X Paradigm)
+* **Key Takeaway:** Software-First Engineering: $5,000\times$ faster Ridge Physics-Surrogate ($R^2 > 0.98$) for city-wide grid screening, Bronze→Silver→Gold ETL Medallion pipeline (18 engineered features), Isolation Forest sensor anomaly detector, and Weibull Remaining Useful Life (RUL) survival analysis.
+* **Talking Points:** Standalone Jupyter Notebook (`notebooks/Thermal_Sentinel_DataScience.ipynb`) + interactive in-app Data Science Studio tab; 175 passing unit tests delivering enterprise-grade execution stability.
+
 
 ---
 

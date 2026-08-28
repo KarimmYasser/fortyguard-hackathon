@@ -12,13 +12,13 @@
 | Form Field | Exact Submission Content |
 | :--- | :--- |
 | **Project Title** | **Thermal Sentinel Grid** |
-| **One-Line Pitch** | Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Distribution Transformers & Urban Energy Infrastructure |
+| **One-Line Pitch** | **Physical-AI Digital Twin & Autonomous Agentic Dispatch Engine for Substation Transformers & Urban Grid Resilience** |
 | **Primary Track** | **Track 06 - Agentic AI** |
 | **Secondary Track Tags** | **Track 02 (Future Buildings & Energy)** & **Track 03 (Industrial & Enterprise / Critical Assets)** |
 | **Target Audience (Who It's For)** | Substation Reliability Engineers & Grid Operators at Electric Utilities (APS, ConEd, ERCOT, PG&E) and Mission-Critical Facility Managers (Data Centers, Hospitals, Military Bases). |
 | **Location & Time Period Analyzed** | **Downtown Phoenix, Arizona (33.4484° N, 112.0740° W)** — canonical FortyGuard capture on **2023-07-19** ($42.74^\circ\mathrm{C}$ parcel peak, 12 sampled hours above $40^\circ\mathrm{C}$), plus a complete 72-hour live capture for **2023-07-24 through 2023-07-26** (daily peaks $42.44/42.76/42.52^\circ\mathrm{C}$). The historical regional record reached $119^\circ\mathrm{F}$; it is context, not the API boundary. |
 | **How FortyGuard API Was Used** | Programmatically calls FortyGuard's async submit-and-poll REST API (`POST /v1/heatmap`, `POST /v1/env_params`, `GET /v1/status/{id}`, `GET /v1/system/fetch-api-key-usage`). Ingests 2-meter convective ambient air temperature tiles ($60\text{m}$ resolution) and 12-hour forward forecasts to compute Continuous Persistence ($P_{40} = 12.0\text{h}$), Exceedance Degree-Hours ($H_{40} = 17.48\text{ }^\circ\mathrm{C}\cdot\text{h}$), and Thermal Soak Index ($3.68$), driving proactive 12-hour BESS and transformer cooling dispatch. |
-| **AI & Data Science Tools Used** | 1. **LangGraph StateGraph**: Autonomous cognitive multi-agent orchestration.<br>2. **Siemens SDC Gateway (`gpt-5.4` default)**: Optional narrative synthesis for operator work orders, with deterministic fallback when unavailable.<br>3. **Non-LLM CBF-Inspired Safety Filter**: Deterministic bounded-trajectory validation and bisection over permissible load, checking ANSI C84.1 voltage ($0.95-1.05\text{ pu}$), thermal, BESS, and N-1 limits in the model.<br>4. **Physics Surrogate Regressor (Ridge + Poly2)**: $5000\times$ faster city-wide screening ($R^2 > 0.98, \text{MAE} < 1.5^\circ\mathrm{C}$).<br>5. **Sensor Anomaly Detection (Isolation Forest)**: Identifies sensor drift and thermal runaway pre-cursors.<br>6. **Weibull RUL Survival Analysis**: Extreme value lifetime hazard forecasting under sustained thermal stress.<br>7. **Bronze→Silver→Gold ETL Pipeline**: Medallion architecture generating 18 engineered features for real-time analytics. |
+| **AI & Data Science Tools Used** | 1. **Physical-AI Digital Twin Stack**: Perception (FortyGuard 2m AI) $\to$ Digital Twin ODEs (IEEE C57.91 Annex G / IEC 60287) $\to$ Cognitive Planner (LangGraph StateGraph) $\to$ Deterministic Safety Gate.<br>2. **Software-First Acceleration & Physics Surrogate (Ridge + Poly2)**: $5000\times$ faster city-wide grid screening ($R^2 > 0.98, \text{MAE} < 1.5^\circ\mathrm{C}$).<br>3. **Mike Stelfox 5-Layer Multiplicative Priority Engine**: Resolves the *Empty Parking Lot vs School* paradox ($\text{Hazard} \times \text{Causes} \times \text{Exposure} \times \text{Vulnerability} \times \text{Opportunity}$).<br>4. **Mean Radiant Temperature (MRT) & UTCI Comfort Suite**: ISO 7726 / VDI 3787 radiation balance proving $\Delta T_{\text{mrt}} = -19.2^\circ\mathrm{C}$ under shading.<br>5. **Non-LLM CBF-Inspired Safety Filter**: Deterministic trajectory validation checking ANSI C84.1 voltage ($0.95-1.05\text{ pu}$), thermal, BESS, and N-1 limits in the model.<br>6. **Weibull RUL Survival Analysis & Isolation Forest**: Extreme value lifetime hazard forecasting and real-time sensor anomaly detection.<br>7. **Bronze→Silver→Gold ETL Pipeline**: Medallion architecture generating 18 engineered features for real-time analytics. |
 | **Live Demo URL** | **[https://www.thermal-sentinel-grid.live](https://www.thermal-sentinel-grid.live)** (Zero install, no login, full incognito compatibility) · *Local:* `http://localhost:8000` |
 | **Demo Video Link (3 min max)** | YouTube / Loom unlisted URL with full narration & voiceover (Available locally as Motion Pitch `videos/thermal-sentinel-pitch/renders/video.mp4` and Live UI Walkthrough `videos/thermal-sentinel-pitch/renders/live_product_demo.mp4`, also embedded directly into the Home screen at `/`). |
 | **GitHub Repository Link** | **[https://github.com/KarimmYasser/fortyguard-hackathon](https://github.com/KarimmYasser/fortyguard-hackathon)** *(Collaborator `hackathon@fortyguard.com` / `Hackathon-FG` invited)*. |
@@ -28,26 +28,26 @@
 
 ---
 
-## 🌟 Executive Summary & Pitch
+## 🌟 Executive Summary & Pitch: The Physical-AI Digital Twin
 
 During extreme heatwaves, electrical utilities manage power distribution using regional airport weather stations located 10 miles away. However, distribution transformers, switchgear, and underground feeder cables sit **0 to 2 meters above radiating black asphalt** inside dense urban canyons.
 
 During the historic Phoenix July 2023 heatwave, the regional record reached $119^\circ\mathrm{F}$, while the pinned FortyGuard parcel capture measured $42.74^\circ\mathrm{C}$ and remained above $40^\circ\mathrm{C}$ for all 12 sampled hours. Direct probing showed Sky Harbor slightly *warmer* than downtown, so the product does not claim an airport-to-asset delta; it leads on measured duration and parcel conditions.
 
-**Thermal Sentinel Grid** bridges this dangerous 2-meter microclimate gap by coupling **FortyGuard’s hyperlocal Temperature AI** with **IEEE Std C57.91 / IEC 60076-7 thermal differential equations**, a **LangGraph multi-agent recommendation workflow**, and a **non-LLM deterministic, CBF-inspired safety-envelope filter**. Its Portfolio Ops module ranks registered assets, screens candidate crew-intervention windows, and exposes content-addressed evidence through both the dashboard and an MCP-compatible tool interface. It is a decision-support prototype with no physical actuation; see the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md) and [as-built operations and MCP specification](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md).
+**Thermal Sentinel Grid** delivers **Wave 4 Physical AI** by coupling **FortyGuard’s hyperlocal Temperature AI** with a **Substation & Distribution Feeder Digital Twin (IEEE C57.91 / IEC 60287)**, a **LangGraph multi-agent cognitive planner**, and a **deterministic, non-LLM safety gate**. Its Portfolio Ops module ranks registered assets and urban parcels via Mike Stelfox's 5-layer multiplicative model, screens candidate crew-intervention windows, and exposes content-addressed evidence through both the dashboard and an MCP-compatible tool interface. It is a decision-support prototype with no physical actuation; see the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md) and [as-built operations and MCP specification](docs/research/PORTFOLIO_OPERATIONS_AND_MCP.md).
 
 ---
 
 ## 📋 The 15-Minute Pre-Build Decision Checklist (Judge Alignment)
 
-*Evaluated against the official Hackathon Judge Framework (Ahmed Abdelkhalek - Head of Startups, Google Cloud):*
+*Evaluated against the official Hackathon Judge Framework (Ahmed Abdelkhalek - Head of Startups, Google Cloud & Constantine - AI for Science Lead, NVIDIA):*
 
 | Dimension | Thermal Sentinel Grid Implementation |
 | :--- | :--- |
 | **Hero (Exact Buyer)** | **Substation Reliability Engineers & Grid Operators** (Utilities e.g. APS, ConEd, ERCOT) & **Mission-Critical Facility Directors** (Data Centers, Hospitals). |
-| **Pain** | **$2.8M in substation blowouts and 15x accelerated insulation aging** caused by unmeasured 2m asphalt thermal soak during 12-hour heatwaves. |
-| **AI Justification** | **Autonomous 12-Hour Proactive Dispatch:** Cognitive multi-agent planning connecting FortyGuard's forecast with BESS peak-shaving, OLTC tap tuning, and radiator pre-cooling. Exact physics ODEs handle math, while AI handles multi-asset policy synthesis. |
-| **Kill Switch (24h Validation)** | **Sub-15ms Real-Time Simulation Engine:** Interactive What-If Studio allowing judges to modulate microclimate deltas and see live ODE recalculations in $<15\text{ms}$. |
+| **Pain (Burning Crisis)** | **$2.8M in substation blowouts and 15x accelerated insulation aging** caused by unmeasured 2m asphalt thermal soak during 12-hour heatwaves. |
+| **AI Justification (Physical AI)** | **Autonomous 12-Hour Proactive Dispatch:** Cognitive multi-agent planning connecting FortyGuard's forecast with BESS peak-shaving, OLTC tap tuning, and radiator pre-cooling. Exact physics ODEs handle math, while AI handles multi-asset policy synthesis. |
+| **Kill Switch / Lightbulb Test** | **Sub-15ms Real-Time Simulation Engine & $5000\times$ Physics Surrogate:** Interactive What-If Studio allowing judges to modulate microclimate deltas and see live ODE recalculations in $<15\text{ms}$. |
 
 ---
 
@@ -56,9 +56,9 @@ During the historic Phoenix July 2023 heatwave, the regional record reached $119
 | Weight | Official Criterion | What Judges Look For | Thermal Sentinel Grid Moat & Evidence |
 | :---: | :--- | :--- | :--- |
 | **40%** | **Impact & Relevance** | Real-world problem, client benefit, commercial viability over toy demos. | **~$2.57M modeled avoided exposure in the canonical scenario** under disclosed assumptions; addresses the 2-meter asphalt heat-soak blind spot for utilities and mission-critical facilities. |
-| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **168 automated pytest tests passing (plus 3 opt-in live checks skipped by default)**, clean Medallion ETL feature pipeline, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
-| **15%** | **Innovation** | Novel concepts, multi-source coupling, Physical-AI hybrid synthesis. | **Physical-AI Hybrid Stack (Prof. Reichental Model):** Perception (FortyGuard 2m AI) $\to$ Physics Truth (IEEE C57.91 / IEC 60287) $\to$ Cognitive Planner (LangGraph) $\to$ Deterministic Safety Guardrail. |
-| **10%** | **Communication** | Pitch clarity, video quality, documentation, conveying the core "Why". | **3-minute high-velocity screen demo** of the working software UI, second-by-second narrative script, 22 academic citations with LaTeX proofs, and full webinar alignment. |
+| **35%** | **Technical Execution** | Code quality, proper FortyGuard API usage, live deployment stability. | **175 automated pytest tests passing (plus 3 opt-in live checks skipped by default)**, clean Medallion ETL feature pipeline, $5000\times$ physics surrogate, sub-15ms simulation engine, zero-install incognito live deployment, and server-side secret management. |
+| **15%** | **Innovation** | Novel concepts, multi-source coupling, Physical-AI hybrid synthesis. | **Physical-AI Digital Twin Stack (NVIDIA Earth-2 / Prof. Reichental Model):** Perception (FortyGuard 2m AI) $\to$ Digital Twin Physics (IEEE C57.91 / IEC 60287) $\to$ Cognitive Planner (LangGraph) $\to$ Deterministic Safety Guardrail. |
+| **10%** | **Communication** | Pitch clarity, video quality, documentation, conveying the core "Why". | **Constantine's 'Simplicity of Explanation'**: 3-minute high-velocity screen demo, 30-second Lightbulb Hook, 22 academic citations with LaTeX proofs, and full webinar alignment. |
 
 ---
 

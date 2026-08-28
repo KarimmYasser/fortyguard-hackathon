@@ -1,5 +1,5 @@
 # ⚡ Thermal Sentinel Grid - FortyGuard Hackathon '26
-> **Physics-Constrained Agentic Thermal Resilience & Dispatch Engine for Grid Assets & Transformers**  
+> **Physical-AI Digital Twin & Autonomous Agentic Dispatch Engine for Grid Infrastructure & Distribution Transformers**  
 > *Building the World's Temperature AI · Global AI Hackathon (August 18-30, 2026)*
 
 [![Track: Agentic AI](https://img.shields.io/badge/Track%2006-Agentic%20AI-0e9ec4?style=for-the-badge)](https://www.fortyguard.com/hackathon26)
@@ -11,21 +11,22 @@
 
 ---
 
-## 🧭 Executive Summary
+## 🧭 Executive Summary: Delivering Wave 4 Physical AI
 
 During extreme urban heatwaves, standard meteorological forecasts report broad regional conditions, while critical grid infrastructure—**substation distribution transformers, underground MV cables, padmount switchgear, and outdoor Battery Energy Storage Systems (BESS)**—operates inside the **2-meter boundary layer** above radiating asphalt and urban street canyons. In the pinned downtown Phoenix capture, FortyGuard measured a **42.74°C peak and 12 consecutive sampled hours above 40°C**. The operational signal is the sustained parcel-level boundary, not an assumed airport-to-city temperature gap.
 
 This microclimate heat trap creates massive **cumulative thermal soak**, pushing transformer top-oil and winding hot-spot temperatures past critical limits, accelerating insulation aging by orders of magnitude, and driving catastrophic substation blowouts and grid outages.
 
-**Thermal Sentinel Grid** bridges this critical gap by fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential equations** and a **LangGraph multi-agent harness guarded by a deterministic, CBF-inspired safety-envelope filter**. It is a decision-support prototype: grid, asset, reliability, and economic outputs are modeled, no physical equipment is actuated, and operational deployment requires calibration and utility approval. See the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md).
+**Thermal Sentinel Grid** bridges this critical gap by delivering **Wave 4 Physical AI**: fusing **FortyGuard’s 2-meter hyperlocal Temperature API** with **IEEE C57.91 / IEC 60076-7 thermal differential digital twins**, a **LangGraph multi-agent cognitive planner**, and a **deterministic, CBF-inspired safety-envelope filter**. It is a decision-support prototype: grid, asset, reliability, and economic outputs are modeled, no physical equipment is actuated, and operational deployment requires calibration and utility approval. See the [simulation scope and evidence contract](docs/SIMULATION_SCOPE_AND_ROADMAP.md).
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   THE 3 ARCHITECTURAL PILLARS                                            │
+│                             THE 4-LAYER PHYSICAL-AI DIGITAL TWIN ARCHITECTURE                            │
 │                                                                                                          │
-│   1. External Boundary Condition  ──►  FortyGuard 2m Ambient Air + 12h Forecast + Persistence Runs       │
-│   2. Physical State Estimation    ──►  IEEE C57.91 / IEC 60076-7 Differential Thermal & Aging Equations  │
-│   3. Deterministic Safety Gate    ──►  Bounded-trajectory checks for thermal, voltage, BESS & N-1 limits │
+│   1. Perception AI (FortyGuard)   ──►  2m Ambient Air + 12h Hyperlocal Forecast + Continuous Persistence │
+│   2. Physical Digital Twin        ──►  IEEE C57.91 Annex G Non-linear ODEs + IEC 60287 Soil Dryout       │
+│   3. Agentic Cognitive Planner    ──►  LangGraph StateGraph Multi-Asset Policy Orchestrator (BESS/Fans)  │
+│   4. Deterministic Safety Gate    ──►  Bounded-trajectory barrier filter checking ANSI C84.1 & N-1 limits│
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
