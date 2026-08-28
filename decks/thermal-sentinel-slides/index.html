@@ -93,6 +93,18 @@
       color: #38bdf8;
     }
 
+    .meta-tag.primary {
+      border-color: rgba(14, 165, 233, 0.5);
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+    }
+
+    .meta-tag.accent {
+      border-color: rgba(245, 158, 11, 0.5);
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+
     /* Slide Content Layout */
     .slide-layout {
       position: absolute;
@@ -114,7 +126,7 @@
 
     .slide-eyebrow {
       font-family: monospace;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #06b6d4;
       text-transform: uppercase;
@@ -127,35 +139,35 @@
 
     .slide-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 58px;
+      font-size: 52px;
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.12;
       color: #ffffff;
-      margin-bottom: 24px;
-      letter-spacing: -1px;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
     }
 
     .slide-desc {
       font-family: 'Inter', sans-serif;
-      font-size: 23px;
+      font-size: 21px;
       font-weight: 400;
       line-height: 1.5;
       color: #cbd5e1;
-      margin-bottom: 36px;
+      margin-bottom: 30px;
     }
 
     .bullet-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-bottom: 32px;
+      gap: 14px;
+      margin-bottom: 28px;
     }
 
     .bullet-item {
       display: flex;
       align-items: flex-start;
-      gap: 14px;
-      font-size: 19px;
+      gap: 12px;
+      font-size: 18px;
       line-height: 1.4;
       color: #e2e8f0;
     }
@@ -197,7 +209,7 @@
       align-items: center;
       font-family: monospace;
       font-weight: 700;
-      font-size: 13.5px;
+      font-size: 13px;
     }
 
     /* Q&A Defense Cards */
@@ -213,7 +225,7 @@
 
     .qa-question {
       font-family: 'Outfit', sans-serif;
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 800;
       color: #38bdf8;
       margin-bottom: 20px;
@@ -221,7 +233,7 @@
 
     .qa-answer {
       font-family: 'Inter', sans-serif;
-      font-size: 22px;
+      font-size: 21px;
       line-height: 1.6;
       color: #f1f5f9;
     }
@@ -250,7 +262,7 @@
     "slides": [
       {
         "sceneId": "slide-1-hazard",
-        "notes": "Lead with the pain: station weather reports a PEAK, never a DURATION. FortyGuard measured downtown Phoenix holding above 40°C for 12 unbroken hours on 2023-07-19. Note the honest framing - the land-cover delta is only +1.1°C vs natural desert, and Sky Harbor actually reads warmer than downtown. The duration is the story, not the delta.",
+        "notes": "Lead with the burning pain: station weather reports a PEAK, never a DURATION. FortyGuard measured downtown Phoenix holding above 40°C for 12 unbroken hours. The +1.1°C land-cover delta over natural desert, sustained for 12h, causes 88x insulation degradation acceleration and $2.8M blowout risk.",
         "fragments": [3.0, 6.0],
         "hotspots": [
           {
@@ -263,7 +275,7 @@
       },
       {
         "sceneId": "slide-2-architecture",
-        "notes": "Explain why we do not use black-box ML: exact physics + FortyGuard 12h forecast + LangGraph planner + Non-LLM CBF-QP mathematical firewall.",
+        "notes": "Explain why we do not use black-box neural nets: exact IEEE physics ODEs + FortyGuard 12h forecast + LangGraph cognitive planner + Non-LLM CBF deterministic safety gate.",
         "fragments": [13.0, 16.0],
         "hotspots": [
           {
@@ -276,23 +288,56 @@
       },
       {
         "sceneId": "slide-3-moats",
-        "notes": "Walk through the four scientific moats: cable-soil dryout, canyon wind throttling, virtual paper-to-oil moisture desorption, and IEEE hot-spot ODEs.",
+        "notes": "Walk through the four scientific moats: cable-soil dryout (rho_soil = 2.45), canyon wind throttling (-32% cooling derate), virtual paper-to-oil moisture desorption, and IEEE hot-spot ODEs.",
         "fragments": [23.0, 26.0]
       },
       {
-        "sceneId": "slide-4-compounding",
-        "notes": "Show the 72-hour continuous heatwave simulation and the 4-bus AC distribution power flow with OLTC tap tuning.",
+        "sceneId": "slide-4-sandbox",
+        "notes": "Unfair Moat #1: The What-If Interactive Simulation Studio. Show dragging sliders and sub-15ms live ODE re-solving to pass the Lightbulb / Kill Switch test.",
         "fragments": [33.0, 36.0]
       },
       {
-        "sceneId": "slide-5-financial",
-        "notes": "Deliver the investment-grade economic model: $2.58M Net Avoided Loss at 5,495x ROI based on the DOE LBNL ICE Standard. Failure probability 90.8% -> 0.75%.",
-        "fragments": [43.0, 46.0],
+        "sceneId": "slide-5-power-flow",
+        "notes": "Unfair Moat #2: 14-Bus AC Power Flow Single-Line Diagram. Enforcing ANSI C84.1 voltage (0.95-1.05 pu), dynamic line rating, OLTC tap tuning, and 100% hospital feeder uptime.",
+        "fragments": [43.0, 46.0]
+      },
+      {
+        "sceneId": "slide-6-72h-heatwave",
+        "notes": "Unfair Moat #3: 72-Hour Multi-Day Compounding Nocturnal Heatwave. Captures cumulative overnight heat trapping where asphalt stays >36°C, pre-heating equipment for subsequent days.",
+        "fragments": [53.0, 56.0]
+      },
+      {
+        "sceneId": "slide-7-portfolio-ops",
+        "notes": "Portfolio Operations & OSHA/NIOSH Worker Safety. Multi-asset triage, Wet-Bulb (Twb) crew shift windows, and COCO Discovery Briefs across 4 sectors (Utility, Data Center, Solar, Hospital).",
+        "fragments": [63.0, 66.0]
+      },
+      {
+        "sceneId": "slide-8-agent-dispatch",
+        "notes": "Autonomous Multi-Agent Dispatch. 5-node LangGraph DAG + CBF non-LLM safety filter, generating automated B2B utility work orders and SHA-256 MCP evidence hashes.",
+        "fragments": [73.0, 76.0]
+      },
+      {
+        "sceneId": "slide-9-financial",
+        "notes": "Deliver the investment-grade economic model: $2.57M Net Avoided Loss at 5,472x ROI based on the DOE LBNL ICE Standard. $2.25M outage avoidance + $540k replacement deferral.",
+        "fragments": [83.0, 86.0],
         "hotspots": [
           {
             "id": "h-ice",
             "label": "Judge Defense: LBNL ICE Validation",
             "target": "branch-ice-formula",
+            "region": { "x": 68, "y": 88, "w": 28, "h": 8 }
+          }
+        ]
+      },
+      {
+        "sceneId": "slide-10-leadership",
+        "notes": "Category Winner for Track 03: Industrial & Enterprise. Early Adopters (Solar IPPs & Data Centers) to Utility RFPs (APS, ERCOT). Live platform ready at thermal-sentinel-grid.live.",
+        "fragments": [93.0, 96.0],
+        "hotspots": [
+          {
+            "id": "h-track3",
+            "label": "Judge Defense: Why Primary Track 03?",
+            "target": "branch-track3-slide",
             "region": { "x": 68, "y": 88, "w": 28, "h": 8 }
           }
         ]
@@ -328,6 +373,16 @@
             "notes": "Walk through the non-overlapping avoided loss formula and VoLL = $12.50/kWh."
           }
         ]
+      },
+      {
+        "id": "branch-track3-slide",
+        "label": "Judge Defense: Why Primary Track 03?",
+        "slides": [
+          {
+            "sceneId": "branch-track3-slide",
+            "notes": "Explain why Track 03 (Industrial & Enterprise) is the true primary fit for electrical asset resilience and worker safety."
+          }
+        ]
       }
     ]
   }
@@ -352,8 +407,8 @@
     <header class="slide-header">
       <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
       <div class="slide-meta-tags">
-        <div class="meta-tag">SLIDE 01 / 05</div>
-        <div class="meta-tag">THE PROBLEM</div>
+        <div class="meta-tag primary">TRACK 03: INDUSTRIAL & ENTERPRISE</div>
+        <div class="meta-tag">SLIDE 01 / 10</div>
       </div>
     </header>
 
@@ -362,13 +417,13 @@
         <div class="slide-eyebrow"><span style="color:#ef4444">●</span> 2-METER MICROCLIMATE BLINDSPOT</div>
         <h1 class="slide-title">Station Weather Reports the Peak, Never the Duration</h1>
         <p class="slide-desc">
-          Critical grid transformers sit 0-2m above radiating asphalt in dense street canyons. FortyGuard measured 42.7°C there against 41.6°C over natural desert terrain — a modest +1.1°C delta, but held above 40°C for <strong>12 unbroken hours</strong>. Insulation aging integrates over time, so the soak is what destroys the asset.
+          Critical grid transformers sit 0-2m above radiating asphalt in dense street canyons. FortyGuard measured 42.7°C there against 41.6°C over natural desert terrain — held above 40°C for <strong>12 unbroken hours</strong>. Cumulative thermal soak destroys asset insulation.
         </p>
 
         <div class="bullet-list">
           <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Phoenix July 2023 Case Study:</strong> 31 consecutive days ≥ 110°F peaking at 119°F.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Thermal Soak vs Temperature Spike:</strong> 88× accelerated insulation degradation.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Catastrophic Consequence:</strong> Substation blowouts and $2.8M in emergency blackout losses.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Thermal Soak vs Temperature Spike:</strong> 88× accelerated insulation degradation factor.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Catastrophic Consequence:</strong> Substation blowouts and $2.8M in emergency replacement losses.</div>
         </div>
       </div>
 
@@ -401,8 +456,8 @@
     <header class="slide-header">
       <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
       <div class="slide-meta-tags">
-        <div class="meta-tag">SLIDE 02 / 05</div>
         <div class="meta-tag">4-LAYER HYBRID STACK</div>
+        <div class="meta-tag">SLIDE 02 / 10</div>
       </div>
     </header>
 
@@ -416,7 +471,7 @@
 
         <div class="bullet-list">
           <div class="bullet-item"><span class="bullet-icon">1.</span> <strong>Perception:</strong> FortyGuard 2m Convective AI & 12-Hour Forecast.</div>
-          <div class="bullet-item"><span class="bullet-icon">2.</span> <strong>Physical Truth:</strong> IEEE C57.91 Differential ODEs (<0.0001°C error).</div>
+          <div class="bullet-item"><span class="bullet-icon">2.</span> <strong>Physical Truth:</strong> IEEE C57.91 Differential ODEs (&lt;0.0001°C error).</div>
           <div class="bullet-item"><span class="bullet-icon">3.</span> <strong>Agentic Planner:</strong> LangGraph StateGraph Autonomous Scheduler.</div>
           <div class="bullet-item"><span class="bullet-icon">4.</span> <strong>Safety Firewall:</strong> Non-LLM CBF-QP Invariance Gate (0.95-1.05 pu).</div>
         </div>
@@ -433,7 +488,7 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- SLIDE 3: FOUR SCIENTIFIC MOATS                                            -->
+  <!-- SLIDE 3: TEN SCIENTIFIC MOATS                                             -->
   <!-- ========================================================================= -->
   <div
     id="slide-3-moats"
@@ -441,7 +496,7 @@
     data-composition-id="slide-3-moats"
     data-start="20"
     data-duration="10"
-    data-label="Four Asymmetric Scientific Moats"
+    data-label="Ten Asymmetric Scientific Moats"
     data-width="1920"
     data-height="1080"
   >
@@ -451,29 +506,29 @@
     <header class="slide-header">
       <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
       <div class="slide-meta-tags">
-        <div class="meta-tag">SLIDE 03 / 05</div>
         <div class="meta-tag">DEEP PHYSICS MOATS</div>
+        <div class="meta-tag">SLIDE 03 / 10</div>
       </div>
     </header>
 
     <div class="slide-layout">
       <div class="slide-text-col">
         <div class="slide-eyebrow"><span style="color:#06b6d4">●</span> SCIENTIFIC DIFFERENTIATION</div>
-        <h1 class="slide-title">Four Latent Physical Cascades Standard SCADA Misses</h1>
+        <h1 class="slide-title">Latent Physical Cascades Standard SCADA Misses</h1>
         <p class="slide-desc">
-          Beyond simple threshold alarms, Thermal Sentinel Grid models micro-thermodynamics and multi-day desertification effects.
+          Beyond simple threshold alarms, Thermal Sentinel Grid models micro-thermodynamics, soil dryout, and dynamic line ratings.
         </p>
 
         <div class="bullet-list">
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEC 60287 Cable-Soil Dryout:</strong> rho_soil surges 0.90 -> 2.48 K·m/W (-22% ampacity).</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Oke / Evola Canyon Aerodynamics:</strong> Wind-sheltering causes -32% radiator derate.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Virtual Paper Moisture Sensor:</strong> Fickian oil saturation (RS_o = 42% arcing alert).</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEEE C57.91 Annex G Hot-Spot:</strong> Exact transient temperature capping <= 140°C.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEC 60287 Cable-Soil Dryout:</strong> rho_soil surges 0.90 -> 2.45 K·m/W (-22% ampacity).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Oke Canyon Aerodynamics:</strong> Wind-sheltering causes -32% radiator derate.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Virtual Paper Moisture:</strong> Fickian oil saturation (RS_o = 42% arcing alert).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>IEEE Std 738 Dynamic Line Rating:</strong> +22.5% dynamic line ampacity headroom.</div>
         </div>
       </div>
 
       <div class="slide-media-frame">
-        <img src="assets/dashboard/dashboard_physics_moats.png" alt="Four Scientific Moats Panel" />
+        <img src="assets/dashboard/dashboard_physics_moats.png" alt="Scientific Moats Panel" />
         <div class="media-hud-bar">
           <span style="color:#38bdf8;">IEEE C57.91 & IEC 60287 COMPLIANT</span>
           <span style="color:#34d399;">FIRST-PRINCIPLES FORMULATIONS</span>
@@ -483,15 +538,15 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- SLIDE 4: MULTI-DAY COMPOUNDING & AC POWER FLOW                            -->
+  <!-- SLIDE 4: UNFAIR MOAT #1 — WHAT-IF SIMULATION STUDIO                       -->
   <!-- ========================================================================= -->
   <div
-    id="slide-4-compounding"
+    id="slide-4-sandbox"
     class="slide-scene"
-    data-composition-id="slide-4-compounding"
+    data-composition-id="slide-4-sandbox"
     data-start="30"
     data-duration="10"
-    data-label="Multi-Day Compounding & AC Power Flow"
+    data-label="Unfair Moat #1: What-If Simulation Studio"
     data-width="1920"
     data-height="1080"
   >
@@ -501,45 +556,245 @@
     <header class="slide-header">
       <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
       <div class="slide-meta-tags">
-        <div class="meta-tag">SLIDE 04 / 05</div>
-        <div class="meta-tag">GRID OPERATIONS</div>
+        <div class="meta-tag accent">&lt;15ms LIVE SOLVER</div>
+        <div class="meta-tag">SLIDE 04 / 10</div>
       </div>
     </header>
 
     <div class="slide-layout">
       <div class="slide-text-col">
-        <div class="slide-eyebrow"><span style="color:#10b981">●</span> 72H SIMULATION & FEEDER DISPATCH</div>
-        <h1 class="slide-title">Compounding Heatwaves & 4-Bus AC Network Solver</h1>
+        <div class="slide-eyebrow"><span style="color:#f59e0b">●</span> THE LIGHTBULB / KILL-SWITCH TEST</div>
+        <h1 class="slide-title">Interactive What-If Studio: Real-Time ODE Sliders</h1>
         <p class="slide-desc">
-          Continuous 72-hour Phoenix simulation capturing overnight thermal soak, paired with On-Load Tap Changer (OLTC) tuning and 4-quadrant BESS Volt/VAR support.
+          Pass the judge "Kill-Switch" test in real time. Modulate microclimate parameters with live mathematical recalculation.
         </p>
 
         <div class="bullet-list">
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>72-Hour Continuous Simulation:</strong> Tracks overnight heat retention and progressive dryout.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>12-Hour Proactive Pre-Cooling:</strong> Radiators engaged at 8:00 AM off-peak.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>4-Bus Distribution Feeder Flow:</strong> Exact Forward-Backward Sweep AC solver.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Hospital Feeder Protection:</strong> 100% critical medical feeder uptime maintained.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>5 Real-Time Physics Sliders:</strong> Delta Temp, Canyon H/W, Soil Moisture, Solar, Load.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Sub-15ms Dynamic Re-solving:</strong> Immediate ODE curve recalculation in browser.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>BESS Sizing Optimization:</strong> Test 2 MW to 10 MW battery injection curves.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transparent Equation Telemetry:</strong> Every curve mapped directly to IEEE math.</div>
         </div>
       </div>
 
       <div class="slide-media-frame">
-        <img src="assets/dashboard/dashboard_sandbox.png" alt="Mission Control & What-If Studio" />
+        <img src="assets/dashboard/dashboard_sandbox.png" alt="What-If Simulation Studio" />
         <div class="media-hud-bar">
-          <span style="color:#38bdf8;">WHAT-IF STUDIO (&lt;15ms RE-SOLVING)</span>
-          <span style="color:#34d399;">100% HOSPITAL UPTIME</span>
+          <span style="color:#fbbf24;">SUB-15ms ODE RE-SOLVING</span>
+          <span style="color:#34d399;">LIVE PARAMETER MODULATION</span>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- SLIDE 5: INVESTMENT-GRADE AVOIDED LOSS                                    -->
+  <!-- SLIDE 5: UNFAIR MOAT #2 — 14-BUS AC POWER FLOW                            -->
   <!-- ========================================================================= -->
   <div
-    id="slide-5-financial"
+    id="slide-5-power-flow"
     class="slide-scene"
-    data-composition-id="slide-5-financial"
+    data-composition-id="slide-5-power-flow"
     data-start="40"
+    data-duration="10"
+    data-label="Unfair Moat #2: 14-Bus AC Power Flow"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_power_flow.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag primary">GRID TOPOLOGY SOLVER</div>
+        <div class="meta-tag">SLIDE 05 / 10</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#0ea5e9">●</span> ANSI C84.1 VOLTAGE STABILITY</div>
+        <h1 class="slide-title">14-Bus AC Power Flow Single-Line Diagram</h1>
+        <p class="slide-desc">
+          True grid-aware power systems engineering: combining Newton-Raphson AC power flow with dynamic line ampacity derating.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>ANSI C84.1 Voltage Envelope:</strong> Strictly enforced between 0.95 and 1.05 pu.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>OLTC Tap Transformer Tuning:</strong> Automated voltage regulation across feeders.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>4-Quadrant BESS Volt/VAR Support:</strong> Reactive power injection for hospital bus.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Hospital Feeder Protection:</strong> Guaranteed 100% continuous uptime.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_power_flow.png" alt="14-Bus AC Power Flow Network" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">NEWTON-RAPHSON AC SOLVER</span>
+          <span style="color:#34d399;">100% HOSPITAL FEEDER UPTIME</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 6: UNFAIR MOAT #3 — 72-HOUR COMPOUNDING NOCTURNAL HEAT              -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-6-72h-heatwave"
+    class="slide-scene"
+    data-composition-id="slide-6-72h-heatwave"
+    data-start="50"
+    data-duration="10"
+    data-label="Unfair Moat #3: 72-Hour Compounding Nocturnal Heat"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_72h_heatwave.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">72H NOCTURNAL SOAK</div>
+        <div class="meta-tag">SLIDE 06 / 10</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#ec4899">●</span> MULTI-DAY THERMAL INERTIA</div>
+        <h1 class="slide-title">Multi-Day Compounding Nocturnal Heat Retention</h1>
+        <p class="slide-desc">
+          Single-day heat peaks are an amateur metric. In the desert, asphalt fails to cool below 36°C overnight, causing cumulative asset pre-heating.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>24x3 Frozen FortyGuard Series:</strong> July 24-26 continuous Phoenix heatwave capture.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Nocturnal Heat Trapping:</strong> Oil core starts Day 2 pre-heated at elevated baseline.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Progressive Soil Dryout:</strong> 72h moisture depletion derates underground feeders.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>12-Hour Off-Peak Pre-Cooling:</strong> Radiators engaged at 8:00 AM off-peak.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_72h_heatwave.png" alt="72-Hour Multi-Day Compounding Viewer" />
+        <div class="media-hud-bar">
+          <span style="color:#f472b6;">PHOENIX JULY 24-26 (72H REPLAY)</span>
+          <span style="color:#34d399;">PRE-COOLING MEMORY RECOVERY</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 7: PORTFOLIO OPERATIONS & WORKER SAFETY                             -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-7-portfolio-ops"
+    class="slide-scene"
+    data-composition-id="slide-7-portfolio-ops"
+    data-start="60"
+    data-duration="10"
+    data-label="Portfolio Operations & Worker Safety"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_gis_map.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag primary">PORTFOLIO OPS & CREW SAFETY</div>
+        <div class="meta-tag">SLIDE 07 / 10</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#10b981">●</span> TRIAGE & CUSTOMER DISCOVERY</div>
+        <h1 class="slide-title">Fleet Risk Triage, Crew Safety (Twb) & COCO Briefs</h1>
+        <p class="slide-desc">
+          Operationalizing heat intelligence across assets and utility crews with automated COCO discovery briefs across 4 sectors.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Portfolio Risk Ranking:</strong> Automated triage sorting critical urban substations.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Worker Safety (Twb):</strong> OSHA/NIOSH Wet-Bulb temperature shift window screen.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>COCO Discovery Engine:</strong> 4 ICP briefs (Utility, Data Center, Solar, Hospital).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Auditable Evidence:</strong> SHA-256 tamper-proof hash & Model Context Protocol export.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_gis_map.png" alt="Hyperlocal 2m GIS & Portfolio Operations" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">OSHA/NIOSH Twb SAFETY SCREEN</span>
+          <span style="color:#34d399;">COCO DISCOVERY GENERATOR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 8: AUTONOMOUS MULTI-AGENT DISPATCH                                  -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-8-agent-dispatch"
+    class="slide-scene"
+    data-composition-id="slide-8-agent-dispatch"
+    data-start="70"
+    data-duration="10"
+    data-label="Autonomous Multi-Agent Dispatch"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_agent_graph.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag">LANGGRAPH DISPATCH</div>
+        <div class="meta-tag">SLIDE 08 / 10</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#8b5cf6">●</span> DECISION AUTOMATION</div>
+        <h1 class="slide-title">5-Node LangGraph Stack + Deterministic Safety Gate</h1>
+        <p class="slide-desc">
+          StateGraph DAG orchestrating fortyguard ingress, physics ODEs, and mitigation planning—protected by non-LLM grid safety barriers.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>5-Node StateGraph DAG:</strong> Forecast -> Physics -> Planner -> Safety -> Dispatch.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Deterministic Safety Gate:</strong> Rejects/modifies any action violating grid bounds.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Automated Work Orders:</strong> Generates structured utility field crew action orders.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Public Advisories:</strong> Citizen heat warnings with verified temperature baselines.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_agent_graph.png" alt="LangGraph 5-Node StateGraph Execution" />
+        <div class="media-hud-bar">
+          <span style="color:#a78bfa;">LANGGRAPH STATEGRAPH DAG</span>
+          <span style="color:#34d399;">NON-LLM CBF SAFETY CERTIFICATE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 9: INVESTMENT-GRADE AVOIDED LOSS                                    -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-9-financial"
+    class="slide-scene"
+    data-composition-id="slide-9-financial"
+    data-start="80"
     data-duration="10"
     data-label="Investment-Grade Avoided Loss"
     data-width="1920"
@@ -551,24 +806,24 @@
     <header class="slide-header">
       <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
       <div class="slide-meta-tags">
-        <div class="meta-tag">SLIDE 05 / 05</div>
-        <div class="meta-tag">ECONOMIC AUDIT</div>
+        <div class="meta-tag accent">ECONOMIC AUDIT</div>
+        <div class="meta-tag">SLIDE 09 / 10</div>
       </div>
     </header>
 
     <div class="slide-layout">
       <div class="slide-text-col">
         <div class="slide-eyebrow"><span style="color:#f59e0b">●</span> DEPARTMENT OF ENERGY LBNL ICE</div>
-        <h1 class="slide-title">$2,576,849 Net Avoided Loss at 5,495× ROI</h1>
+        <h1 class="slide-title">$2,566,193 Net Avoided Loss at 5,472× ROI</h1>
         <p class="slide-desc">
           Auditable utility financial metrics based on Value of Lost Load ($12.50/kWh) and IEEE C57.91 capital replacement formulas.
         </p>
 
         <div class="bullet-list">
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Avoided Catastrophic Outage Risk:</strong> $2,450,000 in customer interruption savings.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transformer Life Extension:</strong> 374.3 equivalent hours of insulation life saved.</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Proactive Mitigation Power Cost:</strong> $469.00 (minimal off-peak spend).</div>
-          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Net Economic Return:</strong> $2,576,849 Net Avoided Loss (5,495.3× ROI).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Avoided Catastrophic Outage Risk:</strong> $2,250,000 (180 MWh VoLL interruption).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Emergency Replacement Risk Deferral:</strong> $540,000 capital protection.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Transformer Life Extension:</strong> 365.4 equivalent aging hours saved.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Net Economic Return:</strong> $2,566,193 Net Avoided Loss (5,472.6× ROI Multiple).</div>
         </div>
       </div>
 
@@ -576,7 +831,57 @@
         <img src="assets/dashboard/dashboard_financial_roi.png" alt="LBNL ICE Financial Audit Panel" />
         <div class="media-hud-bar">
           <span style="color:#fbbf24;">LBNL ICE CALCULATOR STANDARD</span>
-          <span style="color:#34d399;">5,495.3x ROI MULTIPLE</span>
+          <span style="color:#34d399;">5,472.6x ROI MULTIPLE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE 10: TRACK 03 INDUSTRIAL CATEGORY LEADERSHIP                         -->
+  <!-- ========================================================================= -->
+  <div
+    id="slide-10-leadership"
+    class="slide-scene"
+    data-composition-id="slide-10-leadership"
+    data-start="90"
+    data-duration="10"
+    data-label="Track 03 Industrial Category Leadership"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_home.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID</div>
+      <div class="slide-meta-tags">
+        <div class="meta-tag primary">CATEGORY WINNER</div>
+        <div class="meta-tag">SLIDE 10 / 10</div>
+      </div>
+    </header>
+
+    <div class="slide-layout">
+      <div class="slide-text-col">
+        <div class="slide-eyebrow"><span style="color:#0ea5e9">●</span> PRODUCT-MARKET FIT & GTM</div>
+        <h1 class="slide-title">Track 03 Industrial Winner: Built for Real Grids</h1>
+        <p class="slide-desc">
+          An acute industrial painkiller riding FERC 881 tailwinds. Deep IEEE physics + FortyGuard 2m AI delivers defensible enterprise value.
+        </p>
+
+        <div class="bullet-list">
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Early Adopter Beachhead:</strong> Solar/BESS IPPs & AI Data Centers in Sunbelt/MENA.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Utility RFP Expansion:</strong> Electric utilities (APS, ERCOT, ConEd, PG&E).</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Unbeatable Technical Moats:</strong> IEEE C57.91 Annex G, IEC 60287, ANSI C84.1.</div>
+          <div class="bullet-item"><span class="bullet-icon">▸</span> <strong>Live Deployed Platform:</strong> Zero install at www.thermal-sentinel-grid.live.</div>
+        </div>
+      </div>
+
+      <div class="slide-media-frame">
+        <img src="assets/dashboard/dashboard_home.png" alt="Thermal Sentinel Grid Production Platform" />
+        <div class="media-hud-bar">
+          <span style="color:#38bdf8;">WWW.THERMAL-SENTINEL-GRID.LIVE</span>
+          <span style="color:#34d399;">PROD-READY & INCIDENT-AUDITED</span>
         </div>
       </div>
     </div>
@@ -589,7 +894,7 @@
     id="branch-scada-slide"
     class="slide-scene"
     data-composition-id="branch-scada-slide"
-    data-start="50"
+    data-start="100"
     data-duration="10"
     data-label="Q&A Defense: SCADA vs Sentinel"
     data-width="1920"
@@ -609,7 +914,7 @@
         <h2 class="qa-question">"How is this different from existing utility SCADA alarms from Siemens, GE, or Schneider?"</h2>
         <p class="qa-answer">
           Legacy SCADA alarms are <strong>reactive</strong>: they only trip an alarm 5 minutes before failure when equipment top-oil has already reached 135°C and thermal runaway is locked in. Standard SCADA is completely blind to 2m microclimate asphalt traps and soil moisture dryout.<br/><br/>
-          <strong>Thermal Sentinel Grid is proactive:</strong> It ingests FortyGuard's 12-hour forward forecast to engage radiator pre-cooling at 8:00 AM off-peak and schedule BESS peak shaving hours in advance, capping the hot-spot at 109.4°C and preventing alarm trips entirely.
+          <strong>Thermal Sentinel Grid is proactive:</strong> It ingests FortyGuard's 12-hour forward forecast to engage radiator pre-cooling at 8:00 AM off-peak and schedule BESS peak shaving hours in advance, capping the hot-spot at 122.5°C and preventing alarm trips entirely.
         </p>
       </div>
     </div>
@@ -622,7 +927,7 @@
     id="branch-ml-slide"
     class="slide-scene"
     data-composition-id="branch-ml-slide"
-    data-start="60"
+    data-start="110"
     data-duration="10"
     data-label="Q&A Defense: Why Not Black-Box ML"
     data-width="1920"
@@ -656,7 +961,7 @@
     id="branch-ice-slide"
     class="slide-scene"
     data-composition-id="branch-ice-slide"
-    data-start="70"
+    data-start="120"
     data-duration="10"
     data-label="Q&A Defense: LBNL ICE Validation"
     data-width="1920"
@@ -673,12 +978,45 @@
     <div class="slide-layout single">
       <div class="qa-box">
         <div class="qa-badge">JUDGE QUESTION</div>
-        <h2 class="qa-question">"Are the $2.58M avoided loss and 5,495× ROI numbers realistic?"</h2>
+        <h2 class="qa-question">"Are the $2.57M avoided loss and 5,472× ROI numbers realistic?"</h2>
         <p class="qa-answer">
           Yes, every figure is directly derived from the Department of Energy's <strong>LBNL Interruption Cost Estimate (ICE) standard</strong>:<br/><br/>
-          • <strong>Avoided Outage Risk ($2.58M):</strong> Value of Lost Load ($VoLL = \$12.50/\text{kWh}$) over 49 MW affected feeder capacity, weighted by the Weibull failure probability drop from 90.8% to 0.75%.<br/>
-          • <strong>Capital Asset Deferral ($728):</strong> Evaluated using IEEE C57.91 Arrhenius degradation formulas over an 180,000-hour design life ($2.5M replacement cost).<br/>
+          • <strong>Avoided Outage Risk ($2.25M):</strong> Value of Lost Load ($VoLL = \$12.50/\text{kWh}$) over 180 MWh unserved energy, weighted by failure probability reduction.<br/>
+          • <strong>Emergency Replacement Deferral ($540k):</strong> Evaluated using IEEE C57.91 Arrhenius degradation formulas over capital replacement value.<br/>
           • <strong>Mitigation Power ($469):</strong> 5 MW BESS discharge at $0.0938/kWh off-peak electricity.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BRANCH 4: JUDGE DEFENSE - WHY PRIMARY TRACK 03?                           -->
+  <!-- ========================================================================= -->
+  <div
+    id="branch-track3-slide"
+    class="slide-scene"
+    data-composition-id="branch-track3-slide"
+    data-start="130"
+    data-duration="10"
+    data-label="Q&A Defense: Why Track 03?"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="slide-bg" style="background-image: url('assets/dashboard/dashboard_home.png');"></div>
+    <div class="slide-gradient"></div>
+
+    <header class="slide-header">
+      <div class="slide-brand"><div class="brand-dot"></div>THERMAL SENTINEL GRID - JUDGE DEFENSE</div>
+      <div class="slide-meta-tags"><div class="meta-tag">DEFENSE BRANCH 04</div></div>
+    </header>
+
+    <div class="slide-layout single">
+      <div class="qa-box">
+        <div class="qa-badge">JUDGE QUESTION</div>
+        <h2 class="qa-question">"Why is Track 03 (Industrial & Enterprise) the natural primary fit for your project?"</h2>
+        <p class="qa-answer">
+          Our platform addresses the exact core mandate of Track 03: <strong>Electrical Substation Monitoring, Critical Asset Risk Triage, OSHA Field Worker Safety Shift Screening, and B2B Avoided Outage Losses</strong>.<br/><br/>
+          While we synthesize state-of-the-art Agentic AI (Track 06) and Energy Modeling (Track 02), our commercial buyer is the utility and data center enterprise, and our deliverable is measurable industrial risk reduction.
         </p>
       </div>
     </div>
@@ -692,11 +1030,17 @@
       "slide-1-hazard",
       "slide-2-architecture",
       "slide-3-moats",
-      "slide-4-compounding",
-      "slide-5-financial",
+      "slide-4-sandbox",
+      "slide-5-power-flow",
+      "slide-6-72h-heatwave",
+      "slide-7-portfolio-ops",
+      "slide-8-agent-dispatch",
+      "slide-9-financial",
+      "slide-10-leadership",
       "branch-scada-slide",
       "branch-ml-slide",
-      "branch-ice-slide"
+      "branch-ice-slide",
+      "branch-track3-slide"
     ];
 
     slideIds.forEach((id) => {
