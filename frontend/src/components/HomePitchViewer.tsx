@@ -25,6 +25,7 @@ import {
   Film,
   BriefcaseBusiness,
   BarChart3,
+  ExternalLink,
 } from 'lucide-react';
 import { ActiveTab } from './Navbar';
 import { startTourGuide } from '../utils/tourGuide';
@@ -48,6 +49,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
   onOpenDatabaseModal,
 }) => {
   const [activeVideoSource, setActiveVideoSource] = useState<'pitch' | 'live_demo' | 'business_demo'>('business_demo');
+  const [playerMode, setPlayerMode] = useState<'youtube' | 'local'>('youtube');
   const [currentTime, setCurrentTime] = useState<number>(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -278,45 +280,87 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
               </button>
             </div>
 
+            {/* Stream Player Toggle (YouTube / Local MP4) */}
+            <div className="flex items-center bg-slate-900 border border-slate-800 p-1 rounded-2xl text-xs font-mono">
+              <button
+                onClick={() => setPlayerMode('youtube')}
+                className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
+                  playerMode === 'youtube'
+                    ? 'bg-rose-500 text-white shadow-md shadow-rose-500/25'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Stream via Official YouTube Player"
+              >
+                <Video className="h-3.5 w-3.5" />
+                <span>YouTube</span>
+              </button>
+              <button
+                onClick={() => setPlayerMode('local')}
+                className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
+                  playerMode === 'local'
+                    ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/25'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Stream via Direct High-Bitrate MP4"
+              >
+                <Film className="h-3.5 w-3.5" />
+                <span>Direct MP4</span>
+              </button>
+            </div>
+
+            {/* Open YouTube External Link */}
+            <a
+              href="https://youtu.be/2kf-TLSv9kU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 hover:text-rose-200 text-xs font-mono font-medium flex items-center gap-1.5 transition-all shadow-sm"
+              title="Watch on YouTube"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">YouTube</span>
+            </a>
+
             {/* Download MP4 Button */}
             <a
-              href={videoSources[activeVideoSource].url}
+              href="/videos/final_submission_fortyguard_burned_subtitles.mp4"
               download
-              className="px-3.5 py-2 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs font-mono font-medium flex items-center gap-1.5 transition-all shadow-sm"
-              title="Download Current Video (MP4)"
+              className="px-3 py-2 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs font-mono font-medium flex items-center gap-1.5 transition-all shadow-sm"
+              title="Download Burned-in Subtitled MP4"
             >
               <Download className="h-3.5 w-3.5 text-amber-400" />
-              <span className="hidden sm:inline">Download MP4</span>
+              <span className="hidden sm:inline">MP4</span>
             </a>
           </div>
         </div>
 
-        {/* Standard Native Video Player Card (Medium Cinema Size) */}
+        {/* Video Player Card */}
         <div className="max-w-6xl mx-auto w-full rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl p-2.5 sm:p-4">
-          {!videoSources[activeVideoSource].bundled ? (
-            <div className="w-full aspect-video rounded-2xl bg-black shadow-inner border border-slate-800 flex flex-col items-center justify-center gap-3 px-8 text-center">
-              <Film className="h-8 w-8 text-slate-600" />
-              <p className="text-sm font-bold text-slate-300 font-heading uppercase tracking-wide">
-                Walkthrough recording is being re-captured
-              </p>
-              <p className="text-xs text-slate-500 font-mono max-w-lg">
-                The previous recording shows the pre-correction UI, so it is withheld rather than
-                served beside a dashboard that contradicts it. The 3-minute motion pitch above is
-                current.
-              </p>
+          {playerMode === 'youtube' && activeVideoSource === 'business_demo' ? (
+            <div className="w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner border border-slate-800">
+              <iframe
+                className="w-full h-full border-0"
+                src="https://www.youtube-nocookie.com/embed/2kf-TLSv9kU?autoplay=0&rel=0&modestbranding=1"
+                title="Thermal Sentinel Grid - FortyGuard Hackathon Submission Pitch"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           ) : (
             <video
-              key={activeVideoSource}
+              key={`${activeVideoSource}-${playerMode}`}
               ref={videoRef}
-              src={videoSources[activeVideoSource].url}
+              src={
+                activeVideoSource === 'business_demo'
+                  ? '/videos/final_submission_fortyguard_burned_subtitles.mp4'
+                  : videoSources[activeVideoSource].url
+              }
               controls
               playsInline
               preload="metadata"
               className="w-full aspect-video rounded-2xl bg-black shadow-inner"
             >
               <track
-                src="/videos/business_value_demo.vtt"
+                src="/videos/final_submission_fortyguard.vtt"
                 kind="subtitles"
                 srcLang="en"
                 label="English Subtitles"
