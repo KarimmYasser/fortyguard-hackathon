@@ -23,7 +23,7 @@ fs.mkdirSync(path.dirname(OUTPUT_VIDEO), { recursive: true });
 fs.mkdirSync(path.dirname(RAW_VIDEO), { recursive: true });
 fs.mkdirSync(path.dirname(PUBLIC_VIDEO), { recursive: true });
 
-// Optional local static server if TARGET_URL is not supplied or unreachable
+// Local static preview server
 function startLocalStaticServer(port = 4173) {
   const mimeTypes = {
     '.html': 'text/html',
@@ -42,7 +42,6 @@ function startLocalStaticServer(port = 4173) {
   };
 
   const server = http.createServer((req, res) => {
-    // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -66,7 +65,6 @@ function startLocalStaticServer(port = 4173) {
       res.writeHead(200, { 'Content-Type': contentType });
       fs.createReadStream(filePath).pipe(res);
     } else {
-      // SPA Fallback
       const indexPath = path.join(DIST_DIR, 'index.html');
       if (fs.existsSync(indexPath)) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -88,15 +86,14 @@ function startLocalStaticServer(port = 4173) {
 
 async function recordBusinessValueDemo() {
   console.log('=================================================================');
-  console.log('⚡ THERMAL SENTINEL GRID — BUSINESS VALUE VIDEO RECORDING ENGINE');
-  console.log('🎯 Curated for Hackathon Judges: Problem, Pain & Commercial Impact');
+  console.log('⚡ THERMAL SENTINEL GRID — COMPLETE BUSINESS VALUE VIDEO ENGINE');
+  console.log('🎯 Curated for Hackathon Judges: Problem, Moats & Commercial Impact');
   console.log('=================================================================\n');
 
   let localServer = null;
   let targetUrl = process.env.TARGET_URL;
 
   if (!targetUrl) {
-    // If no target URL specified, check if dist exists and start local server
     if (fs.existsSync(DIST_DIR)) {
       localServer = await startLocalStaticServer(4173);
       targetUrl = 'http://127.0.0.1:4173';
@@ -105,7 +102,7 @@ async function recordBusinessValueDemo() {
     }
   }
 
-  console.log(`🚀 Launching Chromium (1920x1080 Full HD, 60fps capable)...`);
+  console.log(`🚀 Launching Chromium (1920x1080 Full HD, 30fps constant clock)...`);
   const browser = await puppeteer.launch({
     headless: 'new',
     args: [
@@ -211,7 +208,7 @@ async function recordBusinessValueDemo() {
   });
 
   // Start FFmpeg process for CDP Screencast
-  console.log('🎥 Initializing CDP Screencast & FFmpeg H.264 Encoder...');
+  console.log('🎥 Initializing CDP Screencast & FFmpeg H.264 Encoder (Constant 30fps Clock)...');
   const ffmpeg = spawn(FFMPEG, [
     '-y',
     '-f', 'image2pipe',
@@ -225,10 +222,6 @@ async function recordBusinessValueDemo() {
     RAW_VIDEO,
   ]);
 
-  ffmpeg.stderr.on('data', (data) => {
-    // suppress verbose output
-  });
-
   const client = await page.target().createCDPSession();
   await client.send('Page.startScreencast', {
     format: 'jpeg',
@@ -239,23 +232,32 @@ async function recordBusinessValueDemo() {
   });
 
   let isStreaming = true;
+  let latestBuffer = null;
+
   client.on('Page.screencastFrame', async ({ data, sessionId }) => {
-    if (!isStreaming) return;
+    latestBuffer = Buffer.from(data, 'base64');
     try {
-      const buffer = Buffer.from(data, 'base64');
-      ffmpeg.stdin.write(buffer);
       await client.send('Page.screencastFrameAck', { sessionId });
     } catch (e) {}
   });
 
-  // Motion helpers for natural, human-like, unhurried choreography
+  const frameWriterInterval = setInterval(() => {
+    if (isStreaming && latestBuffer) {
+      ffmpeg.stdin.write(latestBuffer);
+    }
+  }, 1000 / 30);
+
+  while (!latestBuffer) {
+    await new Promise((r) => setTimeout(r, 50));
+  }
+
+  // Motion helpers for natural, human-like choreography
   let curX = 960, curY = 540;
   async function smoothMouseMove(targetX, targetY, durationMs = 600) {
     const steps = Math.max(12, Math.round(durationMs / 16));
     const startX = curX, startY = curY;
     for (let i = 1; i <= steps; i++) {
       const t = i / steps;
-      // Smooth cubic ease in-out
       const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       const x = Math.round(startX + (targetX - startX) * ease);
       const y = Math.round(startY + (targetY - startY) * ease);
@@ -264,25 +266,6 @@ async function recordBusinessValueDemo() {
     }
     curX = targetX;
     curY = targetY;
-  }
-
-  async function clickElement(selector, waitAfter = 800) {
-    try {
-      const rect = await page.evaluate((sel) => {
-        const el = document.querySelector(sel);
-        if (!el) return null;
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const r = el.getBoundingClientRect();
-        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-      }, selector);
-
-      if (rect) {
-        await smoothMouseMove(rect.x, rect.y, 450);
-        await page.evaluate((x, y) => window.triggerClickEffect(x, y), rect.x, rect.y);
-        await page.click(selector);
-      }
-    } catch (err) {}
-    await new Promise((r) => setTimeout(r, waitAfter));
   }
 
   async function clickTabByText(tabLabel, waitAfter = 1000) {
@@ -339,26 +322,21 @@ async function recordBusinessValueDemo() {
   console.log('🎬 Commencing Unhurried, Story-Driven Business Value Walkthrough...\n');
 
   // =========================================================================
-  // ACT 1: THE HIGH-STAKES PROBLEM & FORTYGUARD LIVE CLOUD INGESTION (~0s - 35s)
-  // Guidance: Ahmed (Session 5), Tarek (Session 6), Constantine (Session 14)
+  // ACT 1: THE HIGH-STAKES PROBLEM & FORTYGUARD LIVE CLOUD INGESTION (~0s - 30s)
   // =========================================================================
-  console.log('📍 [ACT 1/7] Executive Problem Hook & FortyGuard Live Cloud Ingestion...');
+  console.log('📍 [ACT 1/9] Executive Problem Hook & FortyGuard Live Cloud Ingestion...');
   await smoothMouseMove(500, 320, 600);
-  await new Promise((r) => setTimeout(r, 2200)); // Dwell on title & hero statement
+  await new Promise((r) => setTimeout(r, 2200));
 
-  // Hover over the brand & active safety badges
   await smoothMouseMove(380, 75, 500);
   await new Promise((r) => setTimeout(r, 1400));
 
-  // Open Live FortyGuard API Scan Modal
   console.log('  ↳ Opening FortyGuard Live Cloud Ingestion Modal...');
   await clickTabByText('Live Cloud Scan', 1800);
 
-  // Hover over FortyGuard API Parameters in modal
   await smoothMouseMove(800, 420, 500);
   await new Promise((r) => setTimeout(r, 2200));
 
-  // Trigger Live Ingestion
   console.log('  ↳ Executing Live Cloud Ingestion across 60m Parcel Tiles...');
   try {
     const liveScanBtn = await page.evaluate(() => {
@@ -375,9 +353,8 @@ async function recordBusinessValueDemo() {
     }
   } catch (e) {}
 
-  await new Promise((r) => setTimeout(r, 3500)); // Dwell on the live status & credit quota
+  await new Promise((r) => setTimeout(r, 3500));
 
-  // Close Live Scan Modal
   try {
     await page.evaluate(() => {
       const closeBtn = Array.from(document.querySelectorAll('button')).find((b) => b.textContent?.includes('Close') || b.textContent?.includes('Dismiss'));
@@ -387,85 +364,164 @@ async function recordBusinessValueDemo() {
   await new Promise((r) => setTimeout(r, 1500));
 
   // =========================================================================
-  // ACT 2: MISSION CONTROL — "FACT VS. FINDING" & MITIGATION CLAMP (~35s - 95s)
-  // Guidance: Mudethir & Aamir (Session 7), Snehil (Session 9), Reichental (Session 10)
+  // ACT 2: MISSION CONTROL — "FACT VS. FINDING" & MITIGATION CLAMP (~30s - 75s)
   // =========================================================================
-  console.log('📍 [ACT 2/7] Mission Control Telemetry & Fact vs. Finding Discovery...');
+  console.log('📍 [ACT 2/9] Mission Control Telemetry & Fact vs. Finding Discovery...');
   await clickTabByText('Mission Control', 1800);
 
-  // Dwell on Hero KPI Grid (highlighting 2m Ambient 42.7°C, Land-Cover Delta +1.1°C, 12.0h Persistence above 40°C)
   await smoothMouseMove(400, 220, 600);
-  await new Promise((r) => setTimeout(r, 2200));
+  await new Promise((r) => setTimeout(r, 2000));
   await smoothMouseMove(800, 220, 600);
-  await new Promise((r) => setTimeout(r, 2200));
+  await new Promise((r) => setTimeout(r, 2000));
   await smoothMouseMove(1200, 220, 600);
-  await new Promise((r) => setTimeout(r, 2200));
+  await new Promise((r) => setTimeout(r, 2000));
 
-  // Scrub through the 12-Hour Heatwave Timeline
   console.log('  ↳ Scrubbing 12-Hour Heatwave Progression (Morning -> Afternoon Peak)...');
   const hourButtons = await page.$$('div.flex.gap-1 button, div.space-x-1 button');
   if (hourButtons.length >= 8) {
-    // Hour 2: Morning cool baseline
     await hourButtons[2].click();
     await page.evaluate(() => window.triggerClickEffect(450, 140));
     await new Promise((r) => setTimeout(r, 1800));
 
-    // Hour 5: Rapid thermal ramp
     await hourButtons[5].click();
     await page.evaluate(() => window.triggerClickEffect(550, 140));
     await new Promise((r) => setTimeout(r, 1800));
 
-    // Hour 7: Dangerous Afternoon Peak (13:00 Phoenix heatwave)
     await hourButtons[7].click();
     await page.evaluate(() => window.triggerClickEffect(650, 140));
-    await new Promise((r) => setTimeout(r, 3000));
+    await new Promise((r) => setTimeout(r, 2800));
   }
 
-  // Demonstrate Baseline vs. Mitigated Operational Toggle
   console.log('  ↳ Demonstrating Baseline vs. Mitigated Operational Toggle...');
-  // Toggle to Baseline (danger state)
   await clickTabByText('Baseline', 2000);
   await smoothMouseMove(550, 320, 500);
-  await new Promise((r) => setTimeout(r, 3000)); // Let the viewer see 159.5°C hot-spot & 88x aging
+  await new Promise((r) => setTimeout(r, 3000)); // View 159.5°C hot-spot & 88x aging
 
-  // Toggle back to Mitigated (safe state)
   await clickTabByText('Mitigated', 2000);
   await smoothMouseMove(550, 320, 500);
-  await new Promise((r) => setTimeout(r, 3000)); // Let the viewer see 122.5°C clamp
+  await new Promise((r) => setTimeout(r, 3000)); // View 122.5°C clamp
 
-  // Smooth scroll down to review the ECharts Physics Telemetry & Safety Gate Card
-  console.log('  ↳ Inspecting Physical ECharts Telemetry & Deterministic Safety Gate...');
   await smoothScroll(400, 800);
   await smoothMouseMove(650, 550, 600);
-  await new Promise((r) => setTimeout(r, 3500));
+  await new Promise((r) => setTimeout(r, 3000));
   await smoothScroll(-400, 800);
   await new Promise((r) => setTimeout(r, 1200));
 
   // =========================================================================
-  // ACT 3: PORTFOLIO OPERATIONS, WORKER SAFETY & COCO DISCOVERY (~95s - 170s)
-  // Guidance: Thamir (Session 8 PMF), Karel (Session 11), Stelfox (Session 13)
+  // ACT 3: UNFAIR MOAT #1 — WHAT-IF SIMULATION STUDIO (<15ms RE-SOLVE) (~75s - 115s)
   // =========================================================================
-  console.log('📍 [ACT 3/7] Portfolio Operations, Worker Safety & COCO Discovery Generator...');
-  await clickTabByText('Portfolio Ops', 1800);
+  console.log('📍 [ACT 3/9] UNFAIR MOAT #1: What-If Interactive Simulation Studio (<15ms Re-Solving)...');
+  await clickTabByText('What-If Studio', 1800);
 
-  // Review the Portfolio Risk Ranking Table
-  console.log('  ↳ Inspecting Portfolio Risk-Ranked Triage Table...');
-  await smoothMouseMove(600, 380, 600);
+  await smoothMouseMove(600, 240, 600);
+  await new Promise((r) => setTimeout(r, 2500));
+
+  // Click Scenario Preset 1: 31-Day Desertification
+  console.log('  ↳ Applying 31-Day Heatwave Desertification Preset...');
+  try {
+    await page.evaluate(() => {
+      const btns = Array.from(document.querySelectorAll('button'));
+      const p = btns.find((b) => b.textContent?.includes('31-Day') || b.textContent?.includes('Desertification'));
+      if (p) p.click();
+    });
+    await page.evaluate(() => window.triggerClickEffect(curX, curY));
+  } catch (e) {}
   await new Promise((r) => setTimeout(r, 3000));
 
-  // Review Worker Intervention Screen (Wet-Bulb Temperature limits)
+  // Click Scenario Preset 2: AI Data Center Megawatt Feed
+  console.log('  ↳ Applying AI Data Center Megawatt Feed Preset...');
+  try {
+    await page.evaluate(() => {
+      const btns = Array.from(document.querySelectorAll('button'));
+      const p = btns.find((b) => b.textContent?.includes('Data Center') || b.textContent?.includes('Megawatt'));
+      if (p) p.click();
+    });
+    await page.evaluate(() => window.triggerClickEffect(curX, curY));
+  } catch (e) {}
+  await new Promise((r) => setTimeout(r, 3000));
+
+  // Scroll down to observe the live ECharts temperature response & BESS dispatch
+  await smoothScroll(350, 800);
+  await smoothMouseMove(960, 500, 600);
+  await new Promise((r) => setTimeout(r, 3500));
+  await smoothScroll(-350, 800);
+  await new Promise((r) => setTimeout(r, 1200));
+
+  // =========================================================================
+  // ACT 4: UNFAIR MOAT #2 — 14-BUS AC POWER FLOW & GRID STABILITY (~115s - 150s)
+  // =========================================================================
+  console.log('📍 [ACT 4/9] UNFAIR MOAT #2: 14-Bus AC Power Flow & ANSI C84.1 Feeder Stability...');
+  await clickTabByText('AC Power Flow', 1800);
+
+  // Inspect the Single-Line Diagram & Hospital Bus Protection
+  await smoothMouseMove(650, 360, 600);
+  await new Promise((r) => setTimeout(r, 3000));
+
+  // Scroll to inspect ANSI C84.1 Voltage Heatbars & Dynamic Line Ratings
+  await smoothScroll(300, 800);
+  await smoothMouseMove(800, 520, 600);
+  await new Promise((r) => setTimeout(r, 3500));
+  await smoothScroll(-300, 800);
+  await new Promise((r) => setTimeout(r, 1200));
+
+  // =========================================================================
+  // ACT 5: UNFAIR MOAT #3 — 72-HOUR COMPOUNDING NOCTURNAL HEATWAVE (~150s - 185s)
+  // =========================================================================
+  console.log('📍 [ACT 5/9] UNFAIR MOAT #3: 72-Hour Multi-Day Compounding Nocturnal Heat Retention...');
+  await clickTabByText('72h Compounding', 1800);
+
+  await smoothMouseMove(500, 220, 600);
+  await new Promise((r) => setTimeout(r, 2500));
+
+  // Step through Day 1 -> Day 2 -> Day 3
+  console.log('  ↳ Scrubbing Day 1 -> Day 2 -> Day 3 Nocturnal Soak Progression...');
+  try {
+    const dayBtns = await page.$$('div#tour-72h-day-selector button, div.flex.items-center.gap-2 button');
+    if (dayBtns.length >= 3) {
+      // Day 1
+      await dayBtns[0].click();
+      await page.evaluate(() => window.triggerClickEffect(curX, curY));
+      await new Promise((r) => setTimeout(r, 2000));
+
+      // Day 2 (Ratcheting heat)
+      await dayBtns[1].click();
+      await page.evaluate(() => window.triggerClickEffect(curX, curY));
+      await new Promise((r) => setTimeout(r, 2500));
+
+      // Day 3 (Cumulative pre-heating peak)
+      await dayBtns[2].click();
+      await page.evaluate(() => window.triggerClickEffect(curX, curY));
+      await new Promise((r) => setTimeout(r, 3000));
+    }
+  } catch (e) {}
+
+  await smoothScroll(250, 600);
+  await new Promise((r) => setTimeout(r, 2500));
+  await smoothScroll(-250, 600);
+  await new Promise((r) => setTimeout(r, 1200));
+
+  // =========================================================================
+  // ACT 6: PORTFOLIO OPERATIONS, WORKER SAFETY & COCO DISCOVERY (~185s - 240s)
+  // =========================================================================
+  console.log('📍 [ACT 6/9] Portfolio Operations, Worker Safety & COCO Discovery Generator...');
+  await clickTabByText('Portfolio Ops', 1800);
+
+  await smoothMouseMove(600, 380, 600);
+  await new Promise((r) => setTimeout(r, 2500));
+
+  // Worker Intervention Screen (Wet-Bulb Temperature limits)
   console.log('  ↳ Reviewing Worker Intervention Screen (Wet-Bulb Thermal Stress)...');
   await smoothScroll(300, 800);
   await smoothMouseMove(450, 520, 600);
-  await new Promise((r) => setTimeout(r, 3500));
+  await new Promise((r) => setTimeout(r, 3000));
 
-  // COCO Customer Discovery Brief Generator (Session 8 PMF - Thamir)
+  // COCO Customer Discovery Brief Generator across 4 ICP Sectors
   console.log('  ↳ Demonstrating COCO Customer Discovery Engine across 4 ICP Sectors...');
   await smoothScroll(350, 800);
   await smoothMouseMove(960, 480, 500);
-  await new Promise((r) => setTimeout(r, 2200));
+  await new Promise((r) => setTimeout(r, 2000));
 
-  // Click Sector 1: Utility Substation
+  // Sector 1: Utility Substation
   console.log('    1. ⚡ Utility Substation Sector Brief...');
   try {
     await page.evaluate(() => {
@@ -474,9 +530,9 @@ async function recordBusinessValueDemo() {
       if (sec) sec.click();
     });
   } catch (e) {}
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
 
-  // Click Sector 2: AI Data Center
+  // Sector 2: AI Data Center
   console.log('    2. 🏢 AI Data Center Sector Brief...');
   try {
     await page.evaluate(() => {
@@ -485,9 +541,9 @@ async function recordBusinessValueDemo() {
       if (sec) sec.click();
     });
   } catch (e) {}
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
 
-  // Click Sector 3: Solar & BESS IPP
+  // Sector 3: Solar & BESS IPP
   console.log('    3. ☀️ Solar & BESS IPP Sector Brief...');
   try {
     await page.evaluate(() => {
@@ -496,9 +552,9 @@ async function recordBusinessValueDemo() {
       if (sec) sec.click();
     });
   } catch (e) {}
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
 
-  // Click Sector 4: Hospital Trauma Center
+  // Sector 4: Hospital Trauma Center
   console.log('    4. 🏥 Hospital Trauma Center Sector Brief...');
   try {
     await page.evaluate(() => {
@@ -507,10 +563,9 @@ async function recordBusinessValueDemo() {
       if (sec) sec.click();
     });
   } catch (e) {}
-  await new Promise((r) => setTimeout(r, 3500)); // Dwell on COCO 4 pillars
+  await new Promise((r) => setTimeout(r, 3000));
 
-  // Copy MCP Call (showing enterprise tool compatibility)
-  console.log('  ↳ Demonstrating MCP Tool-Calling Integration...');
+  // Copy MCP Call
   try {
     await page.evaluate(() => {
       const btns = Array.from(document.querySelectorAll('button'));
@@ -518,67 +573,53 @@ async function recordBusinessValueDemo() {
       if (copyBtn) copyBtn.click();
     });
   } catch (e) {}
-  await new Promise((r) => setTimeout(r, 1500));
+  await new Promise((r) => setTimeout(r, 1200));
 
   await smoothScroll(-650, 800);
   await new Promise((r) => setTimeout(r, 1200));
 
   // =========================================================================
-  // ACT 4: HYPERLOCAL 2M GIS & SPATIAL LAND COVER CAUSALITY (~170s - 225s)
-  // Guidance: Mudethir (Session 7), Snehil (Session 9), Stelfox (Session 13)
+  // ACT 7: HYPERLOCAL 2M GIS & SPATIAL LAND COVER CAUSALITY (~240s - 270s)
   // =========================================================================
-  console.log('📍 [ACT 4/7] Hyperlocal 2m Microclimate GIS Map & Spatial Causality...');
+  console.log('📍 [ACT 7/9] Hyperlocal 2m Microclimate GIS Map & Spatial Causality...');
   await clickTabByText('Hyperlocal 2m GIS', 1800);
 
-  // Explore 60m microclimate heat map
   await smoothMouseMove(550, 450, 600);
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
 
-  // Inspect Substation Asset Parcel
   console.log('  ↳ Inspecting Downtown Substation Parcel & Land Cover Breakdown...');
   await smoothMouseMove(850, 480, 500);
-  await new Promise((r) => setTimeout(r, 3500)); // Dwell on 78% asphalt vs. 2% canopy
-
-  await smoothScroll(250, 600);
-  await new Promise((r) => setTimeout(r, 2200));
-  await smoothScroll(-250, 600);
-  await new Promise((r) => setTimeout(r, 1200));
+  await new Promise((r) => setTimeout(r, 3000));
 
   // =========================================================================
-  // ACT 5: AUTONOMOUS LANGGRAPH MULTI-AGENT ENGINE (~225s - 290s)
-  // Guidance: Fawad (Session 2), Reichental (Session 10), Constantine (Session 14)
+  // ACT 8: AUTONOMOUS LANGGRAPH MULTI-AGENT ENGINE (~270s - 315s)
   // =========================================================================
-  console.log('📍 [ACT 5/7] LangGraph Multi-Agent Stack & Deterministic Safety Gate...');
+  console.log('📍 [ACT 8/9] LangGraph Multi-Agent Stack & Deterministic Safety Gate...');
   await clickTabByText('LangGraph Engine', 1800);
 
   // Step through the 5-node StateGraph DAG
   console.log('  ↳ Inspecting 5-Node StateGraph Architecture...');
   const dagButtons = await page.$$('div#tour-agent-dag button');
   if (dagButtons.length >= 5) {
-    // 1. Forecast Node
     await dagButtons[0].click();
     await page.evaluate(() => window.triggerClickEffect(curX, curY));
-    await new Promise((r) => setTimeout(r, 1800));
+    await new Promise((r) => setTimeout(r, 1500));
 
-    // 2. Physics Node
     await dagButtons[1].click();
     await page.evaluate(() => window.triggerClickEffect(curX, curY));
-    await new Promise((r) => setTimeout(r, 1800));
+    await new Promise((r) => setTimeout(r, 1500));
 
-    // 3. Planner Node
     await dagButtons[2].click();
     await page.evaluate(() => window.triggerClickEffect(curX, curY));
-    await new Promise((r) => setTimeout(r, 1800));
+    await new Promise((r) => setTimeout(r, 1500));
 
-    // 4. Deterministic Safety Gate Node
     await dagButtons[3].click();
     await page.evaluate(() => window.triggerClickEffect(curX, curY));
-    await new Promise((r) => setTimeout(r, 3000)); // Dwell on Non-LLM Safety Verification
+    await new Promise((r) => setTimeout(r, 2500)); // Dwell on Non-LLM Safety Verification
 
-    // 5. Audit & Dispatch Node
     await dagButtons[4].click();
     await page.evaluate(() => window.triggerClickEffect(curX, curY));
-    await new Promise((r) => setTimeout(r, 1800));
+    await new Promise((r) => setTimeout(r, 1500));
   }
 
   // Trigger Live LangGraph StateGraph Execution
@@ -597,51 +638,42 @@ async function recordBusinessValueDemo() {
     }
   } catch (e) {}
 
-  await new Promise((r) => setTimeout(r, 4000)); // Dwell on execution logs & generated work order
+  await new Promise((r) => setTimeout(r, 3500));
 
-  // Smooth scroll to view generated B2B work order & citizen advisory
   await smoothScroll(350, 800);
   await smoothMouseMove(960, 600, 500);
-  await new Promise((r) => setTimeout(r, 3500));
+  await new Promise((r) => setTimeout(r, 3000));
   await smoothScroll(-350, 800);
   await new Promise((r) => setTimeout(r, 1200));
 
   // =========================================================================
-  // ACT 6: AVOIDED LOSS ROI FINANCIAL MODEL (~290s - 345s)
-  // Guidance: Ahmed (Session 5), Karel (Session 11), Vikram (Session 12)
+  // ACT 9: AVOIDED LOSS ROI & FINAL PITCH CONCLUSION (~315s - 355s)
   // =========================================================================
-  console.log('📍 [ACT 6/7] Avoided Loss ROI & Hard Financial Impact...');
+  console.log('📍 [ACT 9/9] Avoided Loss ROI & Final Executive Summary...');
   await clickTabByText('Avoided Loss ROI', 1800);
 
-  // Dwell on the Net Avoided Loss Banner ($2,566,193)
   await smoothMouseMove(400, 220, 600);
-  await new Promise((r) => setTimeout(r, 3000));
-
-  // Dwell on Customer Interruption Cost & Replacement Deferral
+  await new Promise((r) => setTimeout(r, 2500));
   await smoothMouseMove(800, 220, 600);
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
   await smoothMouseMove(1200, 220, 600);
-  await new Promise((r) => setTimeout(r, 3000));
+  await new Promise((r) => setTimeout(r, 2500));
 
-  // Scroll to review the complete financial formula and assumption-based matrix
   await smoothScroll(350, 800);
   await smoothMouseMove(650, 550, 600);
-  await new Promise((r) => setTimeout(r, 4000));
+  await new Promise((r) => setTimeout(r, 3000));
   await smoothScroll(-350, 800);
   await new Promise((r) => setTimeout(r, 1200));
 
-  // =========================================================================
-  // ACT 7: CINEMATIC CONCLUSION & EXECUTIVE SUMMARY (~345s - 365s)
-  // Guidance: Tarek (Session 6), Constantine (Session 14)
-  // =========================================================================
-  console.log('📍 [ACT 7/7] Final Executive Summary & Pitch Conclusion...');
+  // Conclude on Pitch & Video Home view
+  console.log('  ↳ Returning to Executive Pitch & Video Showcase...');
   await clickTabByText('Pitch & Video', 1800);
-
   await smoothMouseMove(960, 480, 600);
   await new Promise((r) => setTimeout(r, 3500));
 
   console.log('🏁 Walkthrough interaction complete. Stopping screencast...');
   isStreaming = false;
+  clearInterval(frameWriterInterval);
   await client.send('Page.stopScreencast');
   await browser.close();
 
@@ -686,7 +718,7 @@ async function recordBusinessValueDemo() {
     console.log(`🎉 Video saved (silent): ${OUTPUT_VIDEO}`);
   }
 
-  console.log('\n✨ ALL DONE! You can now use the video directly or edit/voiceover it as needed.');
+  console.log('\n✨ ALL DONE! Video re-recording complete.');
 }
 
 recordBusinessValueDemo().catch((err) => {
