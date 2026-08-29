@@ -65,8 +65,8 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
     business_demo: {
       bundled: true,
       url: '/videos/business_value_demo.mp4',
-      subtitledUrl: '/videos/business_value_demo_subtitled.mp4',
-      youtubeUrl: undefined,
+      subtitledUrl: '/videos/final_submission_fortyguard_burned_subtitles.mp4',
+      youtubeUrl: 'https://youtu.be/2kf-TLSv9kU',
       title: '⚡ 4-Min Business Value & Customer Discovery Demo',
       badge: 'Judges Choice · Subtitled',
       description: 'Unhurried 1080p full interaction focused on commercial ROI, COCO customer discovery, OSHA worker safety shifts, and deterministic safety gates.',
