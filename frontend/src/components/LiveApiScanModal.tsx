@@ -25,6 +25,8 @@ interface LiveApiScanModalProps {
   onClose: () => void;
   /** Rebases the whole dashboard onto the scanned location's physics. */
   onSimulationResult?: (result: any) => void;
+  /** Navigates dashboard to target tab (e.g. overview) when closing with analysis active. */
+  onNavigateTab?: (tab: any) => void;
 }
 
 interface ApiUsageData {
@@ -51,7 +53,12 @@ const PRESET_LOCATIONS = [
   { name: 'Houston, TX (Energy Corridor)', lat: 29.7604, lon: -95.3698, date: '2024-07-15' },
 ];
 
-export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onClose, onSimulationResult }) => {
+export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({
+  isOpen,
+  onClose,
+  onSimulationResult,
+  onNavigateTab,
+}) => {
   const [usage, setUsage] = useState<ApiUsageData | null>(null);
   const [isFetchingUsage, setIsFetchingUsage] = useState<boolean>(false);
 
@@ -114,15 +121,33 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
     setAnalysis(null);
     setAnalysisError(null);
     try {
+      const payload: any = {
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+        analysis_date: startDate,
+        city,
+      };
+      if (scanResult?.forecast && Array.isArray(scanResult.forecast)) {
+        payload.hourly_forecast = scanResult.forecast;
+      }
+      if (scanResult?.metrics) {
+        payload.persistence_metrics = {
+          persistence_hours_p40: scanResult.metrics.persistence_hours_p40,
+          exceedance_hours_e40: scanResult.metrics.exceedance_hours_e40,
+          exceedance_degree_hours_h40: scanResult.metrics.exceedance_degree_hours_h40,
+          thermal_soak_index_tsi: scanResult.metrics.thermal_soak_index_tsi,
+          analysis_date: scanResult.metrics.analysis_date || startDate,
+          data_source: scanResult.metrics.data_source,
+        };
+        if (scanResult.metrics.intra_aoi_spread_c !== undefined && scanResult.metrics.intra_aoi_spread_c !== null) {
+          payload.intra_aoi_spread_c = Number(scanResult.metrics.intra_aoi_spread_c);
+        }
+      }
+
       const resp = await fetch(`${API_BASE}/api/v1/sandbox/simulate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          analysis_date: startDate,
-          city,
-        }),
+        body: JSON.stringify(payload),
       });
       if (!resp.ok) {
         const errJson = await resp.json().catch(() => ({}));
@@ -479,8 +504,11 @@ export const LiveApiScanModal: React.FC<LiveApiScanModalProps> = ({ isOpen, onCl
                       {' '}{analysis?.scan_binding?.n_hours ?? '—'}h solved
                     </div>
                     <button
-                      onClick={onClose}
-                      className="col-span-2 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 font-bold text-[11px] hover:bg-emerald-500/30 transition"
+                      onClick={() => {
+                        onNavigateTab?.('overview');
+                        onClose();
+                      }}
+                      className="col-span-2 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 font-bold text-[11px] hover:bg-emerald-500/30 transition flex items-center justify-center gap-1.5"
                     >
                       Close and view across every dashboard tab →
                     </button>

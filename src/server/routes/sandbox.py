@@ -50,6 +50,14 @@ class SandboxSimulationRequest(BaseModel):
     longitude: Optional[float] = Field(default=None, ge=-180.0, le=180.0, description="Run against a live 2m scan at this longitude")
     analysis_date: Optional[str] = Field(default=None, description="YYYY-MM-DD for the live scan; defaults to the benchmark date")
     city: Optional[str] = Field(default=None, description="Label recorded with the simulation run")
+    hourly_forecast: Optional[List[Dict[str, Any]]] = Field(
+        default=None,
+        description="Pre-computed 12h hourly forecast from live scan to bypass redundant network refetching",
+    )
+    persistence_metrics: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="Pre-computed persistence & exceedance metrics from live scan",
+    )
 
 
 def _simulation_cache_key(req: SandboxSimulationRequest) -> str:
@@ -97,13 +105,58 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
         "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
     ]
 
-    # When coordinates are supplied, replace the benchmark curve with a real 2m
-    # profile for that location and date. Same solver, same gate, same economics
+    # When coordinates or pre-supplied forecast are supplied, replace the benchmark curve
+    # with a real 2m profile for that location and date. Same solver, same gate, same economics
     # - only the measured inputs change, which is what makes the study portable
     # off Phoenix.
     scan_binding: Dict[str, Any] = {"mode": "benchmark_replay", "city": "Phoenix, AZ"}
     spread_c = req.intra_aoi_spread_c
-    if req.latitude is not None and req.longitude is not None:
+    usable: List[Dict[str, Any]] = []
+
+    if req.hourly_forecast is not None:
+        usable = [h for h in req.hourly_forecast if h.get("fortyguard_2m_ambient_c") is not None]
+        if len(usable) < 2:
+            raise HTTPException(
+                status_code=502,
+                detail=(
+                    "Pre-supplied 2m profile had fewer than 2 valid hours, so the "
+                    "simulation was not run."
+                ),
+            )
+        coolest_tile_temps = [h.get("coolest_tile_2m_c", h["fortyguard_2m_ambient_c"]) for h in usable]
+        solar_fluxes = [h.get("solar_irradiance_w_m2") or 0.0 for h in usable]
+        time_labels = [h.get("time_label", f"H{h.get('hour_index', i)}") for i, h in enumerate(usable)]
+        peak = max(usable, key=lambda h: h["fortyguard_2m_ambient_c"])
+        spread_c = peak.get("intra_aoi_spread_c")
+        if spread_c is None:
+            spread_c = round(peak["fortyguard_2m_ambient_c"] - peak.get("coolest_tile_2m_c", peak["fortyguard_2m_ambient_c"]), 3)
+
+        live_persistence = req.persistence_metrics or {}
+        analysis_date = req.analysis_date or (usable[0].get("timestamp", "").split("T")[0] if usable else None)
+        city_label = req.city or (f"{req.latitude:.4f}, {req.longitude:.4f}" if req.latitude is not None and req.longitude is not None else "Scanned AOI")
+
+        scan_binding = {
+            "mode": "live_scan",
+            "city": city_label,
+            "latitude": req.latitude,
+            "longitude": req.longitude,
+            "analysis_date": analysis_date,
+            "n_hours": len(usable),
+            "peak_2m_ambient_c": round(peak["fortyguard_2m_ambient_c"], 2),
+            "measured_intra_aoi_spread_c": spread_c,
+            "data_source": usable[0].get("data_source") or (req.persistence_metrics or {}).get("data_source", "fortyguard_live"),
+            "scenario_metadata_patch": {
+                "location": {
+                    "city": city_label,
+                    "substation_name": f"Generic {req.transformer_mva:.0f} MVA asset model (unregistered site)",
+                    "latitude": req.latitude,
+                    "longitude": req.longitude,
+                },
+                "date_range": {"start_date": analysis_date},
+                "persistence_metrics": live_persistence or None,
+            },
+        }
+    elif req.latitude is not None and req.longitude is not None:
         from src.api.fortyguard_client import AsyncFortyGuardClient
 
         client = AsyncFortyGuardClient()
@@ -132,7 +185,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
             spread_c = round(peak["fortyguard_2m_ambient_c"] - peak.get("coolest_tile_2m_c", peak["fortyguard_2m_ambient_c"]), 3)
         # Persistence for the scanned location. Without this the dashboard kept
         # showing the Phoenix P40 / TSI beside the scanned city's ambient curve.
-        live_persistence: Dict[str, Any] = {}
+        live_persistence = {}
         try:
             live_persistence = await client.get_persistence_and_exceedance(
                 latitude=req.latitude,
@@ -197,7 +250,7 @@ async def run_sandbox_simulation(req: SandboxSimulationRequest) -> Dict[str, Any
     for idx, (time_lbl, t_air, s_w) in enumerate(zip(time_labels, coolest_tile_temps, solar_fluxes)):
         hour_of_day = 6 + idx
         t_2m = t_air + spread_c
-        source_row = usable[idx] if req.latitude is not None and req.longitude is not None else {}
+        source_row = usable[idx] if idx < len(usable) else {}
         forecast_dicts.append(
             {
                 "hour_index": idx,

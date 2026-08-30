@@ -160,6 +160,57 @@ class TestSandboxLiveBinding:
         assert b["measured_intra_aoi_spread_c"] == pytest.approx(0.5)
         assert b["peak_2m_ambient_c"] == pytest.approx(41.0)
 
+    @pytest.mark.asyncio
+    async def test_live_binding_with_presupplied_forecast_skips_network(self):
+        """Pre-supplied hourly forecast runs immediately without calling FortyGuard client."""
+        forecast = [
+            {
+                "hour_index": i,
+                "time_label": f"{6+i:02d}:00",
+                "timestamp": f"2024-07-15T{6+i:02d}:00:00-07:00",
+                "fortyguard_2m_ambient_c": 38.0 + (i * 0.5),
+                "coolest_tile_2m_c": 36.5 + (i * 0.5),
+                "intra_aoi_spread_c": 1.5,
+                "solar_irradiance_w_m2": 700.0,
+                "data_source": "fortyguard_live",
+            }
+            for i in range(12)
+        ]
+        persistence = {
+            "persistence_hours_p40": 8.5,
+            "exceedance_hours_e40": 8.5,
+            "exceedance_degree_hours_h40": 14.2,
+            "thermal_soak_index_tsi": 2.8,
+            "data_source": "fortyguard_live",
+        }
+        res = await run_sandbox_simulation(SandboxSimulationRequest(
+            city="San Jose, CA",
+            latitude=37.3382,
+            longitude=-121.8863,
+            analysis_date="2024-07-15",
+            hourly_forecast=forecast,
+            persistence_metrics=persistence,
+        ))
+        assert res["status"] == "success"
+        b = res["scan_binding"]
+        assert b["mode"] == "live_scan"
+        assert b["city"] == "San Jose, CA"
+        assert b["peak_2m_ambient_c"] == pytest.approx(43.5)
+        assert b["measured_intra_aoi_spread_c"] == pytest.approx(1.5)
+        assert len(res["timeline_steps"]) == 12
+        assert res["baseline_summary"]["peak_hot_spot_c"] > 0
+        assert res["economic_evaluation"]["net_avoided_loss_usd"] > 0
+
+    @pytest.mark.asyncio
+    async def test_presupplied_forecast_too_short_raises_502(self):
+        """Fewer than 2 valid hours in pre-supplied forecast raises 502."""
+        from fastapi import HTTPException
+        with pytest.raises(HTTPException) as exc:
+            await run_sandbox_simulation(SandboxSimulationRequest(
+                hourly_forecast=[{"fortyguard_2m_ambient_c": 39.0}],
+            ))
+        assert exc.value.status_code == 502
+
 
 class TestUiDoesNotFabricateOnZero:
     def test_scan_modal_has_no_falsy_fallbacks(self):

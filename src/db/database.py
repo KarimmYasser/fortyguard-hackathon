@@ -1366,9 +1366,15 @@ class HybridDatabaseManager:
         try:
             async with httpx.AsyncClient(timeout=4.0) as client:
                 resp = await client.post(url, json=payload, headers=headers)
-                return resp.status_code in (200, 201, 204)
+                if resp.status_code in (200, 201, 204):
+                    return True
+                logger.warning(
+                    f"Supabase sync non-fatal error for table {table}: HTTP {resp.status_code} - {resp.text[:200]}"
+                )
+                return False
         except Exception as e:
-            logger.warning(f"Supabase sync non-fatal error for table {table}: {e}")
+            err_msg = str(e) or repr(e)
+            logger.warning(f"Supabase sync non-fatal error for table {table}: {type(e).__name__} ({err_msg})")
             return False
 
     async def _supabase_select(

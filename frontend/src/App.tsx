@@ -99,34 +99,43 @@ export const App: React.FC = () => {
     if (simResult?.scan_binding?.mode === 'live_scan') {
       setActiveBinding({ ...simResult.scan_binding, cache_hit: simResult.cache?.hit === true });
     }
-    if (data && simResult.timeline_steps) {
+    if (simResult?.timeline_steps) {
       const patch = simResult?.scan_binding?.scenario_metadata_patch;
-      // Merge rather than replace: the patch only carries what the scan can
-      // actually speak to, so canyon/soil metrics keep their existing values.
-      const mergedMetadata = patch
-        ? {
-            ...data.scenario_metadata,
-            name: `${patch.location?.city ?? 'Live scan'} — live FortyGuard capture`,
-            location: { ...data.scenario_metadata.location, ...patch.location },
-            date_range: { ...data.scenario_metadata.date_range, ...patch.date_range },
-            persistence_metrics:
-              patch.persistence_metrics ?? data.scenario_metadata.persistence_metrics,
-          }
-        : data.scenario_metadata;
-      setData({
-        ...data,
-        scenario_metadata: mergedMetadata,
-        provenance: simResult.provenance ?? data.provenance,
-        timeline_steps: simResult.timeline_steps,
-        baseline_summary: simResult.baseline_summary,
-        mitigated_summary: simResult.mitigated_summary,
-        safety_gate_verdict: simResult.safety_gate_verdict,
-        economic_evaluation: simResult.economic_evaluation,
-        soil_cable_state: simResult.soil_cable_state,
-        virtual_moisture_state: simResult.virtual_moisture_state,
-        urban_canyon_state: simResult.urban_canyon_state,
-        sensitivity_analysis: simResult.sensitivity_analysis,
-        integrated_grid_evaluation: simResult.integrated_grid_evaluation,
+      setData((prevData) => {
+        const baseMetadata = prevData?.scenario_metadata || {
+          scenario_id: 'live_scan',
+          name: `${patch?.location?.city ?? 'Live scan'} — live FortyGuard capture`,
+          location: patch?.location || { city: 'Live Scan Site' },
+          date_range: patch?.date_range || { start_date: '2024-07-15' },
+          persistence_metrics: patch?.persistence_metrics || {},
+        };
+        const mergedMetadata = patch
+          ? {
+              ...baseMetadata,
+              name: `${patch.location?.city ?? 'Live scan'} — live FortyGuard capture`,
+              location: { ...baseMetadata.location, ...patch.location },
+              date_range: { ...baseMetadata.date_range, ...patch.date_range },
+              persistence_metrics:
+                patch.persistence_metrics ?? baseMetadata.persistence_metrics,
+            }
+          : baseMetadata;
+
+        return {
+          ...(prevData || {}),
+          scenario_metadata: mergedMetadata,
+          provenance: simResult.provenance ?? prevData?.provenance,
+          timeline_steps: simResult.timeline_steps,
+          baseline_summary: simResult.baseline_summary,
+          mitigated_summary: simResult.mitigated_summary,
+          safety_gate_verdict: simResult.safety_gate_verdict,
+          economic_evaluation: simResult.economic_evaluation,
+          soil_cable_state: simResult.soil_cable_state,
+          virtual_moisture_state: simResult.virtual_moisture_state,
+          urban_canyon_state: simResult.urban_canyon_state,
+          sensitivity_analysis: simResult.sensitivity_analysis,
+          integrated_grid_evaluation: simResult.integrated_grid_evaluation,
+          heatmap_geojson_tiles: prevData?.heatmap_geojson_tiles || { type: 'FeatureCollection', features: [] },
+        } as ReplayDataset;
       });
     }
   };
@@ -405,6 +414,7 @@ export const App: React.FC = () => {
             isOpen={isLiveScanOpen}
             onClose={() => setIsLiveScanOpen(false)}
             onSimulationResult={handleSandboxSimulateResult}
+            onNavigateTab={setActiveTab}
           />
         </Suspense>
       )}
