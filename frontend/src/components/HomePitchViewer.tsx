@@ -68,7 +68,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
       bundled: true,
       url: '/videos/business_value_demo.mp4',
       subtitledUrl: '/videos/final_submission_fortyguard_burned_subtitles.mp4',
-      youtubeUrl: 'https://youtu.be/2kf-TLSv9kU',
+      youtubeUrl: 'https://youtu.be/xfdOuxOmEgw',
       title: '⚡ 4-Min Business Value & Customer Discovery Demo',
       badge: 'Judges Choice · Subtitled',
       description: 'Unhurried 1080p full interaction focused on commercial ROI, COCO customer discovery, OSHA worker safety shifts, and deterministic safety gates.',
@@ -310,7 +310,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
 
             {/* Open YouTube External Link */}
             <a
-              href="https://youtu.be/2kf-TLSv9kU"
+              href="https://youtu.be/xfdOuxOmEgw"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 hover:text-rose-200 text-xs font-mono font-medium flex items-center gap-1.5 transition-all shadow-sm"
@@ -339,7 +339,7 @@ export const HomePitchViewer: React.FC<HomePitchViewerProps> = ({
             <div className="w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner border border-slate-800">
               <iframe
                 className="w-full h-full border-0"
-                src="https://www.youtube-nocookie.com/embed/2kf-TLSv9kU?autoplay=0&rel=0&modestbranding=1"
+                src="https://www.youtube-nocookie.com/embed/xfdOuxOmEgw?autoplay=0&rel=0&modestbranding=1"
                 title="Thermal Sentinel Grid - FortyGuard Hackathon Submission Pitch"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
